@@ -11,6 +11,15 @@ import { HeaderComponent } from './component/header/header/header.component';
 import { FooterComponent } from './component/footer/footer/footer.component';
 import { OnlyNumberDirective } from './directive/only-number.directive';
 
+//----------------Material----------------//
+import {
+  MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, MatCardModule, MatCheckboxModule,
+  MatChipsModule, MatDatepickerModule, MatDialogModule, MatExpansionModule, MatGridListModule, 
+  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
+  MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
+  MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule,MatStepperModule,
+} from '@angular/material';
 //----------------Services----------------//
 import { LoginService } from './services/login.service';
 
@@ -23,6 +32,15 @@ import { LoginService } from './services/login.service';
     NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    //----------------Material----------------//
+    MatAutocompleteModule,MatButtonModule,MatButtonToggleModule,
+    MatCardModule,MatCheckboxModule,MatChipsModule,MatStepperModule,MatDatepickerModule,
+    MatDialogModule,MatExpansionModule,MatGridListModule,MatIconModule,MatInputModule,MatListModule,
+    MatMenuModule,MatNativeDateModule,MatPaginatorModule,MatProgressBarModule,
+    MatProgressSpinnerModule,MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,
+    MatSliderModule,MatSlideToggleModule,MatSnackBarModule,MatSortModule,MatTableModule,
+    MatTabsModule,MatToolbarModule,MatTooltipModule,
+    //----------------Material----------------//
   ],
   declarations: [
     HeaderComponent, 
@@ -37,7 +55,16 @@ import { LoginService } from './services/login.service';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    OnlyNumberDirective
+    OnlyNumberDirective,
+     //----------------Material----------------//
+     MatAutocompleteModule,MatButtonModule,MatButtonToggleModule,
+     MatCardModule,MatCheckboxModule,MatChipsModule,MatStepperModule,MatDatepickerModule,
+     MatDialogModule,MatExpansionModule,MatGridListModule,MatIconModule,MatInputModule,MatListModule,
+     MatMenuModule,MatNativeDateModule,MatPaginatorModule,MatProgressBarModule,
+     MatProgressSpinnerModule,MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,
+     MatSliderModule,MatSlideToggleModule,MatSnackBarModule,MatSortModule,MatTableModule,
+     MatTabsModule,MatToolbarModule,MatTooltipModule,
+     //----------------Material----------------//
   ]
 })
 export class CoreModule {

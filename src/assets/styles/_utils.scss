@@ -92,7 +92,7 @@ p {
 }
 
 .background-grey {
-    background-color: #f6f6f6;
+    background-color: #E9EBEC;
 }
 
 .background-pink {
@@ -113,7 +113,6 @@ p {
     background: -webkit-gradient(linear, left top, right top, from(#00e4ce), to(#00abc9));
     background: -o-linear-gradient(left, #00e4ce 0%, #00abc9 100%);
     background: linear-gradient(to right, #00e4ce 0%, #00abc9 100%);
-    
 }
 
 .gradient-bg-orange-pink {
@@ -122,7 +121,6 @@ p {
     background: -webkit-gradient(linear, left top, right top, from(#ffcb00), to(#ff0061));
     background: -o-linear-gradient(left, #ffcb00 0%, #ff0061 100%);
     background: linear-gradient(to right, #ffcb00 0%, #ff0061 100%);
-    
 }
 
 .text-color-primary {
@@ -420,14 +418,10 @@ p {
     -webkit-border-radius: 50px;
     border-radius: 50px;
     font-family: 'Montserrat', sans-serif;
-    -webkit-transition: color 300ms ease-in-out, -webkit-box-shadow 400ms ease-in-out !important;
-    transition: color 300ms ease-in-out, -webkit-box-shadow 400ms ease-in-out !important;
-    -o-transition: box-shadow 400ms ease-in-out, color 300ms ease-in-out !important;
-    transition: box-shadow 400ms ease-in-out, color 300ms ease-in-out !important;
-    transition: box-shadow 400ms ease-in-out, color 300ms ease-in-out, -webkit-box-shadow 400ms ease-in-out !important;
+    transition: all .40s ease-out;
+    -webkit-box-shadow: 0px 4px 5px 1px rgba(00, 00, 00, 0.2);
+    box-shadow: 0px 4px 5px 1px rgba(00, 00, 00, 0.2);
     display: inline-block;
-    -webkit-box-shadow: none;
-    box-shadow: none;
 }
 
 .button-setting:hover,
@@ -439,6 +433,9 @@ p {
 .button-setting-primary:focus {
     -webkit-box-shadow: 0 0 40px 40px #fcc42c inset !important;
     box-shadow: 0 0 40px 40px #fcc42c inset !important;
+    transition: all .40s ease;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .button-setting-secondary:hover,
@@ -1698,6 +1695,123 @@ p {
 
 /*custom-css*/
 
+.matrial-btn {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    width: 150px;
+    background: rgb(52, 148, 193);
+    background: linear-gradient(90deg, rgba(52, 148, 193, 1) 0%, rgba(30, 126, 171, 1) 100%);
+    color: #fff;
+    -webkit-clip-path: circle(24px at 30px 24px);
+    clip-path: circle(24px at 32px 24px);
+    -webkit-transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
+    transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
+    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+    border-radius: 3px;
+}
+
+.matrial-btn:hover {
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    -webkit-transition-duration: 0.75s;
+    transition-duration: 0.75s;
+    -webkit-clip-path: circle(390px at 225px 24px);
+    clip-path: circle(390px at 150px 24px);
+}
+
+.matrial-btn a {
+    display: block;
+    line-height: 50px;
+    padding: 0 20px;
+    color: inherit;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.matrial-btn a:hover {
+    background: rgb(32, 119, 160);
+}
+
+.matrial-btn a:active {
+    background: rgb(28, 107, 144);
+}
+
+.navicon {
+    padding: 23px 20px;
+    cursor: pointer;
+    -webkit-transform-origin: 32px 24px;
+    -ms-transform-origin: 32px 24px;
+    transform-origin: 32px 24px;
+}
+
+.navicon div {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    left: 9px;
+}
+
+.navicon div:before,
+.navicon div:after {
+    display: block;
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    position: absolute;
+}
+
+.navicon div:before {
+    top: -9px;
+}
+
+.navicon div:after {
+    top: 9px;
+}
+
+
+/* for-matrial-btn-end */
+
+.solid-banner {
+    background: rgb(52, 148, 193);
+    background: linear-gradient(90deg, rgba(52, 148, 193, 1) 0%, rgba(30, 126, 171, 1) 100%);
+    height: 200px;
+    width: 100%;
+   position: absolute;
+}
+
+.min-height-box {
+    position: relative;
+}
+
+.freelink a {
+    background: #eaeaea;
+    padding: 1px 15px;
+    border-radius: 10px;
+    margin: 4px 3px;
+    float: left;
+    transition: all .40s ease-out;
+}
+
+.freelink a:hover {
+    background: #d6d6d6;
+    transition: all .40s ease;
+}
+
+.freelink a i {
+    font-size: 11px;
+    color: #b3b1b1;
+}
+
+.freelink a:hover i {
+    color: green;
+}
+
 .lebel-form {
     font-size: 17px;
     font-weight: 500;
@@ -1737,12 +1851,12 @@ p {
 }
 
 .icon-apps li i {
-    color: #a3a3a3;
+    color: #689F38;
     font-size: 36px;
 }
 
 .icon-apps li:last-child i {
-    color: #689F38;
+    color: #a3a3a3;
 }
 
 .icon-apps li {
@@ -1763,7 +1877,10 @@ p {
 
 .broder-grey {
     padding: 15px 10px;
-    border: 1px solid #c5c5cb;
+    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+    background: #F5F5F5;
+    border-radius: 3px;
+    margin-top: 146px;
 }
 
 .app-name {
@@ -2204,6 +2321,7 @@ p {
     background: url(../images/upload-image.png) no-repeat center center;
     border: 2px solid #bababa;
     border-radius: 8px;
+    background-size: cover;
 }
 
 .mobo-custom .discription h3 {
@@ -2225,10 +2343,18 @@ p {
 }
 
 .mobo-theme {
-    background: url(../images/app-macking.jpg) no-repeat center center;
-    background-size: contain;
     min-height: 462px;
     padding: 50px 76px;
+}
+
+.android-mobo-theme {
+    background: url(../images/app-macking.png) no-repeat center center;
+    background-size: contain;
+}
+
+.ios-mobo-theme {
+    background: url(../images/ios-app-macking.png) no-repeat center center;
+    background-size: contain;
 }
 
 .mobo-custom span {
@@ -2933,6 +3059,7 @@ p {
 
 .contact-form-textfield input,
 .contact-form-textfield textarea {
+    background: #F5F5F5;
     font-size: 16px;
     border: none;
     border-bottom: 1px solid #c3c3c3;
@@ -3425,126 +3552,6 @@ p {
     .padding-bottom {
         padding-bottom: 120px;
     }
-    .padding-top-5 {
-        padding-top: 2.5px;
-    }
-    .padding-bottom-5 {
-        padding-bottom: 2.5px;
-    }
-    .padding-top-10 {
-        padding-top: 5px;
-    }
-    .padding-bottom-10 {
-        padding-bottom: 5px;
-    }
-    .padding-top-15 {
-        padding-top: 7.5px;
-    }
-    .padding-bottom-15 {
-        padding-bottom: 7.5px;
-    }
-    .padding-top-20 {
-        padding-top: 10px;
-    }
-    .padding-bottom-20 {
-        padding-bottom: 10px;
-    }
-    .padding-top-25 {
-        padding-top: 12.5px;
-    }
-    .padding-bottom-25 {
-        padding-bottom: 12.5px;
-    }
-    .padding-top-30 {
-        padding-top: 15px;
-    }
-    .padding-bottom-30 {
-        padding-bottom: 15px;
-    }
-    .padding-top-35 {
-        padding-top: 17.5px;
-    }
-    .padding-bottom-35 {
-        padding-bottom: 17.5px;
-    }
-    .padding-top-40 {
-        padding-top: 20px;
-    }
-    .padding-bottom-40 {
-        padding-bottom: 20px;
-    }
-    .padding-top-45 {
-        padding-top: 22.5px;
-    }
-    .padding-bottom-45 {
-        padding-bottom: 22.5px;
-    }
-    .padding-top-50 {
-        padding-top: 25px;
-    }
-    .padding-bottom-50 {
-        padding-bottom: 25px;
-    }
-    .padding-top-55 {
-        padding-top: 27.5px;
-    }
-    .padding-bottom-55 {
-        padding-bottom: 27.5px;
-    }
-    .padding-top-60 {
-        padding-top: 30px;
-    }
-    .padding-bottom-60 {
-        padding-bottom: 30px;
-    }
-    .padding-top-65 {
-        padding-top: 32.5px;
-    }
-    .padding-bottom-65 {
-        padding-bottom: 32.5px;
-    }
-    .padding-top-70 {
-        padding-top: 35px;
-    }
-    .padding-bottom-70 {
-        padding-bottom: 35px;
-    }
-
-
-    .button-setting {
-        padding: 12px 28px !important;
-    }
-    /*NavBar*/
-    /*.navbar {
-        padding-top: 20px;
-    }
-    .navbar-full-white-bg {
-        background: #ffffff;
-        padding-top: 10px;
-    }
-    .navbar-full-white-bg .nav-logo-detail-outer {
-        padding-left: 0;
-    }
-    .navbar-full-white-bg .nav-menu-button span {
-        background: #333333;
-    }
-    .navbar-full-white-bg .navbar-brand {
-        vertical-align: middle;
-        padding-top: 5px;
-    }
-    .navbar .navbar-brand  {
-        max-width: 100px;
-    }
-    .overlay nav ul li {
-        display: block;
-        margin: 30px 0;
-     }
-    .overlay nav ul li:nth-child(1) {
-        margin-top: 0;
-    }
-   .nav-menu-button {
-        right: 85px !important;
-    }*/
     /*Slider*/
     .main-slider-detail-text {
         font-size: 18px !important;
@@ -3804,4 +3811,7 @@ p {
     .company-contact-detail {
         padding-left: 25px;
     }
+}
+.mat-horizontal-stepper-header-container{
+    display: none !important;
 }
