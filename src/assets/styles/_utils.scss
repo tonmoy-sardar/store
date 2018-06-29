@@ -422,6 +422,7 @@ p {
     -webkit-box-shadow: 0px 4px 5px 1px rgba(00, 00, 00, 0.2);
     box-shadow: 0px 4px 5px 1px rgba(00, 00, 00, 0.2);
     display: inline-block;
+    border: none;
 }
 
 .button-setting:hover,
@@ -1884,14 +1885,22 @@ p {
 }
 
 .app-name {
-    margin-top: 13%;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .app-name a {
     display: block;
     text-align: center;
     margin-top: 10px;
+}
+
+.catagory-btn{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .catagory-btn li a {
@@ -2290,8 +2299,8 @@ p {
 
 .busness-image img {
     float: left;
-    width: 86px !important;
-    height: 86px !important;
+    width: 84px !important;
+    height: 84px !important;
     margin: 4px !important;
 }
 
@@ -2315,6 +2324,7 @@ p {
     opacity: 0;
     height: 108px;
     cursor: pointer;
+    width: 100%;
 }
 
 .custom-input .upload-defolt {

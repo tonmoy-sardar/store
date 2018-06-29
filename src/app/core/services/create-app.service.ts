@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class LoginService {
+export class CreateAppService {
 
   constructor(private http: HttpClient) { }
 
-  login(data): Observable<any>{
-    return this.http.post(environment.apiEndpoint+'login', data)
+  getCategoryList(): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'all_categories/')
   }
 
 }

@@ -22,6 +22,7 @@ import {
 } from '@angular/material';
 //----------------Services----------------//
 import { LoginService } from './services/login.service';
+import { CreateAppService } from './services/create-app.service';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         LoginService,
+        CreateAppService
       ]
       
     };

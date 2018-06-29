@@ -2,79 +2,111 @@
 <!-- Sposnors Sider Section Start -->
 
 <section class="sponsors-slider-section background-grey ">
-
-
-    <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
-                <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
-                <div class="container">
-                    <div class="background-white broder-grey min-height-box">
-                        <div class="row">
-                            <div class="col-md-3 app-name text-color-dark font-weight-700 fontface-one">
-                                <h4>Create a Mini App </h4>
-                                <!-- <a href="javascript:void(0);" class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft matStepperNext" data-wow-delay="400ms">Create Now</a> -->
-                                <button matStepperNext class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft"
-                                    data-wow-delay="400ms">Create Now</button>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-12 background-white broder-grey min-height-box">
+                <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+                    <mat-step [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                            <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                            <div class="row">
+                                <div class="col-md-3 app-name text-color-dark font-weight-700 fontface-one">
+                                    <h4>Create a Mini App </h4>
+                                    <!-- <a href="javascript:void(0);" class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft matStepperNext" data-wow-delay="400ms">Create Now</a> -->
+                                    <button matStepperNext class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft"
+                                        data-wow-delay="400ms">Create Now</button>
+                                </div>
+                                <div class="col-md-9 catagory-btn">
+                                    <ul *ngIf="category_list.length > 0">
+                                        <li class="wow fadeInDown" data-wow-delay="400ms" *ngFor="let category of category_list">
+                                            <a href="#">
+                                                <img src="assets/images/resturent-btn.png" alt=""> {{category.category_name}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-md-9 catagory-btn">
-                                <ul>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                    <li class="wow fadeInDown" data-wow-delay="400ms">
-                                        <a href="#">
-                                            <img src="assets/images/resturent-btn.png" alt=""> Mobile Sales and Services
-                                        </a>
-                                    </li>
-                                </ul>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <ngb-tabset type="pills" orientation="horizontal" justify="center">
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-android"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
+                                                    <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
+                                                    <span>Shyamfuture tech LLp</span>
+                                                    <div class="discription">
+                                                        <h3>Description</h3>
+                                                        <p>
+                                                            Discover Mini Apps of 1000s of Businesses in one Mega App. No need to download individual apps for individual Businesses.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-apple"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
+                                                    <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
+                                                    <span>Shyamfuture tech LLp</span>
+                                                    <div class="discription">
+                                                        <h3>Description</h3>
+                                                        <p>
+                                                            Discover Mini Apps of 1000s of Businesses in one Mega App. No need to download individual apps for individual Businesses.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngb-tab>
+
+                                    </ngb-tabset>
+
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                                        <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Write Us</h3>
+                                        <form class="contact-form-outer">
+                                            <div class="row custom-input">
+                                                <div class="col-md-6">
+                                                    <div class="contact-form-textfield  upload-defolt">
+                                                        <!-- <input type="email" placeholder="Your Email" class="form-control paragraph-16"> -->
+                                                        <input type="file" name="imageUpload" id="" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="contact-form-textfield padding-bottom-30">
+                                                        <input type="text" placeholder="Your Name" class="form-control paragraph-16">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="contact-form-textfield padding-bottom-40">
+                                                        <textarea placeholder="Your Message" class="form-control paragraph-16"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <!-- <a class="button-setting button-setting-primary background-secondary text-color-white width-100 text-center" href="javascript:void(0);"
+                                            (click)="btnClickNav('create-app/step-two')">Next</a> -->
+                                                    <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
+                                                    <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <div class="container">
-                    <div class="background-white broder-grey min-height-box">
+                        </form>
+                    </mat-step>
+                    <mat-step>
                         <div class="row">
                             <div class="col-md-4">
                                 <ngb-tabset type="pills" orientation="horizontal" justify="center">
@@ -88,9 +120,10 @@
                                                 <span>Shyamfuture tech LLp</span>
                                                 <div class="discription">
                                                     <h3>Description</h3>
-                                                    <p>
-                                                        Discover Mini Apps of 1000s of Businesses in one Mega App. No need to download individual apps for individual Businesses.
-                                                    </p>
+                                                    <span>Shyamfuture tech LLp</span>
+                                                    <hr>
+                                                    <h3>Business Location</h3>
+                                                    <span>Shyamfuture tech LLp</span>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -105,9 +138,10 @@
                                                 <span>Shyamfuture tech LLp</span>
                                                 <div class="discription">
                                                     <h3>Description</h3>
-                                                    <p>
-                                                        Discover Mini Apps of 1000s of Businesses in one Mega App. No need to download individual apps for individual Businesses.
-                                                    </p>
+                                                    <span>Shyamfuture tech LLp</span>
+                                                    <hr>
+                                                    <h3>Business Location</h3>
+                                                    <span>Shyamfuture tech LLp</span>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -116,31 +150,40 @@
                                 </ngb-tabset>
 
                             </div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-8">
                                 <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Write Us</h3>
+                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 3</h3>
                                     <form class="contact-form-outer">
                                         <div class="row custom-input">
                                             <div class="col-md-6">
+                                                <div class="contact-form-textfield padding-bottom-30 ">
+                                                    <input type="text" placeholder="Owner Name" class="form-control paragraph-16">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 padding-bottom-30">
+                                                <label class="lebel-form">Upload Owner Photo:</label>
                                                 <div class="contact-form-textfield  upload-defolt">
+
                                                     <!-- <input type="email" placeholder="Your Email" class="form-control paragraph-16"> -->
                                                     <input type="file" name="imageUpload" id="" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="contact-form-textfield padding-bottom-30">
-                                                    <input type="text" placeholder="Your Name" class="form-control paragraph-16">
-                                                </div>
-                                            </div>
+                                                <div class="contact-form-textfield padding-bottom-30 ">
+                                                    <input type="text" placeholder="Owner Designation" class="form-control paragraph-16">
 
-                                            <div class="col-md-12">
-                                                <div class="contact-form-textfield padding-bottom-40">
-                                                    <textarea placeholder="Your Message" class="form-control paragraph-16"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="contact-form-textfield padding-bottom-30 map-btn">
+                                                    <input type="text" placeholder="Business Location" class="form-control paragraph-16">
+                                                    <a href="#">
+                                                        <i class="fa fa-map" aria-hidden="true"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <!-- <a class="button-setting button-setting-primary background-secondary text-color-white width-100 text-center" href="javascript:void(0);"
-                                                    (click)="btnClickNav('create-app/step-two')">Next</a> -->
                                                 <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
                                                 <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
                                             </div>
@@ -149,266 +192,166 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-            </form>
-        </mat-step>
-        <mat-step>
-            <div class="container">
-                <div class="background-white broder-grey min-height-box">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-android"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="discription">
-                                                <h3>Description</h3>
+                    </mat-step>
+                    <mat-step>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ngb-tabset type="pills" orientation="horizontal" justify="center">
+                                    <ngb-tab>
+                                        <ng-template ngbTabTitle>
+                                            <i class="fa fa-android"></i>
+                                        </ng-template>
+                                        <ng-template ngbTabContent>
+                                            <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
+                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
                                                 <span>Shyamfuture tech LLp</span>
-                                                <hr>
-                                                <h3>Business Location</h3>
+                                                <div class="busness-image">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-tab>
+                                    <ngb-tab>
+                                        <ng-template ngbTabTitle>
+                                            <i class="fa fa-apple"></i>
+                                        </ng-template>
+                                        <ng-template ngbTabContent>
+                                            <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
+                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
                                                 <span>Shyamfuture tech LLp</span>
+                                                <div class="busness-image">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-apple"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="discription">
-                                                <h3>Description</h3>
-                                                <span>Shyamfuture tech LLp</span>
-                                                <hr>
-                                                <h3>Business Location</h3>
-                                                <span>Shyamfuture tech LLp</span>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
+                                        </ng-template>
+                                    </ngb-tab>
 
-                            </ngb-tabset>
+                                </ngb-tabset>
 
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 3</h3>
-                                <form class="contact-form-outer">
-                                    <div class="row custom-input">
-                                        <div class="col-md-6">
-                                            <div class="contact-form-textfield padding-bottom-30 ">
-                                                <input type="text" placeholder="Owner Name" class="form-control paragraph-16">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 4</h3>
+                                    <form class="contact-form-outer">
+                                        <div class="row custom-input">
+                                            <div class="col-md-6 padding-bottom-30">
+                                                <label class="lebel-form">Upload Some Business Photo:</label>
+                                                <div class="contact-form-textfield  upload-defolt">
 
+                                                    <!-- <input type="email" placeholder="Your Email" class="form-control paragraph-16"> -->
+                                                    <input type="file" name="imageUpload" id="" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="lebel-form">Established In The Year:</label>
+                                                <div class="contact-form-textfield padding-bottom-30 ">
+                                                    <input type="text" placeholder="Ex:2018" class="form-control paragraph-16">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 padding-bottom-15 ">
+                                                <label class="lebel-form">Choose your free website URL:</label>
+                                                <div class="contact-form-textfield padding-bottom-15 ">
+                                                    <input type="text" value="shyamfuture.com/" class="form-control paragraph-16">
+
+                                                </div>
+                                                <div class="freelink">
+                                                    <a href="#">shyamfuture.com/Facebook
+                                                        <i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="#">shyamfuture.com/indus
+                                                        <i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="#">shyamfuture.com/indus
+                                                        <i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
+                                                <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 padding-bottom-30">
-                                            <label class="lebel-form">Upload Owner Photo:</label>
-                                            <div class="contact-form-textfield  upload-defolt">
-
-                                                <!-- <input type="email" placeholder="Your Email" class="form-control paragraph-16"> -->
-                                                <input type="file" name="imageUpload" id="" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="contact-form-textfield padding-bottom-30 ">
-                                                <input type="text" placeholder="Owner Designation" class="form-control paragraph-16">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="contact-form-textfield padding-bottom-30 map-btn">
-                                                <input type="text" placeholder="Business Location" class="form-control paragraph-16">
-                                                <a href="#">
-                                                    <i class="fa fa-map" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
-                                            <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </mat-step>
-        <mat-step>
-            <div class="container">
-                <div class="background-white broder-grey min-height-box">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-android"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="busness-image">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
+                    </mat-step>
+                    <mat-step>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ngb-tabset type="pills" orientation="horizontal" justify="center">
+                                    <ngb-tab>
+                                        <ng-template ngbTabTitle>
+                                            <i class="fa fa-android"></i>
+                                        </ng-template>
+                                        <ng-template ngbTabContent>
+                                            <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
+                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
+                                                <span>Shyamfuture tech LLp</span>
+                                                <div class="busness-image">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-apple"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="busness-image">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
+                                        </ng-template>
+                                    </ngb-tab>
+                                    <ngb-tab>
+                                        <ng-template ngbTabTitle>
+                                            <i class="fa fa-apple"></i>
+                                        </ng-template>
+                                        <ng-template ngbTabContent>
+                                            <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
+                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
+                                                <span>Shyamfuture tech LLp</span>
+                                                <div class="busness-image">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                    <img src="assets/images/product-image.jpg" alt="">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
+                                        </ng-template>
+                                    </ngb-tab>
 
-                            </ngb-tabset>
+                                </ngb-tabset>
 
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 4</h3>
-                                <form class="contact-form-outer">
-                                    <div class="row custom-input">
-                                        <div class="col-md-6 padding-bottom-30">
-                                            <label class="lebel-form">Upload Some Business Photo:</label>
-                                            <div class="contact-form-textfield  upload-defolt">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 5</h3>
+                                    <form class="contact-form-outer">
+                                        <div class="row custom-input">
+                                            <div class="col-md-6">
+                                                <label class="lebel-form">Validate 10 Digit Mobile Number:</label>
+                                                <div class="contact-form-textfield padding-bottom-30 ">
+                                                    <input type="text" value="+91" class="form-control paragraph-16">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="lebel-form">Your Email Address: </label>
+                                                <div class="contact-form-textfield padding-bottom-30 ">
+                                                    <input type="text" placeholder="shyamfuturetech@gmail.com" class="form-control paragraph-16">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
 
-                                                <!-- <input type="email" placeholder="Your Email" class="form-control paragraph-16"> -->
-                                                <input type="file" name="imageUpload" id="" />
+                                                <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
+                                                <button class="button-setting button-setting-primary background-secondary text-color-white text-center">Conform</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="lebel-form">Established In The Year:</label>
-                                            <div class="contact-form-textfield padding-bottom-30 ">
-                                                <input type="text" placeholder="Ex:2018" class="form-control paragraph-16">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 padding-bottom-15 ">
-                                            <label class="lebel-form">Choose your free website URL:</label>
-                                            <div class="contact-form-textfield padding-bottom-15 ">
-                                                <input type="text" value="shyamfuture.com/" class="form-control paragraph-16">
-
-                                            </div>
-                                            <div class="freelink">
-                                                <a href="#">shyamfuture.com/Facebook
-                                                    <i class="fa fa-link" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="#">shyamfuture.com/indus
-                                                    <i class="fa fa-link" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="#">shyamfuture.com/indus
-                                                    <i class="fa fa-link" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
-                                            <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
             </div>
-        </mat-step>
-        <mat-step>
-            <div class="container">
-                <div class="background-white broder-grey min-height-box">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-android"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="busness-image">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
-                                <ngb-tab>
-                                    <ng-template ngbTabTitle>
-                                        <i class="fa fa-apple"></i>
-                                    </ng-template>
-                                    <ng-template ngbTabContent>
-                                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                                            <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                            <span>Shyamfuture tech LLp</span>
-                                            <div class="busness-image">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                                <img src="assets/images/product-image.jpg" alt="">
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-tab>
-
-                            </ngb-tabset>
-
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 5</h3>
-                                <form class="contact-form-outer">
-                                    <div class="row custom-input">
-                                        <div class="col-md-6">
-                                            <label class="lebel-form">Validate 10 Digit Mobile Number:</label>
-                                            <div class="contact-form-textfield padding-bottom-30 ">
-                                                <input type="text" value="+91" class="form-control paragraph-16">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="lebel-form">Your Email Address: </label>
-                                            <div class="contact-form-textfield padding-bottom-30 ">
-                                                <input type="text" placeholder="shyamfuturetech@gmail.com" class="form-control paragraph-16">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-
-                                            <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
-                                            <button class="button-setting button-setting-primary background-secondary text-color-white text-center">Conform</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </mat-step>
-    </mat-horizontal-stepper>
+        </div>
+    </div>
 </section>
 
 <!-- Sponsors Slider Section End -->
