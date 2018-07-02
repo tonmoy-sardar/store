@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-create-app',
@@ -18,6 +19,8 @@ export class CreateAppComponent implements OnInit {
   stepOne: FormGroup;
   stepTwo: FormGroup;
   stepThree: FormGroup;
+  stepFour: FormGroup;
+  stepFive: FormGroup;
   category_list: any = [];
   storeCreateAppStep;
 
@@ -39,17 +42,32 @@ export class CreateAppComponent implements OnInit {
     business_locatioon: '',
   }
 
+  setp_four_data = {
+    business_photos: [],
+    established_year: '',
+    website_url: ''
+  }
+
+  setp_five_data = {
+    mobile: '',
+    email: ''
+  }
+
+  base_url: string;
+
   constructor(
     private router: Router,
     private _formBuilder: FormBuilder,
     private createAppService: CreateAppService,
     private cd: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private platformLocation: PlatformLocation
   ) { }
 
   ngOnInit() {
-    alert("okk");
     this.storeCreateAppStep = 0;
+    this.base_url = (this.platformLocation as any).location.origin;
+
     this.stepOne = this._formBuilder.group({
       session_id: ['', Validators.required],
       app_category: ['', Validators.required]
@@ -67,11 +85,35 @@ export class CreateAppComponent implements OnInit {
       owner_designation: ['', Validators.required],
       business_locatioon: ['', Validators.required]
     });
+
+    this.stepFour = this._formBuilder.group({
+      business_photos: [null, Validators.required],
+      established_year: ['', Validators.required],
+      website_url: ['', Validators.required]
+    });
+
+    this.stepFive = this._formBuilder.group({
+      email: ['', [
+        Validators.required,
+        Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
+      ]],
+      mobile: ['', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(12)
+      ]],
+    });
+
     this.stepOne.patchValue({
       session_id: localStorage.getItem('storeSessionID')
     });
+
     this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
-    // this.stepper.selectedIndex = 3;
+    
+    if(localStorage.getItem('storeCreateAppStep')){
+      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
+    }
+
     this.getCategoryList();
   }
 
@@ -142,11 +184,30 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
+  businessPhotoChange(event) {
+    if (event.target.files && event.target.files.length) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.setp_four_data.business_photos.push(event.target.result)
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+      // need to run CD since file load runs outside of zone
+      this.cd.markForCheck();
+
+    }
+  }
+
   categorySelect(id) {
     this.setp_one_data.app_category = id
     this.stepOne.patchValue({
       app_category: id
     });
+  }
+
+  getWebUrl(url: string) {
+    this.setp_four_data.website_url = url;
   }
 
   submitStepOne() {
@@ -230,5 +291,24 @@ export class CreateAppComponent implements OnInit {
   goToStep(value)
   {
     this.storeCreateAppStep =  value - 1;
+  }
+
+  submitStepFour() {
+    if (this.stepFour.valid) {
+      this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      
+    }
+    else {
+      this.markFormGroupTouched(this.stepFour)
+    }
+  }
+
+  submitStepFive() {
+    if (this.stepFive.valid) {
+      
+    }
+    else {
+      this.markFormGroupTouched(this.stepFive)
+    }
   }
 }
