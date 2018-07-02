@@ -13,4 +13,14 @@ export class CreateAppService {
     return this.http.get(environment.apiEndpoint + 'all_categories/')
   }
 
+  createTempApp(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'create_app/', data)
+  }
+
+  logoUploadSection(data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'logo_upload/'+data.id+'/', data)
+  }
+
+ 
+
 }
