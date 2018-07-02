@@ -22,6 +22,7 @@ export class CreateAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   category_list: any = [];
+  storeCreateAppStep;
 
   setp_one_data = {
     session_id: '',
@@ -64,6 +65,7 @@ export class CreateAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.storeCreateAppStep = 0;
     this.base_url = (this.platformLocation as any).location.origin;
 
     this.stepOne = this._formBuilder.group({
@@ -108,8 +110,8 @@ export class CreateAppComponent implements OnInit {
 
     this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
     
-    if(localStorage.getItem('stepper_step')){
-      this.stepper.selectedIndex = +localStorage.getItem('stepper_step')
+    if(localStorage.getItem('storeCreateAppStep')){
+      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
     }
 
     this.getCategoryList();
@@ -210,8 +212,55 @@ export class CreateAppComponent implements OnInit {
 
   submitStepOne() {
     if (this.stepOne.valid) {
-      this.stepper.selectedIndex = 1      
-      localStorage.setItem('stepper_step', this.stepper.selectedIndex.toString());
+
+      this.storeCreateAppStep =  this.storeCreateAppStep +1;
+
+      // if(this.storeCreateAppStep>0)
+      // {
+      //   this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      //   localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+      //   let data = {
+      //     session_id:this.stepOne.value.session_id,
+      //     app_category: [{app_category:this.stepOne.value.app_category}]
+      //   }
+      
+      //   this.createAppService.createTempApp(data).subscribe(
+      //     response => {
+      //       this.toastr.success('Success', '', {
+      //         timeOut: 3000,
+      //       });
+          
+      //     },
+      //     error => {
+      //       this.toastr.error('Something went wrong', '', {
+      //         timeOut: 3000,
+      //       });
+      //     }
+      //   );
+      // }
+      // else
+      // {
+      //   this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      //   localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+      //   let data = {
+      //     session_id:this.stepOne.value.session_id,
+      //     app_category: [{app_category:this.stepOne.value.app_category}]
+      //   }
+      
+      //   this.createAppService.createTempApp(data).subscribe(
+      //     response => {
+      //       this.toastr.success('Success', '', {
+      //         timeOut: 3000,
+      //       });
+          
+      //     },
+      //     error => {
+      //       this.toastr.error('Something went wrong', '', {
+      //         timeOut: 3000,
+      //       });
+      //     }
+      //   );
+      // }
     }
     else {
       this.toastr.error('Please select a category', '', {
@@ -223,8 +272,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepTwo() {
     if (this.stepTwo.valid) {
-      this.stepper.selectedIndex = 2      
-      localStorage.setItem('stepper_step', this.stepper.selectedIndex.toString());
+      this.storeCreateAppStep =  this.storeCreateAppStep +1;
     }
     else {
       this.markFormGroupTouched(this.stepTwo)
@@ -233,18 +281,22 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      this.stepper.selectedIndex = 3      
-      localStorage.setItem('stepper_step', this.stepper.selectedIndex.toString());
+      this.storeCreateAppStep =  this.storeCreateAppStep +1;
     }
     else {
       this.markFormGroupTouched(this.stepThree)
     }
   }
 
+  goToStep(value)
+  {
+    this.storeCreateAppStep =  value - 1;
+  }
+
   submitStepFour() {
     if (this.stepFour.valid) {
-      this.stepper.selectedIndex = 4      
-      localStorage.setItem('stepper_step', this.stepper.selectedIndex.toString());
+      this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      
     }
     else {
       this.markFormGroupTouched(this.stepFour)
