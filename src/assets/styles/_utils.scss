@@ -2319,21 +2319,24 @@ p {
     background: linear-gradient(3deg, rgba(255, 255, 255, 1) 51%, rgba(255, 255, 255, 0) 100%)
 }
 
-.custom-input input[type="file"] {
+.custom-input input[type="file"],.custom-input input[type="hidden"] {
     background: red;
     opacity: 0;
-    height: 108px;
+    height: 100%;
     cursor: pointer;
     width: 100%;
 }
 
 .custom-input .upload-defolt {
     background: url(../images/upload-image.png) no-repeat center center;
-    border: 2px solid #bababa;
+    border: 1px solid #bababa;
     border-radius: 8px;
     background-size: cover;
+    height: 124px;
 }
-
+.custom-input .upload-defolt.is-invalid{
+    border-color: #e74c3c;
+}
 .mobo-custom .discription h3 {
     font-size: 16px;
     color: #000;
