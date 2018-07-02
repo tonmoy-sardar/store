@@ -206,158 +206,181 @@
                             </div>
                         </form>
                     </mat-step>
-                    <mat-step>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                                    <ngb-tab>
-                                        <ng-template ngbTabTitle>
-                                            <i class="fa fa-android"></i>
-                                        </ng-template>
-                                        <ng-template ngbTabContent>
-                                            <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                                <span>Shyamfuture tech LLp</span>
-                                                <div class="busness-image">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
+                    <mat-step [stepControl]="stepFour">
+                        <form [formGroup]="stepFour" novalidate>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <ngb-tabset type="pills" orientation="horizontal" justify="center">
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-android"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
+                                                    <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
+                                                    <span>{{setp_two_data.business_name}}</span>
+                                                    <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
+                                                        <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab>
-                                        <ng-template ngbTabTitle>
-                                            <i class="fa fa-apple"></i>
-                                        </ng-template>
-                                        <ng-template ngbTabContent>
-                                            <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                                <span>Shyamfuture tech LLp</span>
-                                                <div class="busness-image">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-apple"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
+                                                    <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
+                                                    <span>{{setp_two_data.business_name}}</span>
+                                                    <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
+                                                        <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
+                                            </ng-template>
+                                        </ngb-tab>
 
-                                </ngb-tabset>
+                                    </ngb-tabset>
 
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 4</h3>
-                                    <form class="contact-form-outer">
-                                        <div class="row custom-input">
-                                            <div class="col-md-6 padding-bottom-30">
-                                                <label class="lebel-form">Upload Some Business Photo:</label>
-                                                <div class="contact-form-textfield  upload-defolt">
-                                                    <input type="file" name="imageUpload" id="" />
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                                        <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 4</h3>
+                                        <div class="contact-form-outer">
+                                            <div class="row custom-input">
+                                                <div class="col-md-6 padding-bottom-30">
+                                                    <label class="lebel-form">Upload Some Business Photo:</label>
+                                                    <div class="contact-form-textfield form-control  upload-defolt" [ngClass]="displayFieldCss(stepFour,'business_photos')">
+                                                        <input type="file" name="gallery" formControlName="business_photos" multiple (change)="businessPhotoChange($event)" />
+                                                    </div>
+                                                    <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'business_photos')">
+                                                        Please select Business Photo
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="lebel-form">Established In The Year:</label>
-                                                <div class="contact-form-textfield padding-bottom-30 ">
-                                                    <input type="text" placeholder="Ex:2018" class="form-control paragraph-16">
+                                                <div class="col-md-6">
+                                                    <label class="lebel-form">Established In The Year:</label>
+                                                    <div class="contact-form-textfield padding-bottom-30 ">
+                                                        <input type="text" placeholder="Ex:2018" class="form-control paragraph-16" formControlName="established_year" [ngClass]="displayFieldCss(stepFour,'established_year')"
+                                                            [(ngModel)]="setp_four_data.established_year">
+                                                        <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'established_year')">
+                                                            Please Enter Established Year
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12 padding-bottom-15 ">
-                                                <label class="lebel-form">Choose your free website URL:</label>
-                                                <div class="contact-form-textfield padding-bottom-15 ">
-                                                    <input type="text" value="shyamfuture.com/" class="form-control paragraph-16">
-
+                                                <div class="col-md-12 padding-bottom-15 ">
+                                                    <label class="lebel-form">Choose your free website URL:</label>
+                                                    <div class="contact-form-textfield padding-bottom-15 ">
+                                                        <input type="text" class="form-control paragraph-16" formControlName="website_url" [ngClass]="displayFieldCss(stepFour,'website_url')"
+                                                            [(ngModel)]="setp_four_data.website_url">
+                                                        <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'website_url')">
+                                                            Choose your free website URL
+                                                        </div>
+                                                    </div>
+                                                    <div class="freelink">
+                                                        <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_two_data.business_name)">{{base_url}}/{{setp_two_data.business_name}}
+                                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_three_data.business_locatioon)">{{base_url}}/{{setp_three_data.business_locatioon}}
+                                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_three_data.business_locatioon+'/'+setp_two_data.business_name)">{{base_url}}/{{setp_three_data.business_locatioon}}/{{setp_two_data.business_name}}
+                                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="freelink">
-                                                    <a href="#">shyamfuture.com/Facebook
-                                                        <i class="fa fa-link" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="#">shyamfuture.com/indus
-                                                        <i class="fa fa-link" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="#">shyamfuture.com/indus
-                                                        <i class="fa fa-link" aria-hidden="true"></i>
-                                                    </a>
+                                                <div class="col-md-12">
+                                                    <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
+                                                    <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepFour()">Next</button>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
-                                                <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center">Next</button>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </mat-step>
-                    <mat-step>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                                    <ngb-tab>
-                                        <ng-template ngbTabTitle>
-                                            <i class="fa fa-android"></i>
-                                        </ng-template>
-                                        <ng-template ngbTabContent>
-                                            <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                                <span>Shyamfuture tech LLp</span>
-                                                <div class="busness-image">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
+                    <mat-step [stepControl]="stepFive">
+                        <form [formGroup]="stepFive" novalidate>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <ngb-tabset type="pills" orientation="horizontal" justify="center">
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-android"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
+                                                    <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
+                                                    <span>{{setp_two_data.business_name}}</span>
+                                                    <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
+                                                        <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab>
-                                        <ng-template ngbTabTitle>
-                                            <i class="fa fa-apple"></i>
-                                        </ng-template>
-                                        <ng-template ngbTabContent>
-                                            <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                                                <img class="img-fluid" src="assets/images/defolt-logo.png" alt="">
-                                                <span>Shyamfuture tech LLp</span>
-                                                <div class="busness-image">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
-                                                    <img src="assets/images/product-image.jpg" alt="">
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab>
+                                            <ng-template ngbTabTitle>
+                                                <i class="fa fa-apple"></i>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                                <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
+                                                    <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
+                                                    <span>{{setp_two_data.business_name}}</span>
+                                                    <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
+                                                        <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-template>
-                                    </ngb-tab>
+                                            </ng-template>
+                                        </ngb-tab>
 
-                                </ngb-tabset>
+                                    </ngb-tabset>
 
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 5</h3>
-                                    <form class="contact-form-outer">
-                                        <div class="row custom-input">
-                                            <div class="col-md-6">
-                                                <label class="lebel-form">Validate 10 Digit Mobile Number:</label>
-                                                <div class="contact-form-textfield padding-bottom-30 ">
-                                                    <input type="text" value="+91" class="form-control paragraph-16">
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                                        <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 5</h3>
+                                        <div class="contact-form-outer">
+                                            <div class="row custom-input">
+                                                <div class="col-md-6">
+                                                    <label class="lebel-form">Validate 10 Digit Mobile Number:</label>
+                                                    <div class="contact-form-textfield padding-bottom-30 ">
+                                                        <input type="text" appOnlyNumber class="form-control paragraph-16" placeholder="Mobile Number" formControlName="mobile"
+                                                            [ngClass]="displayFieldCss(stepFive,'mobile')" [(ngModel)]="setp_five_data.mobile">
+                                                        <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('minlength') && !stepFive.get('mobile').hasError('required')">
+                                                            Please enter at least 10 digit
+                                                        </div>
+                                                        <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('maxlength') && !stepFive.get('mobile').hasError('required')">
+                                                            Phone number should be less then 13 digit
+                                                        </div>
+                                                        <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('required')">
+                                                            Please enter phone
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="lebel-form">Your Email Address: </label>
-                                                <div class="contact-form-textfield padding-bottom-30 ">
-                                                    <input type="text" placeholder="shyamfuturetech@gmail.com" class="form-control paragraph-16">
+                                                <div class="col-md-6">
+                                                    <label class="lebel-form">Your Email Address: </label>
+                                                    <div class="contact-form-textfield padding-bottom-30 ">
+                                                        <input type="text" placeholder="shyamfuturetech@gmail.com" class="form-control paragraph-16" formControlName="email"
+                                                            [ngClass]="displayFieldCss(stepFive,'email')" [(ngModel)]="setp_five_data.email">
+                                                        <div class="invalid-feedback" *ngIf="stepFive.get('email').touched && stepFive.get('email').hasError('pattern')">
+                                                            Please enter a valid email address
+                                                        </div>
+                                                        <div class="invalid-feedback" *ngIf="stepFive.get('email').touched && stepFive.get('email').hasError('required')">
+                                                            Please enter email address
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-12">
+                                                <div class="col-md-12">
 
-                                                <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
-                                                <button class="button-setting button-setting-primary background-secondary text-color-white text-center">Conform</button>
+                                                    <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center">Back</button>
+                                                    <button class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepFive()">Conform</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </mat-step>
                 </mat-horizontal-stepper>
             </div>
