@@ -1930,13 +1930,13 @@ p {
     max-width: 50%;
 }
 
-.catagory-btn li a:hover img {
+.catagory-btn li a:hover img,.catagory-btn li a.selected img {
     -webkit-filter: grayscale(0%);
     /* Safari 6.0 - 9.0 */
     filter: grayscale(0%);
 }
 
-.catagory-btn li a:hover {
+.catagory-btn li a:hover,.catagory-btn li a.selected {
     box-shadow: 0 9px 18px 0 rgba(0, 0, 0, 0.12);
     cursor: pointer;
     transition-duration: 200ms;
