@@ -72,7 +72,7 @@
                                             <div class="row custom-input">
                                                 <div class="col-md-6">
                                                     <div class="contact-form-textfield  upload-defolt form-control" [ngClass]="displayFieldCss(stepTwo,'logo')">
-                                                        <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event)" />
+                                                        <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" />
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="isFieldValid(stepTwo,'logo')">
                                                         Please select logo
@@ -168,7 +168,7 @@
                                                 <div class="col-md-6 padding-bottom-30">
                                                     <label class="lebel-form">Upload Owner Photo:</label>
                                                     <div class="contact-form-textfield form-control upload-defolt" [ngClass]="displayFieldCss(stepThree,'owner_logo')">
-                                                        <input type="file" name="imageUpload" formControlName="owner_logo" (change)="ownerLogoChange($event)" />
+                                                        <input type="file" name="imageUpload" formControlName="owner_logo" (change)="ownerLogoChange($event.target.files)" />
                                                     </div>
                                                     <div class="invalid-feedback" *ngIf="isFieldValid(stepThree,'owner_logo')">
                                                         Please select Owner Photo
