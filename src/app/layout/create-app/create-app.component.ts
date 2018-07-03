@@ -22,6 +22,10 @@ export class CreateAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   category_list: any = [];
+
+  logoToUpload: File  = null;
+  ownerToUpload: File = null;
+  
   storeCreateAppStep;
 
   setp_one_data = {
@@ -30,7 +34,7 @@ export class CreateAppComponent implements OnInit {
   }
 
   setp_two_data = {
-    logo: '',
+    logo:'',
     business_name: '',
     business_description: '',
   }
@@ -74,7 +78,7 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepTwo = this._formBuilder.group({
-      logo: [null, Validators.required],
+      logo: ['', Validators.required],
       business_name: ['', Validators.required],
       business_description: ['', Validators.required]
     });
@@ -152,10 +156,11 @@ export class CreateAppComponent implements OnInit {
     });
   }
 
-  appLogoChange(event) {
+  appLogoChange(logofile: FileList) {
     const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
+    if (logofile && logofile.length) {
+      const file = logofile.item(0);
+      this.logoToUpload = file;
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.setp_two_data.logo = event.target.result;
@@ -168,10 +173,11 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  ownerLogoChange(event) {
+  ownerLogoChange(ownerfile: FileList) {
     const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
+    if (ownerfile && ownerfile.length) {
+      const file = ownerfile.item(0);
+      this.ownerToUpload = file;
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.setp_three_data.owner_logo = event.target.result;
@@ -272,13 +278,9 @@ export class CreateAppComponent implements OnInit {
 
   submitStepTwo() {
     if (this.stepTwo.valid) {
-
-      console.log(this.stepTwo.value);
       this.storeCreateAppStep =  this.storeCreateAppStep +1;
       localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
-    
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'),this.stepTwo.value).subscribe(
+      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'),this.logoToUpload,this.stepTwo.value).subscribe(
         response => {
           this.toastr.success('Success', '', {
             timeOut: 3000,
@@ -299,7 +301,31 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      
+
+      let data = {
+        session_id:localStorage.getItem('storeSessionID'),
+        username: this.stepThree.value.owner_name,
+        user_locality:this.stepThree.value.business_locatioon,
+        user_designation: this.stepThree.value.owner_designation,
+        users_pic: this.stepThree.value.owner_logo,
+      }
+      this.createAppService.createTempUser(this.ownerToUpload,data).subscribe(
+        response => {
+          this.storeCreateAppStep =  this.storeCreateAppStep +1;
+          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+        
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
     }
     else {
       this.markFormGroupTouched(this.stepThree)
@@ -309,6 +335,7 @@ export class CreateAppComponent implements OnInit {
   goToStep(value)
   {
     this.storeCreateAppStep =  value - 1;
+    localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
   submitStepFour() {

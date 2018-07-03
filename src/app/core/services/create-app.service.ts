@@ -17,9 +17,56 @@ export class CreateAppService {
     return this.http.post(environment.apiEndpoint + 'create_app/', data)
   }
 
-  logoUploadSection(id,data): Observable<any> {
-    return this.http.put(environment.apiEndpoint + 'logo_upload/'+id+'/', data)
+  logoUploadSection(id,logoToUpload,data): Observable<any> {
+    const formData: FormData = new FormData();
+    let logo;
+    if (data) {
+      for(let key in data){
+          if (key == 'logo'){
+            logo = data[key]
+          }
+        formData.append(key, data[key])
+      }
+    }
+
+    if (logoToUpload){
+      if (!logo){
+         logo = logoToUpload.name
+      }
+      formData.append('logo', logoToUpload, logo);
+    }
+    console.log(formData);
+
+    return this.http.put(environment.apiEndpoint + 'logo_upload/'+id+'/', formData)
+
   }
+
+  createTempUser(ownerToUpload,data): Observable<any> {
+    const formData: FormData = new FormData();
+    let users_pic;
+    if (data) {
+      for(let key in data){
+          if (key == 'users_pic'){
+            users_pic = data[key]
+          }
+       // formData.append(key, data[key])
+      }
+    }
+
+    if (ownerToUpload){
+      if (!users_pic){
+        users_pic = ownerToUpload.name
+      }
+      formData.append('users_pic', ownerToUpload, users_pic);
+    }
+    
+    console.log(formData);
+
+    return this.http.put(environment.apiEndpoint + 'create_tempuser/', formData)
+
+  }
+
+  
 
  
 
