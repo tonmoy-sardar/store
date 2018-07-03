@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { AppStoreRoutingModule } from './app-store-routing.module';
 import { AppStoreComponent } from './app-store.component';
+import { EditAppComponent } from './edit-app/edit-app.component';
 
 // core
 import { CoreModule } from "../../core/core.module";
+
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import { CoreModule } from "../../core/core.module";
     AppStoreRoutingModule,
     CoreModule
   ],
-  declarations: [AppStoreComponent]
+  declarations: [AppStoreComponent, EditAppComponent]
 })
 export class AppStoreModule { }
