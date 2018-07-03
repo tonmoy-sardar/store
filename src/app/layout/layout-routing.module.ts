@@ -4,11 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
+  { path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
   {
     path: '',
     component: LayoutComponent,  
     children: [
-      { path: '', loadChildren: './home/home.module#HomeModule' },
       { path: 'home', loadChildren: './home/home.module#HomeModule' },
       { path: 'create-app', loadChildren: './create-app/create-app.module#CreateAppModule' },
     ]

@@ -3,13 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
+  { path: '',
+    redirectTo: '/dashboard/app-store',
+    pathMatch: 'full'
+  },
   {
     path: '',
-    component: DashboardComponent,  
+    component: DashboardComponent,
     children: [
-      
+      { path: 'app-store', loadChildren: './app-store/app-store.module#AppStoreModule' },
+      { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' }
     ]
-  }
+  }  
 ];
 
 @NgModule({
