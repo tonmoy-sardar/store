@@ -3456,8 +3456,12 @@ p {
 .blog-detail-contact-form {
     margin-top: 30px;
 }
-
-
+.full_width { display:block; width: 100%;  }
+.popup_wrapper .mat-dialog-container { border-radius: 6px; }
+.popup_wrapper input {     background: #F5F5F5; padding: 10px; }
+.popup_wrapper mat-error { text-align: right;  }
+.popup_wrapper .mat-form-field-label { top: 25px; }
+ 
 /* Large Devices Having Width > 1600px */
 
 @media only screen and (min-width: 1600px) {

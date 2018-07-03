@@ -11,9 +11,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
   isLoggedin: boolean;
+  user_name: string;
   ngOnInit() {
-    if(localStorage.getItem('isLoggedin')){
-      this.isLoggedin = true
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName')
     }
   }
 
@@ -25,7 +27,8 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  logout(){
+  logout() {
+    this.isLoggedin = false
     localStorage.removeItem('isLoggedin')
   }
 

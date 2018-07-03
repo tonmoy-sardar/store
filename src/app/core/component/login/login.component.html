@@ -1,8 +1,7 @@
-<div class="login_modal">
-  <a class="modal_close" (click)="modalClose()">
-    <i class="fa fa-times" aria-hidden="true"></i>
-  </a>
-  <h5>Login</h5>
+<div class="login_modal ">
+ 
+  <a class="close"   (click)="modalClose()">×</a>
+  <h5 class="text-color-secondary text-center">Login</h5>
   <form class="login_form" [formGroup]="form" novalidate>
     <div class="full_width">
       <mat-form-field class="example-full-width full_width">
@@ -13,7 +12,7 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="full_width">
+    <div class="full_width padding-bottom-10">
       <mat-form-field class="example-full-width full_width">
         <input type="password" matInput class="form-control" placeholder="Password" formControlName="password" name="password">
         <mat-error *ngIf="form.get('password').touched && form.get('password').hasError('required')">
@@ -22,8 +21,12 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="form-group">
-      <button class="btn btn-default" (click)="onSubmit()">Login</button>
+    <div class="full_width">
+      <button class=" button-setting background-secondary button-setting-primary text-color-white btn btn-default" (click)="onSubmit()">Login</button>
     </div>
-  </form>
+  </form> 
+
+
+
+
 </div>
