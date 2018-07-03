@@ -34,7 +34,18 @@
             <a class="nav-link scroll" href="javascript:void(0)" (click)="openLogin()">Login</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedin">
-            <a class="nav-link scroll" href="javascript:void(0)" (click)="logout()">Logout</a>
+            <a class="nav-link scroll" href="javascript:void(0)">{{user_name}}</a>
+            <ul>
+              <li>
+                <a class="nav-link scroll" href="javascript:void(0)" [routerLink]="['/dashboard/app-store']">Dashboard</a>
+              </li>
+              <li>
+                <a class="nav-link scroll" href="javascript:void(0)" [routerLink]="['/profile']">Profile</a>
+              </li>
+              <li>
+                <a class="nav-link scroll" href="javascript:void(0)" (click)="logout()">Logout</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -68,12 +79,6 @@
           </li>
           <li>
             <a class="scroll" href="#contact-form-section">contact us</a>
-          </li>
-          <li *ngIf="!isLoggedin">
-            <a class="scroll" href="javascript:void(0)" (click)="openLogin()">Login</a>
-          </li>
-          <li *ngIf="isLoggedin">
-            <a class="scroll" href="javascript:void(0)" (click)="logout()">Logout</a>
           </li>
         </ul>
       </nav>

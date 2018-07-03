@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { LoginService } from '../../services/login.service';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  @Output() myEvent = new EventEmitter();
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private loginService: LoginService,
@@ -42,6 +44,13 @@ export class LoginComponent implements OnInit {
             timeOut: 3000,
           });
           localStorage.setItem('isLoggedin', 'true');
+          localStorage.setItem('isLoggedin', 'true');
+          localStorage.setItem('logedUserEmail', response.email);
+          localStorage.setItem('logedUserToken', response.token);
+          localStorage.setItem('logedUserUserId', response.user_id);
+          localStorage.setItem('logedUserUserName', response.username);
+          this.dialogRef.close();
+          this.myEvent.emit()
           this.router.navigateByUrl('/dashboard');
         },
         error => {
