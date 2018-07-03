@@ -213,54 +213,54 @@ export class CreateAppComponent implements OnInit {
   submitStepOne() {
     if (this.stepOne.valid) {
 
-      this.storeCreateAppStep =  this.storeCreateAppStep +1;
-
-      // if(this.storeCreateAppStep>0)
-      // {
-      //   this.storeCreateAppStep =  this.storeCreateAppStep +1;
-      //   localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      //   let data = {
-      //     session_id:this.stepOne.value.session_id,
-      //     app_category: [{app_category:this.stepOne.value.app_category}]
-      //   }
+      if(localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID'))
+      {
+        this.storeCreateAppStep =  this.storeCreateAppStep +1;
+        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+        let data = {
+          session_id:this.stepOne.value.session_id,
+          app_category: [{app_category:this.stepOne.value.app_category}]
+        }
       
-      //   this.createAppService.createTempApp(data).subscribe(
-      //     response => {
-      //       this.toastr.success('Success', '', {
-      //         timeOut: 3000,
-      //       });
+        this.createAppService.createTempApp(data).subscribe(
+          response => {
+           
+            this.toastr.success('Success', '', {
+              timeOut: 3000,
+            });
           
-      //     },
-      //     error => {
-      //       this.toastr.error('Something went wrong', '', {
-      //         timeOut: 3000,
-      //       });
-      //     }
-      //   );
-      // }
-      // else
-      // {
-      //   this.storeCreateAppStep =  this.storeCreateAppStep +1;
-      //   localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      //   let data = {
-      //     session_id:this.stepOne.value.session_id,
-      //     app_category: [{app_category:this.stepOne.value.app_category}]
-      //   }
+          },
+          error => {
+            this.toastr.error('Something went wrong', '', {
+              timeOut: 3000,
+            });
+          }
+        );
+      }
+      else
+      {
+        this.storeCreateAppStep =  this.storeCreateAppStep +1;
+        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+        let data = {
+          session_id:this.stepOne.value.session_id,
+          app_category: [{app_category:this.stepOne.value.app_category}]
+        }
       
-      //   this.createAppService.createTempApp(data).subscribe(
-      //     response => {
-      //       this.toastr.success('Success', '', {
-      //         timeOut: 3000,
-      //       });
+        this.createAppService.createTempApp(data).subscribe(
+          response => {
+            localStorage.setItem('storeCreateAppID', response.id);
+            this.toastr.success('Success', '', {
+              timeOut: 3000,
+            });
           
-      //     },
-      //     error => {
-      //       this.toastr.error('Something went wrong', '', {
-      //         timeOut: 3000,
-      //       });
-      //     }
-      //   );
-      // }
+          },
+          error => {
+            this.toastr.error('Something went wrong', '', {
+              timeOut: 3000,
+            });
+          }
+        );
+      }
     }
     else {
       this.toastr.error('Please select a category', '', {
@@ -272,7 +272,25 @@ export class CreateAppComponent implements OnInit {
 
   submitStepTwo() {
     if (this.stepTwo.valid) {
+
+      console.log(this.stepTwo.value);
       this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+    
+      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'),this.stepTwo.value).subscribe(
+        response => {
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+        
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
     }
     else {
       this.markFormGroupTouched(this.stepTwo)
