@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { HeaderComponent } from './component/header/header/header.component';
-import { FooterComponent } from './component/footer/footer/footer.component';
+import { HeaderComponent } from './component/header/header.component';
+import { FooterComponent } from './component/footer/footer.component';
 import { OnlyNumberDirective } from './directive/only-number.directive';
 
 //----------------Material----------------//
@@ -23,6 +23,10 @@ import {
 //----------------Services----------------//
 import { LoginService } from './services/login.service';
 import { CreateAppService } from './services/create-app.service';
+
+// guard
+import { AuthGuard } from './guard/auth.guard';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
   imports: [
@@ -46,7 +50,7 @@ import { CreateAppService } from './services/create-app.service';
   declarations: [
     HeaderComponent, 
     FooterComponent, 
-    OnlyNumberDirective
+    OnlyNumberDirective, LoginComponent
   ],
   providers: [],
   exports: [
@@ -66,6 +70,9 @@ import { CreateAppService } from './services/create-app.service';
      MatSliderModule,MatSlideToggleModule,MatSnackBarModule,MatSortModule,MatTableModule,
      MatTabsModule,MatToolbarModule,MatTooltipModule,
      //----------------Material----------------//
+  ],
+  entryComponents:[
+    LoginComponent
   ]
 })
 export class CoreModule {
@@ -73,6 +80,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
+        AuthGuard,
         LoginService,
         CreateAppService
       ]
