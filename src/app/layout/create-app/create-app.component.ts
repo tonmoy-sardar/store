@@ -23,9 +23,9 @@ export class CreateAppComponent implements OnInit {
   stepFive: FormGroup;
   category_list: any = [];
 
-  logoToUpload: File  = null;
+  logoToUpload: File = null;
   ownerToUpload: File = null;
-  
+
   storeCreateAppStep;
 
   setp_one_data = {
@@ -34,16 +34,16 @@ export class CreateAppComponent implements OnInit {
   }
 
   setp_two_data = {
-    logo:'',
+    logo: '',
     business_name: '',
     business_description: '',
   }
 
   setp_three_data = {
-    owner_name: '',
-    owner_logo: '',
-    owner_designation: '',
-    business_locatioon: '',
+    username: '',
+    users_pic: '',
+    user_designation: '',
+    user_locality: '',
   }
 
   setp_four_data = {
@@ -78,17 +78,18 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepTwo = this._formBuilder.group({
-      logo: ['', Validators.required],
+      logo: [null],
       business_name: ['', Validators.required],
       business_description: ['', Validators.required]
     });
 
     this.stepThree = this._formBuilder.group({
-      owner_name: ['', Validators.required],
-      owner_logo: [null, Validators.required],
-      owner_designation: ['', Validators.required],
-      business_locatioon: ['', Validators.required]
+      username: ['', Validators.required],
+      users_pic: [null, Validators.required],
+      user_designation: ['', Validators.required],
+      user_locality: ['', Validators.required]
     });
+
 
     this.stepFour = this._formBuilder.group({
       business_photos: [null, Validators.required],
@@ -113,13 +114,49 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
-    
-    if(localStorage.getItem('storeCreateAppStep')){
-      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
+
+    if (localStorage.getItem('storeCreateAppStep')) {
+      // this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
     }
 
-    this.getCategoryList();
+    this.stepper.selectedIndex = 0
+
+    if (localStorage.getItem('storeCreateAppID')) {
+      this.getLocalAppDetails((localStorage.getItem('storeCreateAppID')));
+    }
+
+    //this.getCategoryList();
   }
+
+  getLocalAppDetails(id) {
+    this.createAppService.getLocalAppDetails(id).subscribe(
+      (data: any[]) => {
+        console.log(data);
+
+
+        this.setp_one_data.app_category = data[0].app_category[0].app_category;
+        this.stepOne.patchValue({
+          app_category: data[0].app_category[0].app_category
+        });
+
+        this.setp_two_data.logo = data[0].logo;
+        this.setp_two_data.business_name = data[0].business_name;
+        this.setp_two_data.business_description = data[0].business_description;
+
+        // = {
+        // logo:data.logo,
+        // business_name: '',
+        // business_description: '',
+        // }
+      },
+      error => {
+
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  };
 
   btnClickNav(toNav) {
     this.router.navigateByUrl('/' + toNav);
@@ -180,7 +217,7 @@ export class CreateAppComponent implements OnInit {
       this.ownerToUpload = file;
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
-        this.setp_three_data.owner_logo = event.target.result;
+        this.setp_three_data.users_pic = event.target.result;
         // this.stepThree.patchValue({
         //   owner_logo: reader.result
         // });
@@ -219,22 +256,19 @@ export class CreateAppComponent implements OnInit {
   submitStepOne() {
     if (this.stepOne.valid) {
 
-      if(localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID'))
-      {
-        this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
+        this.storeCreateAppStep = this.storeCreateAppStep + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
-          session_id:this.stepOne.value.session_id,
-          app_category: [{app_category:this.stepOne.value.app_category}]
+          app_category: this.stepOne.value.app_category
         }
-      
-        this.createAppService.createTempApp(data).subscribe(
+
+        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'),data).subscribe(
           response => {
-           
             this.toastr.success('Success', '', {
               timeOut: 3000,
             });
-          
+
           },
           error => {
             this.toastr.error('Something went wrong', '', {
@@ -243,22 +277,21 @@ export class CreateAppComponent implements OnInit {
           }
         );
       }
-      else
-      {
-        this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      else {
+        this.storeCreateAppStep = this.storeCreateAppStep + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
-          session_id:this.stepOne.value.session_id,
-          app_category: [{app_category:this.stepOne.value.app_category}]
+          session_id: this.stepOne.value.session_id,
+          app_category: [{ app_category: this.stepOne.value.app_category }]
         }
-      
+
         this.createAppService.createTempApp(data).subscribe(
           response => {
             localStorage.setItem('storeCreateAppID', response.id);
             this.toastr.success('Success', '', {
               timeOut: 3000,
             });
-          
+
           },
           error => {
             this.toastr.error('Something went wrong', '', {
@@ -278,14 +311,14 @@ export class CreateAppComponent implements OnInit {
 
   submitStepTwo() {
     if (this.stepTwo.valid) {
-      this.storeCreateAppStep =  this.storeCreateAppStep +1;
+      this.storeCreateAppStep = this.storeCreateAppStep + 1;
       localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'),this.logoToUpload,this.stepTwo.value).subscribe(
+      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-        
+
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -301,24 +334,22 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      
-
       let data = {
-        session_id:localStorage.getItem('storeSessionID'),
+        session_id: localStorage.getItem('storeSessionID'),
         username: this.stepThree.value.owner_name,
-        user_locality:this.stepThree.value.business_locatioon,
+        user_locality: this.stepThree.value.business_locatioon,
         user_designation: this.stepThree.value.owner_designation,
         users_pic: this.stepThree.value.owner_logo,
       }
-      this.createAppService.createTempUser(this.ownerToUpload,data).subscribe(
+      this.createAppService.createLocalUser(localStorage.getItem('storeCreateAppID'), this.ownerToUpload, data).subscribe(
         response => {
-          this.storeCreateAppStep =  this.storeCreateAppStep +1;
+          this.storeCreateAppStep = this.storeCreateAppStep + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-        
+
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -332,16 +363,15 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  goToStep(value)
-  {
-    this.storeCreateAppStep =  value - 1;
+  goToStep(value) {
+    this.storeCreateAppStep = value - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
   submitStepFour() {
     if (this.stepFour.valid) {
-      this.storeCreateAppStep =  this.storeCreateAppStep +1;
-      
+      this.storeCreateAppStep = this.storeCreateAppStep + 1;
+
     }
     else {
       this.markFormGroupTouched(this.stepFour)
@@ -350,7 +380,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepFive() {
     if (this.stepFive.valid) {
-      
+
     }
     else {
       this.markFormGroupTouched(this.stepFive)

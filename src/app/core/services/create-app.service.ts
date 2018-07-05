@@ -17,6 +17,18 @@ export class CreateAppService {
     return this.http.post(environment.apiEndpoint + 'create_app/', data)
   }
 
+  editCategoryMaping(id,data): Observable<any> {
+    console.log(id);
+    console.log(data);
+    return this.http.put(environment.apiEndpoint + 'edit_category_maping/'+id+'/', data)
+  }
+
+  
+
+  getLocalAppDetails(id): Observable<any>{
+    return this.http.get(environment.apiEndpoint+'local_appmaster/'+id+'/')
+  }
+
   logoUploadSection(id,logoToUpload,data): Observable<any> {
     const formData: FormData = new FormData();
     let logo;
@@ -41,7 +53,10 @@ export class CreateAppService {
 
   }
 
-  createTempUser(ownerToUpload,data): Observable<any> {
+  createLocalUser(session_id,ownerToUpload,data): Observable<any> {
+    console.log(session_id);
+    console.log(ownerToUpload);
+    console.log(data);
     const formData: FormData = new FormData();
     let users_pic;
     if (data) {
@@ -60,9 +75,11 @@ export class CreateAppService {
       formData.append('users_pic', ownerToUpload, users_pic);
     }
     
+    formData.append('session_id', session_id);
+
     console.log(formData);
 
-    return this.http.put(environment.apiEndpoint + 'create_tempuser/', formData)
+    return this.http.post(environment.apiEndpoint + 'create_local_user/', formData)
 
   }
 
