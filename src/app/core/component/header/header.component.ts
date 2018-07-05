@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,7 +9,7 @@ import { LoginComponent } from '../login/login.component';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private router: Router) { }
   isLoggedin: boolean;
   user_name: string;
   ngOnInit() {
@@ -28,8 +28,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.isLoggedin = false
-    localStorage.removeItem('isLoggedin')
+    this.isLoggedin = false;
+    localStorage.removeItem('isLoggedin');
+    this.router.navigate(['/home']);
   }
 
 }
