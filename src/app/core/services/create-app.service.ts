@@ -18,15 +18,13 @@ export class CreateAppService {
   }
 
   editCategoryMaping(id,data): Observable<any> {
-    console.log(id);
-    console.log(data);
+    
     return this.http.put(environment.apiEndpoint + 'edit_category_maping/'+id+'/', data)
   }
 
-  
 
-  getLocalAppDetails(id): Observable<any>{
-    return this.http.get(environment.apiEndpoint+'local_appmaster/'+id+'/')
+  getTempAppDetails(id): Observable<any>{
+    return this.http.get(environment.apiEndpoint+'create_app_details/'+id+'/')
   }
 
   logoUploadSection(id,logoToUpload,data): Observable<any> {
@@ -47,44 +45,72 @@ export class CreateAppService {
       }
       formData.append('logo', logoToUpload, logo);
     }
-    console.log(formData);
+   
 
-    return this.http.put(environment.apiEndpoint + 'logo_upload/'+id+'/', formData)
+    return this.http.put(environment.apiEndpoint + 'create_app_step_one/'+id+'/', formData)
 
   }
 
   createLocalUser(session_id,ownerToUpload,data): Observable<any> {
-    console.log(session_id);
-    console.log(ownerToUpload);
-    console.log(data);
+    
     const formData: FormData = new FormData();
-    let users_pic;
+    let owner_pic;
     if (data) {
       for(let key in data){
-          if (key == 'users_pic'){
-            users_pic = data[key]
+          if (key == 'owner_pic'){
+            owner_pic = data[key]
           }
-       // formData.append(key, data[key])
+        formData.append(key, data[key])
       }
     }
 
     if (ownerToUpload){
-      if (!users_pic){
-        users_pic = ownerToUpload.name
+      if (!owner_pic){
+        owner_pic = ownerToUpload.name
       }
-      formData.append('users_pic', ownerToUpload, users_pic);
+      formData.append('owner_pic', ownerToUpload, owner_pic);
     }
     
     formData.append('session_id', session_id);
 
-    console.log(formData);
-
-    return this.http.post(environment.apiEndpoint + 'create_local_user/', formData)
+    return this.http.post(environment.apiEndpoint + 'create_app_step_two/', formData)
 
   }
 
   
+  uploadBusinessImages(app_id,appImageToUpload): Observable<any> {
+    
+    const formData: FormData = new FormData();
+    let app_images;
+    
 
+    if (appImageToUpload){
+      if (!app_images){
+        app_images = appImageToUpload.name
+      }
+      formData.append('app_images', appImageToUpload, app_images);
+    }
+    
+    formData.append('app', app_id);
+
+    return this.http.post(environment.apiEndpoint + 'create_app_step_three/', formData)
+
+  }
+
+  updateTempAppURL(data): Observable<any>{
+    return this.http.put(environment.apiEndpoint+'insert_app_url/'+data.id+'/',data)
+  }
+
+  getTempUserDetails(session_id): Observable<any>{
+    return this.http.get(environment.apiEndpoint+'app_user_details/'+session_id+'/')
+  }
+
+  createOriginalApp(data): Observable<any>{
+    return this.http.put(environment.apiEndpoint+'create_app_step_last/'+data.id+'/',data)
+  }
+  
+
+  
  
 
 }

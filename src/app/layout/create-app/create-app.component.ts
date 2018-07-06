@@ -22,11 +22,14 @@ export class CreateAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   category_list: any = [];
+  business_photo_arr = [];
 
   logoToUpload: File = null;
   ownerToUpload: File = null;
 
   storeCreateAppStep;
+
+  user_id;
 
   setp_one_data = {
     session_id: '',
@@ -37,24 +40,23 @@ export class CreateAppComponent implements OnInit {
     logo: '',
     business_name: '',
     business_description: '',
+    locality: ''
   }
 
   setp_three_data = {
-    username: '',
-    users_pic: '',
-    user_designation: '',
-    user_locality: '',
+    owner_name: '',
+    owner_pic: '',
+    owner_designation: ''
   }
 
   setp_four_data = {
     business_photos: [],
-    established_year: '',
     website_url: ''
   }
 
   setp_five_data = {
-    mobile: '',
-    email: ''
+    contact_no: '',
+    email_id: ''
   }
 
   base_url: string;
@@ -80,29 +82,28 @@ export class CreateAppComponent implements OnInit {
     this.stepTwo = this._formBuilder.group({
       logo: [null],
       business_name: ['', Validators.required],
-      business_description: ['', Validators.required]
+      business_description: [''],
+      locality: ['']
     });
 
     this.stepThree = this._formBuilder.group({
-      username: ['', Validators.required],
-      users_pic: [null, Validators.required],
-      user_designation: ['', Validators.required],
-      user_locality: ['', Validators.required]
+      owner_name: ['', Validators.required],
+      owner_pic: [null],
+      owner_designation: [''],
     });
 
 
     this.stepFour = this._formBuilder.group({
-      business_photos: [null, Validators.required],
-      established_year: ['', Validators.required],
+      business_photos: [''],
       website_url: ['', Validators.required]
     });
 
     this.stepFive = this._formBuilder.group({
-      email: ['', [
+      email_id: ['', [
         Validators.required,
         Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
       ]],
-      mobile: ['', [
+      contact_no: ['', [
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(12)
@@ -116,32 +117,60 @@ export class CreateAppComponent implements OnInit {
     this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
 
     if (localStorage.getItem('storeCreateAppStep')) {
-      // this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
+      //alert(localStorage.getItem('storeCreateAppStep'));
+      this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
+      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
     }
-
-    this.stepper.selectedIndex = 0
 
     if (localStorage.getItem('storeCreateAppID')) {
-      this.getLocalAppDetails((localStorage.getItem('storeCreateAppID')));
+      this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
     }
 
-    //this.getCategoryList();
+    if (localStorage.getItem('storeSessionID'))
+    {
+      this.getTempUserDetails(localStorage.getItem('storeSessionID'));
+    }
+
+    this.getCategoryList();
   }
 
-  getLocalAppDetails(id) {
-    this.createAppService.getLocalAppDetails(id).subscribe(
+
+  getTempUserDetails(id) {
+    this.createAppService.getTempUserDetails(id).subscribe(
+      (data: any[]) => {
+        console.log(data);
+        this.setp_three_data.owner_pic = data[0].owner_pic;
+        this.setp_three_data.owner_name = data[0].owner_name;
+        this.setp_three_data.owner_designation = data[0].owner_designation;
+        this.user_id =data[0].id;
+      },
+      error => {
+
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  };
+
+
+  getTempAppDetails(id) {
+    this.createAppService.getTempAppDetails(id).subscribe(
       (data: any[]) => {
         console.log(data);
 
 
-        this.setp_one_data.app_category = data[0].app_category[0].app_category;
+        this.setp_one_data.app_category = data[0].app_category.id;
         this.stepOne.patchValue({
-          app_category: data[0].app_category[0].app_category
+          app_category: data[0].app_category.id
         });
 
-        this.setp_two_data.logo = data[0].logo;
-        this.setp_two_data.business_name = data[0].business_name;
-        this.setp_two_data.business_description = data[0].business_description;
+        this.setp_two_data.logo = data[0].appmaster.logo;
+        this.setp_two_data.business_name = data[0].appmaster.business_name;
+        this.setp_two_data.business_description = data[0].appmaster.business_description;
+
+        this.setp_four_data.website_url = data[0].appmaster.website_url;
+        
 
         // = {
         // logo:data.logo,
@@ -217,7 +246,7 @@ export class CreateAppComponent implements OnInit {
       this.ownerToUpload = file;
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
-        this.setp_three_data.users_pic = event.target.result;
+        this.setp_three_data.owner_pic = event.target.result;
         // this.stepThree.patchValue({
         //   owner_logo: reader.result
         // });
@@ -234,6 +263,7 @@ export class CreateAppComponent implements OnInit {
         reader.onload = (event: any) => {
           this.setp_four_data.business_photos.push(event.target.result)
         }
+        this.business_photo_arr.push(event.target.files[i]);
         reader.readAsDataURL(event.target.files[i]);
       }
       // need to run CD since file load runs outside of zone
@@ -257,13 +287,13 @@ export class CreateAppComponent implements OnInit {
     if (this.stepOne.valid) {
 
       if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
+        this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           app_category: this.stepOne.value.app_category
         }
 
-        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'),data).subscribe(
+        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'), data).subscribe(
           response => {
             this.toastr.success('Success', '', {
               timeOut: 3000,
@@ -278,11 +308,11 @@ export class CreateAppComponent implements OnInit {
         );
       }
       else {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
+        this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           session_id: this.stepOne.value.session_id,
-          app_category: [{ app_category: this.stepOne.value.app_category }]
+          app_category: this.stepOne.value.app_category
         }
 
         this.createAppService.createTempApp(data).subscribe(
@@ -302,7 +332,7 @@ export class CreateAppComponent implements OnInit {
       }
     }
     else {
-      this.toastr.error('Please select a category', '', {
+      this.toastr.error('Please select a app type', '', {
         timeOut: 3000,
       });
       this.markFormGroupTouched(this.stepOne)
@@ -310,10 +340,11 @@ export class CreateAppComponent implements OnInit {
   }
 
   submitStepTwo() {
+
     if (this.stepTwo.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
+      this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
       localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
+      this.createAppService.logoUploadSection(localStorage.getItem('storeSessionID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
           this.toastr.success('Success', '', {
             timeOut: 3000,
@@ -334,16 +365,10 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      let data = {
-        session_id: localStorage.getItem('storeSessionID'),
-        username: this.stepThree.value.owner_name,
-        user_locality: this.stepThree.value.business_locatioon,
-        user_designation: this.stepThree.value.owner_designation,
-        users_pic: this.stepThree.value.owner_logo,
-      }
-      this.createAppService.createLocalUser(localStorage.getItem('storeCreateAppID'), this.ownerToUpload, data).subscribe(
+
+      this.createAppService.createLocalUser(localStorage.getItem('storeCreateAppID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
-          this.storeCreateAppStep = this.storeCreateAppStep + 1;
+          this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
           this.toastr.success('Success', '', {
@@ -370,16 +395,74 @@ export class CreateAppComponent implements OnInit {
 
   submitStepFour() {
     if (this.stepFour.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
 
+      var data = {
+        id:localStorage.getItem('storeCreateAppID'),
+        app_url:this.stepFour.value.website_url
+      }
+      this.createAppService.updateTempAppURL(data).subscribe(
+        response => {
+
+          for (let i = 0; i < this.business_photo_arr.length; i++) {
+            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+              response => {
+    
+                if (i == this.business_photo_arr.length - 1) {
+                  this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
+                  localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+                  this.toastr.success('Success', '', {
+                    timeOut: 3000,
+                  });
+                }
+                // this.storeCreateAppStep = this.storeCreateAppStep + 1;
+                // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+              },
+              error => {
+                this.toastr.error('Something went wrong', '', {
+                  timeOut: 3000,
+                });
+              }
+            );
+          }
+
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+      );
+      
     }
     else {
-      this.markFormGroupTouched(this.stepFour)
+     
+      this.markFormGroupTouched(this.stepFive)
     }
   }
 
   submitStepFive() {
     if (this.stepFive.valid) {
+      let data = {
+        id:this.user_id,
+        email_id:this.stepFive.value.email_id,
+        contact_no:this.stepFive.value.contact_no
+      }
+      this.createAppService.createOriginalApp(data).subscribe(
+        response => {
+          // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
 
     }
     else {

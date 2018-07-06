@@ -349,6 +349,24 @@ a:hover {
     transform: scale(1.1);
     transition: all .40s ease;
 }
+.selected {
+    transform: scale(1.1);
+    transition: all .40s ease;
+}
+
+.selected::before {
+    content: "";
+    background: #00aff0;
+    height: 2px;
+    width: 107px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all .40s ease;
+}
+
+
+
 
 .select-btn ul li::before {
     content: "";
