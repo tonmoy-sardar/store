@@ -308,7 +308,7 @@ export class EditAppComponent implements OnInit {
         user_designation: this.stepThree.value.owner_designation,
         users_pic: this.stepThree.value.owner_logo,
       }
-      this.createAppService.createTempUser(this.ownerToUpload, data).subscribe(
+      this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'),this.ownerToUpload, data).subscribe(
         response => {
           this.storeCreateAppStep = this.storeCreateAppStep + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
