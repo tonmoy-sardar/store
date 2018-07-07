@@ -126,8 +126,7 @@ export class CreateAppComponent implements OnInit {
       this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
     }
 
-    if (localStorage.getItem('storeSessionID'))
-    {
+    if (localStorage.getItem('storeSessionID')) {
       this.getTempUserDetails(localStorage.getItem('storeSessionID'));
     }
 
@@ -139,13 +138,14 @@ export class CreateAppComponent implements OnInit {
     this.createAppService.getTempUserDetails(id).subscribe(
       (data: any[]) => {
         console.log(data);
-        this.setp_three_data.owner_pic = data[0].owner_pic;
-        this.setp_three_data.owner_name = data[0].owner_name;
-        this.setp_three_data.owner_designation = data[0].owner_designation;
-        this.user_id =data[0].id;
+        if (data.length > 0) {
+          this.setp_three_data.owner_pic = data[0].owner_pic;
+          this.setp_three_data.owner_name = data[0].owner_name;
+          this.setp_three_data.owner_designation = data[0].owner_designation;
+          this.user_id = data[0].id;
+        }
       },
       error => {
-
         this.toastr.error('Something went wrong', '', {
           timeOut: 3000,
         });
@@ -170,7 +170,7 @@ export class CreateAppComponent implements OnInit {
         this.setp_two_data.business_description = data[0].appmaster.business_description;
 
         this.setp_four_data.website_url = data[0].appmaster.website_url;
-        
+
 
         // = {
         // logo:data.logo,
@@ -279,8 +279,12 @@ export class CreateAppComponent implements OnInit {
     });
   }
 
+  getSuggestedUrl(url: string){
+    return url.replace(/\s/g, "").toLowerCase();
+  }
+
   getWebUrl(url: string) {
-    this.setp_four_data.website_url = url;
+    this.setp_four_data.website_url = url.replace(/\s/g, "").toLowerCase();
   }
 
   submitStepOne() {
@@ -344,7 +348,7 @@ export class CreateAppComponent implements OnInit {
     if (this.stepTwo.valid) {
       this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
       localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      this.createAppService.logoUploadSection(localStorage.getItem('storeSessionID'), this.logoToUpload, this.stepTwo.value).subscribe(
+      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
           this.toastr.success('Success', '', {
             timeOut: 3000,
@@ -397,8 +401,8 @@ export class CreateAppComponent implements OnInit {
     if (this.stepFour.valid) {
 
       var data = {
-        id:localStorage.getItem('storeCreateAppID'),
-        app_url:this.stepFour.value.website_url
+        id: localStorage.getItem('storeCreateAppID'),
+        app_url: this.stepFour.value.website_url
       }
       this.createAppService.updateTempAppURL(data).subscribe(
         response => {
@@ -406,7 +410,7 @@ export class CreateAppComponent implements OnInit {
           for (let i = 0; i < this.business_photo_arr.length; i++) {
             this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
               response => {
-    
+
                 if (i == this.business_photo_arr.length - 1) {
                   this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
                   localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
@@ -425,17 +429,17 @@ export class CreateAppComponent implements OnInit {
             );
           }
 
-      },
-      error => {
-        this.toastr.error('Something went wrong', '', {
-          timeOut: 3000,
-        });
-      }
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
       );
-      
+
     }
     else {
-     
+
       this.markFormGroupTouched(this.stepFive)
     }
   }
@@ -443,9 +447,9 @@ export class CreateAppComponent implements OnInit {
   submitStepFive() {
     if (this.stepFive.valid) {
       let data = {
-        id:this.user_id,
-        email_id:this.stepFive.value.email_id,
-        contact_no:this.stepFive.value.contact_no
+        id: this.user_id,
+        email_id: this.stepFive.value.email_id,
+        contact_no: this.stepFive.value.contact_no
       }
       this.createAppService.createOriginalApp(data).subscribe(
         response => {
