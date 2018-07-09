@@ -32,7 +32,10 @@ export class CreateAppService {
     let logo;
     if (data) {
       for (let key in data) {
-        formData.append(key, data[key])
+        if(key!='logo' && key!='business_photos')
+        {
+          formData.append(key, data[key])
+        }
       }
     }
 

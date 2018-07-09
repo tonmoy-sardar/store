@@ -16,6 +16,8 @@ export class CreateAppComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   isLinear = true;
+  haveBusinessName;
+  haveBusinessDescription;
   stepOne: FormGroup;
   stepTwo: FormGroup;
   stepThree: FormGroup;
@@ -40,7 +42,7 @@ export class CreateAppComponent implements OnInit {
     logo: '',
     business_name: '',
     business_description: '',
-    locality: ''
+    business_photos: [],
   }
 
   setp_three_data = {
@@ -50,7 +52,6 @@ export class CreateAppComponent implements OnInit {
   }
 
   setp_four_data = {
-    business_photos: [],
     website_url: ''
   }
 
@@ -80,15 +81,15 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepTwo = this._formBuilder.group({
-      logo: [null],
+      logo: [''],
       business_name: ['', Validators.required],
       business_description: [''],
-      locality: ['']
+      business_photos: [''],
     });
 
     this.stepThree = this._formBuilder.group({
       owner_name: ['', Validators.required],
-      owner_pic: [null],
+      owner_pic: [''],
       owner_designation: [''],
     });
 
@@ -119,7 +120,7 @@ export class CreateAppComponent implements OnInit {
     if (localStorage.getItem('storeCreateAppStep')) {
       //alert(localStorage.getItem('storeCreateAppStep'));
       this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
-      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
+      this.stepper.selectedIndex =  parseInt(this.storeCreateAppStep)
     }
 
     if (localStorage.getItem('storeCreateAppID')) {
@@ -133,6 +134,29 @@ export class CreateAppComponent implements OnInit {
     this.getCategoryList();
   }
 
+  checkBusinessName()
+  {
+   
+    if(this.setp_two_data.business_name!=null && this.setp_two_data.business_name.length>0)
+    {
+     this.haveBusinessName=true;
+    }
+    else{
+     this.haveBusinessName=false;
+    }
+  }
+
+  checkBusinessDescription()
+  {
+   
+    if(this.setp_two_data.business_description!=null && this.setp_two_data.business_description.length>0)
+    {
+     this.haveBusinessDescription=true;
+    }
+    else{
+     this.haveBusinessDescription=false;
+    }
+  }
 
   getTempUserDetails(id) {
     this.createAppService.getTempUserDetails(id).subscribe(
@@ -261,7 +285,7 @@ export class CreateAppComponent implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         const reader = new FileReader();
         reader.onload = (event: any) => {
-          this.setp_four_data.business_photos.push(event.target.result)
+          this.setp_two_data.business_photos.push(event.target.result)
         }
         this.business_photo_arr.push(event.target.files[i]);
         reader.readAsDataURL(event.target.files[i]);
@@ -321,6 +345,7 @@ export class CreateAppComponent implements OnInit {
 
         this.createAppService.createTempApp(data).subscribe(
           response => {
+            console.log(response);
             localStorage.setItem('storeCreateAppID', response.id);
             this.toastr.success('Success', '', {
               timeOut: 3000,
@@ -346,13 +371,31 @@ export class CreateAppComponent implements OnInit {
   submitStepTwo() {
 
     if (this.stepTwo.valid) {
-      this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+      
       this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
+
+          this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
+          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
+
+          for (let i = 0; i < this.business_photo_arr.length; i++) {
+            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+              response => {
+                // this.toastr.success('Success2', '', {
+                //   timeOut: 3000,
+                // });
+              },
+              error => {
+                this.toastr.error('Something went wrong', '', {
+                  timeOut: 3000,
+                });
+              }
+            );
+          }
+          
 
         },
         error => {
@@ -370,9 +413,9 @@ export class CreateAppComponent implements OnInit {
   submitStepThree() {
     if (this.stepThree.valid) {
 
-      this.createAppService.createLocalUser(localStorage.getItem('storeCreateAppID'), this.ownerToUpload, this.stepThree.value).subscribe(
+      this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
-          this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+          this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
           this.toastr.success('Success', '', {
@@ -393,7 +436,7 @@ export class CreateAppComponent implements OnInit {
   }
 
   goToStep(value) {
-    this.storeCreateAppStep = value - 1;
+    this.storeCreateAppStep = parseInt(value) - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
@@ -406,28 +449,6 @@ export class CreateAppComponent implements OnInit {
       }
       this.createAppService.updateTempAppURL(data).subscribe(
         response => {
-
-          for (let i = 0; i < this.business_photo_arr.length; i++) {
-            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
-              response => {
-
-                if (i == this.business_photo_arr.length - 1) {
-                  this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-                  localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-                  this.toastr.success('Success', '', {
-                    timeOut: 3000,
-                  });
-                }
-                // this.storeCreateAppStep = this.storeCreateAppStep + 1;
-                // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-              },
-              error => {
-                this.toastr.error('Something went wrong', '', {
-                  timeOut: 3000,
-                });
-              }
-            );
-          }
 
         },
         error => {
