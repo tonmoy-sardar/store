@@ -9,6 +9,10 @@ export class CreateAppService {
 
   constructor(private http: HttpClient) { }
 
+  customer_login(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'customer_login/', data)
+  }
+
   getCategoryList(): Observable<any> {
     return this.http.get(environment.apiEndpoint + 'all_categories/')
   }
@@ -53,8 +57,11 @@ export class CreateAppService {
     const formData: FormData = new FormData();
     let owner_pic;
     if (data) {
-      for (let key in data) {       
-        formData.append(key, data[key])
+      for (let key in data) {
+        if(key!='owner_pic')
+        {
+          formData.append(key, data[key])
+        } 
       }
     }
 
@@ -101,6 +108,14 @@ export class CreateAppService {
     return this.http.put(environment.apiEndpoint + 'create_app_step_last/' + data.id + '/', data)
   }
 
+
+  createProductCategory(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'create_product_category/', data)
+  }
+
+  createProduct(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'create_product/', data)
+  }
 
 
 

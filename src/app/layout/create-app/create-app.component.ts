@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-app',
@@ -23,6 +24,11 @@ export class CreateAppComponent implements OnInit {
   stepThree: FormGroup;
   stepFour: FormGroup;
   stepFive: FormGroup;
+  stepFiveProductCat1: FormGroup;
+  stepFiveProductCat2: FormGroup;
+  stepSix: FormGroup;
+  stepSeven:FormGroup;
+  stepEight:FormGroup;
   category_list: any = [];
   business_photo_arr = [];
 
@@ -56,6 +62,16 @@ export class CreateAppComponent implements OnInit {
   }
 
   setp_five_data = {
+    product_categories: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        category_name: 'Generic Category'
+      }
+    ]
+  }
+
+  setp_six_data = {
     contact_no: '',
     email_id: ''
   }
@@ -72,7 +88,12 @@ export class CreateAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+
+
     this.storeCreateAppStep = 0;
+    this.stepper.selectedIndex =  0;
+
     this.base_url = (this.platformLocation as any).location.origin;
 
     this.stepOne = this._formBuilder.group({
@@ -100,6 +121,19 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepFive = this._formBuilder.group({
+      product_categories: this._formBuilder.array([this.createProductCategory('Generic Category')]),
+    });
+
+    this.stepFiveProductCat1 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
+
+    this.stepFiveProductCat2 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
+
+
+    this.stepSix = this._formBuilder.group({
       email_id: ['', [
         Validators.required,
         Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
@@ -119,8 +153,8 @@ export class CreateAppComponent implements OnInit {
 
     if (localStorage.getItem('storeCreateAppStep')) {
       //alert(localStorage.getItem('storeCreateAppStep'));
-      this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
-      this.stepper.selectedIndex =  parseInt(this.storeCreateAppStep)
+      //this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
+      //this.stepper.selectedIndex =  parseInt(this.storeCreateAppStep)
     }
 
     if (localStorage.getItem('storeCreateAppID')) {
@@ -134,27 +168,136 @@ export class CreateAppComponent implements OnInit {
     this.getCategoryList();
   }
 
-  checkBusinessName()
-  {
-   
-    if(this.setp_two_data.business_name!=null && this.setp_two_data.business_name.length>0)
-    {
-     this.haveBusinessName=true;
+  submitCategory() {
+    //console.log(this.setp_five_data);
+
+    this.createAppService.createProductCategory(this.setp_five_data).subscribe(
+      response => {
+        console.log(response);
+        // localStorage.setItem('storeCreateAppID', response.id);
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
+        });
+
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+  }
+
+  submitProduct(type: number) {
+    if (type == 0) {
+      console.log(this.stepFiveProductCat1.value);
     }
-    else{
-     this.haveBusinessName=false;
+    if (type == 1) {
+      console.log(this.stepFiveProductCat2.value);
+    }
+
+  }
+  addProductCategory() {
+    var product_cate = {
+      id: null,
+      app_master: localStorage.getItem('storeCreateAppID'),
+      category_name: ''
+    }
+    this.setp_five_data.product_categories.push(product_cate)
+
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.push(this.createProductCategory(''));
+  }
+
+  deleteProductCategory(index: number) {
+    if (index > -1) {
+      this.setp_five_data.product_categories.splice(index, 1)
+    }
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.removeAt(index);
+  }
+  createProductCategory(categoryName) {
+    return this._formBuilder.group({
+      category_name: [categoryName, Validators.required]
+    });
+  }
+
+  geCategory(form) {
+    return form.get('product_categories').controls
+  }
+
+  getProduct(form) {
+    return form.get('products').controls
+  }
+
+
+
+  addProduct(type: number) {
+    //   var product = {
+    //    id: null,
+    //    product_name:'',
+    //    price:'',
+    //    discounted_price:'',
+    //    packing_charges:'',
+    //    tags:'',
+    //  }
+
+    if (type == 0) {
+      //this.setp_five_data.product_category.push(product)
+
+      const control = <FormArray>this.stepFiveProductCat1.controls['product'];
+      control.push(this.createProduct());
+    }
+    if (type == 1) {
+      // this.setp_five_data.product_category.push(product)
+
+      const control = <FormArray>this.stepFiveProductCat2.controls['product'];
+      control.push(this.createProduct());
     }
   }
 
-  checkBusinessDescription()
-  {
-   
-    if(this.setp_two_data.business_description!=null && this.setp_two_data.business_description.length>0)
-    {
-     this.haveBusinessDescription=true;
+  deleteProduct(index: number, type: number) {
+
+    if (type == 0) {
+      const control = <FormArray>this.stepFiveProductCat1.controls['product'];
+      control.removeAt(index);
     }
-    else{
-     this.haveBusinessDescription=false;
+
+    if (type == 1) {
+      const control = <FormArray>this.stepFiveProductCat2.controls['product'];
+      control.removeAt(index);
+    }
+
+  }
+
+  createProduct() {
+    return this._formBuilder.group({
+      product_name: ['', Validators.required],
+      price: ['', Validators.required],
+      discounted_price: [''],
+      packing_charges: [''],
+      tags: [''],
+    });
+  }
+
+  checkBusinessName() {
+
+    if (this.setp_two_data.business_name != null && this.setp_two_data.business_name.length > 0) {
+      this.haveBusinessName = true;
+    }
+    else {
+      this.haveBusinessName = false;
+    }
+  }
+
+  checkBusinessDescription() {
+
+    if (this.setp_two_data.business_description != null && this.setp_two_data.business_description.length > 0) {
+      this.haveBusinessDescription = true;
+    }
+    else {
+      this.haveBusinessDescription = false;
     }
   }
 
@@ -182,19 +325,37 @@ export class CreateAppComponent implements OnInit {
     this.createAppService.getTempAppDetails(id).subscribe(
       (data: any[]) => {
         console.log(data);
+        if (data.length > 0) {
+          this.setp_one_data.app_category = data[0].app_category.id;
+          this.stepOne.patchValue({
+            app_category: data[0].app_category.id
+          });
+
+          this.setp_two_data.logo = data[0].appmaster.logo;
+          this.setp_two_data.business_name = data[0].appmaster.business_name;
+          if(this.setp_two_data.business_name.length>0)
+          {
+          this.haveBusinessName=true;
+          }
+          
+
+          this.setp_two_data.business_description = data[0].appmaster.business_description;
+
+          if(this.setp_two_data.business_description.length>0)
+          {
+          this.haveBusinessDescription=true;
+          }
 
 
-        this.setp_one_data.app_category = data[0].app_category.id;
-        this.stepOne.patchValue({
-          app_category: data[0].app_category.id
-        });
+          this.setp_four_data.website_url = data[0].appmaster.website_url;
 
-        this.setp_two_data.logo = data[0].appmaster.logo;
-        this.setp_two_data.business_name = data[0].appmaster.business_name;
-        this.setp_two_data.business_description = data[0].appmaster.business_description;
-
-        this.setp_four_data.website_url = data[0].appmaster.website_url;
-
+          for(var i=0;i<data[0].app_imgs.length; i++)
+          {
+            var business_img_url = environment.urlEndpoint+data[0].app_imgs[i].app_img;
+            this.setp_two_data.business_photos.push(business_img_url)
+          }
+          
+        }
 
         // = {
         // logo:data.logo,
@@ -303,13 +464,15 @@ export class CreateAppComponent implements OnInit {
     });
   }
 
-  getSuggestedUrl(url: string){
+  getSuggestedUrl(url: string) {
     return url.replace(/\s/g, "").toLowerCase();
   }
 
   getWebUrl(url: string) {
     this.setp_four_data.website_url = url.replace(/\s/g, "").toLowerCase();
   }
+
+
 
   submitStepOne() {
     if (this.stepOne.valid) {
@@ -371,7 +534,7 @@ export class CreateAppComponent implements OnInit {
   submitStepTwo() {
 
     if (this.stepTwo.valid) {
-      
+
       this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
 
@@ -395,7 +558,7 @@ export class CreateAppComponent implements OnInit {
               }
             );
           }
-          
+
 
         },
         error => {
@@ -437,6 +600,12 @@ export class CreateAppComponent implements OnInit {
 
   goToStep(value) {
     this.storeCreateAppStep = parseInt(value) - 1;
+    //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+  }
+
+  nextStep(value)
+  {
+    this.storeCreateAppStep = parseInt(value) - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
@@ -465,12 +634,12 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  submitStepFive() {
-    if (this.stepFive.valid) {
+  submitStepSix() {
+    if (this.stepSix.valid) {
       let data = {
         id: this.user_id,
-        email_id: this.stepFive.value.email_id,
-        contact_no: this.stepFive.value.contact_no
+        email_id: this.stepSix.value.email_id,
+        contact_no: this.stepSix.value.contact_no
       }
       this.createAppService.createOriginalApp(data).subscribe(
         response => {
@@ -491,7 +660,7 @@ export class CreateAppComponent implements OnInit {
 
     }
     else {
-      this.markFormGroupTouched(this.stepFive)
+      this.markFormGroupTouched(this.stepSix)
     }
   }
 }

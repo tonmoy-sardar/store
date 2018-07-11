@@ -49,7 +49,8 @@
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>card_travel</mat-icon>
-                                        <input class="form-control" matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name" (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
+                                        <input class="form-control" matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name"
+                                            (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
                                         <mat-error *ngIf="isFieldValid(stepTwo,'business_name')"> Please Enter Business Name</mat-error>
 
                                     </mat-form-field>
@@ -61,7 +62,8 @@
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>info</mat-icon>
-                                        <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description" (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
+                                        <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
+                                            (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
                                     </mat-form-field>
 
                                     <p class="btn-switch">
@@ -89,7 +91,7 @@
 
                                 <div class="form-field col-md-12">
                                     <div class="upload-filed  business-photo">
-    
+
                                         <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
                                             multiple>
                                         <p class="btn-switch">
@@ -265,7 +267,7 @@
                             <div class="form-field col-md-12">
                                 <div class="row">
                                     <div class="form-field  align-center col-md-5">
-                                        <button type="button" matStepperPrevious class="round-g-btn"  (click)="goToStep(3)">Back</button>
+                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(3)">Back</button>
                                     </div>
                                     <div class="form-field align-center col-md-5">
                                         <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
@@ -299,7 +301,196 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="stepFive">
-        <form [formGroup]="stepFive" class="contact-form row">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <section class="get-in-touch">
+                        <h1 class="title">
+                            <span> your own app</span> Get in 5 Minutes
+                        </h1>
+                        <div class="col-md-12">
+                            <form [formGroup]="stepFive">
+                                <div class="col-md-12" formArrayName="product_categories">
+                                    <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
+                                        <div class="col-md-12" [formGroupName]="i">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <mat-form-field class="input-full-width">
+                                                        <mat-icon matPrefix>info</mat-icon>
+                                                        <input matInput placeholder="Category" [(ngModel)]="setp_five_data.product_categories[i].category_name" name="category_name"
+                                                            formControlName="category_name">
+                                                        <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="text-align: right">
+                                    <button matStepperNext class="round-g-btn" (click)="submitCategory()">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-tab-group>
+                                <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of setp_five_data.product_categories; let i = index;">
+                                    <div class="col-md-12" *ngIf="i == 0">
+                                        <form class="row" [formGroup]="stepFiveProductCat1">
+                                            <div class="col-md-12" formArrayName="products">
+                                                <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
+                                                    <div class="col-md-12" [formGroupName]="j">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput placeholder="product name" name="product_name" formControlName="product_name">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="price" name="price" formControlName="price">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="discounted price" name="discounted_price" formControlName="discounted_price">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" name="packing_charges" formControlName="packing_charges">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput placeholder="tags" name="tags" formControlName="tags">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <a routerLink="." (click)="addProduct(i)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                    <i class="fa fa-times-circle fa-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="text-align: right">
+                                                <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="i == 1">
+                                        <form class="row" [formGroup]="stepFiveProductCat2">
+                                            <div class="col-md-12" formArrayName="products">
+                                                <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
+                                                    <div class="col-md-12" [formGroupName]="j">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput placeholder="product name" name="product_name" formControlName="product_name">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="price" name="price" formControlName="price">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="discounted price" name="discounted_price" formControlName="discounted_price">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" name="packing_charges" formControlName="packing_charges">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <mat-form-field class="input-full-width">
+                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    <input matInput placeholder="tags" name="tags" formControlName="tags">
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <a routerLink="." (click)="addProduct(i)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                    <i class="fa fa-times-circle fa-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="text-align: right">
+                                                <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="align-center col-md-5">
+                                    <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
+                                </div>
+                                <div class="align-center col-md-5">
+                                    <button matStepperNext class="round-g-btn" (click)="nextStep(5)">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6 bg-texture">
+
+                    <div class="mob">
+                        <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                            <img [src]="setp_two_data.logo ?setp_two_data.logo : '../../../assets/images/resturent-logo.png'" alt="">
+
+                            <h1>{{setp_two_data.business_name}}</h1>
+                            <div class="description">
+
+
+                            </div>
+                            <div class="description ">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-step>
+    <mat-step [stepControl]="stepSix">
+        <form [formGroup]="stepSix" class="contact-form row">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -310,8 +501,8 @@
                             <div class="form-field col col-md-12">
                                 <mat-form-field class="input-full-width">
                                     <mat-icon matPrefix>phone_android</mat-icon>
-                                    <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_five_data.contact_no">
-                                    <mat-error *ngIf="isFieldValid(stepFive,'contact_no')"> Please Your Mobile Number</mat-error>
+                                    <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                                    <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Your Mobile Number</mat-error>
                                 </mat-form-field>
                                 <p class="btn-switch">
                                     <mat-slide-toggle></mat-slide-toggle>
@@ -320,8 +511,8 @@
                             <div class="form-field col col-md-12">
                                 <mat-form-field class="input-full-width">
                                     <mat-icon matPrefix>email</mat-icon>
-                                    <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_five_data.email_id">
-                                    <mat-error *ngIf="isFieldValid(stepFive,'contact_no')"> Please Your Email Address</mat-error>
+                                    <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                                    <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Your Email Address</mat-error>
                                 </mat-form-field>
                                 <p class="btn-switch">
                                     <mat-slide-toggle></mat-slide-toggle>
@@ -330,10 +521,10 @@
                             <div class="form-field col-md-12">
                                 <div class="row">
                                     <div class="form-field  align-center col-md-5">
-                                        <button matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
+                                        <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
                                     </div>
                                     <div class="form-field align-center col-md-5">
-                                        <button class="round-g-btn" (click)="submitStepFive()">Next</button>
+                                        <button matStepperNext class="round-g-btn" (click)="submitStepSix()">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -349,12 +540,12 @@
                                 <h1>{{setp_two_data.business_name}}</h1>
                                 <div class="description">
 
-                                    <span *ngIf="setp_five_data.contact_no != ''">Mobile Number</span>
-                                    <p>{{setp_five_data.contact_no}}</p>
+                                    <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                                    <p>{{setp_six_data.contact_no}}</p>
                                 </div>
                                 <div class="description ">
-                                    <span *ngIf="setp_five_data.email_id != ''">Email Address</span>
-                                    <p>{{setp_five_data.email_id}}</p>
+                                    <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                                    <p>{{setp_six_data.email_id}}</p>
                                 </div>
                             </div>
                         </div>
@@ -362,5 +553,172 @@
                 </div>
             </div>
         </form>
+    </mat-step>
+    <mat-step [stepControl]="stepSeven">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <section class="get-in-touch">
+                        <div class="payment-btn bg-white box-shadow padding-10 min-height-400 broder-radius-5">
+                            <h1 class="font-size-26 ">Lock in your savings with a multi-year term.</h1>
+                            <div class="col-xs-3">
+                                <!-- required for floating -->
+                                <!-- Nav tabs -->
+                                <ul class="payment-tab nav nav-tabs tabs-left">
+                                    <li class="active">
+                                        <a href="#home" data-toggle="tab">Net banking</a>
+                                    </li>
+                                    <li>
+                                        <a href="#profile" data-toggle="tab">Debit card</a>
+                                    </li>
+                                    <li>
+                                        <a href="#messages" data-toggle="tab">Credit card</a>
+                                    </li>
+                                    <li>
+                                        <a href="#settings" data-toggle="tab">COD</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-9">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="home">
+
+                                        <article class="card">
+                                            <div class="card-body p-5">
+                                                <p>
+                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-visa.png">
+                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-mastercard.png">
+                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-american-ex.png">
+                                                </p>
+                                                <p class="alert alert-success">Some text success or error</p>
+
+                                                <form role="form">
+                                                    <div class="form-group">
+                                                        <label for="username">Full name (on the card)</label>
+                                                        <div class="">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="fa fa-user"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input type="text" class="form-control" name="username" placeholder="" required="">
+                                                        </div>
+                                                        <!-- input-group.// -->
+                                                    </div>
+                                                    <!-- form-group.// -->
+
+                                                    <div class="form-group">
+                                                        <label for="cardNumber">Card number</label>
+                                                        <div class="">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="fa fa-credit-card"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                        </div>
+                                                        <!-- input-group.// -->
+                                                    </div>
+                                                    <!-- form-group.// -->
+
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    <span class="hidden-xs">Expiration</span>
+                                                                </label>
+                                                                <div class="form-inline">
+                                                                    <select class="form-control" style="width:45%">
+                                                                        <option>MM</option>
+                                                                        <option>01 - Janiary</option>
+                                                                        <option>02 - February</option>
+                                                                        <option>03 - February</option>
+                                                                    </select>
+                                                                    <span style="width:10%; text-align: center"> / </span>
+                                                                    <select class="form-control" style="width:45%">
+                                                                        <option>YY</option>
+                                                                        <option>2018</option>
+                                                                        <option>2019</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV
+                                                                    <i class="fa fa-question-circle"></i>
+                                                                </label>
+                                                                <input class="form-control" required="" type="text">
+                                                            </div>
+                                                            <!-- form-group.// -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- row.// -->
+
+                                                    <div class="col-md-5 col-lg-offset-3">
+                                                            <button matStepperNext class="round-g-btn margin-top-20" >Confirm</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- card-body.// -->
+                                        </article>
+                                        <!-- card.// -->
+                                    </div>
+                                    <div class="tab-pane" id="profile">Profile Tab.</div>
+                                    <div class="tab-pane" id="messages">Messages Tab.</div>
+                                    <div class="tab-pane" id="settings">Settings Tab.</div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-5  bg-texture">
+                    <div class="payment-btn bg-white box-shadow padding-10 min-height-400 broder-radius-5">
+                        <h1 class="font-size-26 ">Order summary</h1>
+                        <div class="product-price">
+                            <div class="price-line  margin-top-40   col-md-12 dased-broder broder-radius-5">
+                                <div class="row padding-15">
+
+
+                                    <div class="col-md-7 font-size-20">
+                                        Your Items
+                                        <ul class="list-small">
+                                            <li>
+                                                <span>1 month subcribtion</span>
+                                            </li>
+                                            <li>
+                                                <span>1 month IOS support</span>
+                                            </li>
+                                            <li>
+                                                <span>1 month IOS support</span>
+                                            </li>
+                                        </ul>
+
+
+                                    </div>
+                                    <div class="col-md-5 font-size-20">
+                                        ₹ 199.00/mo
+                                        <button matStepperNext class="round-g-btn margin-top-20" >cash pay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="stepEight">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="font-size-26 ">Your app is successfully created</h1>
+                </div>
+            </div>
+        </div>
     </mat-step>
 </mat-horizontal-stepper>
