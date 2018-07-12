@@ -109,12 +109,12 @@ export class CreateAppService {
   }
 
 
-  createProductCategory(data): Observable<any> {
-    return this.http.post(environment.apiEndpoint + 'create_product_category/', data)
+  createProductCategory(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'edit_product_Categories/' + id + '/', data)
   }
 
-  createProduct(data): Observable<any> {
-    return this.http.post(environment.apiEndpoint + 'create_product/', data)
+  createProduct(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'edit_product/' + id + '/', data)
   }
 
 

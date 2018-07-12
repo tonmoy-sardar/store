@@ -27,7 +27,7 @@
                             </div>
                         </section>
                     </div>
-                    <div class="col-md-6 bg-texture">
+                    <div class="col-md-6">
                         <div class="mob ">
                             <div class="wallpaper-size caragory-resturent"></div>
                         </div>
@@ -112,7 +112,7 @@
                             </div>
                         </section>
                     </div>
-                    <div class="col-md-6 bg-texture">
+                    <div class="col-md-6">
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -201,7 +201,7 @@
 
 
                     </div>
-                    <div class="col-md-6 bg-texture">
+                    <div class="col-md-6">
 
                         <div class="mob">
                             <div class="wallpaper-size profile-page apps-design padding-10 text-center ">
@@ -277,7 +277,7 @@
 
                         </section>
                     </div>
-                    <div class="col-md-6 bg-texture">
+                    <div class="col-md-6">
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -337,7 +337,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="text-align: right">
-                                    <button matStepperNext class="round-g-btn" (click)="submitCategory()">Submit</button>
+                                    <button  class="round-g-btn" (click)="submitCategory()">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -353,35 +353,35 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name" formControlName="product_name">
+                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name" formControlName="product_name">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="price" name="price" formControlName="price">
+                                                                    <input matInput appOnlyNumber placeholder="price" [(ngModel)]="setp_five_data_cat_1.products[j].price" name="price" formControlName="price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price" name="discounted_price" formControlName="discounted_price">
+                                                                    <input matInput appOnlyNumber placeholder="discounted price"  [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="packing charges" name="packing_charges" formControlName="packing_charges">
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="tags" name="tags" formControlName="tags">
+                                                                    <input matInput placeholder="tags" [(ngModel)]="setp_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
-                                                                <a routerLink="." (click)="addProduct(i)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                     <i class="fa fa-plus"></i>
                                                                 </a>
                                                                 <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
@@ -407,35 +407,36 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name" formControlName="product_name">
+                                                                    <input matInput placeholder="product name" name="product_name"  [(ngModel)]="setp_five_data_cat_2.products[j].product_name" formControlName="product_name">
+                                                                    
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="price" name="price" formControlName="price">
+                                                                    <input matInput appOnlyNumber placeholder="price" name="price" [(ngModel)]="setp_five_data_cat_2.products[j].price" formControlName="price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price" name="discounted_price" formControlName="discounted_price">
+                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="packing charges" name="packing_charges" formControlName="packing_charges">
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="tags" name="tags" formControlName="tags">
+                                                                    <input matInput placeholder="tags" name="tags" [(ngModel)]="setp_five_data_cat_2.products[j].tags" formControlName="tags">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
-                                                                <a routerLink="." (click)="addProduct(i)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                     <i class="fa fa-plus"></i>
                                                                 </a>
                                                                 <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
@@ -467,7 +468,7 @@
                         </div>
                     </section>
                 </div>
-                <div class="col-md-6 bg-texture">
+                <div class="col-md-6">
 
                     <div class="mob">
                         <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -530,7 +531,7 @@
                             </div>
                         </section>
                     </div>
-                    <div class="col-md-6 bg-texture">
+                    <div class="col-md-6">
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -675,7 +676,7 @@
                         </div>
                     </section>
                 </div>
-                <div class="col-md-5  bg-texture">
+                <div class="col-md-5">
                     <div class="payment-btn bg-white box-shadow padding-10 min-height-400 broder-radius-5">
                         <h1 class="font-size-26 ">Order summary</h1>
                         <div class="product-price">
