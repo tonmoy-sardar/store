@@ -13,7 +13,7 @@
                                 <ul *ngIf="category_list.length > 0">
                                     <li *ngFor="let category of category_list">
                                         <a href="javascript:void(0)" (click)="categorySelect(category.id)" [ngClass]="{'selected': setp_one_data.app_category == category.id}">
-                                            <img src="../../../assets/images/select-1.png" alt=""> {{category.category_name}}
+                                            <img src="assets/images/select-1.png" alt=""> {{category.category_name}}
                                         </a>
                                     </li>
                                     <div class="clearfix"></div>
@@ -116,7 +116,7 @@
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-                                <img [src]="setp_two_data.logo ?setp_two_data.logo : '../../../assets/images/resturent-logo.png'" alt="" alt="">
+                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
                                 <h1>{{setp_two_data.business_name}}</h1>
                                 <div class="description ">
                                     <span *ngIf="setp_two_data.business_description != '' && setp_two_data.business_description != null">Description</span>
@@ -206,7 +206,7 @@
                         <div class="mob">
                             <div class="wallpaper-size profile-page apps-design padding-10 text-center ">
 
-                                <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : '../../../assets/images/resturent-logo.png'" alt="">
+                                <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'" alt="">
 
                                 <h1>{{setp_three_data.owner_name}}</h1>
                                 <div class="description ">
@@ -282,7 +282,7 @@
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
-                                <img [src]="setp_two_data.logo ?setp_two_data.logo : '../../../assets/images/resturent-logo.png'" alt="" alt="">
+                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
                                 <h1>{{setp_two_data.business_name}}</h1>
 
                                 <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
@@ -473,7 +473,7 @@
                     <div class="mob">
                         <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
-                            <img [src]="setp_two_data.logo ?setp_two_data.logo : '../../../assets/images/resturent-logo.png'" alt="">
+                            <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
 
                             <h1>{{setp_two_data.business_name}}</h1>
                             <div class="description">
@@ -536,7 +536,7 @@
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
-                                <img [src]="setp_two_data.logo ?setp_two_data.logo : '../../../assets/images/resturent-logo.png'" alt="">
+                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
 
                                 <h1>{{setp_two_data.business_name}}</h1>
                                 <div class="description">
