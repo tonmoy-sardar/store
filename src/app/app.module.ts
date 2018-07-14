@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -10,6 +11,7 @@ import { AppComponent } from './app.component';
 
 // core
 import { CoreModule } from "./core/core.module";
+import { PaytamService } from './core/services/paytam.service';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,10 @@ import { CoreModule } from "./core/core.module";
     CoreModule,
     CoreModule.forRoot(),
     ToastrModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [PaytamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
