@@ -5,7 +5,10 @@
 
 export const environment = {
   production: false,
-  //apiEndpoint: 'http://192.168.24.129:8000/'
-  apiEndpoint: 'http://192.168.24.208:8000/paytm/'
+
+  apiEndpoint: 'http://192.168.24.129:8000/',
+  urlEndpoint: 'http://132.148.147.239:8001'
+
+
 };
 

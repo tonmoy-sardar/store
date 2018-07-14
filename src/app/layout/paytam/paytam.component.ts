@@ -10,9 +10,9 @@ import  { PaytamService } from '../../core/services/paytam.service';
 })
 export class PaytamComponent implements OnInit {
   payment_details;
-  pytamFormVal;
+  paymentdetails_data = {};
   form: FormGroup;
-
+  paymentFormActive;
   lastAction: string;
   totalPrice = 0.00;
   data = [
@@ -22,14 +22,6 @@ export class PaytamComponent implements OnInit {
     
     ];
 
-  onChange(event, index, item) {
-     if(item.checked = !item.checked) {
-       this.totalPrice =  this.totalPrice + parseFloat(item.price);
-     }
-     else{
-      this.totalPrice =  this.totalPrice - parseFloat(item.price);
-     }
-  }
  
 
   constructor(
@@ -39,71 +31,38 @@ export class PaytamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //Sandbox Merchant ID : testtu84067624389986
-    //Website Url :http://shyamfuture.com/
-   // Sandbox Merchant Key : 1E63QFGCt09ttJoW
-   // Channel Id :WEB
-    //Industry Type : Retail
-    // this.paytamForm = this.fb.group({
-    //   'MID': ['testtu84067624389986', Validators.required],
-    //    'ORDERID':['7654sdfghj', Validators.required],
-    //   'CHECKSUMHASH':['5aVR8KqkoCz9RqoBSszK3ksGfLtI6Rj5teplBdUHk49dh13A', Validators.required],
-    // })
-    //alert('hi');
-   this.paytamService.pytamFormValue(100).subscribe(
-    (res: any[]) => {
-        this.payment_details = res;
-        console.log(res);
-   },
-    error => {
-      console.log(error)
-    })
-    this.form = this.fb.group({
-      MID: [null,Validators.required],
-      CHANNEL_ID:[null,Validators.required],
-      INDUSTRY_TYPE_ID:[null,Validators.required],
-      WEBSITE:[null,Validators.required],
-      CALLBACK_URL:[null,Validators.required],
-      CUST_ID:[null,Validators.required],
-      ORDER_ID:[null,Validators.required],
-      TXN_AMOUNT:[null,Validators.required],
-      CHECKSUMHASH:[null,Validators.required]
-    });
-
-    this.payment_details = {
-        MID: '',
-        CHANNEL_ID: '',
-        INDUSTRY_TYPE_ID: '',
-        WEBSITE: '',
-        CALLBACK_URL: '',
-        CUST_ID: '',
-        ORDER_ID: '',
-        TXN_AMOUNT: '',
-        CHECKSUMHASH: ''
-
-    };
-
-    
+    this.paymentFormActive=false;
+    this.getPaymentSettingsDetails();
   
   }
 
-  
-
-  patyamPayment()
-  {
-    console.log('sss')
-    window.location.href = 'https://securegw-stage.paytm.in/theia/processTransaction';
- 
-    //   this.paytamService.patyamPayments(this.form.value).subscribe(res=>{
-  //     console.log('dfdssfsdsf')
-  //   },
-    
-  //     error => {
-  //       console.log(error)
-  //     }
-    
-  //   )
-  //   console.log( this.form.value);
+  onChange(event, index, item) {
+    if(item.checked = !item.checked) {
+      this.totalPrice =  this.totalPrice + parseFloat(item.price);
+    }
+    else{
+     this.totalPrice =  this.totalPrice - parseFloat(item.price);
+    }
+ }
+ patyamPayments(event,item){
+   if(this.totalPrice==0.00){
+       alert('Please check one');
    }
+   else{
+    this.paymentFormActive=true;
+   }
+ }
+
+  
+  getPaymentSettingsDetails(){
+    this.paytamService.getPaymentDetailsResponse(100).subscribe((data=>{
+        console.log(data)
+        this.paymentdetails_data = data
+    }
+    
+    ),
+  );
+}
+
  
 }

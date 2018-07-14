@@ -2,6 +2,15 @@
   <div class="row">
     <div class="col-md-6">
       <section class="get-in-touch">
+        <ul>
+
+          <li class="nav-item" *ngIf="!isLoggedin">
+            <a class="nav-link scroll" href="javascript:void(0)" (click)="openLogin()">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="isLoggedin">
+            <a class="nav-link scroll" href="javascript:void(0)">{{user_name}}</a>
+          </li>
+        </ul>
         <h1 class="title">
           <span> your own app</span> Get in 5 Minutes
         </h1>

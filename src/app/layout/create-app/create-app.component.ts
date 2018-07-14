@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-app',
@@ -16,17 +17,27 @@ export class CreateAppComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   isLinear = true;
+  haveBusinessName;
+  haveBusinessDescription;
   stepOne: FormGroup;
   stepTwo: FormGroup;
   stepThree: FormGroup;
   stepFour: FormGroup;
   stepFive: FormGroup;
+  stepFiveProductCat1: FormGroup;
+  stepFiveProductCat2: FormGroup;
+  stepSix: FormGroup;
+  stepSeven:FormGroup;
+  stepEight:FormGroup;
   category_list: any = [];
+  business_photo_arr = [];
 
   logoToUpload: File = null;
   ownerToUpload: File = null;
 
   storeCreateAppStep;
+
+  user_id;
 
   setp_one_data = {
     session_id: '',
@@ -37,24 +48,66 @@ export class CreateAppComponent implements OnInit {
     logo: '',
     business_name: '',
     business_description: '',
+    business_photos: [],
   }
 
   setp_three_data = {
-    username: '',
-    users_pic: '',
-    user_designation: '',
-    user_locality: '',
+    owner_name: '',
+    owner_pic: '',
+    owner_designation: ''
   }
 
   setp_four_data = {
-    business_photos: [],
-    established_year: '',
     website_url: ''
   }
 
   setp_five_data = {
-    mobile: '',
-    email: ''
+    product_categories: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        category_name: 'Generic Category',
+        description:''
+      }
+    ]
+  }
+
+  setp_five_data_cat_1 = {
+    products: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        product_category:'',
+        product_name: '',
+        price: '',
+        discounted_price: '',
+        packing_charges:'',
+        tags: '',
+      }
+    ]
+  }
+
+  setp_five_data_cat_2 = {
+    products: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        product_category:'',
+        product_name: '',
+        price: '',
+        discounted_price: '',
+        packing_charges:'',
+        tags: '',
+      }
+    ]
+  }
+
+
+  
+
+  setp_six_data = {
+    contact_no: '',
+    email_id: ''
   }
 
   base_url: string;
@@ -69,7 +122,10 @@ export class CreateAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.storeCreateAppStep = 0;
+    this.stepper.selectedIndex =  0;
+
     this.base_url = (this.platformLocation as any).location.origin;
 
     this.stepOne = this._formBuilder.group({
@@ -78,31 +134,43 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepTwo = this._formBuilder.group({
-      logo: [null],
+      logo: [''],
       business_name: ['', Validators.required],
-      business_description: ['', Validators.required]
+      business_description: [''],
+      business_photos: [''],
     });
 
     this.stepThree = this._formBuilder.group({
-      username: ['', Validators.required],
-      users_pic: [null, Validators.required],
-      user_designation: ['', Validators.required],
-      user_locality: ['', Validators.required]
+      owner_name: ['', Validators.required],
+      owner_pic: [''],
+      owner_designation: [''],
     });
 
 
     this.stepFour = this._formBuilder.group({
-      business_photos: [null, Validators.required],
-      established_year: ['', Validators.required],
+      business_photos: [''],
       website_url: ['', Validators.required]
     });
 
     this.stepFive = this._formBuilder.group({
-      email: ['', [
+      product_categories: this._formBuilder.array([this.createProductCategory('Generic Category')]),
+    });
+
+    this.stepFiveProductCat1 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
+
+    this.stepFiveProductCat2 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
+
+
+    this.stepSix = this._formBuilder.group({
+      email_id: ['', [
         Validators.required,
         Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
       ]],
-      mobile: ['', [
+      contact_no: ['', [
         Validators.required,
         Validators.minLength(10),
         Validators.maxLength(12)
@@ -116,32 +184,370 @@ export class CreateAppComponent implements OnInit {
     this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
 
     if (localStorage.getItem('storeCreateAppStep')) {
-      // this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
+      //alert(localStorage.getItem('storeCreateAppStep'));
+      //this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
+      //this.stepper.selectedIndex =  parseInt(this.storeCreateAppStep)
     }
-
-    this.stepper.selectedIndex = 0
 
     if (localStorage.getItem('storeCreateAppID')) {
-      this.getLocalAppDetails((localStorage.getItem('storeCreateAppID')));
+      this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
     }
 
-    //this.getCategoryList();
+    if (localStorage.getItem('storeSessionID')) {
+      this.getTempUserDetails(localStorage.getItem('storeSessionID'));
+    }
+
+    this.getCategoryList();
   }
 
-  getLocalAppDetails(id) {
-    this.createAppService.getLocalAppDetails(id).subscribe(
-      (data: any[]) => {
-        console.log(data);
+  submitCategory() {
+    //console.log(this.setp_five_data);
 
+    this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'),this.setp_five_data).subscribe(
+      response => {
+        console.log(response);
+        const control = <FormArray>this.stepFive.controls['product_categories'];
+        control.removeAt(1);
+        const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
+        control1.removeAt(1);
+        const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
+        control2.removeAt(1);
 
-        this.setp_one_data.app_category = data[0].app_category[0].app_category;
-        this.stepOne.patchValue({
-          app_category: data[0].app_category[0].app_category
+        this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
+
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
         });
 
-        this.setp_two_data.logo = data[0].logo;
-        this.setp_two_data.business_name = data[0].business_name;
-        this.setp_two_data.business_description = data[0].business_description;
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+  }
+
+  submitProduct(type: number) {
+    if (type == 0) {
+      var submitedData = this.setp_five_data_cat_1;
+    }
+    if (type == 1) {
+      var submitedData = this.setp_five_data_cat_2;
+    }
+
+    this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'),submitedData).subscribe(
+      response => {
+        console.log(response);
+
+        const control = <FormArray>this.stepFive.controls['product_categories'];
+        control.removeAt(1);
+
+        if (type == 0) {
+          const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
+          control1.removeAt(1);
+        }
+        if (type == 1) {
+          const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
+          control2.removeAt(1);
+        }
+        this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
+
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
+        });
+
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+  }
+  addProductCategory() {
+    var product_cate = {
+      id: null,
+      app_master: localStorage.getItem('storeCreateAppID'),
+      category_name: '',
+      description:''
+    }
+    // this.setp_five_data.product_categories.push(product_cate)
+
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.push(this.createProductCategory(''));
+  }
+
+  deleteProductCategory(index: number) {
+    if (index > -1) {
+      this.setp_five_data.product_categories.splice(index, 1)
+    }
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.removeAt(index);
+  }
+  createProductCategory(categoryName) {
+    return this._formBuilder.group({
+      category_name: [categoryName, Validators.required]
+    });
+  }
+
+  geCategory(form) {
+    //console.log(form.get('product_categories').controls.length)
+    return form.get('product_categories').controls
+  }
+
+  getProduct(form) {
+    return form.get('products').controls
+  }
+
+
+
+  addProduct(type: number,product_cat_id) {
+    
+    var prod = {
+      id:null,
+      app_master: localStorage.getItem('storeCreateAppID'),
+      product_category:product_cat_id,
+      product_name: '',
+      price: '',
+      discounted_price: '',
+      packing_charges:'',
+      tags: '',
+    
+    }
+
+    if (type == 0) {
+      this.setp_five_data_cat_1.products.push(prod);
+      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
+      control.push(this.createProduct());
+    }
+    if (type == 1) {
+      this.setp_five_data_cat_2.products.push(prod);
+      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
+      control.push(this.createProduct());
+    }
+  }
+
+  deleteProduct(index: number, type: number) {
+    if (type == 0) {
+      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
+      control.removeAt(index);
+    }
+    if (type == 1) {
+      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
+      control.removeAt(index);
+    }
+
+  }
+
+  createProduct() {
+    return this._formBuilder.group({
+      product_name: ['', Validators.required],
+      price: ['', Validators.required],
+      discounted_price: [''],
+      packing_charges: [''],
+      tags: [''],
+    });
+  }
+
+  checkBusinessName() {
+
+    if (this.setp_two_data.business_name != null && this.setp_two_data.business_name.length > 0) {
+      this.haveBusinessName = true;
+    }
+    else {
+      this.haveBusinessName = false;
+    }
+  }
+
+  checkBusinessDescription() {
+
+    if (this.setp_two_data.business_description != null && this.setp_two_data.business_description.length > 0) {
+      this.haveBusinessDescription = true;
+    }
+    else {
+      this.haveBusinessDescription = false;
+    }
+  }
+
+  getTempUserDetails(id) {
+    this.createAppService.getTempUserDetails(id).subscribe(
+      (data: any[]) => {
+        console.log(data);
+        if (data.length > 0) {
+          this.setp_three_data.owner_pic = data[0].owner_pic;
+          this.setp_three_data.owner_name = data[0].owner_name;
+          this.setp_three_data.owner_designation = data[0].owner_designation;
+          this.user_id = data[0].id;
+        }
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  };
+
+
+  getTempAppDetails(id) {
+    this.createAppService.getTempAppDetails(id).subscribe(
+      (data: any[]) => {
+        console.log(data);
+        if (data.length > 0) {
+          this.setp_one_data.app_category = data[0].app_category.id;
+          this.stepOne.patchValue({
+            app_category: data[0].app_category.id
+          });
+
+          this.setp_two_data.logo = data[0].appmaster.logo;
+          this.setp_two_data.business_name = data[0].appmaster.business_name;
+          if(!this.setp_two_data.business_name)
+          {
+          this.haveBusinessName=true;
+          }
+          
+
+          this.setp_two_data.business_description = data[0].appmaster.business_description;
+
+          if(!this.setp_two_data.business_description)
+          {
+          this.haveBusinessDescription=true;
+          }
+
+         
+          this.setp_four_data.website_url = data[0].appmaster.app_url;
+
+          for(var i=0;i<data[0].app_imgs.length; i++)
+          {
+            var business_img_url = environment.urlEndpoint+data[0].app_imgs[i].app_img;
+            this.setp_two_data.business_photos.push(business_img_url)
+          }
+
+          if(data[0].product_details.length>0)
+          {
+            this.setp_five_data.product_categories = [];
+            const category_control = <FormArray>this.stepFive.controls['product_categories'];
+            
+            for(var i=0; i<data[0].product_details.length; i++)
+            { 
+              if(i<data[0].product_details.length-1)
+              {
+              category_control.push(this.createProductCategory(''));
+              }
+
+              var prod_cat = {
+                  id: data[0].product_details[i].id,
+                  app_master: id,
+                  category_name: data[0].product_details[i].category_name,
+                  description:''
+                  
+              }
+              this.setp_five_data.product_categories.push(prod_cat);
+
+
+              if(i==0)
+              {
+                this.setp_five_data_cat_1.products = [];
+                const product_control_one = <FormArray>this.stepFiveProductCat1.controls['products'];
+                if(data[0].product_details[i].products.length>0)
+                {
+                  for(var j=0; j<data[0].product_details[i].products.length;j++)
+                  {
+                    if(j<data[0].product_details[i].products.length-1)
+                    {
+                      product_control_one.push(this.createProduct());
+                    }
+                    
+                    var prod = {
+                        id: data[0].product_details[i].products[j].id,
+                        app_master: localStorage.getItem('storeCreateAppID'),
+                        product_category:data[0].product_details[i].id,
+                        product_name: data[0].product_details[i].products[j].product_name,
+                        price: data[0].product_details[i].products[j].price,
+                        discounted_price: data[0].product_details[i].products[j].discounted_price,
+                        packing_charges:data[0].product_details[i].products[j].packing_charges,
+                        tags: data[0].product_details[i].products[j].tags,
+                      
+                    }
+                    this.setp_five_data_cat_1.products.push(prod);
+                  }
+                  
+                }
+                else{
+                  this.setp_five_data_cat_1 = {
+                    products: [
+                      {
+                        id: null,
+                        app_master: localStorage.getItem('storeCreateAppID'),
+                        product_category:data[0].product_details[i].id,
+                        product_name: '',
+                        price: '',
+                        discounted_price: '',
+                        packing_charges:'',
+                        tags: '',
+                      }
+                    ]
+                  }
+                }
+                
+              }
+
+              if(i==1)
+              {
+                this.setp_five_data_cat_2.products = [];
+                const product_control_two = <FormArray>this.stepFiveProductCat2.controls['products'];
+                if(data[0].product_details[i].products.length>0)
+                {
+                  for(var j=0; j<data[0].product_details[i].products.length;j++)
+                  {
+                    if(j<data[0].product_details[i].products.length-1)
+                    {
+                      product_control_two.push(this.createProduct());
+                    }
+                    
+                    var prod = {
+                        id: data[0].product_details[i].products[j].id,
+                        app_master: localStorage.getItem('storeCreateAppID'),
+                        product_category:data[0].product_details[i].id,
+                        product_name: data[0].product_details[i].products[j].product_name,
+                        price: data[0].product_details[i].products[j].price,
+                        discounted_price: data[0].product_details[i].products[j].discounted_price,
+                        packing_charges:data[0].product_details[i].products[j].packing_charges,
+                        tags: data[0].product_details[i].products[j].tags,
+                      
+                    }
+                    this.setp_five_data_cat_2.products.push(prod);
+                  }
+                  
+                }
+                else{
+                  this.setp_five_data_cat_2 = {
+                    products: [
+                      {
+                        id: null,
+                        app_master: localStorage.getItem('storeCreateAppID'),
+                        product_category:data[0].product_details[i].id,
+                        product_name: '',
+                        price: '',
+                        discounted_price: '',
+                        packing_charges:'',
+                        tags: '',
+                      }
+                    ]
+                  }
+                }
+                
+              }
+            }
+          }
+
+        
+
+          
+        }
 
         // = {
         // logo:data.logo,
@@ -217,7 +623,7 @@ export class CreateAppComponent implements OnInit {
       this.ownerToUpload = file;
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
-        this.setp_three_data.users_pic = event.target.result;
+        this.setp_three_data.owner_pic = event.target.result;
         // this.stepThree.patchValue({
         //   owner_logo: reader.result
         // });
@@ -232,8 +638,9 @@ export class CreateAppComponent implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         const reader = new FileReader();
         reader.onload = (event: any) => {
-          this.setp_four_data.business_photos.push(event.target.result)
+          this.setp_two_data.business_photos.push(event.target.result)
         }
+        this.business_photo_arr.push(event.target.files[i]);
         reader.readAsDataURL(event.target.files[i]);
       }
       // need to run CD since file load runs outside of zone
@@ -249,21 +656,27 @@ export class CreateAppComponent implements OnInit {
     });
   }
 
-  getWebUrl(url: string) {
-    this.setp_four_data.website_url = url;
+  getSuggestedUrl(url: string) {
+    return url.replace(/\s/g, "").toLowerCase();
   }
+
+  getWebUrl(url: string) {
+    this.setp_four_data.website_url = url.replace(/\s/g, "").toLowerCase();
+  }
+
+
 
   submitStepOne() {
     if (this.stepOne.valid) {
 
       if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
+        this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           app_category: this.stepOne.value.app_category
         }
 
-        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'),data).subscribe(
+        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'), data).subscribe(
           response => {
             this.toastr.success('Success', '', {
               timeOut: 3000,
@@ -278,15 +691,16 @@ export class CreateAppComponent implements OnInit {
         );
       }
       else {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
+        this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
         localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           session_id: this.stepOne.value.session_id,
-          app_category: [{ app_category: this.stepOne.value.app_category }]
+          app_category: this.stepOne.value.app_category
         }
 
         this.createAppService.createTempApp(data).subscribe(
           response => {
+            console.log(response);
             localStorage.setItem('storeCreateAppID', response.id);
             this.toastr.success('Success', '', {
               timeOut: 3000,
@@ -302,7 +716,7 @@ export class CreateAppComponent implements OnInit {
       }
     }
     else {
-      this.toastr.error('Please select a category', '', {
+      this.toastr.error('Please select a app type', '', {
         timeOut: 3000,
       });
       this.markFormGroupTouched(this.stepOne)
@@ -310,14 +724,33 @@ export class CreateAppComponent implements OnInit {
   }
 
   submitStepTwo() {
+
     if (this.stepTwo.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
-      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
       this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
+
+          this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
+          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
+
+          for (let i = 0; i < this.business_photo_arr.length; i++) {
+            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+              response => {
+                // this.toastr.success('Success2', '', {
+                //   timeOut: 3000,
+                // });
+              },
+              error => {
+                this.toastr.error('Something went wrong', '', {
+                  timeOut: 3000,
+                });
+              }
+            );
+          }
+
 
         },
         error => {
@@ -334,16 +767,10 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      let data = {
-        session_id: localStorage.getItem('storeSessionID'),
-        username: this.stepThree.value.owner_name,
-        user_locality: this.stepThree.value.business_locatioon,
-        user_designation: this.stepThree.value.owner_designation,
-        users_pic: this.stepThree.value.owner_logo,
-      }
-      this.createAppService.createLocalUser(localStorage.getItem('storeCreateAppID'), this.ownerToUpload, data).subscribe(
+
+      this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
-          this.storeCreateAppStep = this.storeCreateAppStep + 1;
+          this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
           this.toastr.success('Success', '', {
@@ -364,26 +791,72 @@ export class CreateAppComponent implements OnInit {
   }
 
   goToStep(value) {
-    this.storeCreateAppStep = value - 1;
+    this.storeCreateAppStep = parseInt(value) - 1;
+    //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+  }
+
+  nextStep(value)
+  {
+    this.storeCreateAppStep = parseInt(value) - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
   submitStepFour() {
     if (this.stepFour.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
+
+      var data = {
+        id: localStorage.getItem('storeCreateAppID'),
+        app_url: this.stepFour.value.website_url
+      }
+      this.createAppService.updateTempAppURL(data).subscribe(
+        response => {
+
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
 
     }
     else {
-      this.markFormGroupTouched(this.stepFour)
+
+      this.markFormGroupTouched(this.stepFive)
     }
   }
 
-  submitStepFive() {
-    if (this.stepFive.valid) {
+  submitStepSix() {
+    if (this.stepSix.valid) {
+      let data = {
+        id: this.user_id,
+        email_id: this.stepSix.value.email_id,
+        contact_no: this.stepSix.value.contact_no
+      }
+      this.createAppService.createOriginalApp(data).subscribe(
+        response => {
+          // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+          localStorage.removeItem('storeCreateAppID');
+          localStorage.removeItem('storeCreateAppStep');
+          localStorage.removeItem('storeSessionID');
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
 
     }
     else {
-      this.markFormGroupTouched(this.stepFive)
+      this.markFormGroupTouched(this.stepSix)
     }
   }
 }
