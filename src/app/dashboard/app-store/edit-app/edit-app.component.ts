@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { ActivatedRoute,Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-app',
@@ -13,54 +14,79 @@ import { PlatformLocation } from '@angular/common';
 })
 export class EditAppComponent implements OnInit {
 
-  @ViewChild('stepper') stepper: MatStepper;
-
-  isLinear = true;
   stepOne: FormGroup;
-  stepTwo: FormGroup;
-  stepThree: FormGroup;
   stepFour: FormGroup;
   stepFive: FormGroup;
-  category_list: any = [];
+  stepFiveProductCat1: FormGroup;
+  stepFiveProductCat2: FormGroup;
 
+  haveBusinessName;
+  haveBusinessDescription;
+  category_list: any = [];
+  business_photo_arr = [];
+  designations = [];
   logoToUpload: File = null;
   ownerToUpload: File = null;
-
-  storeCreateAppStep;
-
-  setp_one_data = {
-    session_id: '',
-    app_category: ''
-  }
-
-  setp_two_data = {
+  
+  step_one_data = {
     logo: '',
     business_name: '',
     business_description: '',
-  }
-
-  setp_three_data = {
-    owner_name: '',
-    owner_logo: '',
-    owner_designation: '',
-    business_locatioon: '',
-  }
-
-  setp_four_data = {
     business_photos: [],
-    established_year: '',
+  }
+
+  step_four_data = {
     website_url: ''
   }
 
-  setp_five_data = {
-    mobile: '',
-    email: ''
+  step_five_data = {
+    product_categories: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        category_name: 'Generic Category',
+        description:''
+      }
+    ]
+  }
+
+  step_five_data_cat_1 = {
+    products: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        product_category:'',
+        product_name: '',
+        price: '',
+        discounted_price: '',
+        packing_charges:'',
+        tags: '',
+      }
+    ]
+  }
+  step_five_data_cat_2 = {
+    products: [
+      {
+        id: null,
+        app_master: localStorage.getItem('storeCreateAppID'),
+        product_category:'',
+        product_name: '',
+        price: '',
+        discounted_price: '',
+        packing_charges:'',
+        tags: '',
+      }
+    ]
   }
 
   base_url: string;
 
+  @ViewChild('stepper') stepper: MatStepper;
+
+  isLinear = true;
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private createAppService: CreateAppService,
     private cd: ChangeDetectorRef,
@@ -69,71 +95,362 @@ export class EditAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.storeCreateAppStep = 0;
+
     this.base_url = (this.platformLocation as any).location.origin;
-
     this.stepOne = this._formBuilder.group({
-      session_id: ['', Validators.required],
-      app_category: ['', Validators.required]
-    });
-
-    this.stepTwo = this._formBuilder.group({
-      logo: ['', Validators.required],
+      logo: [''],
       business_name: ['', Validators.required],
-      business_description: ['', Validators.required]
-    });
-
-    this.stepThree = this._formBuilder.group({
-      owner_name: ['', Validators.required],
-      owner_logo: [null, Validators.required],
-      owner_designation: ['', Validators.required],
-      business_locatioon: ['', Validators.required]
+      business_description: [''],
+      business_photos: [''],
     });
 
     this.stepFour = this._formBuilder.group({
-      business_photos: [null, Validators.required],
-      established_year: ['', Validators.required],
+      business_photos: [''],
       website_url: ['', Validators.required]
     });
 
     this.stepFive = this._formBuilder.group({
-      email: ['', [
-        Validators.required,
-        Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
-      ]],
-      mobile: ['', [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(12)
-      ]],
+      product_categories: this._formBuilder.array([this.createProductCategory('Generic Category')]),
     });
 
-    this.stepOne.patchValue({
-      session_id: localStorage.getItem('storeSessionID')
+    this.stepFiveProductCat1 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
     });
 
-    this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
+    this.stepFiveProductCat2 = this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
 
-    if (localStorage.getItem('storeCreateAppStep')) {
-      this.stepper.selectedIndex = +localStorage.getItem('storeCreateAppStep')
-    }
-
-    this.getCategoryList();
+    this.getAppDetails(this.route.snapshot.params['id']);
   }
 
-  btnClickNav(toNav) {
-    this.router.navigateByUrl('/' + toNav);
-  };
+  getAppDetails(id)
+  {
+    this.createAppService.getAppDetails(id).subscribe(
+      data => {
+        console.log(data);
 
-  getCategoryList() {
-    this.createAppService.getCategoryList().subscribe(
-      res => {
-        this.category_list = res;
+        this.step_one_data.logo = data.logo;
+        this.step_one_data.business_name = data.business_name;
+        if(!this.step_one_data.business_name)
+        {
+        this.haveBusinessName=true;
+        }
+        
+
+        this.step_one_data.business_description = data.business_description;
+
+        if(!this.step_one_data.business_description)
+        {
+        this.haveBusinessDescription=true;
+        }
+
+        
+        this.step_four_data.website_url = data.app_url;
+
+        for(var i=0;i<data.app_imgs.length; i++)
+        {
+          var business_img_url = environment.urlEndpoint+data.app_imgs[i].app_img;
+          this.step_one_data.business_photos.push(business_img_url)
+        }
+
       },
       error => {
-        console.log(error)
+
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
       }
-    )
+    );
+  }
+  submitCategory() {
+    
+
+    this.createAppService.editOrgProductCategory(this.route.snapshot.params['id'],this.step_five_data).subscribe(
+      response => {
+        console.log(response);
+        const control = <FormArray>this.stepFive.controls['product_categories'];
+        control.removeAt(1);
+        const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
+        control1.removeAt(1);
+        const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
+        control2.removeAt(1);
+
+        
+
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
+        });
+
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+  }
+
+  submitProduct(type: number) {
+    if (type == 0) {
+      var submitedData = this.step_five_data_cat_1;
+    }
+    if (type == 1) {
+      var submitedData = this.step_five_data_cat_2;
+    }
+
+    this.createAppService.editOrgProduct(this.route.snapshot.params['id'],submitedData).subscribe(
+      response => {
+        console.log(response);
+
+        const control = <FormArray>this.stepFive.controls['product_categories'];
+        control.removeAt(1);
+
+        if (type == 0) {
+          const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
+          control1.removeAt(1);
+        }
+        if (type == 1) {
+          const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
+          control2.removeAt(1);
+        }
+       
+
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
+        });
+
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+  }
+
+  addProductCategory() {
+    var product_cate = {
+      id: null,
+      app_master: localStorage.getItem('storeCreateAppID'),
+      category_name: '',
+      description:''
+    }
+    
+
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.push(this.createProductCategory(''));
+  }
+
+  deleteProductCategory(index: number) {
+    if (index > -1) {
+      this.step_five_data.product_categories.splice(index, 1)
+    }
+    const control = <FormArray>this.stepFive.controls['product_categories'];
+    control.removeAt(index);
+  }
+
+  createProductCategory(categoryName) {
+    return this._formBuilder.group({
+      category_name: [categoryName, Validators.required]
+    });
+  }
+
+  geCategory(form) {
+    return form.get('product_categories').controls
+  }
+
+  getProduct(form) {
+    return form.get('products').controls
+  }
+
+
+
+  addProduct(type: number,product_cat_id) {
+    
+    var prod = {
+      id:null,
+      app_master: localStorage.getItem('storeCreateAppID'),
+      product_category:product_cat_id,
+      product_name: '',
+      price: '',
+      discounted_price: '',
+      packing_charges:'',
+      tags: '',
+    
+    }
+
+    if (type == 0) {
+      this.step_five_data_cat_1.products.push(prod);
+      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
+      control.push(this.createProduct());
+    }
+    if (type == 1) {
+      this.step_five_data_cat_2.products.push(prod);
+      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
+      control.push(this.createProduct());
+    }
+  }
+
+  deleteProduct(index: number, type: number) {
+    if (type == 0) {
+      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
+      control.removeAt(index);
+    }
+    if (type == 1) {
+      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
+      control.removeAt(index);
+    }
+
+  }
+
+  createProduct() {
+    return this._formBuilder.group({
+      product_name: ['', Validators.required],
+      price: ['', Validators.required],
+      discounted_price: [''],
+      packing_charges: [''],
+      tags: [''],
+    });
+  }
+
+
+  submitStepOne() {
+
+    if (this.stepOne.valid) {
+
+      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepOne.value).subscribe(
+        response => {
+
+         
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+
+          for (let i = 0; i < this.business_photo_arr.length; i++) {
+            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+              response => {
+               
+              },
+              error => {
+                this.toastr.error('Something went wrong', '', {
+                  timeOut: 3000,
+                });
+              }
+            );
+          }
+
+
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    else {
+      this.markFormGroupTouched(this.stepOne)
+    }
+  }
+
+  submitStepFour() {
+    if (this.stepFour.valid) {
+
+      var data = {
+        id: this.route.snapshot.params['id'],
+        app_url: this.stepFour.value.website_url
+      }
+      this.createAppService.updateOrgAppURL(data).subscribe(
+        response => {
+
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+
+    }
+    else {
+
+      this.markFormGroupTouched(this.stepFive)
+    }
+  }
+
+  goToStep(value) {
+    // this.storeCreateAppStep = parseInt(value) - 1;
+    //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+  }
+
+  nextStep(value)
+  {
+    // this.storeCreateAppStep = parseInt(value) - 1;
+    // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+  }
+
+  appLogoChange(logofile: FileList) {
+    const reader = new FileReader();
+    if (logofile && logofile.length) {
+      const file = logofile.item(0);
+      this.logoToUpload = file;
+      reader.readAsDataURL(file);
+      reader.onload = (event: any) => {
+        this.step_one_data.logo = event.target.result;
+        // this.stepTwo.patchValue({
+        //   logo: reader.result
+        // });
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  businessPhotoChange(event) {
+    if (event.target.files && event.target.files.length) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.step_one_data.business_photos.push(event.target.result)
+        }
+        this.business_photo_arr.push(event.target.files[i]);
+        reader.readAsDataURL(event.target.files[i]);
+      }
+      // need to run CD since file load runs outside of zone
+      this.cd.markForCheck();
+
+    }
+  }
+
+  checkBusinessName() {
+
+    if (this.step_one_data.business_name != null && this.step_one_data.business_name.length > 0) {
+      this.haveBusinessName = true;
+    }
+    else {
+      this.haveBusinessName = false;
+    }
+  }
+
+  checkBusinessDescription() {
+
+    if (this.step_one_data.business_description != null && this.step_one_data.business_description.length > 0) {
+      this.haveBusinessDescription = true;
+    }
+    else {
+      this.haveBusinessDescription = false;
+    }
+  }
+
+  getSuggestedUrl(url: string) {
+    return url.replace(/\s/g, "").toLowerCase();
+  }
+
+  getWebUrl(url: string) {
+    this.step_four_data.website_url = url.replace(/\s/g, "").toLowerCase();
   }
 
   isFieldValid(form: FormGroup, field: string) {
@@ -154,204 +471,6 @@ export class EditAppComponent implements OnInit {
         control.controls.forEach(c => this.markFormGroupTouched(c));
       }
     });
-  }
-
-  appLogoChange(logofile: FileList) {
-    const reader = new FileReader();
-    if (logofile && logofile.length) {
-      const file = logofile.item(0);
-      this.logoToUpload = file;
-      reader.readAsDataURL(file);
-      reader.onload = (event: any) => {
-        this.setp_two_data.logo = event.target.result;
-        // this.stepTwo.patchValue({
-        //   logo: reader.result
-        // });
-        // need to run CD since file load runs outside of zone
-        this.cd.markForCheck();
-      };
-    }
-  }
-
-  ownerLogoChange(ownerfile: FileList) {
-    const reader = new FileReader();
-    if (ownerfile && ownerfile.length) {
-      const file = ownerfile.item(0);
-      this.ownerToUpload = file;
-      reader.readAsDataURL(file);
-      reader.onload = (event: any) => {
-        this.setp_three_data.owner_logo = event.target.result;
-        // this.stepThree.patchValue({
-        //   owner_logo: reader.result
-        // });
-        // need to run CD since file load runs outside of zone
-        this.cd.markForCheck();
-      };
-    }
-  }
-
-  businessPhotoChange(event) {
-    if (event.target.files && event.target.files.length) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-          this.setp_four_data.business_photos.push(event.target.result)
-        }
-        reader.readAsDataURL(event.target.files[i]);
-      }
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
-
-    }
-  }
-
-  categorySelect(id) {
-    this.setp_one_data.app_category = id
-    this.stepOne.patchValue({
-      app_category: id
-    });
-  }
-
-  getWebUrl(url: string) {
-    this.setp_four_data.website_url = url;
-  }
-
-  submitStepOne() {
-    if (this.stepOne.valid) {
-
-      if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
-        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-        let data = {
-          session_id: this.stepOne.value.session_id,
-          app_category: [{ app_category: this.stepOne.value.app_category }]
-        }
-
-        this.createAppService.createTempApp(data).subscribe(
-          response => {
-
-            this.toastr.success('Success', '', {
-              timeOut: 3000,
-            });
-
-          },
-          error => {
-            this.toastr.error('Something went wrong', '', {
-              timeOut: 3000,
-            });
-          }
-        );
-      }
-      else {
-        this.storeCreateAppStep = this.storeCreateAppStep + 1;
-        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-        let data = {
-          session_id: this.stepOne.value.session_id,
-          app_category: [{ app_category: this.stepOne.value.app_category }]
-        }
-
-        this.createAppService.createTempApp(data).subscribe(
-          response => {
-            localStorage.setItem('storeCreateAppID', response.id);
-            this.toastr.success('Success', '', {
-              timeOut: 3000,
-            });
-
-          },
-          error => {
-            this.toastr.error('Something went wrong', '', {
-              timeOut: 3000,
-            });
-          }
-        );
-      }
-    }
-    else {
-      this.toastr.error('Please select a category', '', {
-        timeOut: 3000,
-      });
-      this.markFormGroupTouched(this.stepOne)
-    }
-  }
-
-  submitStepTwo() {
-    if (this.stepTwo.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
-      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
-        response => {
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
-
-        },
-        error => {
-          this.toastr.error('Something went wrong', '', {
-            timeOut: 3000,
-          });
-        }
-      );
-    }
-    else {
-      this.markFormGroupTouched(this.stepTwo)
-    }
-  }
-
-  submitStepThree() {
-    if (this.stepThree.valid) {
-
-
-      let data = {
-        session_id: localStorage.getItem('storeSessionID'),
-        username: this.stepThree.value.owner_name,
-        user_locality: this.stepThree.value.business_locatioon,
-        user_designation: this.stepThree.value.owner_designation,
-        users_pic: this.stepThree.value.owner_logo,
-      }
-      this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'),this.ownerToUpload, data).subscribe(
-        response => {
-          this.storeCreateAppStep = this.storeCreateAppStep + 1;
-          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
-
-        },
-        error => {
-          this.toastr.error('Something went wrong', '', {
-            timeOut: 3000,
-          });
-        }
-      );
-    }
-    else {
-      this.markFormGroupTouched(this.stepThree)
-    }
-  }
-
-  goToStep(value) {
-    this.storeCreateAppStep = value - 1;
-    localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-  }
-
-  submitStepFour() {
-    if (this.stepFour.valid) {
-      this.storeCreateAppStep = this.storeCreateAppStep + 1;
-
-    }
-    else {
-      this.markFormGroupTouched(this.stepFour)
-    }
-  }
-
-  submitStepFive() {
-    if (this.stepFive.valid) {
-
-    }
-    else {
-      this.markFormGroupTouched(this.stepFive)
-    }
   }
 
 }

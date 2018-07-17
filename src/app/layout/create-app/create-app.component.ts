@@ -31,6 +31,7 @@ export class CreateAppComponent implements OnInit {
   stepEight:FormGroup;
   category_list: any = [];
   business_photo_arr = [];
+  designations = [];
 
   logoToUpload: File = null;
   ownerToUpload: File = null;
@@ -198,7 +199,23 @@ export class CreateAppComponent implements OnInit {
     }
 
     this.getCategoryList();
+    this.getDesignationDropdown();
   }
+
+  getDesignationDropdown()
+  {
+    this.createAppService.getDesignationDropdown().subscribe(
+      (data: any[]) => {
+        console.log(data);
+        this.designations = data;
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  };
 
   submitCategory() {
     //console.log(this.setp_five_data);
@@ -294,7 +311,6 @@ export class CreateAppComponent implements OnInit {
   }
 
   geCategory(form) {
-    //console.log(form.get('product_categories').controls.length)
     return form.get('product_categories').controls
   }
 
@@ -770,6 +786,7 @@ export class CreateAppComponent implements OnInit {
 
       this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
+          this.user_id = response.id;
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 

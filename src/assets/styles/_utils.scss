@@ -311,12 +311,37 @@ a:hover {
     box-shadow: -1px 0px 59px 10px rgba(0, 0, 0, 0.11);
 }
 
+
+.padding-0 {
+    padding: 0px;
+}
+
 .padding-5 {
     padding: 5px;
 }
 
 .padding-10 {
     padding: 10px;
+}
+
+.padding-15 {
+    padding: 15px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-30 {
+    padding: 30px;
+}
+
+.padding-40 {
+    padding: 40px;
+}
+
+.padding-50 {
+    padding: 50px;
 }
 
 .padding-top-10 {
@@ -327,11 +352,172 @@ a:hover {
     padding-top: 15px;
 }
 
-.broder-radius-5 {
-    border-radius: 5px;
-    ;
+.padding-bottom-10 {
+    padding-bottom: 10px;
 }
 
+.padding-bottom-15 {
+    padding-bottom: 15px;
+}
+
+.broder-radius-5 {
+    border-radius: 5px;
+}
+
+.broder-radius-8 {
+    border-radius: 8px;
+}
+
+.margin-top-10 {
+    margin-top: 10px
+}
+
+.margin-top-15 {
+    margin-top: 15px
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-30 {
+    margin-top: 30px
+}
+
+.margin-top-40 {
+    margin-top: 40px
+}
+
+.margin-top-50 {
+    margin-top: 50px
+}
+
+.margin-top-60 {
+    margin-top: 60px
+}
+
+.margin-top-70 {
+    margin-top: 70px
+}
+
+.margin-top-80 {
+    margin-top: 80px
+}
+
+.margin-top-90 {
+    margin-top: 90px
+}
+
+.margin-top-100 {
+    margin-top: 100px
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-30 {
+    margin-bottom: 30px;
+}
+
+.min-height-200 {
+    min-height: 200px;
+}
+
+.min-height-300 {
+    min-height: 300px;
+}
+
+.min-height-400 {
+    min-height: 400px;
+}
+
+.min-height-500 {
+    min-height: 500px;
+}
+
+.min-height-600 {
+    min-height: 600px;
+}
+
+.min-height-700 {
+    min-height: 700px;
+}
+
+.min-height-800 {
+    min-height: 800px;
+}
+
+.min-height-900 {
+    min-height: 900px;
+}
+
+.min-height-1000 {
+    min-height: 1000px;
+}
+
+.dased-broder {
+    border: 2px dashed #e8e4e4;
+}
+
+
+
+
+.font-size-8 {
+    font-size: 8px;
+}
+
+.font-size-10 {
+    font-size: 10px;
+}
+
+.font-size-12 {
+    font-size: 12px;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+
+.font-size-17 {
+    font-size: 17px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-22 {
+    font-size: 22px;
+}
+
+.font-size-24 {
+    font-size: 24px;
+}
+
+.font-size-23 {
+    font-size: 23px;
+}
+
+.font-size-26 {
+    font-size: 26px;
+}
+
+.grey-broder {
+    border-bottom: 2px solid #e8e4e4;
+}
+
+.grey-broder-top {
+    border-top: 2px solid #e8e4e4;
+}
+
+.opacity-color {
+    color: #e8e8e8;
+}
 .select-btn ul li {
     float: left;
     width: 107px;
@@ -509,15 +695,15 @@ a:hover {
 
 .btn-check {
     font-size: 12px;
-    position: absolute;
     display: inline-block;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    height: 36px;
-    left: 12px;
-    top: 13px;
+}
+
+.product-price .btn-check {
+    height: 24px;
 }
 
 .bg-white {
@@ -563,6 +749,148 @@ a:hover {
 .my-profile ul li a {
     color: #209fcb;
     font-size: 16px;
+}
+
+.product-sec {
+    background: #fff;
+    text-align: left;
+    webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 8px;
+}
+
+.product-sec img {
+    float: left;
+    width: 40px;
+    height: 44px;
+    padding-right: 15px;
+}
+
+.product-sec h4 {
+    margin: 0;
+    padding: 0;
+    color: #13b5f1;
+    font-weight: 500;
+}
+
+.product-sec a {
+    padding: 4px;
+    border-radius: 10px;
+    border: blanchedalmond;
+    font-size: 11px;
+    background-image: -webkit-gradient(linear, left top, right top, from(#3aa6fe), to(#49deff));
+    background-image: linear-gradient(90deg, #3aa6fe 0%, #49deff 100%);
+    color: #ffffff;
+}
+
+.dashdoard-sec h2 {
+    background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
+    background-image: linear-gradient(to right, #00aff0, #99dff9);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.round-btn {
+    background-image: -webkit-gradient(linear, left top, right top, from(#3aa6fe), to(#49deff));
+    background-image: linear-gradient(90deg, #3aa6fe 0%, #49deff 100%);
+    color: #ffffff;
+    padding: 5px 25px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 14px;
+    line-height: 7px;
+    padding: 9px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all .40s ease-out;
+    width: 30px;
+    height: 30px;
+    display: inherit;
+    position: absolute;
+    right: 0px;
+    top: 2px;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.my-profile img {
+    text-align: center;
+    display: block;
+}
+
+.my-profile h2 {
+    text-align: center;
+    background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
+    background-image: linear-gradient(to right, #00aff0, #99dff9);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.my-profile img {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.my-profile ul li {
+    width: 100%;
+    border-top: 1px solid #f0f0f0;
+    padding: 9px 10px;
+    text-align: center;
+}
+
+.my-profile ul li a {
+    color: #209fcb;
+    font-size: 16px;
+}
+
+.dashdoard-menu {
+    background: #209fcb;
+    padding: 16px 10px;
+}
+
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    top: 10px;
+    text-align: center;
+    right: 29px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0px;
+}
+
+.dropdown-content a {
+    width: 100%;
+    padding: 5px 0;
+    display: inline-block;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown img {
+    width: 30px;
+    height: 30px;
+}
+
+.dashdoard-menu h2 {
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    padding: 0;
+    margin: 0;
 }
 
 /************** START MATERIAL CUSTOM CSSS ************/
