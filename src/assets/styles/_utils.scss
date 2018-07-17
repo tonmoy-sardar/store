@@ -520,6 +520,51 @@ a:hover {
     top: 13px;
 }
 
+.bg-white {
+    background: #fff;
+}
+
+.box-shadow {
+    -webkit-box-shadow: -1px 0px 59px 10px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: -1px 0px 59px 10px rgba(0, 0, 0, 0.11);
+    box-shadow: -1px 0px 59px 10px rgba(0, 0, 0, 0.11);
+}
+
+.min-height-600 {
+    min-height: 600px;
+}
+
+.my-profile img {
+    text-align: center;
+    display: block;
+}
+
+.my-profile h2 {
+    text-align: center;
+    background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
+    background-image: linear-gradient(to right, #00aff0, #99dff9);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.my-profile img {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.my-profile ul li {
+    width: 100%;
+    border-top: 1px solid #f0f0f0;
+    padding: 9px 10px;
+    text-align: center;
+}
+
+.my-profile ul li a {
+    color: #209fcb;
+    font-size: 16px;
+}
+
 /************** START MATERIAL CUSTOM CSSS ************/
 
 .input-container {
