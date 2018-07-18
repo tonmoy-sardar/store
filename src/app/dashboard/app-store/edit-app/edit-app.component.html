@@ -71,7 +71,7 @@
                                 <img [src]="step_one_data.logo ?step_one_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
                                 <h1>{{step_one_data.business_name}}</h1>
                                 <div class="description ">
-                                    <span *ngIf="step_one_data.business_description != '' && step_one_data.business_description != null">Description</span>
+                                    
                                     <p>{{step_one_data.business_description}}</p>
                                 </div>
                                 <div class="sub-image" *ngIf="step_one_data.business_photos.length > 0">
@@ -92,7 +92,7 @@
     <mat-step [stepControl]="stepFive">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <section class="get-in-touch">
                             <h1 class="title">
                                 <span> your own app</span> Get in 5 Minutes
@@ -132,46 +132,41 @@
                             <div class="col-md-12">
                                 <mat-tab-group>
                                     <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of step_five_data.product_categories; let i = index;">
-                                        <div class="col-md-12" *ngIf="i == 0">
+                                        <div class="col-md-12" style="padding-top:10px; " *ngIf="i == 0">
                                             <form class="row" [formGroup]="stepFiveProductCat1">
                                                 <div class="col-md-12" formArrayName="products">
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-3">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput placeholder="product name" name="product_name" [(ngModel)]="step_five_data_cat_1.products[j].product_name"
+                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="step_five_data_cat_1.products[j].product_name"
                                                                             formControlName="product_name">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="price" [(ngModel)]="step_five_data_cat_1.products[j].price" name="price" formControlName="price">
+                                                                        <input matInput appOnlyNumber placeholder="Price" [(ngModel)]="step_five_data_cat_1.products[j].price" name="price" formControlName="price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="step_five_data_cat_1.products[j].discounted_price"
+                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="step_five_data_cat_1.products[j].discounted_price"
                                                                             name="discounted_price" formControlName="discounted_price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="step_five_data_cat_1.products[j].packing_charges"
+                                                                        <input matInput appOnlyNumber placeholder="Packing Charges" [(ngModel)]="step_five_data_cat_1.products[j].packing_charges"
                                                                             name="packing_charges" formControlName="packing_charges">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
                                                                         <input matInput placeholder="tags" [(ngModel)]="step_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-1">
                                                                     <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
                                                                     </a>
@@ -262,7 +257,7 @@
                             </div>
                         </section>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
     
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -327,7 +322,7 @@
                                     <div class="row">
                                        
                                         <div class="form-field align-center col-md-5">
-                                            <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
+                                            <button  class="round-g-btn" (click)="submitStepFour()">Next</button>
                                         </div>
                                     </div>
                                 </div>

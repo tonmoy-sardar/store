@@ -43,7 +43,7 @@ export class EditAppComponent implements OnInit {
     product_categories: [
       {
         id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
+        app_master: this.route.snapshot.params['id'],
         category_name: 'Generic Category',
         description:''
       }
@@ -54,7 +54,7 @@ export class EditAppComponent implements OnInit {
     products: [
       {
         id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
+        app_master: this.route.snapshot.params['id'],
         product_category:'',
         product_name: '',
         price: '',
@@ -68,7 +68,7 @@ export class EditAppComponent implements OnInit {
     products: [
       {
         id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
+        app_master: this.route.snapshot.params['id'],
         product_category:'',
         product_name: '',
         price: '',
@@ -153,6 +153,124 @@ export class EditAppComponent implements OnInit {
           var business_img_url = environment.urlEndpoint+data.app_imgs[i].app_img;
           this.step_one_data.business_photos.push(business_img_url)
         }
+        
+        if(data.app_product_categories.length>0)
+        {
+          this.step_five_data.product_categories = [];
+          const category_control = <FormArray>this.stepFive.controls['product_categories'];
+          
+          for(var i=0; i<data.app_product_categories.length; i++)
+          { 
+            if(i<data.app_product_categories.length-1)
+            {
+            category_control.push(this.createProductCategory(''));
+            }
+
+            var prod_cat = {
+                id: data.app_product_categories[i].id,
+                app_master: id,
+                category_name: data.app_product_categories[i].category_name,
+                description:''
+                
+            }
+            this.step_five_data.product_categories.push(prod_cat);
+
+
+            if(i==0)
+            {
+              this.step_five_data_cat_1.products = [];
+              const product_control_one = <FormArray>this.stepFiveProductCat1.controls['products'];
+              if(data.app_product_categories[i].products.length>0)
+              {
+                for(var j=0; j<data.app_product_categories[i].products.length;j++)
+                {
+                  if(j<data.app_product_categories[i].products.length-1)
+                  {
+                    product_control_one.push(this.createProduct());
+                  }
+                  
+                  var prod = {
+                      id: data.app_product_categories[i].products[j].id,
+                      app_master: this.route.snapshot.params['id'],
+                      product_category:data.app_product_categories[i].id,
+                      product_name: data.app_product_categories[i].products[j].product_name,
+                      price: data.app_product_categories[i].products[j].price,
+                      discounted_price: data.app_product_categories[i].products[j].discounted_price,
+                      packing_charges:data.app_product_categories[i].products[j].packing_charges,
+                      tags: data.app_product_categories[i].products[j].tags,
+                    
+                  }
+                  this.step_five_data_cat_1.products.push(prod);
+                }
+                
+              }
+              else{
+                this.step_five_data_cat_1 = {
+                  products: [
+                    {
+                      id: null,
+                      app_master: this.route.snapshot.params['id'],
+                      product_category:data.app_product_categories[i].id,
+                      product_name: '',
+                      price: '',
+                      discounted_price: '',
+                      packing_charges:'',
+                      tags: '',
+                    }
+                  ]
+                }
+              }
+              
+            }
+
+            if(i==1)
+            {
+              this.step_five_data_cat_2.products = [];
+              const product_control_two = <FormArray>this.stepFiveProductCat2.controls['products'];
+              if(data.app_product_categories[i].products.length>0)
+              {
+                for(var j=0; j<data.app_product_categories[i].products.length;j++)
+                {
+                  if(j<data.app_product_categories[i].products.length-1)
+                  {
+                    product_control_two.push(this.createProduct());
+                  }
+                  
+                  var prod = {
+                      id: data.app_product_categories[i].products[j].id,
+                      app_master: this.route.snapshot.params['id'],
+                      product_category:data.app_product_categories[i].id,
+                      product_name: data.app_product_categories[i].products[j].product_name,
+                      price: data.app_product_categories[i].products[j].price,
+                      discounted_price: data.app_product_categories[i].products[j].discounted_price,
+                      packing_charges:data.app_product_categories[i].products[j].packing_charges,
+                      tags: data.app_product_categories[i].products[j].tags,
+                    
+                  }
+                  this.step_five_data_cat_2.products.push(prod);
+                }
+                
+              }
+              else{
+                this.step_five_data_cat_2 = {
+                  products: [
+                    {
+                      id: null,
+                      app_master: this.route.snapshot.params['id'],
+                      product_category:data.app_product_categories[i].id,
+                      product_name: '',
+                      price: '',
+                      discounted_price: '',
+                      packing_charges:'',
+                      tags: '',
+                    }
+                  ]
+                }
+              }
+              
+            }
+          }
+        }
 
       },
       error => {
@@ -177,7 +295,8 @@ export class EditAppComponent implements OnInit {
         control2.removeAt(1);
 
         
-
+        this.getAppDetails(this.route.snapshot.params['id']);
+        
         this.toastr.success('Success', '', {
           timeOut: 3000,
         });
@@ -216,7 +335,7 @@ export class EditAppComponent implements OnInit {
           control2.removeAt(1);
         }
        
-
+        this.getAppDetails(this.route.snapshot.params['id']);
         this.toastr.success('Success', '', {
           timeOut: 3000,
         });
@@ -234,7 +353,7 @@ export class EditAppComponent implements OnInit {
   addProductCategory() {
     var product_cate = {
       id: null,
-      app_master: localStorage.getItem('storeCreateAppID'),
+      app_master: this.route.snapshot.params['id'],
       category_name: '',
       description:''
     }
@@ -272,7 +391,7 @@ export class EditAppComponent implements OnInit {
     
     var prod = {
       id:null,
-      app_master: localStorage.getItem('storeCreateAppID'),
+      app_master: this.route.snapshot.params['id'],
       product_category:product_cat_id,
       product_name: '',
       price: '',
@@ -321,7 +440,7 @@ export class EditAppComponent implements OnInit {
 
     if (this.stepOne.valid) {
 
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepOne.value).subscribe(
+      this.createAppService.updateAppStepOne(this.route.snapshot.params['id'], this.logoToUpload, this.stepOne.value).subscribe(
         response => {
 
          
@@ -330,7 +449,7 @@ export class EditAppComponent implements OnInit {
           });
 
           for (let i = 0; i < this.business_photo_arr.length; i++) {
-            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+            this.createAppService.uploadOrgBusinessImages(this.route.snapshot.params['id'], this.business_photo_arr[i]).subscribe(
               response => {
                
               },
@@ -365,6 +484,10 @@ export class EditAppComponent implements OnInit {
       }
       this.createAppService.updateOrgAppURL(data).subscribe(
         response => {
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
 
         },
         error => {
@@ -410,18 +533,26 @@ export class EditAppComponent implements OnInit {
   }
 
   businessPhotoChange(event) {
-    if (event.target.files && event.target.files.length) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-          this.step_one_data.business_photos.push(event.target.result)
+    if(event.target.files.length>3)
+    {
+      this.toastr.error('You can not upload more than three business images', '', {
+        timeOut: 3000,
+      });
+    }
+    else{
+      if (event.target.files && event.target.files.length) {
+        for (let i = 0; i < event.target.files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.step_one_data.business_photos.push(event.target.result)
+          }
+          this.business_photo_arr.push(event.target.files[i]);
+          reader.readAsDataURL(event.target.files[i]);
         }
-        this.business_photo_arr.push(event.target.files[i]);
-        reader.readAsDataURL(event.target.files[i]);
-      }
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
 
+      }
     }
   }
 

@@ -181,6 +181,46 @@ export class CreateAppService {
  
 
 
+  updateAppStepOne(app_id, logoToUpload,data): Observable<any> {
+    const formData: FormData = new FormData();
+    let logo;
+
+    if (data) {
+      for (let key in data) {
+        if(key!='logo' && key!='business_photos')
+        {
+          formData.append(key, data[key])
+        }
+      }
+    }
+
+    if (logoToUpload) {
+      logo = logoToUpload.name
+      formData.append('logo', logoToUpload, logo);
+    }
+
+    return this.http.put(environment.apiEndpoint + 'edit_applogo_&_appname/' + app_id + '/', formData)
+  }
+
+  uploadOrgBusinessImages(app_id, appImageToUpload): Observable<any> {
+
+    const formData: FormData = new FormData();
+    let app_images;
+
+
+    if (appImageToUpload) {
+      if (!app_images) {
+        app_images = appImageToUpload.name
+      }
+      formData.append('app_images', appImageToUpload, app_images);
+    }
+
+    formData.append('appmaster', app_id);
+
+    return this.http.post(environment.apiEndpoint + 'upload_multiple_imgs/', formData)
+
+  }
+  
 
 
 

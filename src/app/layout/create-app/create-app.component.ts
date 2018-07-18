@@ -230,7 +230,7 @@ export class CreateAppComponent implements OnInit {
         const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
         control2.removeAt(1);
 
-        this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
+        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
 
         this.toastr.success('Success', '', {
           timeOut: 3000,
@@ -269,7 +269,7 @@ export class CreateAppComponent implements OnInit {
           const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
           control2.removeAt(1);
         }
-        this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
+        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
 
         this.toastr.success('Success', '', {
           timeOut: 3000,
