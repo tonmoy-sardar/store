@@ -129,7 +129,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" *ngIf="step_five_data.product_categories[0].id!=null">
                                 <mat-tab-group>
                                     <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of step_five_data.product_categories; let i = index;">
                                         <div class="col-md-12" style="padding-top:10px; " *ngIf="i == 0">
@@ -190,41 +190,36 @@
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-3">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput placeholder="product name" name="product_name" [(ngModel)]="step_five_data_cat_2.products[j].product_name"
+                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="step_five_data_cat_2.products[j].product_name"
                                                                             formControlName="product_name">
     
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="price" name="price" [(ngModel)]="step_five_data_cat_2.products[j].price" formControlName="price">
+                                                                        <input matInput appOnlyNumber placeholder="Price" name="price" [(ngModel)]="step_five_data_cat_2.products[j].price" formControlName="price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="step_five_data_cat_2.products[j].discounted_price"
+                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="step_five_data_cat_2.products[j].discounted_price"
                                                                             name="discounted_price" formControlName="discounted_price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="step_five_data_cat_2.products[j].packing_charges"
+                                                                        <input matInput appOnlyNumber placeholder="Packing Charges" [(ngModel)]="step_five_data_cat_2.products[j].packing_charges"
                                                                             name="packing_charges" formControlName="packing_charges">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
-                                                                        <mat-icon matPrefix>info</mat-icon>
-                                                                        <input matInput placeholder="tags" name="tags" [(ngModel)]="step_five_data_cat_2.products[j].tags" formControlName="tags">
+                                                                        <input matInput placeholder="Tags" name="tags" [(ngModel)]="step_five_data_cat_2.products[j].tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-1">
                                                                     <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
                                                                     </a>

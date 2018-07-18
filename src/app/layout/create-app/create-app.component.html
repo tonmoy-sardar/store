@@ -236,7 +236,7 @@
     <mat-step [stepControl]="stepFive">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <section class="get-in-touch">
                         <h1 class="title">
                             <span> your own app</span> Get in 5 Minutes
@@ -269,11 +269,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="text-align: right">
-                                    <button class="round-g-btn" (click)="submitCategory()">Submit</button>
+                                    <button class="round-g-btn" (click)="submitCategory()">Submit </button>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" *ngIf="setp_five_data.product_categories[0].id!=null">
                             <mat-tab-group>
                                 <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of setp_five_data.product_categories; let i = index;">
                                     <div class="col-md-12" *ngIf="i == 0">
@@ -282,40 +282,40 @@
                                                 <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
                                                     <div class="col-md-12" [formGroupName]="j">
                                                         <div class="row">
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-3">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name"
+                                                                    
+                                                                    <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name"
                                                                         formControlName="product_name">
                                                                 </mat-form-field>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-2">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="price" [(ngModel)]="setp_five_data_cat_1.products[j].price" name="price" formControlName="price">
+                                                                    
+                                                                    <input matInput appOnlyNumber placeholder="Price" [(ngModel)]="setp_five_data_cat_1.products[j].price" name="price" formControlName="price">
                                                                 </mat-form-field>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-2">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price"
+                                                                    
+                                                                    <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price"
                                                                         name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-2">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges"
+                                                                    
+                                                                    <input matInput appOnlyNumber placeholder="Packing Charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges"
                                                                         name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-2">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="tags" [(ngModel)]="setp_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
+                                                                   
+                                                                    <input matInput placeholder="Tags" [(ngModel)]="setp_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
                                                                 </mat-form-field>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-1">
                                                                 <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                     <i class="fa fa-plus"></i>
                                                                 </a>
@@ -339,30 +339,30 @@
                                                 <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
                                                     <div class="col-md-12" [formGroupName]="j">
                                                         <div class="row">
-                                                            <div class="col-md-5">
+                                                            <div class="col-md-3">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_2.products[j].product_name"
+                                                                    
+                                                                    <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_2.products[j].product_name"
                                                                         formControlName="product_name">
 
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="price" name="price" [(ngModel)]="setp_five_data_cat_2.products[j].price" formControlName="price">
+                                                                    
+                                                                    <input matInput appOnlyNumber placeholder="Price" name="price" [(ngModel)]="setp_five_data_cat_2.products[j].price" formControlName="price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price"
+                                                                    
+                                                                    <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price"
                                                                         name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
-                                                                    <mat-icon matPrefix>info</mat-icon>
+                                                                    
                                                                     <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges"
                                                                         name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
@@ -370,7 +370,7 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="tags" name="tags" [(ngModel)]="setp_five_data_cat_2.products[j].tags" formControlName="tags">
+                                                                    <input matInput placeholder="Tags" name="Tags" [(ngModel)]="setp_five_data_cat_2.products[j].tags" formControlName="tags">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
@@ -406,7 +406,7 @@
                         </div>
                     </section>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
 
                     <div class="mob">
                         <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -568,171 +568,5 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="stepSeven">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7">
-                    <section class="get-in-touch">
-                        <div class="payment-btn bg-white box-shadow padding-10 min-height-400 broder-radius-5">
-                            <h1 class="font-size-26 ">Lock in your savings with a multi-year term.</h1>
-                            <div class="col-xs-3">
-                                <!-- required for floating -->
-                                <!-- Nav tabs -->
-                                <ul class="payment-tab nav nav-tabs tabs-left">
-                                    <li class="active">
-                                        <a href="#home" data-toggle="tab">Net banking</a>
-                                    </li>
-                                    <li>
-                                        <a href="#profile" data-toggle="tab">Debit card</a>
-                                    </li>
-                                    <li>
-                                        <a href="#messages" data-toggle="tab">Credit card</a>
-                                    </li>
-                                    <li>
-                                        <a href="#settings" data-toggle="tab">COD</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xs-9">
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="home">
-
-                                        <article class="card">
-                                            <div class="card-body p-5">
-                                                <p>
-                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-visa.png">
-                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-mastercard.png">
-                                                    <img src="http://bootstrap-ecommerce.com/main/images/icons/pay-american-ex.png">
-                                                </p>
-                                                <p class="alert alert-success">Some text success or error</p>
-
-                                                <form role="form">
-                                                    <div class="form-group">
-                                                        <label for="username">Full name (on the card)</label>
-                                                        <div class="">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                    <i class="fa fa-user"></i>
-                                                                </span>
-                                                            </div>
-                                                            <input type="text" class="form-control" name="username" placeholder="" required="">
-                                                        </div>
-                                                        <!-- input-group.// -->
-                                                    </div>
-                                                    <!-- form-group.// -->
-
-                                                    <div class="form-group">
-                                                        <label for="cardNumber">Card number</label>
-                                                        <div class="">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                    <i class="fa fa-credit-card"></i>
-                                                                </span>
-                                                            </div>
-                                                            <input type="text" class="form-control" name="cardNumber" placeholder="">
-                                                        </div>
-                                                        <!-- input-group.// -->
-                                                    </div>
-                                                    <!-- form-group.// -->
-
-                                                    <div class="row">
-                                                        <div class="col-sm-8">
-                                                            <div class="form-group">
-                                                                <label>
-                                                                    <span class="hidden-xs">Expiration</span>
-                                                                </label>
-                                                                <div class="form-inline">
-                                                                    <select class="form-control" style="width:45%">
-                                                                        <option>MM</option>
-                                                                        <option>01 - Janiary</option>
-                                                                        <option>02 - February</option>
-                                                                        <option>03 - February</option>
-                                                                    </select>
-                                                                    <span style="width:10%; text-align: center"> / </span>
-                                                                    <select class="form-control" style="width:45%">
-                                                                        <option>YY</option>
-                                                                        <option>2018</option>
-                                                                        <option>2019</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV
-                                                                    <i class="fa fa-question-circle"></i>
-                                                                </label>
-                                                                <input class="form-control" required="" type="text">
-                                                            </div>
-                                                            <!-- form-group.// -->
-                                                        </div>
-                                                    </div>
-                                                    <!-- row.// -->
-
-                                                    <div class="col-md-5 col-lg-offset-3">
-                                                        <button matStepperNext class="round-g-btn margin-top-20">Confirm</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- card-body.// -->
-                                        </article>
-                                        <!-- card.// -->
-                                    </div>
-                                    <div class="tab-pane" id="profile">Profile Tab.</div>
-                                    <div class="tab-pane" id="messages">Messages Tab.</div>
-                                    <div class="tab-pane" id="settings">Settings Tab.</div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-5">
-                    <div class="payment-btn bg-white box-shadow padding-10 min-height-400 broder-radius-5">
-                        <h1 class="font-size-26 ">Order summary</h1>
-                        <div class="product-price">
-                            <div class="price-line  margin-top-40   col-md-12 dased-broder broder-radius-5">
-                                <div class="row padding-15">
-
-
-                                    <div class="col-md-7 font-size-20">
-                                        Your Items
-                                        <ul class="list-small">
-                                            <li>
-                                                <span>1 month subcribtion</span>
-                                            </li>
-                                            <li>
-                                                <span>1 month IOS support</span>
-                                            </li>
-                                            <li>
-                                                <span>1 month IOS support</span>
-                                            </li>
-                                        </ul>
-
-
-                                    </div>
-                                    <div class="col-md-5 font-size-20">
-                                        ₹ 199.00/mo
-                                        <button matStepperNext class="round-g-btn margin-top-20">cash pay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </mat-step>
-    <mat-step [stepControl]="stepEight">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="font-size-26 ">Your app is successfully created</h1>
-                </div>
-            </div>
-        </div>
-    </mat-step>
+    
 </mat-horizontal-stepper>

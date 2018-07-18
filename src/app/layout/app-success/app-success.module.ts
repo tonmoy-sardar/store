@@ -4,10 +4,15 @@ import { CommonModule } from '@angular/common';
 import { AppSuccessRoutingModule } from './app-success-routing.module';
 import { AppSuccessComponent } from './app-success.component';
 
+// core
+import { CoreModule } from "../../core/core.module";
+
 @NgModule({
   imports: [
     CommonModule,
-    AppSuccessRoutingModule
+    AppSuccessRoutingModule,
+    CoreModule
+
   ],
   declarations: [AppSuccessComponent]
 })

@@ -863,6 +863,8 @@ export class CreateAppComponent implements OnInit {
             timeOut: 3000,
           });
 
+          this.btnClickNav('payment')
+
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -876,4 +878,8 @@ export class CreateAppComponent implements OnInit {
       this.markFormGroupTouched(this.stepSix)
     }
   }
+
+
+  
+
 }

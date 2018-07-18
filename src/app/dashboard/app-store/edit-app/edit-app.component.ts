@@ -489,6 +489,8 @@ export class EditAppComponent implements OnInit {
             timeOut: 3000,
           });
 
+          this.btnClickNav('app-success')
+
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -603,5 +605,9 @@ export class EditAppComponent implements OnInit {
       }
     });
   }
+
+  btnClickNav(toNav) {
+    this.router.navigateByUrl('/' + toNav);
+  };
 
 }
