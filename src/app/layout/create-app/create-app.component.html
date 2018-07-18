@@ -161,9 +161,18 @@
                                 </p>
                             </div>
                             <div class="form-field col col-md-12">
-                                <mat-form-field class="input-full-width">
+                                <!-- <mat-form-field class="input-full-width">
                                     <mat-icon matPrefix>perm_identity</mat-icon>
                                     <input matInput placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
+
+                                </mat-form-field> -->
+                                <mat-form-field>
+                                    <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(value)]="setp_three_data.owner_designation">
+                                        <mat-option *ngFor="let designation of designations" [value]="designation.id">
+                                            {{ designation.designation_name }}
+                                        </mat-option>
+                                        <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Owner Designation</mat-error>
+                                    </mat-select>
                                 </mat-form-field>
                                 <p class="btn-switch">
                                     <mat-slide-toggle></mat-slide-toggle>
@@ -209,10 +218,10 @@
                                 <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'" alt="">
 
                                 <h1>{{setp_three_data.owner_name}}</h1>
-                                <div class="description ">
+                                <!-- <div class="description ">
                                     <span *ngIf="setp_three_data.owner_designation != ''">Designation</span>
                                     <p>{{setp_three_data.owner_designation}}</p>
-                                </div>
+                                </div> -->
                                 <!-- <div class="description ">
                                     <span>Ex. Year</span>
                                     <p>{{setp_three_data.owner_name}}</p>
@@ -224,84 +233,7 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="stepFour">
-        <form [formGroup]="stepFour" class="contact-form row">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <section class="get-in-touch">
-                            <h1 class="title">
-                                <span> your own app</span> Get in 5 Minutes
-                            </h1>
-
-                            <div class="form-field col col-md-12">
-                                <mat-form-field class="input-full-width">
-                                    <mat-icon matPrefix>link</mat-icon>
-                                    <input matInput placeholder="Business URL" formControlName="website_url" [(ngModel)]="setp_four_data.website_url">
-                                    <mat-error *ngIf="isFieldValid(stepFour,'website_url')"> Please Enter Business URL</mat-error>
-                                </mat-form-field>
-                                <p class="btn-switch">
-                                    <mat-slide-toggle></mat-slide-toggle>
-                                </p>
-                            </div>
-                            <div class="form-field col col-md-12" style="padding-bottom: 20px;">
-
-                                <span>Choose your free Business URL:</span>
-                                <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_two_data.business_name)">{{getSuggestedUrl(base_url+'/'+setp_two_data.business_name)}}
-                                    <i class="fa fa-link" aria-hidden="true"></i>
-                                </a>
-
-
-                            </div>
-
-                            <!-- <div class="form-field col-md-12">
-                                <div class="upload-filed  oner-photo">
-
-                                    <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
-                                        multiple>
-                                    <p class="btn-switch">
-                                        <mat-slide-toggle></mat-slide-toggle>
-                                    </p>
-                                </div>
-                            </div> -->
-                            <div class="form-field col-md-12">
-                                <div class="row">
-                                    <div class="form-field  align-center col-md-5">
-                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(3)">Back</button>
-                                    </div>
-                                    <div class="form-field align-center col-md-5">
-                                        <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </section>
-                    </div>
-                    <div class="col-md-6">
-
-                        <div class="mob">
-                            <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
-                                <h1>{{setp_two_data.business_name}}</h1>
-
-                                <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
-                                    <ul>
-                                        <li *ngFor="let img of setp_two_data.business_photos">
-                                            <img [src]="img" alt="">
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </mat-step>
     <mat-step [stepControl]="stepFive">
-
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -337,7 +269,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="text-align: right">
-                                    <button  class="round-g-btn" (click)="submitCategory()">Submit</button>
+                                    <button class="round-g-btn" (click)="submitCategory()">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -353,7 +285,8 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name" formControlName="product_name">
+                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name"
+                                                                        formControlName="product_name">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
@@ -365,13 +298,15 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price"  [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
+                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price"
+                                                                        name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges"
+                                                                        name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
@@ -407,8 +342,9 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput placeholder="product name" name="product_name"  [(ngModel)]="setp_five_data_cat_2.products[j].product_name" formControlName="product_name">
-                                                                    
+                                                                    <input matInput placeholder="product name" name="product_name" [(ngModel)]="setp_five_data_cat_2.products[j].product_name"
+                                                                        formControlName="product_name">
+
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
@@ -420,13 +356,15 @@
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
+                                                                    <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price"
+                                                                        name="discounted_price" formControlName="discounted_price">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <mat-form-field class="input-full-width">
                                                                     <mat-icon matPrefix>info</mat-icon>
-                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
+                                                                    <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges"
+                                                                        name="packing_charges" formControlName="packing_charges">
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="col-md-5">
@@ -488,7 +426,82 @@
                 </div>
             </div>
         </div>
+    </mat-step>
+    <mat-step [stepControl]="stepFour">
+        <form [formGroup]="stepFour" class="contact-form row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <section class="get-in-touch">
+                            <h1 class="title">
+                                <span> your own app</span> Get in 5 Minutes
+                            </h1>
 
+                            <div class="form-field col col-md-12">
+                                <mat-form-field class="input-full-width">
+                                    <mat-icon matPrefix>link</mat-icon>
+                                    <input matInput placeholder="Business URL" formControlName="website_url" [(ngModel)]="setp_four_data.website_url">
+                                    <mat-error *ngIf="isFieldValid(stepFour,'website_url')"> Please Enter Business URL</mat-error>
+                                </mat-form-field>
+                                <p class="btn-switch">
+                                    <mat-slide-toggle></mat-slide-toggle>
+                                </p>
+                            </div>
+                            <div class="form-field col col-md-12" style="padding-bottom: 20px;">
+
+                                <span>Choose your free Business URL:</span>
+                                <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_two_data.business_name)">{{getSuggestedUrl(base_url+'/'+setp_two_data.business_name)}}
+                                    <i class="fa fa-link" aria-hidden="true"></i>
+                                </a>
+
+
+                            </div>
+
+                            <!-- <div class="form-field col-md-12">
+                                    <div class="upload-filed  oner-photo">
+    
+                                        <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
+                                            multiple>
+                                        <p class="btn-switch">
+                                            <mat-slide-toggle></mat-slide-toggle>
+                                        </p>
+                                    </div>
+                                </div> -->
+                            <div class="form-field col-md-12">
+                                <div class="row">
+                                    <div class="form-field  align-center col-md-5">
+                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(3)">Back</button>
+                                    </div>
+                                    <div class="form-field align-center col-md-5">
+                                        <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="mob">
+                            <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
+                                <h1>{{setp_two_data.business_name}}</h1>
+
+                                <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
+                                    <ul>
+                                        <li *ngFor="let img of setp_two_data.business_photos">
+                                            <img [src]="img" alt="">
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </mat-step>
     <mat-step [stepControl]="stepSix">
         <form [formGroup]="stepSix" class="contact-form row">
@@ -658,7 +671,7 @@
                                                     <!-- row.// -->
 
                                                     <div class="col-md-5 col-lg-offset-3">
-                                                            <button matStepperNext class="round-g-btn margin-top-20" >Confirm</button>
+                                                        <button matStepperNext class="round-g-btn margin-top-20">Confirm</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -702,7 +715,7 @@
                                     </div>
                                     <div class="col-md-5 font-size-20">
                                         ₹ 199.00/mo
-                                        <button matStepperNext class="round-g-btn margin-top-20" >cash pay</button>
+                                        <button matStepperNext class="round-g-btn margin-top-20">cash pay</button>
                                     </div>
                                 </div>
                             </div>

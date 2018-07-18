@@ -31,6 +31,11 @@ export class CreateAppService {
     return this.http.get(environment.apiEndpoint + 'create_app_details/' + id + '/')
   }
 
+  getAppDetails(id): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'app_all_details/' + id + '/')
+  }
+  
+
   logoUploadSection(id, logoToUpload, data): Observable<any> {
     const formData: FormData = new FormData();
     let logo;
@@ -116,6 +121,65 @@ export class CreateAppService {
   createProduct(id,data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'edit_product/' + id + '/', data)
   }
+
+  getDesignationDropdown(): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'dropdown_designations/')
+  }
+
+
+  getAppAnduserDetailsByUserID(id): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'app_and_user_details/' + id + '/')
+  }
+
+
+  editOrgProductCategory(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'org_product_categories_edit/' + id + '/', data)
+  }
+
+  editOrgProduct(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'org_product_edit/' + id + '/', data)
+  }
+
+  updateOrgAppURL(data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'insert_org_app_url/' + data.id + '/', data)
+  }
+
+
+  updateOrgAppStepOne(app_id, logoToUpload, appImageToUpload,data): Observable<any> {
+
+    const formData: FormData = new FormData();
+    let app_images;
+
+    let logo;
+
+    if (data) {
+      for (let key in data) {
+        if(key!='logo' && key!='business_photos')
+        {
+          formData.append(key, data[key])
+        }
+      }
+    }
+
+    if (logoToUpload) {
+      logo = logoToUpload.name
+      formData.append('logo', logoToUpload, logo);
+    }
+
+    if (appImageToUpload) {
+      if (!app_images) {
+        app_images = appImageToUpload.name
+      }
+      formData.append('app_images', appImageToUpload, app_images);
+    }
+
+    formData.append('app', app_id);
+
+    return this.http.post(environment.apiEndpoint + 'edit_step1_app_master/' + app_id + '/', formData)
+
+  }
+ 
+
 
 
 

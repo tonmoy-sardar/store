@@ -1,391 +1,360 @@
-<section class="sponsors-slider-section background-grey ">
-  <div class="container">
-    <div class="row">
-      <div class=" col-md-12 background-white broder-grey min-height-box">
-        <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
-          <mat-step [stepControl]="stepOne">
-            <form [formGroup]="stepOne">
-              <div class="row">
-                <div class="col-md-3 app-name text-color-dark font-weight-700 fontface-one">
-                  <h4>Edit Your Mini App </h4>
-                  <button matStepperNext class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft"
-                    data-wow-delay="400ms" (click)="submitStepOne()">Update Now</button>
-                </div>
-                <div class="col-md-9 catagory-btn">
-                  <ul *ngIf="category_list.length > 0">
-                    <li class="wow fadeInDown" data-wow-delay="400ms" *ngFor="let category of category_list">
-                      <a href="javascript:void(0)" (click)="categorySelect(category.id)" [ngClass]="{'selected': setp_one_data.app_category == category.id}">
-                        <img src="assets/images/resturent-btn.png" alt=""> {{category.category_name}}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="stepTwo">
-            <form [formGroup]="stepTwo" novalidate enctype="multipart/form-data">
-              <div class="row">
-                <div class="col-md-4">
-                  <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-android"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="discription">
-                            <h3 *ngIf="setp_two_data.business_description != ''">Description</h3>
-                            <p>{{setp_two_data.business_description}}</p>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-apple"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="discription">
-                            <h3 *ngIf="setp_two_data.business_description != ''">Description</h3>
-                            <p>{{setp_two_data.business_description}}</p>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+    <mat-step [stepControl]="stepOne" class="contact-form row">
+        <form [formGroup]="stepOne">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <section class="get-in-touch">
+                            <h1 class="title">
+                                <span> your own app</span> Get in 5 Minutes
+                            </h1>
+                            <div class="contact-form row">
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>card_travel</mat-icon>
+                                        <input class="form-control" matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="step_one_data.business_name"
+                                            (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
+                                        <mat-error *ngIf="isFieldValid(stepOne,'business_name')"> Please Enter Business Name</mat-error>
 
-                  </ngb-tabset>
+                                    </mat-form-field>
 
-                </div>
-                <div class="col-lg-8">
-                  <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Write Us</h3>
-                    <div class="contact-form-outer">
-                      <div class="row custom-input">
-                        <div class="col-md-6">
-                          <div class="contact-form-textfield  upload-defolt form-control" [ngClass]="displayFieldCss(stepTwo,'logo')">
-                            <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" />
-                          </div>
-                          <div class="invalid-feedback" *ngIf="isFieldValid(stepTwo,'logo')">
-                            Please select logo
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="contact-form-textfield padding-bottom-30">
-                            <input type="text" placeholder="Your Business Name" class="form-control paragraph-16" formControlName="business_name" [ngClass]="displayFieldCss(stepTwo,'business_name')"
-                              [(ngModel)]="setp_two_data.business_name">
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepTwo,'business_name')">
-                              Please Enter Business Name
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle [checked]="haveBusinessName"></mat-slide-toggle>
+                                    </p>
+                                </div>
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>info</mat-icon>
+                                        <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="step_one_data.business_description"
+                                            (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
+                                    </mat-form-field>
+
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle [checked]="haveBusinessDescription"></mat-slide-toggle>
+                                    </p>
+                                </div>
+                                
+                                <div class="form-field col-md-12">
+                                    <div class="upload-filed">
+                                        <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
+                                        <p class="btn-switch">
+                                            <mat-slide-toggle></mat-slide-toggle>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-field col-md-12">
+                                    <div class="upload-filed  business-photo">
+
+                                        <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
+                                            multiple>
+                                        <p class="btn-switch">
+                                            <mat-slide-toggle></mat-slide-toggle>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-field col-md-12">
+                                    <div class="row">
+                                        
+                                        <div class="form-field align-center col-md-5">
+                                            <button matStepperNext class="round-g-btn" (click)="submitStepOne()">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-
-                        <div class="col-md-12">
-                          <div class="contact-form-textfield padding-bottom-40">
-                            <textarea placeholder="Business Description" class="form-control paragraph-16" formControlName="business_description" [ngClass]="displayFieldCss(stepTwo,'business_description')"
-                              [(ngModel)]="setp_two_data.business_description"></textarea>
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepTwo,'business_description')">
-                              Please Enter Business Description
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center"
-                            (click)="goToStep(1)">Back</button>
-                          <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepTwo()">Next</button>
-                        </div>
-                      </div>
+                        </section>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="stepThree">
-            <form [formGroup]="stepThree" novalidate>
-              <div class="row">
-                <div class="col-md-4">
-                  <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-android"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="discription">
-                            <h3 *ngIf="setp_two_data.business_description != ''">Description</h3>
-                            <p>{{setp_two_data.business_description}}</p>
-                            <hr *ngIf="setp_three_data.business_locatioon != ''">
-                            <h3 *ngIf="setp_three_data.business_locatioon != ''">Business Location</h3>
-                            <span>{{setp_three_data.business_locatioon}}</span>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-apple"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="discription">
-                            <h3 *ngIf="setp_two_data.business_description != ''">Description</h3>
-                            <p>{{setp_two_data.business_description}}</p>
-                            <hr *ngIf="setp_three_data.business_locatioon != ''">
-                            <h3 *ngIf="setp_three_data.business_locatioon != ''">Business Location</h3>
-                            <span>{{setp_three_data.business_locatioon}}</span>
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-                  </ngb-tabset>
-                </div>
-                <div class="col-lg-8">
-                  <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 3</h3>
-                    <div class="contact-form-outer">
-                      <div class="row custom-input">
-                        <div class="col-md-6">
-                          <div class="contact-form-textfield padding-bottom-30 ">
-                            <input type="text" placeholder="Owner Name" class="form-control paragraph-16" formControlName="owner_name" [ngClass]="displayFieldCss(stepThree,'owner_name')"
-                              [(ngModel)]="setp_three_data.owner_name">
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepThree,'owner_name')">
-                              Please Enter Owner Name
+                    <div class="col-md-6">
+
+                        <div class="mob">
+                            <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+                                <img [src]="step_one_data.logo ?step_one_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
+                                <h1>{{step_one_data.business_name}}</h1>
+                                <div class="description ">
+                                    <span *ngIf="step_one_data.business_description != '' && step_one_data.business_description != null">Description</span>
+                                    <p>{{step_one_data.business_description}}</p>
+                                </div>
+                                <div class="sub-image" *ngIf="step_one_data.business_photos.length > 0">
+                                    <ul>
+                                        <li *ngFor="let img of step_one_data.business_photos">
+                                            <img [src]="img" alt="">
+                                        </li>
+                                    </ul>
+                                </div>
+                               
                             </div>
-                          </div>
                         </div>
-                        <div class="col-md-6 padding-bottom-30">
-                          <label class="lebel-form">Upload Owner Photo:</label>
-                          <div class="contact-form-textfield form-control upload-defolt" [ngClass]="displayFieldCss(stepThree,'owner_logo')">
-                            <input type="file" name="imageUpload" formControlName="owner_logo" (change)="ownerLogoChange($event.target.files)" />
-                          </div>
-                          <div class="invalid-feedback" *ngIf="isFieldValid(stepThree,'owner_logo')">
-                            Please select Owner Photo
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="contact-form-textfield padding-bottom-30 ">
-                            <input type="text" placeholder="Owner Designation" class="form-control paragraph-16" formControlName="owner_designation"
-                              [ngClass]="displayFieldCss(stepThree,'owner_designation')" [(ngModel)]="setp_three_data.owner_designation">
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepThree,'owner_designation')">
-                              Please Enter Owner Designation
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="contact-form-textfield padding-bottom-30 map-btn">
-                            <input type="text" placeholder="Business Location" class="form-control paragraph-16" formControlName="business_locatioon"
-                              [ngClass]="displayFieldCss(stepThree,'business_locatioon')" [(ngModel)]="setp_three_data.business_locatioon">
-                            <a href="#">
-                              <i class="fa fa-map" aria-hidden="true"></i>
-                            </a>
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepThree,'business_locatioon')">
-                              Please Enter Business Location
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center"
-                            (click)="goToStep(2)">Back</button>
-                          <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepThree()">Next</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="stepFour">
-            <form [formGroup]="stepFour" novalidate>
-              <div class="row">
-                <div class="col-md-4">
-                  <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-android"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
-                            <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-apple"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
-                            <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-
-                  </ngb-tabset>
-
-                </div>
-                <div class="col-lg-8">
-                  <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 4</h3>
-                    <div class="contact-form-outer">
-                      <div class="row custom-input">
-                        <div class="col-md-6 padding-bottom-30">
-                          <label class="lebel-form">Upload Some Business Photo:</label>
-                          <div class="contact-form-textfield form-control  upload-defolt" [ngClass]="displayFieldCss(stepFour,'business_photos')">
-                            <input type="file" name="gallery" formControlName="business_photos" multiple (change)="businessPhotoChange($event)" />
-                          </div>
-                          <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'business_photos')">
-                            Please select Business Photo
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <label class="lebel-form">Established In The Year:</label>
-                          <div class="contact-form-textfield padding-bottom-30 ">
-                            <input type="text" placeholder="Ex:2018" class="form-control paragraph-16" formControlName="established_year" [ngClass]="displayFieldCss(stepFour,'established_year')"
-                              [(ngModel)]="setp_four_data.established_year">
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'established_year')">
-                              Please Enter Established Year
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="stepFive">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <section class="get-in-touch">
+                            <h1 class="title">
+                                <span> your own app</span> Get in 5 Minutes
+                            </h1>
+                            <div class="col-md-12">
+                                <form [formGroup]="stepFive">
+                                    <div class="col-md-12" formArrayName="product_categories">
+                                        <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
+                                            <div class="col-md-12" [formGroupName]="i">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <mat-form-field class="input-full-width">
+                                                            <mat-icon matPrefix>info</mat-icon>
+                                                            <input matInput placeholder="Category" [(ngModel)]="step_five_data.product_categories[i].category_name" name="category_name"
+                                                                formControlName="category_name">
+                                                            <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                                            <i class="fa fa-times-circle fa-2"></i>
+                                                        </a>
+                                                    </div>
+    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="text-align: right">
+                                        <button class="round-g-btn" (click)="submitCategory()">Submit</button>
+                                    </div>
+                                </form>
                             </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12 padding-bottom-15 ">
-                          <label class="lebel-form">Choose your free website URL:</label>
-                          <div class="contact-form-textfield padding-bottom-15 ">
-                            <input type="text" class="form-control paragraph-16" formControlName="website_url" [ngClass]="displayFieldCss(stepFour,'website_url')"
-                              [(ngModel)]="setp_four_data.website_url">
-                            <div class="invalid-feedback" *ngIf="isFieldValid(stepFour,'website_url')">
-                              Choose your free website URL
+                            <div class="col-md-12">
+                                <mat-tab-group>
+                                    <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of step_five_data.product_categories; let i = index;">
+                                        <div class="col-md-12" *ngIf="i == 0">
+                                            <form class="row" [formGroup]="stepFiveProductCat1">
+                                                <div class="col-md-12" formArrayName="products">
+                                                    <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
+                                                        <div class="col-md-12" [formGroupName]="j">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput placeholder="product name" name="product_name" [(ngModel)]="step_five_data_cat_1.products[j].product_name"
+                                                                            formControlName="product_name">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="price" [(ngModel)]="step_five_data_cat_1.products[j].price" name="price" formControlName="price">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="step_five_data_cat_1.products[j].discounted_price"
+                                                                            name="discounted_price" formControlName="discounted_price">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="step_five_data_cat_1.products[j].packing_charges"
+                                                                            name="packing_charges" formControlName="packing_charges">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput placeholder="tags" [(ngModel)]="step_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </a>
+                                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" style="text-align: right">
+                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                </div>
+    
+                                            </form>
+                                        </div>
+                                        <div class="col-md-12" *ngIf="i == 1">
+                                            <form class="row" [formGroup]="stepFiveProductCat2">
+                                                <div class="col-md-12" formArrayName="products">
+                                                    <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
+                                                        <div class="col-md-12" [formGroupName]="j">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput placeholder="product name" name="product_name" [(ngModel)]="step_five_data_cat_2.products[j].product_name"
+                                                                            formControlName="product_name">
+    
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="price" name="price" [(ngModel)]="step_five_data_cat_2.products[j].price" formControlName="price">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="discounted price" [(ngModel)]="step_five_data_cat_2.products[j].discounted_price"
+                                                                            name="discounted_price" formControlName="discounted_price">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="step_five_data_cat_2.products[j].packing_charges"
+                                                                            name="packing_charges" formControlName="packing_charges">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <mat-form-field class="input-full-width">
+                                                                        <mat-icon matPrefix>info</mat-icon>
+                                                                        <input matInput placeholder="tags" name="tags" [(ngModel)]="step_five_data_cat_2.products[j].tags" formControlName="tags">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </a>
+                                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" style="text-align: right">
+                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </mat-tab>
+                                </mat-tab-group>
                             </div>
-                          </div>
-                          <div class="freelink">
-                            <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_two_data.business_name)">{{base_url}}/{{setp_two_data.business_name}}
-                              <i class="fa fa-link" aria-hidden="true"></i>
-                            </a>
-                            <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_three_data.business_locatioon)">{{base_url}}/{{setp_three_data.business_locatioon}}
-                              <i class="fa fa-link" aria-hidden="true"></i>
-                            </a>
-                            <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_three_data.business_locatioon+'/'+setp_two_data.business_name)">{{base_url}}/{{setp_three_data.business_locatioon}}/{{setp_two_data.business_name}}
-                              <i class="fa fa-link" aria-hidden="true"></i>
-                            </a>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center"
-                            (click)="goToStep(3)">Back</button>
-                          <button matStepperNext class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepFour()">Next</button>
-                        </div>
-                      </div>
-
+    
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="align-center col-md-5">
+                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
+                                    </div>
+                                    <div class="align-center col-md-5">
+                                        <button matStepperNext class="round-g-btn" (click)="nextStep(5)">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="stepFive">
-            <form [formGroup]="stepFive" novalidate>
-              <div class="row">
-                <div class="col-md-4">
-                  <ngb-tabset type="pills" orientation="horizontal" justify="center">
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-android"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane active mobo-theme android-mobo-theme mobo-custom " data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
-                            <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>
-                        <i class="fa fa-apple"></i>
-                      </ng-template>
-                      <ng-template ngbTabContent>
-                        <div class="tab-pane mobo-theme mobo-custom ios-mobo-theme" data-wow-delay="300ms">
-                          <img class="img-fluid" [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/defolt-logo.png'" alt="">
-                          <span>{{setp_two_data.business_name}}</span>
-                          <div class="busness-image" *ngIf="setp_four_data.business_photos.length > 0">
-                            <img [src]="img" alt="" *ngFor="let img of setp_four_data.business_photos">
-                          </div>
-                        </div>
-                      </ng-template>
-                    </ngb-tab>
-
-                  </ngb-tabset>
-
-                </div>
-                <div class="col-lg-8">
-                  <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
-                    <h3 class="text-color-dark font-weight-600 fontface-one padding-bottom-45">Step 5</h3>
-                    <div class="contact-form-outer">
-                      <div class="row custom-input">
-                        <div class="col-md-6">
-                          <label class="lebel-form">Validate 10 Digit Mobile Number:</label>
-                          <div class="contact-form-textfield padding-bottom-30 ">
-                            <input type="text" appOnlyNumber class="form-control paragraph-16" placeholder="Mobile Number" formControlName="mobile" [ngClass]="displayFieldCss(stepFive,'mobile')"
-                              [(ngModel)]="setp_five_data.mobile">
-                            <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('minlength') && !stepFive.get('mobile').hasError('required')">
-                              Please enter at least 10 digit
+                    <div class="col-md-6">
+    
+                        <div class="mob">
+                            <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+    
+                                <img [src]="step_one_data.logo ?step_one_data.logo : 'assets/images/resturent-logo.png'" alt="">
+    
+                                <h1>{{step_one_data.business_name}}</h1>
+                                <div class="description">
+    
+    
+                                </div>
+                                <div class="description ">
+    
+                                </div>
                             </div>
-                            <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('maxlength') && !stepFive.get('mobile').hasError('required')">
-                              Phone number should be less then 13 digit
-                            </div>
-                            <div class="invalid-feedback" *ngIf="stepFive.get('mobile').touched && stepFive.get('mobile').hasError('required')">
-                              Please enter phone
-                            </div>
-                          </div>
                         </div>
-                        <div class="col-md-6">
-                          <label class="lebel-form">Your Email Address: </label>
-                          <div class="contact-form-textfield padding-bottom-30 ">
-                            <input type="text" placeholder="shyamfuturetech@gmail.com" class="form-control paragraph-16" formControlName="email" [ngClass]="displayFieldCss(stepFive,'email')"
-                              [(ngModel)]="setp_five_data.email">
-                            <div class="invalid-feedback" *ngIf="stepFive.get('email').touched && stepFive.get('email').hasError('pattern')">
-                              Please enter a valid email address
-                            </div>
-                            <div class="invalid-feedback" *ngIf="stepFive.get('email').touched && stepFive.get('email').hasError('required')">
-                              Please enter email address
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-
-                          <button matStepperPrevious class="button-setting button-setting-primary background-secondary text-color-white  text-center"
-                            (click)="goToStep(4)">Back</button>
-                          <button class="button-setting button-setting-primary background-secondary text-color-white text-center" (click)="submitStepFive()">Conform</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="stepFour">
+            <form [formGroup]="stepFour" class="contact-form row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <section class="get-in-touch">
+                                <h1 class="title">
+                                    <span> your own app</span> Get in 5 Minutes
+                                </h1>
+    
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>link</mat-icon>
+                                        <input matInput placeholder="Business URL" formControlName="website_url" [(ngModel)]="step_four_data.website_url">
+                                        <mat-error *ngIf="isFieldValid(stepFour,'website_url')"> Please Enter Business URL</mat-error>
+                                    </mat-form-field>
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle></mat-slide-toggle>
+                                    </p>
+                                </div>
+                                <div class="form-field col col-md-12" style="padding-bottom: 20px;">
+    
+                                    <span>Choose your free Business URL:</span>
+                                    <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+step_one_data.business_name)">{{getSuggestedUrl(base_url+'/'+step_one_data.business_name)}}
+                                        <i class="fa fa-link" aria-hidden="true"></i>
+                                    </a>
+    
+    
+                                </div>
+    
+                                <!-- <div class="form-field col-md-12">
+                                        <div class="upload-filed  oner-photo">
+        
+                                            <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
+                                                multiple>
+                                            <p class="btn-switch">
+                                                <mat-slide-toggle></mat-slide-toggle>
+                                            </p>
+                                        </div>
+                                    </div> -->
+                                <div class="form-field col-md-12">
+                                    <div class="row">
+                                       
+                                        <div class="form-field align-center col-md-5">
+                                            <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </section>
+                        </div>
+                        <div class="col-md-6">
+    
+                            <div class="mob">
+                                <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+    
+                                    <img [src]="step_one_data.logo ?step_one_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
+                                    <h1>{{step_one_data.business_name}}</h1>
+    
+                                    <div class="sub-image" *ngIf="step_one_data.business_photos.length > 0">
+                                        <ul>
+                                            <li *ngFor="let img of step_one_data.business_photos">
+                                                <img [src]="img" alt="">
+                                            </li>
+                                        </ul>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
-          </mat-step>
-        </mat-horizontal-stepper>
-      </div>
-    </div>
-  </div>
-</section>
+        </mat-step>
+</mat-horizontal-stepper>
