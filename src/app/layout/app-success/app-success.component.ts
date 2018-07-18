@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 import { ViewChild, ElementRef, NgZone } from '@angular/core';
+//import { IpserviceService } from '../../core/services/ipservice';
 
 @Component({
   selector: 'app-app-success',
@@ -15,16 +16,30 @@ export class AppSuccessComponent implements OnInit {
   constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit() {
+
+    // var ipAddress = this.useripService.getIpAddress().subscribe(res => {
+    //   console.log(res.ip)
+    //   this.useripService.getLocation(res.ip);
+    // },
+    // error => {
+    //   console.log(error)
+    // });
+
     this.mapsAPILoader.load().then(
       () => {
         let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ["address"] });
-
+        console.log(autocomplete);
         autocomplete.addListener("place_changed", () => {
           this.ngZone.run(() => {
             let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+            console.log(lat);
+            console.log(lng);
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
+            
           });
         });
       }
