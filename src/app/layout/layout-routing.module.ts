@@ -14,7 +14,6 @@ const routes: Routes = [
     children: [
       { path: 'home', loadChildren: './home/home.module#HomeModule' },
       { path: 'create-app', loadChildren: './create-app/create-app.module#CreateAppModule' },
-      { path: 'paytam', loadChildren: './paytam/paytam.module#PaytamModule' },
       { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
       { path: 'app-success', loadChildren: './app-success/app-success.module#AppSuccessModule'}
     ]
