@@ -27,8 +27,8 @@ export class CreateAppComponent implements OnInit {
   stepFiveProductCat1: FormGroup;
   stepFiveProductCat2: FormGroup;
   stepSix: FormGroup;
-  stepSeven:FormGroup;
-  stepEight:FormGroup;
+  stepSeven: FormGroup;
+  stepEight: FormGroup;
   category_list: any = [];
   business_photo_arr = [];
   designations = [];
@@ -68,7 +68,7 @@ export class CreateAppComponent implements OnInit {
         id: null,
         app_master: localStorage.getItem('storeCreateAppID'),
         category_name: 'Generic Category',
-        description:''
+        description: ''
       }
     ]
   }
@@ -78,11 +78,11 @@ export class CreateAppComponent implements OnInit {
       {
         id: null,
         app_master: localStorage.getItem('storeCreateAppID'),
-        product_category:'',
+        product_category: '',
         product_name: '',
         price: '',
         discounted_price: '',
-        packing_charges:'',
+        packing_charges: '',
         tags: '',
       }
     ]
@@ -93,18 +93,18 @@ export class CreateAppComponent implements OnInit {
       {
         id: null,
         app_master: localStorage.getItem('storeCreateAppID'),
-        product_category:'',
+        product_category: '',
         product_name: '',
         price: '',
         discounted_price: '',
-        packing_charges:'',
+        packing_charges: '',
         tags: '',
       }
     ]
   }
 
 
-  
+
 
   setp_six_data = {
     contact_no: '',
@@ -125,7 +125,7 @@ export class CreateAppComponent implements OnInit {
   ngOnInit() {
 
     this.storeCreateAppStep = 0;
-    this.stepper.selectedIndex =  0;
+    this.stepper.selectedIndex = 0;
 
     this.base_url = (this.platformLocation as any).location.origin;
 
@@ -202,8 +202,7 @@ export class CreateAppComponent implements OnInit {
     this.getDesignationDropdown();
   }
 
-  getDesignationDropdown()
-  {
+  getDesignationDropdown() {
     this.createAppService.getDesignationDropdown().subscribe(
       (data: any[]) => {
         console.log(data);
@@ -220,7 +219,7 @@ export class CreateAppComponent implements OnInit {
   submitCategory() {
     //console.log(this.setp_five_data);
 
-    this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'),this.setp_five_data).subscribe(
+    this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'), this.setp_five_data).subscribe(
       response => {
         console.log(response);
         const control = <FormArray>this.stepFive.controls['product_categories'];
@@ -254,7 +253,7 @@ export class CreateAppComponent implements OnInit {
       var submitedData = this.setp_five_data_cat_2;
     }
 
-    this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'),submitedData).subscribe(
+    this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), submitedData).subscribe(
       response => {
         console.log(response);
 
@@ -289,9 +288,9 @@ export class CreateAppComponent implements OnInit {
       id: null,
       app_master: localStorage.getItem('storeCreateAppID'),
       category_name: '',
-      description:''
+      description: ''
     }
-    // this.setp_five_data.product_categories.push(product_cate)
+    this.setp_five_data.product_categories.push(product_cate)
 
     const control = <FormArray>this.stepFive.controls['product_categories'];
     control.push(this.createProductCategory(''));
@@ -320,18 +319,18 @@ export class CreateAppComponent implements OnInit {
 
 
 
-  addProduct(type: number,product_cat_id) {
-    
+  addProduct(type: number, product_cat_id) {
+
     var prod = {
-      id:null,
+      id: null,
       app_master: localStorage.getItem('storeCreateAppID'),
-      product_category:product_cat_id,
+      product_category: product_cat_id,
       product_name: '',
       price: '',
       discounted_price: '',
-      packing_charges:'',
+      packing_charges: '',
       tags: '',
-    
+
     }
 
     if (type == 0) {
@@ -420,149 +419,135 @@ export class CreateAppComponent implements OnInit {
 
           this.setp_two_data.logo = data[0].appmaster.logo;
           this.setp_two_data.business_name = data[0].appmaster.business_name;
-          if(!this.setp_two_data.business_name)
-          {
-          this.haveBusinessName=true;
+          if (!this.setp_two_data.business_name) {
+            this.haveBusinessName = true;
           }
-          
+
 
           this.setp_two_data.business_description = data[0].appmaster.business_description;
 
-          if(!this.setp_two_data.business_description)
-          {
-          this.haveBusinessDescription=true;
+          if (!this.setp_two_data.business_description) {
+            this.haveBusinessDescription = true;
           }
 
-         
-          this.setp_four_data.website_url = data[0].appmaster.app_url;
 
-          for(var i=0;i<data[0].app_imgs.length; i++)
-          {
-            var business_img_url = environment.urlEndpoint+data[0].app_imgs[i].app_img;
+          this.setp_four_data.website_url = data[0].appmaster.app_url;
+          this.setp_two_data.business_photos =[];
+          for (var i = 0; i < data[0].app_imgs.length; i++) {
+            var business_img_url = environment.urlEndpoint + data[0].app_imgs[i].app_img;
             this.setp_two_data.business_photos.push(business_img_url)
           }
 
-          if(data[0].product_details.length>0)
-          {
+          if (data[0].product_details.length > 0) {
             this.setp_five_data.product_categories = [];
             const category_control = <FormArray>this.stepFive.controls['product_categories'];
-            
-            for(var i=0; i<data[0].product_details.length; i++)
-            { 
-              if(i<data[0].product_details.length-1)
-              {
-              category_control.push(this.createProductCategory(''));
+
+            for (var i = 0; i < data[0].product_details.length; i++) {
+              if (i < data[0].product_details.length - 1) {
+                category_control.push(this.createProductCategory(''));
               }
 
               var prod_cat = {
-                  id: data[0].product_details[i].id,
-                  app_master: id,
-                  category_name: data[0].product_details[i].category_name,
-                  description:''
-                  
+                id: data[0].product_details[i].id,
+                app_master: id,
+                category_name: data[0].product_details[i].category_name,
+                description: ''
+
               }
               this.setp_five_data.product_categories.push(prod_cat);
 
 
-              if(i==0)
-              {
+              if (i == 0) {
                 this.setp_five_data_cat_1.products = [];
                 const product_control_one = <FormArray>this.stepFiveProductCat1.controls['products'];
-                if(data[0].product_details[i].products.length>0)
-                {
-                  for(var j=0; j<data[0].product_details[i].products.length;j++)
-                  {
-                    if(j<data[0].product_details[i].products.length-1)
-                    {
+                if (data[0].product_details[i].products.length > 0) {
+                  for (var j = 0; j < data[0].product_details[i].products.length; j++) {
+                    if (j < data[0].product_details[i].products.length - 1) {
                       product_control_one.push(this.createProduct());
                     }
-                    
+
                     var prod = {
-                        id: data[0].product_details[i].products[j].id,
-                        app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category:data[0].product_details[i].id,
-                        product_name: data[0].product_details[i].products[j].product_name,
-                        price: data[0].product_details[i].products[j].price,
-                        discounted_price: data[0].product_details[i].products[j].discounted_price,
-                        packing_charges:data[0].product_details[i].products[j].packing_charges,
-                        tags: data[0].product_details[i].products[j].tags,
-                      
+                      id: data[0].product_details[i].products[j].id,
+                      app_master: localStorage.getItem('storeCreateAppID'),
+                      product_category: data[0].product_details[i].id,
+                      product_name: data[0].product_details[i].products[j].product_name,
+                      price: data[0].product_details[i].products[j].price,
+                      discounted_price: data[0].product_details[i].products[j].discounted_price,
+                      packing_charges: data[0].product_details[i].products[j].packing_charges,
+                      tags: data[0].product_details[i].products[j].tags,
+
                     }
                     this.setp_five_data_cat_1.products.push(prod);
                   }
-                  
+
                 }
-                else{
+                else {
                   this.setp_five_data_cat_1 = {
                     products: [
                       {
                         id: null,
                         app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category:data[0].product_details[i].id,
+                        product_category: data[0].product_details[i].id,
                         product_name: '',
                         price: '',
                         discounted_price: '',
-                        packing_charges:'',
+                        packing_charges: '',
                         tags: '',
                       }
                     ]
                   }
                 }
-                
+
               }
 
-              if(i==1)
-              {
+              if (i == 1) {
                 this.setp_five_data_cat_2.products = [];
                 const product_control_two = <FormArray>this.stepFiveProductCat2.controls['products'];
-                if(data[0].product_details[i].products.length>0)
-                {
-                  for(var j=0; j<data[0].product_details[i].products.length;j++)
-                  {
-                    if(j<data[0].product_details[i].products.length-1)
-                    {
+                if (data[0].product_details[i].products.length > 0) {
+                  for (var j = 0; j < data[0].product_details[i].products.length; j++) {
+                    if (j < data[0].product_details[i].products.length - 1) {
                       product_control_two.push(this.createProduct());
                     }
-                    
+
                     var prod = {
-                        id: data[0].product_details[i].products[j].id,
-                        app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category:data[0].product_details[i].id,
-                        product_name: data[0].product_details[i].products[j].product_name,
-                        price: data[0].product_details[i].products[j].price,
-                        discounted_price: data[0].product_details[i].products[j].discounted_price,
-                        packing_charges:data[0].product_details[i].products[j].packing_charges,
-                        tags: data[0].product_details[i].products[j].tags,
-                      
+                      id: data[0].product_details[i].products[j].id,
+                      app_master: localStorage.getItem('storeCreateAppID'),
+                      product_category: data[0].product_details[i].id,
+                      product_name: data[0].product_details[i].products[j].product_name,
+                      price: data[0].product_details[i].products[j].price,
+                      discounted_price: data[0].product_details[i].products[j].discounted_price,
+                      packing_charges: data[0].product_details[i].products[j].packing_charges,
+                      tags: data[0].product_details[i].products[j].tags,
+
                     }
                     this.setp_five_data_cat_2.products.push(prod);
                   }
-                  
+
                 }
-                else{
+                else {
                   this.setp_five_data_cat_2 = {
                     products: [
                       {
                         id: null,
                         app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category:data[0].product_details[i].id,
+                        product_category: data[0].product_details[i].id,
                         product_name: '',
                         price: '',
                         discounted_price: '',
-                        packing_charges:'',
+                        packing_charges: '',
                         tags: '',
                       }
                     ]
                   }
                 }
-                
+
               }
             }
           }
 
-        
 
-          
+
+
         }
 
         // = {
@@ -650,17 +635,27 @@ export class CreateAppComponent implements OnInit {
   }
 
   businessPhotoChange(event) {
+    console.log(this.setp_two_data.business_photos.length)
     if (event.target.files && event.target.files.length) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-          this.setp_two_data.business_photos.push(event.target.result)
+      var max_size = Math.round(event.target.files.length + this.setp_two_data.business_photos.length)
+      if (max_size < 4) {
+        for (let i = 0; i < event.target.files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.setp_two_data.business_photos.push(event.target.result)
+          }
+          this.business_photo_arr.push(event.target.files[i]);
+          reader.readAsDataURL(event.target.files[i]);
         }
-        this.business_photo_arr.push(event.target.files[i]);
-        reader.readAsDataURL(event.target.files[i]);
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
       }
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
+      else {
+        this.toastr.error('You can upload maximum 3 business photos', '', {
+          timeOut: 3000,
+        });
+      }
+
 
     }
   }
@@ -697,7 +692,7 @@ export class CreateAppComponent implements OnInit {
             this.toastr.success('Success', '', {
               timeOut: 3000,
             });
-
+            this.stepper.next();
           },
           error => {
             this.toastr.error('Something went wrong', '', {
@@ -721,7 +716,7 @@ export class CreateAppComponent implements OnInit {
             this.toastr.success('Success', '', {
               timeOut: 3000,
             });
-
+            this.stepper.next();
           },
           error => {
             this.toastr.error('Something went wrong', '', {
@@ -748,25 +743,32 @@ export class CreateAppComponent implements OnInit {
 
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
+          if (this.business_photo_arr.length > 0) {
+            for (let i = 0; i < this.business_photo_arr.length; i++) {
+              this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+                response => {
 
-          for (let i = 0; i < this.business_photo_arr.length; i++) {
-            this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
-              response => {
-                // this.toastr.success('Success2', '', {
-                //   timeOut: 3000,
-                // });
-              },
-              error => {
-                this.toastr.error('Something went wrong', '', {
+                },
+                error => {
+                  this.toastr.error('Something went wrong', '', {
+                    timeOut: 3000,
+                  });
+                }
+              );
+              if (i == this.business_photo_arr.length - 1) {
+                this.toastr.success('Success', '', {
                   timeOut: 3000,
                 });
+                this.stepper.next();
               }
-            );
+            }
           }
-
+          else {
+            this.toastr.success('Success', '', {
+              timeOut: 3000,
+            });
+            this.stepper.next();
+          }
 
         },
         error => {
@@ -793,7 +795,7 @@ export class CreateAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-
+          this.stepper.next();
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -812,10 +814,10 @@ export class CreateAppComponent implements OnInit {
     //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
-  nextStep(value)
-  {
+  nextStep(value) {
     this.storeCreateAppStep = parseInt(value) - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+    this.stepper.next();
   }
 
   submitStepFour() {
@@ -827,7 +829,10 @@ export class CreateAppComponent implements OnInit {
       }
       this.createAppService.updateTempAppURL(data).subscribe(
         response => {
-
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+          this.stepper.next();
         },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -862,7 +867,7 @@ export class CreateAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-
+          this.stepper.next();
           this.btnClickNav('payment')
 
         },
@@ -880,6 +885,6 @@ export class CreateAppComponent implements OnInit {
   }
 
 
-  
+
 
 }

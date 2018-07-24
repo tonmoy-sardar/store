@@ -21,8 +21,7 @@
                             </div>
                             <div class="row padding-top-15">
                                 <div class="form-field col x-100 align-center col-md-5">
-                                    <button matStepperNext class="round-g-btn" (click)="submitStepOne()">Next</button>
-
+                                    <button class="round-g-btn" (click)="submitStepOne()">Next</button>
                                 </div>
                             </div>
                         </section>
@@ -105,7 +104,7 @@
                                             <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(1)">Back</button>
                                         </div>
                                         <div class="form-field align-center col-md-5">
-                                            <button matStepperNext class="round-g-btn" (click)="submitStepTwo()">Next</button>
+                                            <button class="round-g-btn" (click)="submitStepTwo()">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +166,7 @@
 
                                 </mat-form-field> -->
                                 <mat-form-field>
-                                    <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(value)]="setp_three_data.owner_designation">
+                                    <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
                                         <mat-option *ngFor="let designation of designations" [value]="designation.id">
                                             {{ designation.designation_name }}
                                         </mat-option>
@@ -201,7 +200,7 @@
                                         <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(2)">Back</button>
                                     </div>
                                     <div class="form-field align-center col-md-5">
-                                        <button matStepperNext class="round-g-btn" (click)="submitStepThree()">Next</button>
+                                        <button class="round-g-btn" (click)="submitStepThree()">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -400,7 +399,7 @@
                                     <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
                                 </div>
                                 <div class="align-center col-md-5">
-                                    <button matStepperNext class="round-g-btn" (click)="nextStep(5)">Next</button>
+                                    <button class="round-g-btn" (click)="nextStep(5)">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -473,7 +472,7 @@
                                         <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(3)">Back</button>
                                     </div>
                                     <div class="form-field align-center col-md-5">
-                                        <button matStepperNext class="round-g-btn" (click)="submitStepFour()">Next</button>
+                                        <button class="round-g-btn" (click)="submitStepFour()">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -538,7 +537,7 @@
                                         <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
                                     </div>
                                     <div class="form-field align-center col-md-5">
-                                        <button matStepperNext class="round-g-btn" (click)="submitStepSix()">Next</button>
+                                        <button class="round-g-btn" (click)="submitStepSix()">Next</button>
                                     </div>
                                 </div>
                             </div>
