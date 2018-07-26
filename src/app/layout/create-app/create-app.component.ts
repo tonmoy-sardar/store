@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../core/services/create-app.service';
@@ -6,7 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
 import { environment } from '../../../environments/environment';
-
+import { MapsAPILoader } from '@agm/core';
+import { } from '@types/googlemaps';
 @Component({
   selector: 'app-create-app',
   templateUrl: './create-app.component.html',
@@ -15,7 +16,7 @@ import { environment } from '../../../environments/environment';
 export class CreateAppComponent implements OnInit {
 
   @ViewChild('stepper') stepper: MatStepper;
-
+  @ViewChild('search') public searchElement: ElementRef;
   isLinear = true;
   haveBusinessName;
   haveBusinessDescription;
@@ -55,7 +56,11 @@ export class CreateAppComponent implements OnInit {
   setp_three_data = {
     owner_name: '',
     owner_pic: '',
-    owner_designation: ''
+    owner_designation: '',
+    store_address: '',
+    lat: '',
+    long: '',
+    business_est_year: ''
   }
 
   setp_four_data = {
@@ -119,7 +124,9 @@ export class CreateAppComponent implements OnInit {
     private createAppService: CreateAppService,
     private cd: ChangeDetectorRef,
     private toastr: ToastrService,
-    private platformLocation: PlatformLocation
+    private platformLocation: PlatformLocation,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -145,8 +152,11 @@ export class CreateAppComponent implements OnInit {
       owner_name: ['', Validators.required],
       owner_pic: [''],
       owner_designation: [''],
+      store_address: [''],
+      lat: [''],
+      long: [''],
+      business_est_year: [''],
     });
-
 
     this.stepFour = this._formBuilder.group({
       business_photos: [''],
@@ -200,6 +210,32 @@ export class CreateAppComponent implements OnInit {
 
     this.getCategoryList();
     this.getDesignationDropdown();
+    this.mapLoader();
+
+  }
+
+
+  mapLoader() {
+    this.mapsAPILoader.load().then(
+      () => {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ["address"] });
+
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            console.log(place)
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+            this.setp_three_data.store_address = place.formatted_address;
+            this.setp_three_data.lat = lat.toString();
+            this.setp_three_data.long = lng.toString();
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+          });
+        });
+      }
+    );
   }
 
   getDesignationDropdown() {
@@ -395,6 +431,10 @@ export class CreateAppComponent implements OnInit {
           this.setp_three_data.owner_pic = data[0].owner_pic;
           this.setp_three_data.owner_name = data[0].owner_name;
           this.setp_three_data.owner_designation = data[0].owner_designation;
+          this.setp_three_data.store_address = data[0].store_address;
+          this.setp_three_data.lat = data[0].lat;
+          this.setp_three_data.long = data[0].long;
+          this.setp_three_data.business_est_year = data[0].business_est_year;
           this.user_id = data[0].id;
         }
       },
@@ -432,7 +472,7 @@ export class CreateAppComponent implements OnInit {
 
 
           this.setp_four_data.website_url = data[0].appmaster.app_url;
-          this.setp_two_data.business_photos =[];
+          this.setp_two_data.business_photos = [];
           for (var i = 0; i < data[0].app_imgs.length; i++) {
             var business_img_url = environment.urlEndpoint + data[0].app_imgs[i].app_img;
             this.setp_two_data.business_photos.push(business_img_url)
@@ -785,7 +825,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-
+      console.log(this.stepThree.value)
       this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
           this.user_id = response.id;
