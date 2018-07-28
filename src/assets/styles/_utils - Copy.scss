@@ -17,7 +17,7 @@ a:hover {
 }
 
 .full-bg {
-    background:url(../images/blue-bg.png) no-repeat right;
+    background: url(../images/blue-bg.png) no-repeat right;
 }
 
 .mob {
@@ -349,6 +349,7 @@ a:hover {
     transform: scale(1.1);
     transition: all .40s ease;
 }
+
 .selected {
     transform: scale(1.1);
     transition: all .40s ease;
@@ -364,9 +365,6 @@ a:hover {
     left: 0;
     transition: all .40s ease;
 }
-
-
-
 
 .select-btn ul li::before {
     content: "";
@@ -460,6 +458,7 @@ a:hover {
     border-radius: 8px;
     padding: 0px;
 }
+
 .profile-page {
     background: url(../images/profile-page.jpg) no-repeat 0 0;
 }
@@ -520,28 +519,31 @@ a:hover {
     top: 13px;
 }
 
+
 /************** START MATERIAL CUSTOM CSSS ************/
 
 .input-container {
     display: flex;
     flex-direction: column;
-  }
+}
+
 .input-full-width {
     width: 100%;
 }
 
-.mat-icon, .mat-form-field-suffix .mat-icon {
+.mat-icon,
+.mat-form-field-suffix .mat-icon {
     background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
     background-image: linear-gradient(to right, #00aff0, #99dff9);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     bottom: -4px;
     position: relative;
-    padding-right:30px !important;
+    padding-right: 30px !important;
 }
 
 .mat-form-field-ripple {
-   background-color: #00aff0 !important;
+    background-color: #00aff0 !important;
 }
 
 .mat-focused .mat-form-field-label {
@@ -553,15 +555,16 @@ a:hover {
 }
 
 .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-    background-color: rgba(0,175,240,.26);
+    background-color: rgba(0, 175, 240, .26);
 }
-.mat-horizontal-stepper-header-container
-{
+
+.mat-horizontal-stepper-header-container {
     display: none !important;
 }
 
-.mat-stepper-horizontal, .mat-stepper-vertical {
-background-color: transparent !important;
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+    background-color: transparent !important;
 }
 
 // .mat-horizontal-content-container {
