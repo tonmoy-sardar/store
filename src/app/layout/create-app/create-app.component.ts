@@ -39,7 +39,7 @@ export class CreateAppComponent implements OnInit {
 
   storeCreateAppStep;
 
-  user_id;
+  logedUserId;
 
   setp_one_data = {
     session_id: '',
@@ -72,7 +72,7 @@ export class CreateAppComponent implements OnInit {
       {
         id: null,
         app_master: localStorage.getItem('storeCreateAppID'),
-        category_name: 'Generic Category',
+        category_name: 'Generic',
         description: ''
       }
     ]
@@ -86,8 +86,8 @@ export class CreateAppComponent implements OnInit {
         product_category: '',
         product_name: '',
         price: '',
-        discounted_price: '',
-        packing_charges: '',
+        discounted_price: '0.00',
+        packing_charges: '0.00',
         tags: '',
       }
     ]
@@ -101,8 +101,8 @@ export class CreateAppComponent implements OnInit {
         product_category: '',
         product_name: '',
         price: '',
-        discounted_price: '',
-        packing_charges: '',
+        discounted_price: '0.00',
+        packing_charges: '0.00',
         tags: '',
       }
     ]
@@ -112,6 +112,7 @@ export class CreateAppComponent implements OnInit {
 
 
   setp_six_data = {
+    name:'',
     contact_no: '',
     email_id: ''
   }
@@ -164,7 +165,7 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepFive = this._formBuilder.group({
-      product_categories: this._formBuilder.array([this.createProductCategory('Generic Category')]),
+      product_categories: this._formBuilder.array([this.createProductCategory('Generic')]),
     });
 
     this.stepFiveProductCat1 = this._formBuilder.group({
@@ -177,6 +178,7 @@ export class CreateAppComponent implements OnInit {
 
 
     this.stepSix = this._formBuilder.group({
+      name: ['', Validators.required],
       email_id: ['', [
         Validators.required,
         Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
@@ -204,10 +206,11 @@ export class CreateAppComponent implements OnInit {
       this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
     }
 
-    if (localStorage.getItem('storeSessionID')) {
-      this.getTempUserDetails(localStorage.getItem('storeSessionID'));
-    }
+    // if (localStorage.getItem('storeSessionID')) {
+    //   this.getTempUserDetails(localStorage.getItem('storeSessionID'));
+    // }
 
+    this.logedUserId = localStorage.getItem('logedUserUserId');
     this.getCategoryList();
     this.getDesignationDropdown();
     this.mapLoader();
@@ -363,8 +366,8 @@ export class CreateAppComponent implements OnInit {
       product_category: product_cat_id,
       product_name: '',
       price: '',
-      discounted_price: '',
-      packing_charges: '',
+      discounted_price: '0.00',
+      packing_charges: '0.00',
       tags: '',
 
     }
@@ -397,8 +400,8 @@ export class CreateAppComponent implements OnInit {
     return this._formBuilder.group({
       product_name: ['', Validators.required],
       price: ['', Validators.required],
-      discounted_price: [''],
-      packing_charges: [''],
+      discounted_price: ['0.00'],
+      packing_charges: ['0.00'],
       tags: [''],
     });
   }
@@ -423,28 +426,28 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  getTempUserDetails(id) {
-    this.createAppService.getTempUserDetails(id).subscribe(
-      (data: any[]) => {
-        console.log(data);
-        if (data.length > 0) {
-          this.setp_three_data.owner_pic = data[0].owner_pic;
-          this.setp_three_data.owner_name = data[0].owner_name;
-          this.setp_three_data.owner_designation = data[0].owner_designation;
-          this.setp_three_data.store_address = data[0].store_address;
-          this.setp_three_data.lat = data[0].lat;
-          this.setp_three_data.long = data[0].long;
-          this.setp_three_data.business_est_year = data[0].business_est_year;
-          this.user_id = data[0].id;
-        }
-      },
-      error => {
-        this.toastr.error('Something went wrong', '', {
-          timeOut: 3000,
-        });
-      }
-    );
-  };
+  // getTempUserDetails(id) {
+  //   this.createAppService.getTempUserDetails(id).subscribe(
+  //     (data: any[]) => {
+  //       console.log(data);
+  //       if (data.length > 0) {
+  //         this.setp_three_data.owner_pic = data[0].owner_pic;
+  //         this.setp_three_data.owner_name = data[0].owner_name;
+  //         this.setp_three_data.owner_designation = data[0].owner_designation;
+  //         this.setp_three_data.store_address = data[0].store_address;
+  //         this.setp_three_data.lat = data[0].lat;
+  //         this.setp_three_data.long = data[0].long;
+  //         this.setp_three_data.business_est_year = data[0].business_est_year;
+  //         this.user_id = data[0].id;
+  //       }
+  //     },
+  //     error => {
+  //       this.toastr.error('Something went wrong', '', {
+  //         timeOut: 3000,
+  //       });
+  //     }
+  //   );
+  // };
 
 
   getTempAppDetails(id) {
@@ -469,6 +472,15 @@ export class CreateAppComponent implements OnInit {
           if (!this.setp_two_data.business_description) {
             this.haveBusinessDescription = true;
           }
+
+
+          this.setp_three_data.owner_pic = data[0].appmaster.owner_pic;
+          this.setp_three_data.owner_name = data[0].appmaster.owner_name;
+          this.setp_three_data.owner_designation = data[0].appmaster.owner_designation;
+          this.setp_three_data.store_address = data[0].appmaster.store_address;
+          this.setp_three_data.lat = data[0].appmaster.lat;
+          this.setp_three_data.long = data[0].appmaster.long;
+          this.setp_three_data.business_est_year = data[0].appmaster.business_est_year;
 
 
           this.setp_four_data.website_url = data[0].appmaster.app_url;
@@ -530,8 +542,8 @@ export class CreateAppComponent implements OnInit {
                         product_category: data[0].product_details[i].id,
                         product_name: '',
                         price: '',
-                        discounted_price: '',
-                        packing_charges: '',
+                        discounted_price: '0.00',
+                        packing_charges: '0.00',
                         tags: '',
                       }
                     ]
@@ -573,8 +585,8 @@ export class CreateAppComponent implements OnInit {
                         product_category: data[0].product_details[i].id,
                         product_name: '',
                         price: '',
-                        discounted_price: '',
-                        packing_charges: '',
+                        discounted_price: '0.00',
+                        packing_charges: '0.00',
                         tags: '',
                       }
                     ]
@@ -826,9 +838,9 @@ export class CreateAppComponent implements OnInit {
   submitStepThree() {
     if (this.stepThree.valid) {
       console.log(this.stepThree.value)
-      this.createAppService.createLocalUser(localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
+      this.createAppService.submitOwnerInfo(localStorage.getItem('storeCreateAppID'),localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
-          this.user_id = response.id;
+          //this.user_id = response.id;
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
@@ -891,11 +903,11 @@ export class CreateAppComponent implements OnInit {
   submitStepSix() {
     if (this.stepSix.valid) {
       let data = {
-        id: this.user_id,
+        name: this.stepSix.value.name,
         email_id: this.stepSix.value.email_id,
         contact_no: this.stepSix.value.contact_no
       }
-      this.createAppService.createOriginalApp(data).subscribe(
+      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'),data).subscribe(
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
@@ -912,7 +924,8 @@ export class CreateAppComponent implements OnInit {
 
         },
         error => {
-          this.toastr.error('Something went wrong', '', {
+          
+          this.toastr.error(error.error.msg, '', {
             timeOut: 3000,
           });
         }
@@ -922,6 +935,37 @@ export class CreateAppComponent implements OnInit {
     else {
       this.markFormGroupTouched(this.stepSix)
     }
+  }
+
+  submitStepSixWithLogin() {
+    
+    let data = {
+     user_id:this.logedUserId
+    }
+      this.createAppService.createOriginalAppWithLogin(localStorage.getItem('storeCreateAppID'),data).subscribe(
+        response => {
+          // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+          localStorage.removeItem('storeCreateAppID');
+          localStorage.removeItem('storeCreateAppStep');
+          localStorage.removeItem('storeSessionID');
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+          this.stepper.next();
+          this.btnClickNav('payment')
+
+        },
+        error => {
+          
+          this.toastr.error(error.error.msg, '', {
+            timeOut: 3000,
+          });
+        }
+      );
+
   }
 
 

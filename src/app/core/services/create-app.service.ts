@@ -57,7 +57,7 @@ export class CreateAppService {
 
   }
 
-  createLocalUser(session_id, ownerToUpload, data): Observable<any> {
+  submitOwnerInfo(id,session_id, ownerToUpload, data): Observable<any> {
 
     const formData: FormData = new FormData();
     let owner_pic;
@@ -77,7 +77,7 @@ export class CreateAppService {
 
     formData.append('session_id', session_id);
 
-    return this.http.post(environment.apiEndpoint + 'create_app_step_two/', formData)
+    return this.http.put(environment.apiEndpoint + 'create_app_step_two/' + id + '/', formData)
 
   }
 
@@ -109,8 +109,8 @@ export class CreateAppService {
     return this.http.get(environment.apiEndpoint + 'app_user_details/' + session_id + '/')
   }
 
-  createOriginalApp(data): Observable<any> {
-    return this.http.put(environment.apiEndpoint + 'create_app_step_last/' + data.id + '/', data)
+  createOriginalApp(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'create_app_step_last/' + id + '/', data)
   }
 
 
@@ -202,6 +202,31 @@ export class CreateAppService {
     return this.http.put(environment.apiEndpoint + 'edit_applogo_&_appname/' + app_id + '/', formData)
   }
 
+  updateOwnerInfo(id,ownerToUpload, data): Observable<any> {
+
+    const formData: FormData = new FormData();
+    let owner_pic;
+    if (data) {
+      for (let key in data) {
+        if(key!='owner_pic')
+        {
+          formData.append(key, data[key])
+        } 
+      }
+    }
+
+    if (ownerToUpload) {
+      owner_pic = ownerToUpload.name
+      formData.append('owner_pic', ownerToUpload, owner_pic);
+    }
+
+    
+
+    return this.http.put(environment.apiEndpoint + 'edit_owner_info/' + id + '/', formData)
+
+  }
+
+
   uploadOrgBusinessImages(app_id, appImageToUpload): Observable<any> {
 
     const formData: FormData = new FormData();
@@ -221,6 +246,10 @@ export class CreateAppService {
 
   }
   
+
+  createOriginalAppWithLogin(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_user/' + id + '/', data)
+  }
 
 
 

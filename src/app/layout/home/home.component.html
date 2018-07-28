@@ -1,70 +1,282 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <section class="get-in-touch">
-        <ul>
+<app-header></app-header>
+<!-- Main Slider Section -->
 
-          <li class="nav-item" *ngIf="!isLoggedin">
-            <a class="nav-link scroll" href="javascript:void(0)" (click)="openLogin()">Login</a>
-          </li>
-          <li class="nav-item" *ngIf="isLoggedin">
-            <a class="nav-link scroll" href="javascript:void(0)">{{user_name}}</a>
-          </li>
-        </ul>
-        <h1 class="title">
-          <span> your own app</span> Get in 5 Minutes
-        </h1>
-        <div class="select-btn bg-white box-shadow padding-10 broder-radius-5">
-          <ul>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="../../../assets/images/select-1.png" alt=""> Restaurants
-              </a>
-            </li>
-            <div class="clearfix"></div>
-          </ul>
-        </div>
-        <div class="row padding-top-15">
-          <div class="form-field col x-100 align-center col-md-5">
-            <input class="round-g-btn" type="submit" value="Next">
-          </div>
-        </div>
-      </section>
+<section id="main-slider-section" class="main-banner-bg background-pink ">
+    <div class="banner-sec">
+        <!-- <h2 class="padding-bottom-35 wow fadeInRight">Get a Readymade App</h2> -->
+        <div class="wow fadeInRight" id="letras"></div>
+
+        <a href="javascript:viod(0);" (click)="btnClickNav('create-app')" class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft" data-wow-delay="400ms">Create Now</a>
     </div>
-    <div class="col-md-6 bg-texture">
-      <div class="mob ">
-        <div class="wallpaper-size caragory-resturent"></div>
-      </div>
+    <img class="img-fluid wow fadeInUp" data-wow-delay="400ms" src="assets/images/hero-12-img.png" alt="">
+
+
+
+</section>
+
+<!-- /Main Slider Section End -->
+
+
+<!-- About Company Section -->
+<section class="about-company-section  padding-top-bottom background-white" id="about-company-section">
+    <div class="about-company-slider-section ">
+        <div class="container">
+            <!-- About Company Slider -->
+
+            <div class="about-company-slider swiper-container">
+
+                <div class="about-company-slide">
+                    <div class="row">
+                        <div class="col-lg-6 offset-lg-0 col-md-8 offset-md-2">
+                            <div class="about-slider-image-section clearfix position-relative">
+                                <div class="about-slider-images-section-inner wow fadeInLeft" data-wow-delay="350ms">
+                                    <img src="assets/images/about-slider-img-1.jpg" alt="about-slider-image" data-slide="animated" data-animate="zoomIn">
+                                </div>
+                                <div class="about-img-gradient-box gradient-bg-green-blue  " data-slide="animated" data-animate="zoomIn"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 vertical-align-about-caption">
+                            <div class="about-slider-img-detail" data-slide="animated" data-animate="fadeInRight">
+
+                                <h2 class="fontface-one text-color-dark padding-bottom-35 text-transform paragraph-34 letter-spacing">About Us</h2>
+                                <p class="text-color-dark paragraph-15 padding-bottom-25 text-color-darkgrey">
+                                    Easy, affordable and money-maker – these best describes the latest product conceptualized and engineered by
+                                    <a target="_blank" href="http://www.shyamfuture.com/">Shyam Future Tech.</a> Introducing Banao.app! The ultimate app creator that allows you
+                                    to make your own app in five simple steps. </p>
+                                <p class="paragraph-15 padding-bottom-35 text-color-darkgrey">
+                                    Having an app for your business is an unrivalled way to project your brand and boost your venture. So we have engaged the
+                                    best of professionals to create this practical solution. It gives you complete liberty
+                                    to create an app and manage it just the way you want, that serves your end motive. You
+                                    can have your own customized app; have the app listed in Play Store and App Store for
+                                    the least possible expense – for just Rs 15 per day!
+                                </p>
+
+                                <a href="#" class="button-setting background-orange text-color-white button-setting-secondary"> Learn More </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="swiper-pagination d-none d-sm-none d-md-none d-lg-block"></div>
+            </div>
+        </div>
+
+
     </div>
-  </div>
-</div>
+</section>
+
+<!-- /About Company Section -->
+
+<!-- Team Section Start -->
+<section class="team-section team-section-two padding-top-bottom background-pink" id="team-section">
+    <div class="container">
+        <div class="section-heading text-center">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2">
+                    <h2 class="fontface-one text-color-dark padding-bottom-35 text-transform paragraph-34 letter-spacing wow fadeInUp" data-wow-delay="300ms">Distinctive Merits</h2>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section-inner team-section-inner-two">
+            <div class="swiper-container team-member-slider-2">
+
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="team-member-outer">
+                            <div class=" position-relative wow fadeInDown" data-wow-delay="400ms">
+                                <img src="assets/images/mobi-screen.png" alt="team-member-image" class="width-100">
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="team-member-progress-detail" data-slide="animated" data-animate="fadeIn">
+                            <h5 class="paragraph-17 font-weight-700 text-color-secondary padding-bottom-10">It’s a ‘your wish granted’ product that comes with surprising features and unmatchable utilities.
+                                </h5>
+                            <ul class="list-tick padding-bottom-10">
+                                <li>Five simple steps to create a functional app</li>
+                                <li>Rs 15 per day ONLY!</li>
+                                <li>App gets listed in Play Store and App Store</li>
+                                <li>Skip investment in marketing</li>
+                                <li>Elevate brand image</li>
+
+                            </ul>
+
+                        </div>
+
+                        <a href="#." class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft" data-wow-delay="400ms">Create Now</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Team Section End -->
+
+<!-- Pricing Table Start -->
+<section class="pricing-table-section padding-top-bottom background-white" id="price">
+    <div class="container">
+        <div class="section-heading text-center">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2">
+                    <h2 class="fontface-one text-color-dark padding-bottom-35 text-transform paragraph-34 letter-spacing wow fadeInUp" data-wow-delay="300ms">App cost </h2>
+                    <p class="paragraph-15 fontface-two text-color-darkgrey wow fadeInUp" data-wow-delay="350ms">
+                        Mobile app development company charges you quite a high price for creating a mobile applicatopn but this online app maker
+                        costs you way less than you assumed. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing-table-outer">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="about-slider-image-section clearfix position-relative">
+                        <div class="about-slider-images-section-inner main wow fadeInLeft" data-wow-delay="350ms">
+                            <img src="assets/images/pigi-bag.jpg" alt="about-slider-image" data-slide="animated" data-animate="zoomIn">
+                        </div>
+                        <div class="price-img-gradient-box gradient-bg-pink-purple wow fadeInDown" data-wow-delay="355ms" data-slide="animated" data-animate="zoomIn"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pricing-table-inner text-center active main wow fadeInUp" data-wow-delay="350ms">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="font-weight-600 text-color-dark fontface-one text-transform letter-spacing padding-bottom-20">Standard App</h4>
+                            </div>
+
+                            <div class="col-md-12">
+                                <h2 class="pricing-main-price fontface-one font-weight-700 text-color-dark">
+                                    <span class="paragraph-22 pricing-currency-sign font-weight-600 fontface-two">₹</span>15
+                                    <span class="paragraph-16 font-weight-400 fontface-two"> /Day</span>
+                                </h2>
+                            </div>
+                            <div class="col-md-12">
+                                <ul class="pricing-detail-list padding-top-25 padding-bottom-45 text-transform">
+                                    <li class="paragraph-17 text-color-secondary fontface-two padding-top-15">Live Chat</li>
+                                    <li class="footer-divider">|</li>
+                                    <li class="paragraph-17 text-color-secondary fontface-two padding-top-15">Payment Gateway</li>
+                                    <li class="footer-divider">|</li>
+                                    <li class="paragraph-17 text-color-secondary fontface-two padding-top-15">iOS & Android listing</li>
+
+                                </ul>
+                            </div>
+                            <div class="col-md-12">
+                                <a href="#." class="button-setting background-biscut button-setting-secondary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Pricing Table Start -->
+
+<!-- Contact Form Section Start -->
+<section class="contact-form-section padding-top-bottom background-pink" id="contact-form-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="company-contact-detail wow fadeInLeft" data-wow-delay="300ms">
+                    <div class="contact-heading padding-bottom-35">
+                        <h2 class="fontface-one text-color-dark text-transform paragraph-34  letter-spacing">Contact Us</h2>
+
+                    </div>
+                    <p class="paragraph-14 text-color-dark fontface-two ">
+                        Speak to us for queries, assistance and more. </p>
+                    <div class="contact-detail-list">
+                        <ul>
+                            <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">Shyam future tech, Shyam Towers, EN 32, Sector V,
+                                <br> Salt Lake, Kolkata-700091</li>
+                            <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">
+                                <a href="mailto:sales@shyamfuture.com ">
+                                    <i class="fa fa-envelope-open text-color-dark"></i> &nbsp; Sales@Shyamfuture.com</a>
+                            </li>
+                            <br>
+                            <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">
+                                <a href="tel:+91 7604011192">
+                                    <i class="fa fa-mobile text-color-dark"></i>&nbsp; +917604011192</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="contact-company-icons padding-top-35">
+                        <ul class="company-social-icons">
+                            <li class="company-social-icons-list">
+                                <a href="#." class="facebook-icon">
+                                    <i class="fa fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="company-social-icons-list">
+                                <a href="#." class="twitter-icon">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+
+                            <li class="company-social-icons-list">
+                                <a href="#." class="instagram-icon">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+
+                            <li class="company-social-icons-list">
+                                <a href="#." class="googleplus-icon">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </li>
+                            <li class="company-social-icons-list">
+                                <a href="#." class="dribble-icon">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1">
+                <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
+                    <h3 class="text-color-dark font-weight-600 text-transform letter-spacing fontface-one padding-bottom-45">Write Us</h3>
+                    <form class="contact-form-outer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="contact-form-textfield padding-bottom-30">
+                                    <input type="text" placeholder="Your Name" class="form-control paragraph-16">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-form-textfield padding-bottom-30">
+                                    <input type="email" placeholder="Your Email" class="form-control paragraph-16">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="contact-form-textfield padding-bottom-45">
+                                    <input type="text" placeholder="Subject" class="form-control paragraph-16">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="contact-form-textfield padding-bottom-40">
+                                    <textarea placeholder="Your Message" class="form-control paragraph-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a class="button-setting button-setting-primary background-black text-color-white text-center" href="#">Send Message</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Contact Form Section End -->

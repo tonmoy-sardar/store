@@ -1,0 +1,636 @@
+                                           :root {
+                                              --darkest: #121619;
+                                              --color: #121619;
+                                              --lightest: #fbfbfb;
+                                              --bgcolor: #fbfbfb;
+                                              --gutter: 18px;
+                                              --logo-size: 50px;
+                                              --word-size: 70px;
+                                              --trans-time: 225ms;
+                                              --container-size: 100%;
+                                              --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                                              --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+                                          }
+                                          
+                                           ::selection {
+                                              background: var(--color);
+                                              color: var(--bgcolor)
+                                          }
+                                          
+                                          * {
+                                              -webkit-font-smoothing: antialiased;
+                                              -moz-osx-font-smoothing: grayscale
+                                          }
+                                          
+                                          a:after {
+                                              transition: width 125ms .1s;
+                                              top: 50%;
+                                              height: 2px;
+                                              position: absolute;
+                                              background: var(--color)
+                                          }
+                                          
+                                          #main a:hover:after,
+                                          li a:hover:after {
+                                              width: 100%
+                                          }
+                                          
+                                          #main #scroll-down:hover,
+                                          li #scroll-down:hover {
+                                              bottom: calc(var(--gutter) - 3px)
+                                          }
+                                          
+                                          #footer-top a:hover,
+                                          #main a:hover {
+                                              padding-left: 3px
+                                          }
+                                          
+                                          code,
+                                          pre {
+                                              font-family: var(--font-family-monospace)
+                                          }
+                                          
+                                          li {
+                                              display: inline-block
+                                          }
+                                          
+                                          #letras,
+                                          .halfwrapper {
+                                              margin-bottom: var(--gutter)
+                                          }
+                                          
+                                          .halfwrapper img {
+                                              width: 100%
+                                          }
+                                          
+                                          .halfwrapper img+img {
+                                              margin-top: var(--gutter)
+                                          }
+                                          
+                                          .word-span p {
+                                              line-height: 120px;
+                                          }
+                                          
+                                          @media (max-width:575px) {
+                                              .halfwrapper p:last-child {
+                                                  margin-bottom: 0
+                                              }
+                                              .halfwrapper.caption+.fullwrapper {
+                                                  margin-top: calc(var(--gutter) * 4)
+                                              }
+                                          }
+                                          
+                                          @media (min-width:576px) {
+                                               :root {
+                                                  --container-size: 540px;
+                                                  --word-size: 80px
+                                              }
+                                              .halfwrapper {
+                                                  width: 50%;
+                                                  float: left;
+                                                  padding: 0 calc(var(--gutter)/ 4) 0 0
+                                              }
+                                              .halfwrapper img+img {
+                                                  margin-top: calc(var(--gutter)/ 2)
+                                              }
+                                              .halfwrapper+.halfwrapper {
+                                                  padding: 0 0 0 calc(var(--gutter)/ 4)
+                                              }
+                                              .halfwrapper.caption {
+                                                  margin: 6em 0;
+                                                  padding: 0 var(--gutter) 0 0
+                                              }
+                                              .halfwrapper+.caption {
+                                                  padding: 0 0 0 var(--gutter)
+                                              }
+                                          }
+                                          
+                                          @media (min-width:1200px) {
+                                               :root {
+                                                  --container-size: 1140px;
+                                                  --word-size: 200px;
+                                                  --gutter: 40px
+                                              }
+                                              .halfwrapper.caption {
+                                                  padding: 0 calc(var(--gutter)/ 2) 0 0
+                                              }
+                                              .halfwrapper+.caption {
+                                                  padding: 0 0 0 calc(var(--gutter)/ 2)
+                                              }
+                                          }
+                                          
+                                          #nav-motto,
+                                          #nav-wrapper-top {
+                                              padding: 0 calc(var(--logo-size)/ 4)
+                                          }
+                                          
+                                          .fullwrapper {
+                                              margin: var(--gutter) calc(-1 * var(--gutter))
+                                          }
+                                          
+                                          .fullwrapper img {
+                                              width: 100%
+                                          }
+                                          
+                                          .fullwrapper.gutter {
+                                              margin: var(--gutter) 0
+                                          }
+                                          
+                                          @media (min-width:576px) {
+                                              .fullwrapper {
+                                                  margin: calc(var(--gutter)/ 4) calc(-1 * var(--gutter))
+                                              }
+                                              .fullwrapper.gutter {
+                                                  margin: calc(var(--gutter)/ 4) 0 calc(var(--gutter)/ 2.5)
+                                              }
+                                          }
+                                          
+                                          #header {
+                                              border: 1px solid var(--color);
+                                              height: calc(var(--logo-size) * 1.333);
+                                              display: flex
+                                          }
+                                          
+                                          @media (max-width:767px) {
+                                              #header {
+                                                  font-size: 12px
+                                              }
+                                          }
+                                          
+                                          @media (max-width:374px) {
+                                              #header {
+                                                  font-size: 9px
+                                              }
+                                          }
+                                          
+                                          #word,
+                                          .word-span {
+                                              height: var(--word-size)
+                                          }
+                                          
+                                          #nav-wrapper {
+                                              display: flex;
+                                              flex: 1;
+                                              flex-direction: column
+                                          }
+                                          
+                                          #nav-wrapper>div {
+                                              display: flex;
+                                              flex: 1
+                                          }
+                                          
+                                          #footer-top a,
+                                          #letras span {
+                                              display: inline-block
+                                          }
+                                          
+                                          #mobile-menu {
+                                              border-left: 1px solid var(--color);
+                                              display: none
+                                          }
+                                          
+                                          #mobile-menu li {
+                                              display: flex
+                                          }
+                                          
+                                          #mobile-menu a {
+                                              line-height: calc(var(--logo-size) * 1.25);
+                                              width: 100%
+                                          }
+                                          
+                                          #mobile-menu a:hover:after {
+                                              width: 0
+                                          }
+                                          
+                                          #nav-wrapper-top {
+                                              align-items: center;
+                                              justify-content: flex-end;
+                                              line-height: 1.4
+                                          }
+                                          
+                                          @media (max-width:767px) {
+                                              #nav-wrapper-bottom {
+                                                  justify-content: flex-end;
+                                                  align-items: center;
+                                                  padding: 0 8px
+                                              }
+                                              #footer-bottom a,
+                                              #footer-bottom ul {
+                                                  display: none
+                                              }
+                                          }
+                                          
+                                          #waving-hand {
+                                              display: none;
+                                              position: absolute;
+                                              top: 1px;
+                                              right: 3px;
+                                              line-height: 26px
+                                          }
+                                          
+                                          #waving-hand:hover {
+                                              animation-name: wave;
+                                              animation-duration: .5s;
+                                              animation-iteration-count: infinite;
+                                              transform-origin: bottom
+                                          }
+                                          
+                                          @keyframes wave {
+                                              50% {
+                                                  transform: rotate(15deg)
+                                              }
+                                              100% {
+                                                  transform: rotate(0)
+                                              }
+                                          }
+                                          
+                                          #nav-motto {
+                                              flex: 1;
+                                              display: none;
+                                              align-items: center
+                                          }
+                                          
+                                          #nav-menu {
+                                              padding: 0 calc(var(--logo-size)/ 4) 0 var(--gutter);
+                                              display: none;
+                                              align-items: center
+                                          }
+                                          
+                                          #nav-menu li+li {
+                                              margin-left: 15px
+                                          }
+                                          
+                                          #nav-menu .active a {
+                                              cursor: default;
+                                              position: relative
+                                          }
+                                          
+                                          #nav-menu .active a:before {
+                                              border-bottom: 2px solid var(--color);
+                                              width: 100%;
+                                              position: absolute;
+                                              right: 0;
+                                              top: 50%
+                                          }
+                                          
+                                          #letras span,
+                                          #pre-footer,
+                                          #scroll-wrapper {
+                                              position: relative
+                                          }
+                                          
+                                          @media (min-width:768px) and (max-width:991px) {
+                                              #nav-menu {
+                                                  flex: 1;
+                                                  justify-content: flex-end
+                                              }
+                                          }
+                                          
+                                          #toggle-menu {
+                                              display: flex;
+                                              cursor: pointer
+                                          }
+                                          
+                                          svg {
+                                              width: var(--logo-size);
+                                              fill: var(--color);
+                                              transition: opacity var(--trans-time)
+                                          }
+                                          
+                                          svg:hover {
+                                              opacity: .2
+                                          }
+                                          
+                                          #pre-footer {
+                                              background: var(--darkest);
+                                              color: var(--lightest);
+                                              margin: 0 calc(-1 * var(--gutter));
+                                              padding: calc(var(--gutter) * 4) var(--gutter) 0;
+                                              overflow: auto;
+                                              line-height: 1.35;
+                                              font-size: 22px
+                                          }
+                                          
+                                          #pre-footer p,
+                                          #pre-footer ul {
+                                              float: left;
+                                              display: block
+                                          }
+                                          
+                                          #pre-footer p {
+                                              margin: 0;
+                                              font-weight: 400
+                                          }
+                                          
+                                          #pre-footer p+p {
+                                              margin-top: 1em
+                                          }
+                                          
+                                          #pre-footer ul {
+                                              display: none;
+                                              width: 40%;
+                                              padding-left: 10%;
+                                              font-size: 30px;
+                                              line-height: 45px
+                                          }
+                                          
+                                          #pre-footer li {
+                                              display: block
+                                          }
+                                          
+                                          #pre-footer li+li {
+                                              margin-top: 50px
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                               :root {
+                                                  --container-size: 960px;
+                                                  --word-size: 160px;
+                                                  --logo-size: 78px
+                                              }
+                                              #waving-hand {
+                                                  display: initial
+                                              }
+                                              #nav-motto {
+                                                  display: flex
+                                              }
+                                              #pre-footer {
+                                                  padding: 130px var(--gutter) 30px;
+                                                  font-size: 32px
+                                              }
+                                              #pre-footer p {
+                                                  max-width: 60%
+                                              }
+                                              #pre-footer ul {
+                                                  display: block
+                                              }
+                                          }
+                                          
+                                          #pre-footer ::selection {
+                                              background: var(--lightest);
+                                              color: var(--darkest)
+                                          }
+                                          
+                                          #footer {
+                                              margin-top: var(--gutter)
+                                          }
+                                          
+                                          #footer-top {
+                                              background: var(--darkest);
+                                              color: var(--lightest);
+                                              margin: 0 calc(-1 * var(--gutter));
+                                              padding: 100px var(--gutter) var(--gutter);
+                                              font-size: 20px;
+                                              overflow: auto
+                                          }
+                                          
+                                          #footer-top ::selection {
+                                              background: var(--lightest);
+                                              color: var(--darkest)
+                                          }
+                                          
+                                          #footer-top li {
+                                              display: block;
+                                              line-height: 1.4
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                              #footer-top {
+                                                  padding: 200px var(--gutter) var(--gutter);
+                                                  font-size: 30px
+                                              }
+                                              #footer-top li {
+                                                  line-height: 1.8
+                                              }
+                                          }
+                                          
+                                          #footer-title {
+                                              font-size: 22px;
+                                              font-weight: 400;
+                                              margin: 0 0 50px;
+                                              line-height: 1.4
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                              #footer-title {
+                                                  font-size: 32px;
+                                                  line-height: 1.35;
+                                                  margin: 0 0 130px
+                                              }
+                                          }
+                                          
+                                          .footer-subtitle {
+                                              font-size: 15px;
+                                              font-weight: 400;
+                                              margin: 0 0 10px
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                              .footer-subtitle {
+                                                  font-size: 19px;
+                                                  margin: 0 0 15px
+                                              }
+                                          }
+                                          
+                                          #footer-bottom li+li,
+                                          .footer-box li a+a {
+                                              margin-left: 15px
+                                          }
+                                          
+                                          .footer-box {
+                                              margin-bottom: calc(var(--gutter) * 2);
+                                              min-height: 75px;
+                                              padding-right: var(--gutter)
+                                          }
+                                          
+                                          #footer-bottom {
+                                              padding-top: var(--gutter);
+                                              line-height: 30px;
+                                              font-size: 18px
+                                          }
+                                          
+                                          @media (min-width:768px) {
+                                               :root {
+                                                  --container-size: 720px;
+                                                  --word-size: 120px
+                                              }
+                                              #nav-menu {
+                                                  display: flex
+                                              }
+                                              #toggle-menu {
+                                                  display: none
+                                              }
+                                              #footer-bottom {
+                                                  display: flex;
+                                                  justify-content: space-between;
+                                                  align-items: center;
+                                                  line-height: initial
+                                              }
+                                          }
+                                          
+                                          #main {
+                                              margin-top: 180px
+                                          }
+                                          
+                                          #main.about-us,
+                                          #main.join-us {
+                                              overflow: auto;
+                                              margin: 0 calc(-1 * var(--gutter))
+                                          }
+                                          
+                                          #letras,
+                                          #word {
+                                              overflow: hidden;
+                                          }
+                                          
+                                          #main.about-us h2,
+                                          #main.join-us h2 {
+                                              font-size: 36px;
+                                              font-weight: 400;
+                                              max-width: 60%;
+                                              line-height: 55px
+                                          }
+                                          
+                                          #main.about-us p,
+                                          #main.join-us p {
+                                              font-size: 18px;
+                                              line-height: 1.5
+                                          }
+                                          
+                                          #main.about-us img+p,
+                                          #main.join-us img+p {
+                                              text-align: center;
+                                              margin: 10px auto 0;
+                                              font-size: 12px;
+                                              padding: 0 var(--gutter)
+                                          }
+                                          
+                                          #main.about-us .intro,
+                                          #main.join-us .intro {
+                                              margin: 8em 0 4em
+                                          }
+                                          
+                                          #main.about-us .intro p,
+                                          #main.join-us .intro p {
+                                              font-size: 22px;
+                                              line-height: 1.35;
+                                              letter-spacing: -.1px
+                                          }
+                                          
+                                          @media (max-width:575px) {
+                                              #main.about-us .intro+.fullwrapper,
+                                              #main.join-us .intro+.fullwrapper {
+                                                  margin-bottom: 5em
+                                              }
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                              .footer-box {
+                                                  width: 50%;
+                                                  float: left;
+                                                  min-height: 100px
+                                              }
+                                              #main.about-us .intro,
+                                              #main.join-us .intro {
+                                                  width: 60%
+                                              }
+                                              #main.about-us .intro p,
+                                              #main.join-us .intro p {
+                                                  font-size: 32px
+                                              }
+                                          }
+                                          
+                                          #about-wrapper {
+                                              padding: 0 var(--gutter)
+                                          }
+                                          
+                                          #letras {
+                                              margin-top: 60%;
+                                          }
+                                          
+                                          #letras p,
+                                          #main.homepage {
+                                              margin: 0
+                                          }
+                                          
+                                          #letras span {
+                                              font-weight: 500;
+                                              color: var(--darkest)
+                                          }
+                                          
+                                          #scroll-down {
+                                              color: var(--darkest);
+                                              bottom: var(--gutter);
+                                              position: absolute;
+                                              right: 0;
+                                              transform: rotate(90deg);
+                                              transform-origin: right;
+                                              cursor: pointer;
+                                              display: none;
+                                              transition: bottom var(--trans-time)
+                                          }
+                                          
+                                          @media (min-width:768px) {
+                                              #scroll-down {
+                                                  display: initial
+                                              }
+                                          }
+                                          
+                                          .word-span {
+                                              width: var(--word-size);
+                                              font-size: var(--word-size);
+                                              transition: .5s
+                                          }
+                                          
+                                          .trick:hover:after {
+                                              display: block;
+                                              position: fixed;
+                                              width: 50%;
+                                              height: 50%;
+                                              background: center/contain no-repeat;
+                                              top: 25px;
+                                              left: 25%
+                                          }
+                                          
+                                          .trick:hover.banana:after {
+                                              background-image: url(/theme/sn-base/assets/img/banana.png)
+                                          }
+                                          
+                                          #main.homepage+#footer {
+                                              margin-top: 0
+                                          }
+                                          
+                                          #main.homepage+#footer #footer-top {
+                                              padding-top: 30px
+                                          }
+                                          
+                                          @media (min-width:992px) {
+                                              #main.homepage+#footer #footer-top {
+                                                  padding-top: 0
+                                              }
+                                              #main.homepage #letras {
+                                                  height: calc(100vh - var(--gutter) - (var(--logo-size) * 1.333));
+                                                  margin: auto;
+                                                  /*        display:flex;*/
+                                                  justify-content: center;
+                                                  align-items: center
+                                              }
+                                          }
+                                          
+                                          .menu-open #mobile-menu {
+                                              display: block
+                                          }
+                                          
+                                          .menu-open #footer-bottom,
+                                          .menu-open #footer-title,
+                                          .menu-open #main {
+                                              display: none
+                                          }
+                                          
+                                          .menu-open .footer-box:first-of-type {
+                                              margin-top: 40px
+                                          }
+                                          
+                                          .menu-open #footer-bottom {
+                                              font-size: 16px
+                                          }

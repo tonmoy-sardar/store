@@ -1,88 +1,68 @@
 <header class="site-header">
   <nav class="navbar navbar-expand-lg navbar-full-white-bg round">
-    <div class="container nav-logo-detail-outer">
-      <a class="navbar-brand" href="#">
-        <img src="assets/images/logo.png" alt="logo" class="logo-default">
-        <img src="assets/images/logo-dark.png" alt="logo" class="logo-after-scroll">
-      </a>
+      <div class="container">
+          <a class="navbar-brand" href="index.html">
+              <img src="assets/images/logo.png" alt="logo" class="logo-default">
+              <img src="assets/images/logo-dark.png" alt="logo" class="logo-after-scroll">
+          </a>
 
-      <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-        <i class="fa fa-bars"></i>
-      </button>
+          <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+              <i class="fa fa-bars"></i>
+          </button>
 
-      <div class="collapse navbar-collapse d-sm-0 d-md-0">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link active scroll" href="#main-slider-section">home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link scroll" href="#about-company-section">who we are</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link scroll" href="#company-portfolio-section">our work</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link scroll" href="#pricing-table-section">pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link scroll" href="#blog-section">blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link scroll" href="#contact-form-section">contact us</a>
-          </li>
-          <li class="nav-item" *ngIf="!isLoggedin">
-            <a class="nav-link scroll" href="javascript:void(0)" (click)="openLogin()">Login</a>
-          </li>
-          <li class="nav-item" *ngIf="isLoggedin">
-            <a class="nav-link scroll" href="javascript:void(0)">{{user_name}}</a>
-            <ul>
-              <li>
-                <a class="nav-link scroll" href="javascript:void(0)" [routerLink]="['/dashboard/app-store']">App Store</a>
-              </li>
-              <li>
-                <a class="nav-link scroll" href="javascript:void(0)" [routerLink]="['/dashboard/profile']">Profile</a>
-              </li>
-              <li>
-                <a class="nav-link scroll" href="javascript:void(0)" (click)="logout()">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+          <div class="collapse navbar-collapse d-sm-0 d-md-0">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link active scroll" href="#main-slider-section">Soft board</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link scroll" href="#about-company-section">Banao aap </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link scroll" href="#pricing-table-section">Franchise club </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link scroll" href="#price">Your expense</a>
+                  </li>
+
+
+                  <li class="nav-item">
+                      <a class="nav-link scroll" href="#contact-form-section">Tell us us</a>
+                  </li>
+              </ul>
+          </div>
       </div>
-    </div>
 
 
-    <!--side menu open button-->
-    <div id="menu_bars" class="full">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+      <!--side menu open button-->
+      <div id="menu_bars" class="full">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
 
-    <div class="sidebar_menu">
-      <nav class="side-nav side-nav-right full-nav">
-        <ul class="side-nav-list">
-          <li>
-            <a class="active scroll" href="#main-slider-section">home</a>
-          </li>
-          <li>
-            <a class="scroll" href="#about-company-section">who we are</a>
-          </li>
-          <li>
-            <a class="scroll" href="#company-portfolio-section">our work</a>
-          </li>
-          <li>
-            <a class="scroll" href="#pricing-table-section">pricing</a>
-          </li>
-          <li>
-            <a class="scroll" href="#blog-section">blog</a>
-          </li>
-          <li>
-            <a class="scroll" href="#contact-form-section">contact us</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+      <div class="sidebar_menu">
+          <nav class="side-nav side-nav-right full-nav">
+              <ul class="side-nav-list">
+                  <li>
+                      <a class="active scroll" href="#main-slider-section">Soft board</a>
+                  </li>
+                  <li>
+                      <a class=" scroll" href="#about-company-section">Banao aap </a>
+                  </li>
+                  <li>
+                      <a class="scroll" href="#pricing-table-section">Franchise club </a>
+                  </li>
+                  <li>
+                      <a class="scroll" href="#price">Your expense</a>
+                  </li>
+
+                  <li>
+                      <a class="scroll" href="#contact-form-section">Tell us</a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
   </nav>
 
 </header>

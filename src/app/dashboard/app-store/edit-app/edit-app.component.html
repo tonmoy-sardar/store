@@ -89,6 +89,110 @@
             </div>
         </form>
     </mat-step>
+    <mat-step [stepControl]="stepThree">
+        <form [formGroup]="stepThree" class="contact-form row">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <section class="get-in-touch">
+                  <h1 class="title">
+                    <span> your own app</span> Get in 5 Minutes
+                  </h1>
+    
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>perm_identity</mat-icon>
+                      <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name">
+                      <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field col col-md-12">
+                    <!-- <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>perm_identity</mat-icon>
+                                        <input matInput placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
+    
+                                    </mat-form-field> -->
+                    <mat-form-field>
+                      <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
+                        <mat-option *ngFor="let designation of designations" [value]="designation.id">
+                          {{ designation.designation_name }}
+                        </mat-option>
+                        <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Owner Designation</mat-error>
+                      </mat-select>
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>calendar_today</mat-icon>
+                      <input matInput placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year">
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>location_on</mat-icon>
+                      <input matInput placeholder="Business location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address" [(ngModel)]="setp_three_data.store_address">
+                      <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
+                      <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field col-md-12">
+                    <div class="upload-filed  oner-photo">
+                      <input type="file" name="owner_pic" formControlName="owner_pic" (change)="ownerLogoChange($event.target.files)" accept="image/*">
+                      <p class="btn-switch">
+                        <mat-slide-toggle></mat-slide-toggle>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-field col-md-12">
+                    <div class="row">
+                      <div class="form-field  align-center col-md-5">
+                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(2)">Back</button>
+                      </div>
+                      <div class="form-field align-center col-md-5">
+                        <button class="round-g-btn" (click)="submitStepThree()">Next</button>
+                      </div>
+                    </div>
+                  </div>
+    
+                </section>
+    
+    
+              </div>
+              <div class="col-md-6">
+    
+                <div class="mob">
+                  <div class="wallpaper-size profile-page apps-design padding-10 text-center ">
+    
+                    <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'" alt="">
+    
+                    <h1>{{setp_three_data.owner_name}}</h1>
+                    <!-- <div class="description ">
+                                        <span *ngIf="setp_three_data.owner_designation != ''">Designation</span>
+                                        <p>{{setp_three_data.owner_designation}}</p>
+                                    </div> -->
+                    <!-- <div class="description ">
+                                        <span>Ex. Year</span>
+                                        <p>{{setp_three_data.owner_name}}</p>
+                                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
     <mat-step [stepControl]="stepFive">
             <div class="container">
                 <div class="row">

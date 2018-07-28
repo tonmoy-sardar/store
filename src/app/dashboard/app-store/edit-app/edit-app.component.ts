@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../../core/services/create-app.service';
@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+import { MapsAPILoader } from '@agm/core';
+import { } from '@types/googlemaps';
 
 @Component({
   selector: 'app-edit-app',
@@ -14,7 +16,10 @@ import { environment } from '../../../../environments/environment';
 })
 export class EditAppComponent implements OnInit {
 
+  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('search') public searchElement: ElementRef;
   stepOne: FormGroup;
+  stepThree: FormGroup;
   stepFour: FormGroup;
   stepFive: FormGroup;
   stepFiveProductCat1: FormGroup;
@@ -34,6 +39,15 @@ export class EditAppComponent implements OnInit {
     business_description: '',
     business_photos: [],
   }
+  setp_three_data = {
+    owner_name: '',
+    owner_pic: '',
+    owner_designation: '',
+    store_address: '',
+    lat: '',
+    long: '',
+    business_est_year: ''
+  }
 
   step_four_data = {
     website_url: ''
@@ -44,7 +58,7 @@ export class EditAppComponent implements OnInit {
       {
         id: null,
         app_master: this.route.snapshot.params['id'],
-        category_name: 'Generic Category',
+        category_name: 'Generic',
         description: ''
       }
     ]
@@ -58,8 +72,8 @@ export class EditAppComponent implements OnInit {
         product_category: '',
         product_name: '',
         price: '',
-        discounted_price: '',
-        packing_charges: '',
+        discounted_price: '0.00',
+        packing_charges: '0.00',
         tags: '',
       }
     ]
@@ -72,16 +86,14 @@ export class EditAppComponent implements OnInit {
         product_category: '',
         product_name: '',
         price: '',
-        discounted_price: '',
-        packing_charges: '',
+        discounted_price: '0.00',
+        packing_charges: '0.00',
         tags: '',
       }
     ]
   }
 
   base_url: string;
-
-  @ViewChild('stepper') stepper: MatStepper;
 
   isLinear = true;
   constructor(
@@ -91,7 +103,9 @@ export class EditAppComponent implements OnInit {
     private createAppService: CreateAppService,
     private cd: ChangeDetectorRef,
     private toastr: ToastrService,
-    private platformLocation: PlatformLocation
+    private platformLocation: PlatformLocation,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -104,13 +118,23 @@ export class EditAppComponent implements OnInit {
       business_photos: [''],
     });
 
+    this.stepThree = this._formBuilder.group({
+      owner_name: ['', Validators.required],
+      owner_pic: [''],
+      owner_designation: [''],
+      store_address: [''],
+      lat: [''],
+      long: [''],
+      business_est_year: [''],
+    });
+
     this.stepFour = this._formBuilder.group({
       business_photos: [''],
       website_url: ['', Validators.required]
     });
 
     this.stepFive = this._formBuilder.group({
-      product_categories: this._formBuilder.array([this.createProductCategory('Generic Category')]),
+      product_categories: this._formBuilder.array([this.createProductCategory('Generic')]),
     });
 
     this.stepFiveProductCat1 = this._formBuilder.group({
@@ -122,8 +146,46 @@ export class EditAppComponent implements OnInit {
     });
 
     this.getAppDetails(this.route.snapshot.params['id']);
+    this.getDesignationDropdown();
+    this.mapLoader();
   }
 
+  mapLoader() {
+    this.mapsAPILoader.load().then(
+      () => {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ["address"] });
+
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            console.log(place)
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+            this.setp_three_data.store_address = place.formatted_address;
+            this.setp_three_data.lat = lat.toString();
+            this.setp_three_data.long = lng.toString();
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+          });
+        });
+      }
+    );
+  }
+
+  getDesignationDropdown() {
+    this.createAppService.getDesignationDropdown().subscribe(
+      (data: any[]) => {
+        console.log(data);
+        this.designations = data;
+      },
+      error => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  };
   getAppDetails(id) {
     this.createAppService.getAppDetails(id).subscribe(
       data => {
@@ -141,6 +203,14 @@ export class EditAppComponent implements OnInit {
         if (!this.step_one_data.business_description) {
           this.haveBusinessDescription = true;
         }
+
+        this.setp_three_data.owner_pic = data.owner_pic;
+        this.setp_three_data.owner_name = data.owner_name;
+        this.setp_three_data.owner_designation = data.owner_designation;
+        this.setp_three_data.store_address = data.store_address;
+        this.setp_three_data.lat = data.lat;
+        this.setp_three_data.long = data.long;
+        this.setp_three_data.business_est_year = data.business_est_year;
 
 
         this.step_four_data.website_url = data.app_url;
@@ -202,8 +272,8 @@ export class EditAppComponent implements OnInit {
                       product_category: data.app_product_categories[i].id,
                       product_name: '',
                       price: '',
-                      discounted_price: '',
-                      packing_charges: '',
+                      discounted_price: '0.00',
+                      packing_charges: '0.00',
                       tags: '',
                     }
                   ]
@@ -245,8 +315,8 @@ export class EditAppComponent implements OnInit {
                       product_category: data.app_product_categories[i].id,
                       product_name: '',
                       price: '',
-                      discounted_price: '',
-                      packing_charges: '',
+                      discounted_price: '0.00',
+                      packing_charges: '0.00',
                       tags: '',
                     }
                   ]
@@ -294,6 +364,20 @@ export class EditAppComponent implements OnInit {
       }
     );
 
+  }
+
+
+  ownerLogoChange(ownerfile: FileList) {
+    const reader = new FileReader();
+    if (ownerfile && ownerfile.length) {
+      const file = ownerfile.item(0);
+      this.ownerToUpload = file;
+      reader.readAsDataURL(file);
+      reader.onload = (event: any) => {
+        this.setp_three_data.owner_pic = event.target.result;
+        this.cd.markForCheck();
+      };
+    }
   }
 
   submitProduct(type: number) {
@@ -379,8 +463,8 @@ export class EditAppComponent implements OnInit {
       product_category: product_cat_id,
       product_name: '',
       price: '',
-      discounted_price: '',
-      packing_charges: '',
+      discounted_price: '0.00',
+      packing_charges: '0.00',
       tags: '',
 
     }
@@ -413,8 +497,8 @@ export class EditAppComponent implements OnInit {
     return this._formBuilder.group({
       product_name: ['', Validators.required],
       price: ['', Validators.required],
-      discounted_price: [''],
-      packing_charges: [''],
+      discounted_price: ['0.00'],
+      packing_charges: ['0.00'],
       tags: [''],
     });
   }
@@ -463,6 +547,29 @@ export class EditAppComponent implements OnInit {
     }
     else {
       this.markFormGroupTouched(this.stepOne)
+    }
+  }
+
+  submitStepThree() {
+    if (this.stepThree.valid) {
+      console.log(this.stepThree.value)
+      this.createAppService.updateOwnerInfo(this.route.snapshot.params['id'], this.ownerToUpload, this.stepThree.value).subscribe(
+        response => {
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+          this.stepper.next();
+        },
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    else {
+      this.markFormGroupTouched(this.stepThree)
     }
   }
 
