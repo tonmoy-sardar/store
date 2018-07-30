@@ -14,16 +14,16 @@ import { OnlyNumberDirective } from './directive/only-number.directive';
 //----------------Material----------------//
 import {
   MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, MatCardModule, MatCheckboxModule,
-  MatChipsModule, MatDatepickerModule, MatDialogModule, MatExpansionModule, MatGridListModule, 
+  MatChipsModule, MatDatepickerModule, MatDialogModule, MatExpansionModule, MatGridListModule,
   MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
-  MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule,MatStepperModule,
+  MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatStepperModule,
 } from '@angular/material';
 //----------------Services----------------//
 import { LoginService } from './services/login.service';
 import { CreateAppService } from './services/create-app.service';
-
+import { FranchiseUserService } from './services/franchise-user.service';
 // guard
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
@@ -39,18 +39,18 @@ import { LoginComponent } from './component/login/login.component';
     FormsModule,
     ReactiveFormsModule,
     //----------------Material----------------//
-    MatAutocompleteModule,MatButtonModule,MatButtonToggleModule,
-    MatCardModule,MatCheckboxModule,MatChipsModule,MatStepperModule,MatDatepickerModule,
-    MatDialogModule,MatExpansionModule,MatGridListModule,MatIconModule,MatInputModule,MatListModule,
-    MatMenuModule,MatNativeDateModule,MatPaginatorModule,MatProgressBarModule,
-    MatProgressSpinnerModule,MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,
-    MatSliderModule,MatSlideToggleModule,MatSnackBarModule,MatSortModule,MatTableModule,
-    MatTabsModule,MatToolbarModule,MatTooltipModule,
+    MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
+    MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,
+    MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule,
+    MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule,
+    MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule,
+    MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule,
+    MatTabsModule, MatToolbarModule, MatTooltipModule,
     //----------------Material----------------//
   ],
   declarations: [
-    HeaderComponent, 
-    FooterComponent, 
+    HeaderComponent,
+    FooterComponent,
     OnlyNumberDirective, LoginComponent
   ],
   providers: [],
@@ -62,17 +62,17 @@ import { LoginComponent } from './component/login/login.component';
     FormsModule,
     ReactiveFormsModule,
     OnlyNumberDirective,
-     //----------------Material----------------//
-     MatAutocompleteModule,MatButtonModule,MatButtonToggleModule,
-     MatCardModule,MatCheckboxModule,MatChipsModule,MatStepperModule,MatDatepickerModule,
-     MatDialogModule,MatExpansionModule,MatGridListModule,MatIconModule,MatInputModule,MatListModule,
-     MatMenuModule,MatNativeDateModule,MatPaginatorModule,MatProgressBarModule,
-     MatProgressSpinnerModule,MatRadioModule,MatRippleModule,MatSelectModule,MatSidenavModule,
-     MatSliderModule,MatSlideToggleModule,MatSnackBarModule,MatSortModule,MatTableModule,
-     MatTabsModule,MatToolbarModule,MatTooltipModule,
-     //----------------Material----------------//
+    //----------------Material----------------//
+    MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
+    MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,
+    MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule,
+    MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule,
+    MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule,
+    MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule,
+    MatTabsModule, MatToolbarModule, MatTooltipModule,
+    //----------------Material----------------//
   ],
-  entryComponents:[
+  entryComponents: [
     LoginComponent
   ]
 })
@@ -83,9 +83,10 @@ export class CoreModule {
       providers: [
         AuthGuard,
         LoginService,
-        CreateAppService
+        CreateAppService,
+        FranchiseUserService
       ]
-      
+
     };
   }
- }
+}

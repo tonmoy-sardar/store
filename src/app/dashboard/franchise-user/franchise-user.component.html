@@ -1,0 +1,73 @@
+<div class="get-in-touch  padding-top-15">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3 padding-0 bg-white box-shadow min-height-600">
+        <div class="my-profile">
+          <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="{{userAndAppDetails.user_details[0]?.users_pic}}"
+            alt="">
+          <h2>{{userAndAppDetails.first_name}}</h2>
+          <ul>
+            <li>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i> {{userAndAppDetails.user_details[0]?.contact_no}} </a>
+            </li>
+            <li>
+              <a href="">
+                <i class="fa fa-home" aria-hidden="true"></i> Resturent
+              </a>
+            </li>
+            <li>
+              <a href=""></a>
+            </li>
+            <li>
+              <a href=""></a>
+            </li>
+            <li>
+              <a href=""></a>
+            </li>
+            <li>
+              <a href=""></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="dashdoard-menu">
+          <h2>User Dashboard</h2>
+          <div class="dropdown pull-right">
+            <span>
+              <img src="assets/images/apps-logo1.png" alt=""> </span>
+
+            <ul class="dropdown-content">
+              <li>
+                <a href="#">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="product-dash bg-white box-shadow padding-top-15">
+          <div class="row">
+            <div class="col-md-2 margin-bottom-30 " *ngFor="let user of FranchiseUserList; let i = index;">
+              <div class="payment-btn min-height-100 dashdoard-sec broder-radius-5">
+                <div class="product-price padding-30">
+                  <div class="font-size-20">
+                    <a class="round-btn " [routerLink]="['/dashboard/app-store/', user.user.id]">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <img class="img-fluid rounded" [src]="user.users_pic" alt="">
+                    <h2 class=" text-center font-size-15">{{user.user.first_name}}</h2>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

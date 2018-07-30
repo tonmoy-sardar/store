@@ -12,7 +12,8 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'app-store', loadChildren: './app-store/app-store.module#AppStoreModule' },
-      { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' }
+      { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+      { path: 'franchise-user', loadChildren: './franchise-user/franchise-user.module#FranchiseUserModule' }
     ]
   }  
 ];

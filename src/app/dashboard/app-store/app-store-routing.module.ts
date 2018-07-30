@@ -9,6 +9,10 @@ const routes: Routes = [
     component: AppStoreComponent
   },
   {
+    path: ':user_id',
+    component: AppStoreComponent
+  },
+  {
     path: 'edit-app/:id',
     component: EditAppComponent
   }

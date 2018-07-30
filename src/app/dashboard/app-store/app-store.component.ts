@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
@@ -15,6 +15,7 @@ export class AppStoreComponent implements OnInit {
   urlEndpoint;
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private createAppService: CreateAppService,
     private toastr: ToastrService,
   ) { }
@@ -35,7 +36,14 @@ export class AppStoreComponent implements OnInit {
         }]
       }]
     }
-    this.getAppAnduserDetailsByUserID(localStorage.getItem('logedUserUserId'));
+    console.log(this.route.snapshot.params['user_id'])
+    if(this.route.snapshot.params['user_id']){      
+      this.getAppAnduserDetailsByUserID(this.route.snapshot.params['user_id']);
+    }
+    else{
+      this.getAppAnduserDetailsByUserID(localStorage.getItem('logedUserUserId'));
+    }
+    
   }
 
   getAppAnduserDetailsByUserID(id)
