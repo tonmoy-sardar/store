@@ -172,7 +172,7 @@ p {
 }
 
 .background-pink {
-    background-color: #F0F0F0;
+    background-color: #f9ece3;
 }
 
 .gradient-bg-red {
@@ -284,6 +284,10 @@ p {
 
 .padding-top-bottom {
     padding: 93px 0;
+}
+
+.padding-top-bottom-20 {
+    padding: 20px 0;
 }
 
 .padding-top {
@@ -524,8 +528,8 @@ p {
     padding: 12px 32px !important;
     font-size: 15px;
     color: #fff;
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
+    // -webkit-border-radius: 50px;
+    // border-radius: 50px;
     font-family: 'Montserrat', sans-serif;
     transition: all .40s ease-out;
     -webkit-box-shadow: 0px 4px 5px 1px rgba(00, 00, 00, 0.2);
@@ -3182,7 +3186,7 @@ p {
 
 .contact-form-textfield input,
 .contact-form-textfield textarea {
-    background: #F0F0F0;
+    background: #f9ece3;
     font-size: 16px;
     border: none;
     border-bottom: 1px solid #c3c3c3;
@@ -4408,7 +4412,7 @@ z #generic_price_table .generic_content,
     height: 694px;
     width: 414px;
     margin: 0 auto;
-    padding-top: 124px;
+    padding-top: 120px;
 }
 
 .bg-texture {
@@ -4432,14 +4436,14 @@ z #generic_price_table .generic_content,
 
 .get-in-touch .title {
     text-transform: uppercase;
-    font-size: 43px;
+    font-size: 20px;
     line-height: 43px;
     padding-bottom: 14px;
-    font-weight: bold;
-    background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
-    background-image: linear-gradient(to right, #00aff0, #99dff9);
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+    font-weight: 300;
+    // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
+    // background-image: linear-gradient(to right, #00aff0, #99dff9);
+    // -webkit-text-fill-color: transparent;
+    // -webkit-background-clip: text;
 }
 
 .get-in-touch .title span {
@@ -4488,10 +4492,11 @@ z #generic_price_table .generic_content,
 }
 
 .round-g-btn {
-    background-image: -webkit-gradient(linear, left top, right top, from(#3aa6fe), to(#49deff));
-    background-image: linear-gradient(90deg, #3aa6fe 0%, #49deff 100%);
+    // background-image: -webkit-gradient(linear, left top, right top, from(#3aa6fe), to(#49deff));
+    // background-image: linear-gradient(90deg, #3aa6fe 0%, #49deff 100%);
+    background: #000;
     color: #ffffff;
-    border: 1px solid #e6e6e6;
+    border: 1px solid #000;
     padding: 5px 25px;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -4500,7 +4505,7 @@ z #generic_price_table .generic_content,
     padding: 11px 16px;
     cursor: pointer;
     width: 175px;
-    border-radius: 28px;
+    // border-radius: 28px;
     transition: all .40s ease-out;
 }
 
@@ -4911,6 +4916,11 @@ z #generic_price_table .generic_content,
     position: relative;
 }
 
+.select-btn ul li img {
+    display: block;
+    margin: 0 auto;
+}
+
 .select-btn ul li:hover img {
     transform: scale(1.1);
     transition: all .40s ease;
@@ -4956,7 +4966,7 @@ z #generic_price_table .generic_content,
 
 .wallpaper-size {
     height: 423px;
-    margin: 0 84px;
+    margin: 0 79px;
     background-size: cover;
     border-radius: 8px;
     overflow-y: auto;
@@ -5342,9 +5352,14 @@ z #generic_price_table .generic_content,
     background-color: transparent !important;
 }
 
-// .mat-horizontal-content-container {
-//     padding: 0 !important;
-// }
+.mat-horizontal-content-container {
+    padding: 0 !important;
+}
+
+.edit-area {
+    padding-top: 50px;
+}
+
 // .mat-horizontal-stepper-content {
 //     overflow: visible !important;
 // }

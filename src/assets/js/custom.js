@@ -90,23 +90,26 @@ $(window).on('load', function() {
 
     // TODO: Move to external YML file
     var words = [
-        ['MORE'],
-        ['MORE'],
-        ['LESS'],
-        ['GIVE'],
-        ['TAKE'],
-        ['LOSE'],
-        ['FIND'],
-        ['OPEN'],
-        ['SHUT'],
-        ['PROB'],
-        ['LEMS'],
+        ['EARN'],
+        ['EASY'],
+        ['RICH'],
+        ['COOL'],
+        ['DEAL'],
+        ['GAIN'],
+        ['GOAL'],
+        ['USER'],
+        ['PLAN'],
+        ['IDEA'],
+        ['SAFE'],
         ['MAKE'],
-        ['SHIP'],
-        ['NONE'],
-        ['NONE'],
-        ['NONE'],
-        ['NONE']
+        ['SELL'],
+        ['HIGH'],
+        ['SHOP'],
+        ['MEET'],
+        ['MAIN'],
+        ['MOTO'],
+        ['BEST'],
+        ['FIND']
     ];
 
     slotMachineify(words);
