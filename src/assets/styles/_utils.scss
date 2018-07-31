@@ -286,6 +286,10 @@ p {
     padding: 93px 0;
 }
 
+.padding-top-bottom-10 {
+    padding: 10px 0;
+}
+
 .padding-top-bottom-20 {
     padding: 20px 0;
 }
@@ -4409,10 +4413,10 @@ z #generic_price_table .generic_content,
 
 .mob {
     background: url(../images/phone.png) no-repeat center center;
-    height: 694px;
-    width: 414px;
+    height: 602px;
+    width: 366px;
     margin: 0 auto;
-    padding-top: 120px;
+    padding-top: 90px;
 }
 
 .bg-texture {
@@ -4510,9 +4514,9 @@ z #generic_price_table .generic_content,
 }
 
 .round-g-btn:hover {
-    border: 1px solid #00aff0;
+    border: 1px solid #000;
     background: #fff;
-    color: #00aff0;
+    color: #000;
     transition: all .40s ease;
 }
 
@@ -4905,20 +4909,33 @@ z #generic_price_table .generic_content,
 
 .select-btn ul li {
     float: left;
-    width: 107px;
-    height: 75px;
+    width: 85px;
+    height: 85px;
     text-align: center;
-    padding-top: 2px;
     transition: transform .2s;
     /* Animation */
     transition: all .40s ease-out;
-    border-bottom: 1px solid #fff;
-    position: relative;
+    border: 1px solid #eee;
+    display: table;
+}
+
+.select-btn ul li a {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 14px;
 }
 
 .select-btn ul li img {
     display: block;
     margin: 0 auto;
+    width: 25px;
+}
+
+.select-btn ul li a:hover {
+    background-color: #f0d8c7;
+    -webkit-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
 }
 
 .select-btn ul li:hover img {
@@ -4929,43 +4946,44 @@ z #generic_price_table .generic_content,
 .selected {
     transform: scale(1.1);
     transition: all .40s ease;
+    background-color: #f0d8c7;
+    -webkit-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
 }
 
-.selected::before {
-    content: "";
-    background: #00aff0;
-    height: 2px;
-    width: 107px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: all .40s ease;
-}
-
-.select-btn ul li::before {
-    content: "";
-    background: #f7f5f5;
-    height: 2px;
-    width: 104px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: all .40s ease-out;
-}
-
-.select-btn ul li:hover ::before {
-    content: "";
-    background: #00aff0;
-    height: 2px;
-    width: 107px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: all .40s ease;
-}
-
+// .selected::before {
+//     content: "";
+//     background: #00aff0;
+//     height: 2px;
+//     width: 107px;
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     transition: all .40s ease;
+// }
+// .select-btn ul li::before {
+//     content: "";
+//     background: #f7f5f5;
+//     height: 2px;
+//     width: 104px;
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     transition: all .40s ease-out;
+// }
+// .select-btn ul li:hover ::before {
+//     content: "";
+//     background: #00aff0;
+//     height: 2px;
+//     width: 107px;
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     transition: all .40s ease;
+// }
 .wallpaper-size {
-    height: 423px;
+    height: 355px;
     margin: 0 79px;
     background-size: cover;
     border-radius: 8px;
