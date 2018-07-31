@@ -769,6 +769,47 @@ export class CreateAppComponent implements OnInit {
               timeOut: 3000,
             });
             this.stepper.next();
+
+            this.setp_five_data = {
+              product_categories: [
+                {
+                  id: null,
+                  app_master: response.id,
+                  category_name: 'Generic',
+                  description: ''
+                }
+              ]
+            }
+          
+            this.setp_five_data_cat_1 = {
+              products: [
+                {
+                  id: null,
+                  app_master: response.id,
+                  product_category: '',
+                  product_name: '',
+                  price: '',
+                  discounted_price: '0.00',
+                  packing_charges: '0.00',
+                  tags: '',
+                }
+              ]
+            }
+          
+            this.setp_five_data_cat_2 = {
+              products: [
+                {
+                  id: null,
+                  app_master: response.id,
+                  product_category: '',
+                  product_name: '',
+                  price: '',
+                  discounted_price: '0.00',
+                  packing_charges: '0.00',
+                  tags: '',
+                }
+              ]
+            }
           },
           error => {
             this.toastr.error('Something went wrong', '', {
