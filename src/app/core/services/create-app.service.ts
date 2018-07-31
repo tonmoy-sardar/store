@@ -251,6 +251,12 @@ export class CreateAppService {
     return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_user/' + id + '/', data)
   }
 
+  createOriginalAppByFranchise(id,data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_franchise/' + id + '/', data)
+  }
+
+  
+
 
 
 }
