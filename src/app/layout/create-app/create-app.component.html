@@ -30,6 +30,7 @@
                                         <div class="clearfix"></div>
                                     </ul>
                                 </div>
+                                <hr>
                                 <div class="row padding-top-15">
                                     <div class="form-field col x-100 align-center col-md-5">
                                         <button class="round-g-btn" (click)="submitStepOne()">Next</button>
@@ -48,13 +49,21 @@
         </mat-step>
         <mat-step [stepControl]="stepTwo" class="contact-form row">
             <form [formGroup]="stepTwo">
-                <div class="container">
+
+                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+                    <div class="container">
+                        <h1 class="title fontface-one text-color-dark letter-spacing">
+                            Enter your business details
+                        </h1>
+                    </div>
+                </div>
+
+
+                <div class="container padding-top-25">
                     <div class="row">
                         <div class="col-md-6">
                             <section class="get-in-touch">
-                                <h1 class="title">
-                                    <span> your own app</span> Get in 5 Minutes
-                                </h1>
+
                                 <div class="contact-form row">
                                     <div class="form-field col col-md-12">
                                         <mat-form-field class="input-full-width">
@@ -69,7 +78,7 @@
                                             <mat-slide-toggle [checked]="haveBusinessName"></mat-slide-toggle>
                                         </p>
                                     </div>
-                                    <div class="form-field col col-md-12">
+                                    <div class="form-field col col-md-12 ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>info</mat-icon>
                                             <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
@@ -90,7 +99,8 @@
                                         <mat-slide-toggle></mat-slide-toggle>
                                     </p>
                                 </div> -->
-                                    <div class="form-field col-md-12">
+
+                                    <div class="form-field col-md-6">
                                         <div class="upload-filed">
                                             <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
                                             <p class="btn-switch">
@@ -99,7 +109,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-field col-md-12">
+                                    <div class="form-field col-md-6">
                                         <div class="upload-filed  business-photo">
 
                                             <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
@@ -108,11 +118,14 @@
                                                 <mat-slide-toggle></mat-slide-toggle>
                                             </p>
                                         </div>
+
                                     </div>
-                                    <div class="form-field col-md-12">
+
+                                    <div class="form-field padding-top-10 col-md-12">
+
                                         <div class="row">
                                             <div class="form-field  align-center col-md-5">
-                                                <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(1)">Back</button>
+                                                <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(1)">Back</button>
                                             </div>
                                             <div class="form-field align-center col-md-5">
                                                 <button class="round-g-btn" (click)="submitStepTwo()">Next</button>
@@ -129,7 +142,7 @@
                                     <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
                                     <h1>{{setp_two_data.business_name}}</h1>
                                     <div class="description ">
-                                        <span *ngIf="setp_two_data.business_description != '' && setp_two_data.business_description != null">Description</span>
+                                        <!-- <span *ngIf="setp_two_data.business_description != '' && setp_two_data.business_description != null">Description</span> -->
                                         <p>{{setp_two_data.business_description}}</p>
                                     </div>
                                     <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
@@ -152,13 +165,18 @@
         </mat-step>
         <mat-step [stepControl]="stepThree">
             <form [formGroup]="stepThree" class="contact-form row">
-                <div class="container">
+
+                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+                    <div class="container">
+                        <h1 class="title fontface-one text-color-dark letter-spacing">
+                            Owner introduction
+                        </h1>
+                    </div>
+                </div>
+                <div class="container padding-top-25">
                     <div class="row">
                         <div class="col-md-6">
-                            <section class="get-in-touch">
-                                <h1 class="title">
-                                    <span> your own app</span> Get in 5 Minutes
-                                </h1>
+                            <section class="get-in-touch full_width">
 
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
@@ -197,7 +215,7 @@
                                         <mat-slide-toggle></mat-slide-toggle>
                                     </p>
                                 </div>
-                                <div class="form-field col col-md-12">
+                                <div class="form-field col col-md-12 ">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>location_on</mat-icon>
                                         <input matInput placeholder="Business location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
@@ -217,10 +235,11 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="form-field col-md-12">
+                                <hr>
+                                <div class="form-field padding-top-10 col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(2)">Back</button>
+                                            <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(2)">Back</button>
                                         </div>
                                         <div class="form-field align-center col-md-5">
                                             <button class="round-g-btn" (click)="submitStepThree()">Next</button>
@@ -235,7 +254,7 @@
                         <div class="col-md-6">
 
                             <div class="mob">
-                                <div class="wallpaper-size profile-page apps-design padding-10 text-center ">
+                                <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
                                     <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'" alt="">
 
@@ -256,15 +275,25 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="stepFive">
-            <div class="container">
+            <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+                <div class="container">
+                    <h1 class="title fontface-one text-color-dark letter-spacing">
+                        All about the product/ service
+                    </h1>
+                </div>
+            </div>
+            <div class="container min-height-600 padding-top-25">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <section class="get-in-touch">
                             <h1 class="title">
-                                <span> your own app</span> Get in 5 Minutes
+
                             </h1>
                             <div class="col-md-12">
                                 <form [formGroup]="stepFive">
+
+
+
                                     <div class="col-md-12" formArrayName="product_categories">
                                         <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
                                             <div class="col-md-12" [formGroupName]="i">
@@ -277,12 +306,13 @@
                                                             <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2 pick-oftext">
                                                         <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
-                                                            <i class="fa fa-plus"></i>
+                                                            <i class="fa fa-plus"></i> <span>Add Category</span>
                                                         </a>
                                                         <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
                                                             <i class="fa fa-times-circle fa-2"></i>
+                                                            <span>Remove</span>
                                                         </a>
                                                     </div>
 
@@ -291,7 +321,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="text-align: right">
-                                        <button class="round-g-btn" (click)="submitCategory()">Submit </button>
+                                        <button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
                                     </div>
                                 </form>
                             </div>
@@ -304,7 +334,7 @@
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
                                                                         <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name"
@@ -337,12 +367,13 @@
                                                                         <input matInput placeholder="Tags" [(ngModel)]="setp_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-1">
+                                                                <div class="col-md-2 pick-oftext">
                                                                     <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
+                                                                        <span>Add Product</span>
                                                                     </a>
                                                                     <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
-                                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                                        <i class="fa fa-times-circle fa-2"></i><span>Remove</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -350,7 +381,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Conform</button>
                                                 </div>
 
                                             </form>
@@ -408,18 +439,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </mat-tab>
                                 </mat-tab-group>
                             </div>
-
-                            <div class="col-md-12">
+                            <hr>
+                            <div class="col-md-6">
                                 <div class="row">
                                     <div class="align-center col-md-5">
-                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
+                                        <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                                     </div>
                                     <div class="align-center col-md-5">
                                         <button class="round-g-btn" (click)="nextStep(5)">Next</button>
@@ -428,7 +459,7 @@
                             </div>
                         </section>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -445,7 +476,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </mat-step>

@@ -4442,7 +4442,6 @@ z #generic_price_table .generic_content,
     text-transform: uppercase;
     font-size: 20px;
     line-height: 43px;
-    padding-bottom: 14px;
     font-weight: 300;
     // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
     // background-image: linear-gradient(to right, #00aff0, #99dff9);
@@ -4495,6 +4494,50 @@ z #generic_price_table .generic_content,
     transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out;
 }
 
+.round-g-biscuit {
+    background: #6d3107;
+    color: #ffffff;
+    border: 1px solid #6d3107;
+    padding: 5px 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    line-height: 24px;
+    padding: 3px 16px;
+    cursor: pointer;
+    width: 121px;
+    transition: all .40s ease-out;
+}
+
+.round-g-biscuit:hover {
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+    transition: all .40s ease;
+}
+
+.round-g-grey {
+    background: #797676;
+    color: #ffffff;
+    border: 1px solid #000;
+    padding: 5px 25px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 123px;
+    transition: all .40s ease-out;
+}
+
+.round-g-grey:hover {
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+    transition: all .40s ease;
+}
+
 .round-g-btn {
     // background-image: -webkit-gradient(linear, left top, right top, from(#3aa6fe), to(#49deff));
     // background-image: linear-gradient(90deg, #3aa6fe 0%, #49deff 100%);
@@ -4504,11 +4547,11 @@ z #generic_price_table .generic_content,
     padding: 5px 25px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
-    padding: 11px 16px;
+    padding: 8px 16px;
     cursor: pointer;
-    width: 175px;
+    width: 123px;
     // border-radius: 28px;
     transition: all .40s ease-out;
 }
@@ -4922,17 +4965,19 @@ z #generic_price_table .generic_content,
 .select-btn ul li a {
     display: table-cell;
     vertical-align: middle;
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 13px;
 }
 
 .select-btn ul li img {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 7px;
     width: 25px;
 }
 
 .select-btn ul li a:hover {
     background-color: #f0d8c7;
+    transition: all .40s ease;
     -webkit-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
     -moz-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
     box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.12);
@@ -4940,7 +4985,7 @@ z #generic_price_table .generic_content,
 
 .select-btn ul li:hover img {
     transform: scale(1.1);
-    transition: all .40s ease;
+    transition: all .40s ease-out;
 }
 
 .selected {
@@ -5008,31 +5053,43 @@ z #generic_price_table .generic_content,
     display: block;
     margin: 0 auto;
     width: 92px;
-    width: 92px
+    height: 92px;
+    border-radius: 50%;
+}
+
+.sub-image img {
+    width: 70px;
+    height: 70px;
+    border-radius: 5%;
 }
 
 .apps-design h1 {
     color: #fff;
-    font-size: 22px;
-    margin: 3px auto;
+    font-size: 15px;
+    margin: 11px auto;
     padding-bottom: 12px;
     border-bottom: 1px solid #fff;
 }
 
 .apps-design .description span {
-    background: #ffffff96;
-    padding: 4px;
+    background: #f9ece3;
+    padding: 2px;
     width: 100%;
     margin: 0 auto;
     float: left;
-    font-size: 16px;
+    font-size: 12px;
     color: #000;
-    border-radius: 15px;
+    border-radius: 7px;
     text-transform: uppercase;
+}
+
+.sub-image {
+    margin-top: 20px;
 }
 
 .apps-design .description p {
     color: #fff;
+    font-size: 12px;
 }
 
 .upload-filed .lebel-form {
@@ -5054,7 +5111,7 @@ z #generic_price_table .generic_content,
 }
 
 .profile-page {
-    background: url(../images/profile-page.jpg) no-repeat 0 0;
+    background: url(../images/bg-phone.jpg) no-repeat 0 0;
 }
 
 .freelink {
@@ -5312,6 +5369,20 @@ z #generic_price_table .generic_content,
     width: 100%;
 }
 
+.pick-oftext {
+    position: relative;
+}
+
+.pick-oftext a {
+    position: absolute;
+    bottom: 13px;
+}
+
+.pick-oftext span {
+    font-size: 12px;
+    color: #b5b5b5;
+}
+
 .full_width .mat-form-field {
     display: block;
 }
@@ -5336,13 +5407,14 @@ z #generic_price_table .generic_content,
 
 .mat-icon,
 .mat-form-field-suffix .mat-icon {
-    background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
-    background-image: linear-gradient(to right, #00aff0, #99dff9);
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+    // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
+    // background-image: linear-gradient(to right, #00aff0, #99dff9);
+    // -webkit-text-fill-color: transparent;
+    // -webkit-background-clip: text;
     bottom: -4px;
     position: relative;
     padding-right: 30px !important;
+    color: #000;
 }
 
 .mat-form-field-ripple {
