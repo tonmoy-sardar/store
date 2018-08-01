@@ -6,9 +6,40 @@
 
                 <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
                     <div class="container">
-                        <h1 class="title fontface-one text-color-dark letter-spacing">
-                            Choose your business category
-                        </h1>
+                        <!--Dropdown primary-->
+                        <div class="pull-left col-md-3">
+                            <a href="#"><img class="img-fluid" [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/logo-dark.png'" alt=""></a>
+                        </div>
+                        <div class=" primary-color">
+
+                            <a class="log-in-out" href="javascript:void(0)">
+                                <span>Hi. Shail </span>
+
+                                <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+
+                                <!-- <i class="material-icons" mat-button [matMenuTriggerFor]="menu">
+                                    more_vert
+                                    </i> -->
+
+
+                            </a>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Dashboard</button>
+                                <button mat-menu-item>Logout</button>
+                            </mat-menu>
+                            <!-- <button class="log-buton" mat-button [matMenuTriggerFor]="menu"><i class="material-icons">
+                                    more_vert
+                                    </i></button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Dashboard</button>
+                                <button mat-menu-item>Logout</button>
+                            </mat-menu> -->
+                        </div>
+                        <!--/Dropdown primary-->
                     </div>
                 </div>
 
@@ -38,6 +69,14 @@
                             </section>
                         </div>
                         <div class="col-md-6">
+
+                            <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                                <div class="container">
+                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                                        Choose your business category
+                                    </h1>
+                                </div>
+                            </div>
                             <div class="mob ">
                                 <div class="wallpaper-size caragory-resturent"></div>
                             </div>
@@ -372,7 +411,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Conform</button>
+                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Confirm</button>
                                                 </div>
 
                                             </form>
