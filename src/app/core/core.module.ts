@@ -27,6 +27,8 @@ import { FranchiseUserService } from './services/franchise-user.service';
 // guard
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
+import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component';
 
 
 @NgModule({
@@ -51,7 +53,7 @@ import { LoginComponent } from './component/login/login.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    OnlyNumberDirective, LoginComponent
+    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent
   ],
   providers: [],
   exports: [
@@ -73,7 +75,9 @@ import { LoginComponent } from './component/login/login.component';
     //----------------Material----------------//
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    ConfirmDialogComponent,
+    OtpDialogComponent
   ]
 })
 export class CoreModule {

@@ -34,15 +34,14 @@ export class CreateAppService {
   getAppDetails(id): Observable<any> {
     return this.http.get(environment.apiEndpoint + 'app_all_details/' + id + '/')
   }
-  
+
 
   logoUploadSection(id, logoToUpload, data): Observable<any> {
     const formData: FormData = new FormData();
     let logo;
     if (data) {
       for (let key in data) {
-        if(key!='logo' && key!='business_photos')
-        {
+        if (key != 'logo' && key != 'business_photos') {
           formData.append(key, data[key])
         }
       }
@@ -57,16 +56,15 @@ export class CreateAppService {
 
   }
 
-  submitOwnerInfo(id,session_id, ownerToUpload, data): Observable<any> {
+  submitOwnerInfo(id, session_id, ownerToUpload, data): Observable<any> {
 
     const formData: FormData = new FormData();
     let owner_pic;
     if (data) {
       for (let key in data) {
-        if(key!='owner_pic')
-        {
+        if (key != 'owner_pic') {
           formData.append(key, data[key])
-        } 
+        }
       }
     }
 
@@ -109,16 +107,16 @@ export class CreateAppService {
     return this.http.get(environment.apiEndpoint + 'app_user_details/' + session_id + '/')
   }
 
-  createOriginalApp(id,data): Observable<any> {
+  createOriginalApp(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'create_app_step_last/' + id + '/', data)
   }
 
 
-  createProductCategory(id,data): Observable<any> {
+  createProductCategory(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'edit_product_Categories/' + id + '/', data)
   }
 
-  createProduct(id,data): Observable<any> {
+  createProduct(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'edit_product/' + id + '/', data)
   }
 
@@ -132,11 +130,11 @@ export class CreateAppService {
   }
 
 
-  editOrgProductCategory(id,data): Observable<any> {
+  editOrgProductCategory(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'org_product_categories_edit/' + id + '/', data)
   }
 
-  editOrgProduct(id,data): Observable<any> {
+  editOrgProduct(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'org_product_edit/' + id + '/', data)
   }
 
@@ -145,7 +143,7 @@ export class CreateAppService {
   }
 
 
-  updateOrgAppStepOne(app_id, logoToUpload, appImageToUpload,data): Observable<any> {
+  updateOrgAppStepOne(app_id, logoToUpload, appImageToUpload, data): Observable<any> {
 
     const formData: FormData = new FormData();
     let app_images;
@@ -154,8 +152,7 @@ export class CreateAppService {
 
     if (data) {
       for (let key in data) {
-        if(key!='logo' && key!='business_photos')
-        {
+        if (key != 'logo' && key != 'business_photos') {
           formData.append(key, data[key])
         }
       }
@@ -178,17 +175,16 @@ export class CreateAppService {
     return this.http.post(environment.apiEndpoint + 'edit_step1_app_master/' + app_id + '/', formData)
 
   }
- 
 
 
-  updateAppStepOne(app_id, logoToUpload,data): Observable<any> {
+
+  updateAppStepOne(app_id, logoToUpload, data): Observable<any> {
     const formData: FormData = new FormData();
     let logo;
 
     if (data) {
       for (let key in data) {
-        if(key!='logo' && key!='business_photos')
-        {
+        if (key != 'logo' && key != 'business_photos') {
           formData.append(key, data[key])
         }
       }
@@ -202,16 +198,15 @@ export class CreateAppService {
     return this.http.put(environment.apiEndpoint + 'edit_applogo_&_appname/' + app_id + '/', formData)
   }
 
-  updateOwnerInfo(id,ownerToUpload, data): Observable<any> {
+  updateOwnerInfo(id, ownerToUpload, data): Observable<any> {
 
     const formData: FormData = new FormData();
     let owner_pic;
     if (data) {
       for (let key in data) {
-        if(key!='owner_pic')
-        {
+        if (key != 'owner_pic') {
           formData.append(key, data[key])
-        } 
+        }
       }
     }
 
@@ -220,7 +215,7 @@ export class CreateAppService {
       formData.append('owner_pic', ownerToUpload, owner_pic);
     }
 
-    
+
 
     return this.http.put(environment.apiEndpoint + 'edit_owner_info/' + id + '/', formData)
 
@@ -245,17 +240,27 @@ export class CreateAppService {
     return this.http.post(environment.apiEndpoint + 'upload_multiple_imgs/', formData)
 
   }
-  
 
-  createOriginalAppWithLogin(id,data): Observable<any> {
+
+  createOriginalAppWithLogin(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_user/' + id + '/', data)
   }
 
-  createOriginalAppByFranchise(id,data): Observable<any> {
+  createOriginalAppByFranchise(id, data): Observable<any> {
     return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_franchise/' + id + '/', data)
   }
 
-  
+
+  createAppStepLastForFranchiseExist(id, data) {
+    return this.http.put(environment.apiEndpoint + 'create_app_step_last_for_franchise_exist/' + id + '/', data)
+  }
+
+
+  confirmOtp(id, data) {
+    return this.http.put(environment.apiEndpoint + 'otp_confirm/' + id + '/', data)
+  }
+
+
 
 
 

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Verify your mobile number</h2>
+<mat-dialog-content>
+  <form class="otp_form" [formGroup]="form" novalidate>
+    <mat-form-field class="example-full-width full_width">
+      <input matInput placeholder="OTP" class="form-control" formControlName="otp" name="otp">
+      <mat-error *ngIf="form.get('otp').touched && form.get('otp').hasError('required')">
+        Please enter
+        <strong>OTP</strong>
+      </mat-error>
+      <mat-error *ngIf="error_msg != ''">
+
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <!-- <button class="round-g-btn" (click)="resendOtp()">Resend</button> -->
+  <button class="round-g-btn" (click)="onSubmit()">Confirm</button>
+</mat-dialog-actions>
