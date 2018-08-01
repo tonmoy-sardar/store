@@ -37,30 +37,30 @@ export class OtpDialogComponent implements OnInit {
     if (this.form.valid) {
       var id = this.user_id;
       var data = {
-        is_active: true
+        is_active: 1
       }
-      if(this.otp.toLowerCase() == this.form.value.otp.toLowerCase()){
+      if (this.otp == this.form.value.otp) {
         this.createAppService.confirmOtp(id, data).subscribe(
           res => {
             console.log(res);
             this.dialogRef.close(true);
           },
           error => {
-            console.log(error)            
+            console.log(error)
           }
         )
       }
-      else{
+      else {
         this.error_msg = 'Please Enter Valid OTP';
       }
-      
+
     } else {
       this.markFormGroupTouched(this.form)
     }
 
   }
 
-  resendOtp(){
+  resendOtp() {
 
   }
 

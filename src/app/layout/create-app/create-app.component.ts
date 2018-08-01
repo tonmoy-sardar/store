@@ -1036,7 +1036,6 @@ export class CreateAppComponent implements OnInit {
             timeOut: 3000,
           });
           this.openOtpDialog(response['otp'], response['user_id'])
-          // this.btnClickNav('payment')
 
         },
         error => {
@@ -1062,8 +1061,7 @@ export class CreateAppComponent implements OnInit {
                   this.toastr.success('Success', '', {
                     timeOut: 3000,
                   });
-                  this.openOtpDialog(response['otp'], response['user_id'])
-                  // this.btnClickNav('payment')
+                  this.btnClickNav('payment')
                 },
                 error => {
                   this.toastr.error(error.error.msg, '', {

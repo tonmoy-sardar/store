@@ -257,7 +257,7 @@ export class CreateAppService {
 
 
   confirmOtp(id, data) {
-    return this.http.put(environment.apiEndpoint + 'otp_confirm/' + id + '/', data)
+    return this.http.put(environment.apiEndpoint + 'otp_confirmation/' + id + '/', data)
   }
 
 
