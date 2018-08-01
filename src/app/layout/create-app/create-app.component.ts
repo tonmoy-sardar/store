@@ -212,7 +212,7 @@ export class CreateAppComponent implements OnInit {
     // }
 
     this.logedUserId = localStorage.getItem('logedUserUserId');
-    this.logedUserGroup = localStorage.getItem('logedUserUserGroup').toLowerCase();
+    this.logedUserGroup = localStorage.getItem('logedUserUserGroup');
     this.getCategoryList();
     this.getDesignationDropdown();
     this.mapLoader();
