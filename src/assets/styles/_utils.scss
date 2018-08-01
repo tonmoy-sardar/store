@@ -239,6 +239,10 @@ p {
     color: #000 !important;
 }
 
+.text-color-darkgrey-b {
+    color: #636262 !important;
+}
+
 .text-color-darkgrey {
     color: #9e9d9d;
 }
@@ -1402,7 +1406,7 @@ p {
 
 #menu_bars span {
     width: 30px;
-    background: #fff;
+    background: #5f3494;
     height: 1px;
     display: block;
 }
@@ -3808,12 +3812,39 @@ z #generic_price_table .generic_content,
     -webkit-transition: all 0.3s ease-in-out 0s;
 }
 
+// .log-in-out span {
+//     padding: 8px;
+//     color: #908e8e;
+//     font-weight: 500;
+// }
+.log-in-out {
+    float: right;
+    margin-top: 14px;
+}
+
+.log-in-out #menu_bars {
+    top: 23px;
+    right: 82px;
+}
+
+.log-in-out i {
+    border-radius: 50%;
+    background: #908e8e;
+    padding: 3px;
+    text-align: center;
+    color: #fff;
+    float: right;
+    font-size: 19px;
+}
+
+.log-in-out:hover {}
+
 .log-round {
     text-align: center;
     display: block;
     color: #fff;
     padding: 3px 13px;
-    border-radius: 20px;
+    border-radius: 5px;
     margin-top: -5px;
     font-family: 'Circular Std Book';
     font-weight: 300;
@@ -4413,10 +4444,10 @@ z #generic_price_table .generic_content,
 
 .mob {
     background: url(../images/phone.png) no-repeat center center;
-    height: 602px;
+    height: 535px;
     width: 366px;
     margin: 0 auto;
-    padding-top: 90px;
+    padding-top: 56px;
 }
 
 .bg-texture {
@@ -4443,6 +4474,7 @@ z #generic_price_table .generic_content,
     font-size: 20px;
     line-height: 43px;
     font-weight: 300;
+    text-align: center;
     // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
     // background-image: linear-gradient(to right, #00aff0, #99dff9);
     // -webkit-text-fill-color: transparent;
@@ -5377,6 +5409,10 @@ z #generic_price_table .generic_content,
     border: 1px solid #f9ece3;
     background: #6d3107;
     color: #fff;
+    height: 36px;
+    letter-spacing: 1px;
+    font-size: 11px;
+    text-transform: uppercase;
 }
 
 .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
