@@ -23,8 +23,7 @@
                                     <ul *ngIf="category_list.length > 0">
                                         <li *ngFor="let category of category_list">
                                             <a href="javascript:void(0)" (click)="categorySelect(category.id)" [ngClass]="{'selected': setp_one_data.app_category == category.id}">
-                                                <img [src]="category.icon" *ngIf="category.icon != null">
-                                                <img src="assets/images/select-1.png" *ngIf="category.icon == null"> {{category.category_name}}
+                                                <img src="assets/images/select-1.png" alt=""> {{category.category_name}}
                                             </a>
                                         </li>
                                         <div class="clearfix"></div>
@@ -68,8 +67,7 @@
                                     <div class="form-field col col-md-12">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>card_travel</mat-icon>
-                                            <input class="form-control" matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name"
-                                                (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
+                                            <input class="form-control" matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name" (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
                                             <mat-error *ngIf="isFieldValid(stepTwo,'business_name')"> Please Enter Business Name</mat-error>
 
                                         </mat-form-field>
@@ -81,8 +79,7 @@
                                     <div class="form-field col col-md-12 ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>info</mat-icon>
-                                            <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
-                                                (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
+                                            <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description" (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
                                         </mat-form-field>
 
                                         <p class="btn-switch">
@@ -112,8 +109,7 @@
                                     <div class="form-field col-md-6">
                                         <div class="upload-filed  business-photo">
 
-                                            <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
-                                                multiple>
+                                            <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*" multiple>
                                             <p class="btn-switch">
                                                 <mat-slide-toggle></mat-slide-toggle>
                                             </p>
@@ -178,7 +174,7 @@
                         <div class="col-md-6">
                             <section class="get-in-touch full_width">
 
-                                <div class="form-field col col-md-12">
+                                <div class="form-field  ">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>perm_identity</mat-icon>
                                         <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name">
@@ -188,7 +184,7 @@
                                         <mat-slide-toggle></mat-slide-toggle>
                                     </p>
                                 </div>
-                                <div class="form-field col col-md-12">
+                                <div class="form-field  ">
                                     <!-- <mat-form-field class="input-full-width">
                                     <mat-icon matPrefix>perm_identity</mat-icon>
                                     <input matInput placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
@@ -206,7 +202,7 @@
                                         <mat-slide-toggle></mat-slide-toggle>
                                     </p>
                                 </div>
-                                <div class="form-field col col-md-12">
+                                <div class="form-field  ">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>calendar_today</mat-icon>
                                         <input matInput placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year">
@@ -215,11 +211,10 @@
                                         <mat-slide-toggle></mat-slide-toggle>
                                     </p>
                                 </div>
-                                <div class="form-field col col-md-12 ">
+                                <div class="form-field   ">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>location_on</mat-icon>
-                                        <input matInput placeholder="Business location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
-                                            [(ngModel)]="setp_three_data.store_address">
+                                        <input matInput placeholder="Business location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address" [(ngModel)]="setp_three_data.store_address">
                                         <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
                                         <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
                                     </mat-form-field>
@@ -289,43 +284,42 @@
                             <h1 class="title">
 
                             </h1>
-                            <div class="col-md-12">
-                                <form [formGroup]="stepFive">
+
+                            <form [formGroup]="stepFive">
 
 
 
-                                    <div class="col-md-12" formArrayName="product_categories">
-                                        <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
-                                            <div class="col-md-12" [formGroupName]="i">
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <mat-form-field class="input-full-width">
-                                                            <mat-icon matPrefix>info</mat-icon>
-                                                            <input matInput placeholder="Category" [(ngModel)]="setp_five_data.product_categories[i].category_name" name="category_name"
-                                                                formControlName="category_name">
-                                                            <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-md-2 pick-oftext">
-                                                        <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
-                                                            <i class="fa fa-plus"></i> <span>Add Category</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
-                                                            <i class="fa fa-times-circle fa-2"></i>
-                                                            <span>Remove</span>
-                                                        </a>
-                                                    </div>
-
+                                <div formArrayName="product_categories">
+                                    <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
+                                        <div class="col-md-12" [formGroupName]="i">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <mat-form-field class="input-full-width">
+                                                        <mat-icon matPrefix>info</mat-icon>
+                                                        <input matInput placeholder="Category" [(ngModel)]="setp_five_data.product_categories[i].category_name" name="category_name" formControlName="category_name">
+                                                        <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
+                                                    </mat-form-field>
                                                 </div>
+                                                <div class="col-md-2 pick-oftext">
+                                                    <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
+                                                        <i class="fa fa-plus"></i> <span>Add Category</span>
+                                                    </a>
+                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                        <span>Remove</span>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="text-align: right">
-                                        <button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-12" *ngIf="setp_five_data.product_categories[0].id!=null">
+                                </div>
+                                <div class="col-md-12" style="text-align: right">
+                                    <button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
+                                </div>
+                            </form>
+
+                            <div class="add-product padding-10 margin-top-10  bg-white box-shadow" *ngIf="setp_five_data.product_categories[0].id!=null">
                                 <mat-tab-group>
                                     <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of setp_five_data.product_categories; let i = index;">
                                         <div class="col-md-12" *ngIf="i == 0">
@@ -337,8 +331,7 @@
                                                                 <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name"
-                                                                            formControlName="product_name">
+                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_1.products[j].product_name" formControlName="product_name">
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="col-md-2">
@@ -350,15 +343,13 @@
                                                                 <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price"
-                                                                            name="discounted_price" formControlName="discounted_price">
+                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_1.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput appOnlyNumber placeholder="Packing Charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges"
-                                                                            name="packing_charges" formControlName="packing_charges">
+                                                                        <input matInput appOnlyNumber placeholder="Packing Charges" [(ngModel)]="setp_five_data_cat_1.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="col-md-2">
@@ -392,46 +383,45 @@
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_2.products[j].product_name"
-                                                                            formControlName="product_name">
+                                                                        <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="setp_five_data_cat_2.products[j].product_name" formControlName="product_name">
 
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
                                                                         <input matInput appOnlyNumber placeholder="Price" name="price" [(ngModel)]="setp_five_data_cat_2.products[j].price" formControlName="price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price"
-                                                                            name="discounted_price" formControlName="discounted_price">
+                                                                        <input matInput appOnlyNumber placeholder="Discounted Price" [(ngModel)]="setp_five_data_cat_2.products[j].discounted_price" name="discounted_price" formControlName="discounted_price">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
 
-                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges"
-                                                                            name="packing_charges" formControlName="packing_charges">
+                                                                        <input matInput appOnlyNumber placeholder="packing charges" [(ngModel)]="setp_five_data_cat_2.products[j].packing_charges" name="packing_charges" formControlName="packing_charges">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
                                                                         <mat-icon matPrefix>info</mat-icon>
                                                                         <input matInput placeholder="Tags" name="Tags" [(ngModel)]="setp_five_data_cat_2.products[j].tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-5">
+                                                                <div class="col-md-2  pick-oftext">
                                                                     <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
-                                                                        <i class="fa fa-plus"></i>
+                                                                        <i class="fa fa-plus"></i> &nbsp;
+                                                                        <span>Add Product</span>
+
                                                                     </a>
                                                                     <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
-                                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                                        <i class="fa fa-times-circle fa-2"></i>&nbsp; <span>Remove</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -482,13 +472,23 @@
         </mat-step>
         <mat-step [stepControl]="stepFour">
             <form [formGroup]="stepFour" class="contact-form row">
-                <div class="container">
+
+                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+                    <div class="container">
+                        <h1 class="title fontface-one text-color-dark letter-spacing">
+                            Get your URL
+                        </h1>
+                    </div>
+                </div>
+
+
+                <div class="container  padding-top-25">
                     <div class="row">
                         <div class="col-md-6">
                             <section class="get-in-touch">
-                                <h1 class="title">
+                                <!-- <h1 class="title">
                                     <span> your own app</span> Get in 5 Minutes
-                                </h1>
+                                </h1> -->
 
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
@@ -504,8 +504,8 @@
 
                                     <span>Choose your free Business URL:</span>
                                     <a href="javascript:void(0)" (click)="getWebUrl(base_url+'/'+setp_two_data.business_name)">{{getSuggestedUrl(base_url+'/'+setp_two_data.business_name)}}
-                                        <i class="fa fa-link" aria-hidden="true"></i>
-                                    </a>
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                </a>
 
 
                                 </div>
@@ -520,10 +520,11 @@
                                         </p>
                                     </div>
                                 </div> -->
+                                <hr>
                                 <div class="form-field col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(3)">Back</button>
+                                            <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(3)">Back</button>
                                         </div>
                                         <div class="form-field align-center col-md-5">
                                             <button class="round-g-btn" (click)="submitStepFour()">Next</button>
@@ -557,171 +558,57 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="stepSix">
-            <div *ngIf="logedUserGroup=='franchise'">
-                <form [formGroup]="stepSix" class="contact-form row">
+            <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
+                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <section class="get-in-touch">
-                                    <h1 class="title">
-                                        <span> your own app</span> Get in 5 Minutes
-                                    </h1>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>phone_android</mat-icon>
-                                            <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>phone_android</mat-icon>
-                                            <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>email</mat-icon>
-                                            <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col-md-12">
-                                        <div class="row">
-                                            <div class="form-field  align-center col-md-5">
-                                                <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                                            </div>
-                                            <div class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="mob">
-                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                        <h1>{{setp_two_data.business_name}}</h1>
-                                        <div class="description">
-
-                                            <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                            <p>{{setp_six_data.contact_no}}</p>
-                                        </div>
-                                        <div class="description ">
-                                            <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                            <p>{{setp_six_data.email_id}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h1 class="title fontface-one text-color-dark letter-spacing">
+                            Submit your details and get the app
+                        </h1>
                     </div>
-                </form>
-            </div>
-            <div *ngIf="logedUserGroup!='franchise'">
-                <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <section class="get-in-touch">
-                                    <h1 class="title">
-                                        <span> your own app</span> Get in 5 Minutes
-                                    </h1>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>phone_android</mat-icon>
-                                            <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>phone_android</mat-icon>
-                                            <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>email</mat-icon>
-                                            <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
-                                            <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col-md-12">
-                                        <div class="row">
-                                            <div class="form-field  align-center col-md-5">
-                                                <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                                            </div>
-                                            <div class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepSix()">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-6">
+                </div>
 
-                                <div class="mob">
-                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                        <h1>{{setp_two_data.business_name}}</h1>
-                                        <div class="description">
-
-                                            <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                            <p>{{setp_six_data.contact_no}}</p>
-                                        </div>
-                                        <div class="description ">
-                                            <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                            <p>{{setp_six_data.email_id}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="container" *ngIf="logedUserId>0">
+                <div class="container  padding-top-25">
                     <div class="row">
                         <div class="col-md-6">
                             <section class="get-in-touch">
-                                <h1 class="title">
-                                    <span> your own app</span> Get in 5 Minutes
-                                </h1>
 
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>phone_android</mat-icon>
+                                        <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
+                                        <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
+                                    </mat-form-field>
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle></mat-slide-toggle>
+                                    </p>
+                                </div>
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>phone_android</mat-icon>
+                                        <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
+                                    </mat-form-field>
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle></mat-slide-toggle>
+                                    </p>
+                                </div>
+                                <div class="form-field col col-md-12">
+                                    <mat-form-field class="input-full-width">
+                                        <mat-icon matPrefix>email</mat-icon>
+                                        <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
+                                    </mat-form-field>
+                                    <p class="btn-switch">
+                                        <mat-slide-toggle></mat-slide-toggle>
+                                    </p>
+                                </div>
                                 <div class="form-field col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                                            <button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
                                         </div>
                                         <div class="form-field align-center col-md-5">
-                                            <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
+                                            <button class="round-g-btn" (click)="submitStepSix()">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -749,7 +636,51 @@
                         </div>
                     </div>
                 </div>
+            </form>
+
+            <div class="container" *ngIf="logedUserId>0">
+                <div class="row">
+                    <div class="col-md-6">
+                        <section class="get-in-touch">
+                            <h1 class="title">
+                                <span> your own app</span> Get in 5 Minutes
+                            </h1>
+
+                            <div class="form-field col-md-12">
+                                <div class="row">
+                                    <div class="form-field  align-center col-md-5">
+                                        <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                                    </div>
+                                    <div class="form-field align-center col-md-5">
+                                        <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="mob">
+                            <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                                <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+
+                                <h1>{{setp_two_data.business_name}}</h1>
+                                <div class="description">
+
+                                    <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                                    <p>{{setp_six_data.contact_no}}</p>
+                                </div>
+                                <div class="description ">
+                                    <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                                    <p>{{setp_six_data.email_id}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </mat-step>
 
     </mat-horizontal-stepper>    
