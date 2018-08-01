@@ -5373,6 +5373,18 @@ z #generic_price_table .generic_content,
     position: relative;
 }
 
+.add-product .mat-tab-label {
+    border: 1px solid #f9ece3;
+    background: #6d3107;
+    color: #fff;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+{
+    background-color: #000;
+    opacity: 1;
+}
+
 .pick-oftext a {
     position: absolute;
     bottom: 13px;
