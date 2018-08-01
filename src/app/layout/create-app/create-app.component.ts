@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, NgZone, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CreateAppService } from '../../core/services/create-app.service';
@@ -8,6 +8,10 @@ import { PlatformLocation } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ConfirmDialogComponent } from "../../core/component/confirm-dialog/confirm-dialog.component";
+import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.component";
+
 @Component({
   selector: 'app-create-app',
   templateUrl: './create-app.component.html',
@@ -113,7 +117,7 @@ export class CreateAppComponent implements OnInit {
 
 
   setp_six_data = {
-    name:'',
+    name: '',
     contact_no: '',
     email_id: ''
   }
@@ -128,7 +132,8 @@ export class CreateAppComponent implements OnInit {
     private toastr: ToastrService,
     private platformLocation: PlatformLocation,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -782,7 +787,7 @@ export class CreateAppComponent implements OnInit {
                 }
               ]
             }
-          
+
             this.setp_five_data_cat_1 = {
               products: [
                 {
@@ -797,7 +802,7 @@ export class CreateAppComponent implements OnInit {
                 }
               ]
             }
-          
+
             this.setp_five_data_cat_2 = {
               products: [
                 {
@@ -881,7 +886,7 @@ export class CreateAppComponent implements OnInit {
   submitStepThree() {
     if (this.stepThree.valid) {
       console.log(this.stepThree.value)
-      this.createAppService.submitOwnerInfo(localStorage.getItem('storeCreateAppID'),localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
+      this.createAppService.submitOwnerInfo(localStorage.getItem('storeCreateAppID'), localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
           //this.user_id = response.id;
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
@@ -950,7 +955,7 @@ export class CreateAppComponent implements OnInit {
         email_id: this.stepSix.value.email_id,
         contact_no: this.stepSix.value.contact_no
       }
-      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'),data).subscribe(
+      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
@@ -962,12 +967,12 @@ export class CreateAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-          this.stepper.next();
-          this.btnClickNav('payment')
+          console.log(response)
+          this.openOtpDialog(response['otp'], response['user_id'])
 
         },
         error => {
-          
+
           this.toastr.error(error.error.msg, '', {
             timeOut: 3000,
           });
@@ -981,33 +986,31 @@ export class CreateAppComponent implements OnInit {
   }
 
   submitStepSixWithLogin() {
-    
+
     let data = {
-     user_id:this.logedUserId
+      user_id: this.logedUserId
     }
-      this.createAppService.createOriginalAppWithLogin(localStorage.getItem('storeCreateAppID'),data).subscribe(
-        response => {
-          // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
-          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+    this.createAppService.createOriginalAppWithLogin(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      response => {
+        // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+        // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
 
-          localStorage.removeItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppStep');
-          localStorage.removeItem('storeSessionID');
+        localStorage.removeItem('storeCreateAppID');
+        localStorage.removeItem('storeCreateAppStep');
+        localStorage.removeItem('storeSessionID');
 
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
-          this.stepper.next();
-          this.btnClickNav('payment')
+        this.toastr.success('Success', '', {
+          timeOut: 3000,
+        });
+        this.btnClickNav('payment')
 
-        },
-        error => {
-          
-          this.toastr.error(error.error.msg, '', {
-            timeOut: 3000,
-          });
-        }
-      );
+      },
+      error => {
+        this.toastr.error(error.error.msg, '', {
+          timeOut: 3000,
+        });
+      }
+    );
 
   }
 
@@ -1015,12 +1018,12 @@ export class CreateAppComponent implements OnInit {
   submitStepSixFranchise() {
     if (this.stepSix.valid) {
       let data = {
-        user_id:this.logedUserId,
+        user_id: this.logedUserId,
         name: this.stepSix.value.name,
         email_id: this.stepSix.value.email_id,
         contact_no: this.stepSix.value.contact_no
       }
-      this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'),data).subscribe(
+      this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
@@ -1032,14 +1035,43 @@ export class CreateAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-          this.stepper.next();
-          this.btnClickNav('payment')
+          this.openOtpDialog(response['otp'], response['user_id'])
+          // this.btnClickNav('payment')
 
         },
         error => {
-          
-          this.toastr.error(error.error.msg, '', {
-            timeOut: 3000,
+          // console.log(error)
+          let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '300px',
+            data: { msg: error.error.msg }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              let data = {
+                name: this.stepSix.value.name,
+                email_id: this.stepSix.value.email_id,
+                contact_no: this.stepSix.value.contact_no
+              }
+              this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+                response => {
+                  console.log(response)
+                  localStorage.removeItem('storeCreateAppID');
+                  localStorage.removeItem('storeCreateAppStep');
+                  localStorage.removeItem('storeSessionID');
+
+                  this.toastr.success('Success', '', {
+                    timeOut: 3000,
+                  });
+                  this.openOtpDialog(response['otp'], response['user_id'])
+                  // this.btnClickNav('payment')
+                },
+                error => {
+                  this.toastr.error(error.error.msg, '', {
+                    timeOut: 3000,
+                  });
+                }
+              )
+            }
           });
         }
       );
@@ -1050,7 +1082,17 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  
+  openOtpDialog(otp, user_id) {
+    let dialogRef = this.dialog.open(OtpDialogComponent, {
+      width: '300px',
+      data: { otp: otp, user_id: user_id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.btnClickNav('payment')
+      }
+    })
+  }
 
 
 
