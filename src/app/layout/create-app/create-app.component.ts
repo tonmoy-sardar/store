@@ -40,6 +40,7 @@ export class CreateAppComponent implements OnInit {
   storeCreateAppStep;
 
   logedUserId;
+  logedUserGroup;
 
   setp_one_data = {
     session_id: '',
@@ -211,6 +212,7 @@ export class CreateAppComponent implements OnInit {
     // }
 
     this.logedUserId = localStorage.getItem('logedUserUserId');
+    this.logedUserGroup = localStorage.getItem('logedUserUserGroup');
     this.getCategoryList();
     this.getDesignationDropdown();
     this.mapLoader();
@@ -1008,6 +1010,47 @@ export class CreateAppComponent implements OnInit {
       );
 
   }
+
+
+  submitStepSixFranchise() {
+    if (this.stepSix.valid) {
+      let data = {
+        user_id:this.logedUserId,
+        name: this.stepSix.value.name,
+        email_id: this.stepSix.value.email_id,
+        contact_no: this.stepSix.value.contact_no
+      }
+      this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'),data).subscribe(
+        response => {
+          // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
+          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+
+          localStorage.removeItem('storeCreateAppID');
+          localStorage.removeItem('storeCreateAppStep');
+          localStorage.removeItem('storeSessionID');
+
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+          this.stepper.next();
+          this.btnClickNav('payment')
+
+        },
+        error => {
+          
+          this.toastr.error(error.error.msg, '', {
+            timeOut: 3000,
+          });
+        }
+      );
+
+    }
+    else {
+      this.markFormGroupTouched(this.stepSix)
+    }
+  }
+
+  
 
 
 
