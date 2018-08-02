@@ -261,6 +261,19 @@ export class CreateAppService {
   }
 
 
+  getPriceList(){
+    return this.http.get(environment.apiEndpoint + 'dropdown_price_master/')
+  }
+
+  getSubscriptionTypeList(){
+    return this.http.get(environment.apiEndpoint + 'dropdown_subscriptions_type/')
+  }
+
+  getOfferList(){
+    return this.http.get(environment.apiEndpoint + 'dropdown_offer_code/')
+  }
+
+
 
 
 

@@ -29,6 +29,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component';
+import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.component';
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component'
   declarations: [
     HeaderComponent,
     FooterComponent,
-    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent
+    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent
   ],
   providers: [],
   exports: [
@@ -77,7 +78,8 @@ import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component'
   entryComponents: [
     LoginComponent,
     ConfirmDialogComponent,
-    OtpDialogComponent
+    OtpDialogComponent,
+    CouponDialogComponent
   ]
 })
 export class CoreModule {
