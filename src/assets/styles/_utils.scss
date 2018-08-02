@@ -2486,10 +2486,9 @@ p {
     text-transform: uppercase;
 }
 
-.page-wrapper {
-    background: url(../images/banner-bg.jpg) no-repeat 0 0;
-}
-
+// .page-wrapper {
+//     background: url(../images/banner-bg.jpg) no-repeat 0 0;
+// }
 .tparrows {
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -3817,13 +3816,19 @@ z #generic_price_table .generic_content,
 //     color: #908e8e;
 //     font-weight: 500;
 // }
+.log-in-out .text-name {
+    color: #908e8e;
+    font-weight: 500;
+    font-family: 'Circular Std Book'
+}
+
 .log-in-out {
     float: right;
-    margin-top: 14px;
+    margin-top: 9px;
 }
 
 .log-in-out #menu_bars {
-    top: 23px;
+    top: 20px;
     right: 82px;
 }
 

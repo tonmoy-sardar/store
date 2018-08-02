@@ -1,47 +1,49 @@
 <!-- <app-step-one></app-step-one> -->
+<div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+    <div class="container">
+        <!--Dropdown primary-->
+        <div class="pull-left col-md-3">
+            <a href="#"><img class="img-fluid" [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/logo-dark.png'" alt=""></a>
+        </div>
+        <div class=" primary-color">
+
+            <a class="log-in-out" href="javascript:void(0)">
+                <span class="text-name">Hi. Shail </span>
+
+                <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <!-- <i class="material-icons" mat-button [matMenuTriggerFor]="menu">
+                        more_vert
+                        </i> -->
+
+
+            </a>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Dashboard</button>
+                <button mat-menu-item>Logout</button>
+            </mat-menu>
+            <!-- <button class="log-buton" mat-button [matMenuTriggerFor]="menu"><i class="material-icons">
+                        more_vert
+                        </i></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Dashboard</button>
+                    <button mat-menu-item>Logout</button>
+                </mat-menu> -->
+        </div>
+        <!--/Dropdown primary-->
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="clearfix"></div>
 <div class="background-pink">
     <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
         <mat-step [stepControl]="stepOne">
             <form [formGroup]="stepOne" class="contact-form row">
 
-                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-                    <div class="container">
-                        <!--Dropdown primary-->
-                        <div class="pull-left col-md-3">
-                            <a href="#"><img class="img-fluid" [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/logo-dark.png'" alt=""></a>
-                        </div>
-                        <div class=" primary-color">
-
-                            <a class="log-in-out" href="javascript:void(0)">
-                                <span>Hi. Shail </span>
-
-                                <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-
-                                <!-- <i class="material-icons" mat-button [matMenuTriggerFor]="menu">
-                                    more_vert
-                                    </i> -->
-
-
-                            </a>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Dashboard</button>
-                                <button mat-menu-item>Logout</button>
-                            </mat-menu>
-                            <!-- <button class="log-buton" mat-button [matMenuTriggerFor]="menu"><i class="material-icons">
-                                    more_vert
-                                    </i></button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Dashboard</button>
-                                <button mat-menu-item>Logout</button>
-                            </mat-menu> -->
-                        </div>
-                        <!--/Dropdown primary-->
-                    </div>
-                </div>
 
                 <div class="container">
                     <div class="row">
@@ -88,18 +90,12 @@
         <mat-step [stepControl]="stepTwo" class="contact-form row">
             <form [formGroup]="stepTwo">
 
-                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-                    <div class="container">
-                        <h1 class="title fontface-one text-color-dark letter-spacing">
-                            Enter your business details
-                        </h1>
-                    </div>
-                </div>
 
 
-                <div class="container padding-top-25">
+
+                <div class="container ">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 padding-top-50">
                             <section class="get-in-touch">
 
                                 <div class="contact-form row">
@@ -171,6 +167,14 @@
                             </section>
                         </div>
                         <div class="col-md-6">
+                            <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                                <div class="container">
+                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                                        Enter your business details
+                                    </h1>
+                                </div>
+                            </div>
+
 
                             <div class="mob">
                                 <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -201,16 +205,10 @@
         <mat-step [stepControl]="stepThree">
             <form [formGroup]="stepThree" class="contact-form row">
 
-                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-                    <div class="container">
-                        <h1 class="title fontface-one text-color-dark letter-spacing">
-                            Owner introduction
-                        </h1>
-                    </div>
-                </div>
-                <div class="container padding-top-25">
+
+                <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 padding-top-50">
                             <section class="get-in-touch full_width">
 
                                 <div class="form-field  ">
@@ -286,7 +284,13 @@
 
                         </div>
                         <div class="col-md-6">
-
+                            <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                                <div class="container">
+                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                                        Owner introduction
+                                    </h1>
+                                </div>
+                            </div>
                             <div class="mob">
                                 <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
@@ -722,5 +726,5 @@
 
         </mat-step>
 
-    </mat-horizontal-stepper>    
+    </mat-horizontal-stepper>
 </div>
