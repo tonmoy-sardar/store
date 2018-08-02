@@ -3,7 +3,7 @@
     <div class="container">
         <!--Dropdown primary-->
         <div class="pull-left col-md-3">
-            <a href="#"><img class="img-fluid" [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/logo-dark.png'" alt=""></a>
+            <a href="#"><img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt=""></a>
         </div>
         <div class=" primary-color">
 
@@ -66,7 +66,7 @@
                                 <hr>
                                 <div class="row padding-top-15">
                                     <div class="form-field col x-100 align-center col-md-5">
-                                        <button class="round-g-btn" (click)="submitStepOne()">Next</button>
+                                        <button mat-button class="round-g-btn" (click)="submitStepOne()">Next</button>
                                     </div>
                                 </div>
                             </section>
@@ -157,10 +157,10 @@
 
                                         <div class="row">
                                             <div class="form-field  align-center col-md-5">
-                                                <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(1)">Back</button>
+                                                <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(1)">Back</button>
                                             </div>
                                             <div class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepTwo()">Next</button>
+                                                <button mat-button class="round-g-btn" (click)="submitStepTwo()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -272,10 +272,10 @@
                                 <div class="form-field padding-top-10 col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(2)">Back</button>
+                                            <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(2)">Back</button>
                                         </div>
                                         <div class="form-field align-center col-md-5">
-                                            <button class="round-g-btn" (click)="submitStepThree()">Next</button>
+                                            <button mat-button class="round-g-btn" (click)="submitStepThree()">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -286,11 +286,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-12 get-in-touch  padding-top-bottom-10">
-                                <div class="container">
-                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                                        Owner introduction
-                                    </h1>
-                                </div>
+
+                                <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                                    Owner introduction
+                                </h1>
+
                             </div>
                             <div class="mob">
                                 <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -314,7 +314,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="stepFive">
-            <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+            <div class="col-md-12 get-in-touch padding-top-bottom-10">
                 <div class="container">
                     <h1 class="title fontface-one text-color-dark letter-spacing">
                         All about the product/ service
@@ -323,7 +323,7 @@
             </div>
             <div class="container min-height-600 padding-top-25">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <section class="get-in-touch">
                             <h1 class="title">
 
@@ -360,7 +360,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="text-align: right">
-                                    <button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
+                                    <button mat-button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
                                 </div>
                             </form>
 
@@ -404,7 +404,7 @@
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="col-md-2 pick-oftext">
-                                                                    <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                    <a mat-button routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
                                                                         <span>Add Product</span>
                                                                     </a>
@@ -418,7 +418,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Confirm</button>
+                                                    <button mat-button class="round-g-biscuit" (click)="submitProduct(i)">Confirm</button>
                                                 </div>
 
                                             </form>
@@ -461,12 +461,12 @@
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="col-md-2  pick-oftext">
-                                                                    <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                    <a mat-button routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i> &nbsp;
                                                                         <span>Add Product</span>
 
                                                                     </a>
-                                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                    <a mat-button href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
                                                                         <i class="fa fa-times-circle fa-2"></i>&nbsp;
                                                                         <span>Remove</span>
                                                                     </a>
@@ -476,7 +476,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-biscuit" (click)="submitProduct(i)">Submit</button>
+                                                    <button mat-button class="round-g-biscuit" (click)="submitProduct(i)">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -487,16 +487,16 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="align-center col-md-5">
-                                        <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
+                                        <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                                     </div>
                                     <div class="align-center col-md-5">
-                                        <button class="round-g-btn" (click)="nextStep(5)">Next</button>
+                                        <button mat-button class="round-g-btn" (click)="nextStep(5)">Next</button>
                                     </div>
                                 </div>
                             </div>
                         </section>
                     </div>
-                    <!-- <div class="col-md-3">
+                    <div class="col-md-3">
 
                         <div class="mob">
                             <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -513,25 +513,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </mat-step>
         <mat-step [stepControl]="stepFour">
             <form [formGroup]="stepFour" class="contact-form row">
 
-                <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-                    <div class="container">
-                        <h1 class="title fontface-one text-color-dark letter-spacing">
-                            Get your URL
-                        </h1>
-                    </div>
-                </div>
 
-
-                <div class="container  padding-top-25">
+                <div class="container ">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6  padding-top-50">
                             <section class="get-in-touch">
                                 <!-- <h1 class="title">
                                     <span> your own app</span> Get in 5 Minutes
@@ -571,9 +563,9 @@
                                 <div class="form-field col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(3)">Back</button>
+                                            <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(3)">Back</button>
                                         </div>
-                                        <div class="form-field align-center col-md-5">
+                                        <div mat-button class="form-field align-center col-md-5">
                                             <button class="round-g-btn" (click)="submitStepFour()">Next</button>
                                         </div>
                                     </div>
@@ -582,6 +574,14 @@
                             </section>
                         </div>
                         <div class="col-md-6">
+
+                            <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+
+                                <h1 class="title fontface-one text-color-dark letter-spacing">
+                                    Get your URL
+                                </h1>
+
+                            </div>
 
                             <div class="mob">
                                 <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
@@ -647,10 +647,10 @@
                                     <div class="form-field col-md-12">
                                         <div class="row">
                                             <div class="form-field  align-center col-md-5">
-                                                <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                                                <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
                                             </div>
                                             <div class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
+                                                <button mat-button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -728,10 +728,10 @@
                                     <div class="form-field col-md-12">
                                         <div class="row">
                                             <div class="form-field  align-center col-md-5">
-                                                <button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
+                                                <button mat-button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
                                             </div>
                                             <div class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepSix()">Next</button>
+                                                <button mat-button class="round-g-btn" (click)="submitStepSix()">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -772,9 +772,9 @@
                                 <div class="form-field col-md-12">
                                     <div class="row">
                                         <div class="form-field  align-center col-md-5">
-                                            <button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                                            <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
                                         </div>
-                                        <div class="form-field align-center col-md-5">
+                                        <div mat-button class="form-field align-center col-md-5">
                                             <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
                                         </div>
                                     </div>

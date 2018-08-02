@@ -1,74 +1,115 @@
-<div class="get-in-touch  padding-top-15">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="col-md-3 padding-0 bg-white box-shadow min-height-600">
-        <div class="my-profile">
-          <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="{{userAndAppDetails.user_details[0].users_pic}}" alt="">
-          <h2>{{userAndAppDetails.first_name}}</h2>
-          <ul>
-            <li>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i> {{userAndAppDetails.user_details[0].contact_no}} </a>
-            </li>
-            <li>
-              <a href="">
-                <i class="fa fa-home" aria-hidden="true"></i> Resturent
-              </a>
-            </li>
-            <li>
-              <a href=""></a>
-            </li>
-            <li>
-              <a href=""></a>
-            </li>
-            <li>
-              <a href=""></a>
-            </li>
-            <li>
-              <a href=""></a>
-            </li>
-          </ul>
+<div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
+    <div class="container">
+        <!--Dropdown primary-->
+        <div class="pull-left col-md-3">
+            <a href="#"><img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt=""></a>
         </div>
-      </div>
-      <div class="col-md-9">
-          <div class="dashdoard-menu">
-            <h2>User Dashboard</h2>
-            <div class="dropdown pull-right">
-              <span>
+        <div class=" primary-color">
+
+            <a class="log-in-out" href="javascript:void(0)">
+                <span class="text-name">Hi. Shail </span>
+
+                <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <!-- <i class="material-icons" mat-button [matMenuTriggerFor]="menu">
+                        more_vert
+                        </i> -->
+
+
+            </a>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Dashboard</button>
+                <button mat-menu-item>Logout</button>
+            </mat-menu>
+            <!-- <button class="log-buton" mat-button [matMenuTriggerFor]="menu"><i class="material-icons">
+                        more_vert
+                        </i></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Dashboard</button>
+                    <button mat-menu-item>Logout</button>
+                </mat-menu> -->
+        </div>
+        <!--/Dropdown primary-->
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="get-in-touch background-pink  padding-top-15">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 padding-10 bg-white box-shadow min-height-600">
+                <div class="my-profile">
+                    <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="{{userAndAppDetails.user_details[0].users_pic}}" alt="">
+                    <h2 class="font-size-22 padding-10">{{userAndAppDetails.first_name}}</h2>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-phone" aria-hidden="true"></i> {{userAndAppDetails.user_details[0].contact_no}} </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-home" aria-hidden="true"></i> Resturent
+                            </a>
+                        </li>
+                        <li>
+                            <a href=""></a>
+                        </li>
+                        <li>
+                            <a href=""></a>
+                        </li>
+                        <li>
+                            <a href=""></a>
+                        </li>
+                        <li>
+                            <a href=""></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="dashdoard-menu">
+                    <h2>User Dashboard</h2>
+                    <!-- <div class="dropdown pull-right">
+                        <span class="text-color-white">
+                          Hi. shail
                 <img src="assets/images/apps-logo1.png" alt=""> </span>
-    
-              <ul class="dropdown-content">
-                <li>
-                  <a href="#">
+
+                        <ul class="dropdown-content">
+                            <li>
+                                <a href="#">
                     Logout
                   </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="product-dash bg-white box-shadow padding-top-15">
-              <div class="row">
-                  <div class="col-md-2 margin-bottom-30 " *ngFor="let apps of userAndAppDetails.user_details[0].app_details; let i = index;">
-                      <div class="payment-btn min-height-100 dashdoard-sec broder-radius-5">
-                          <div class="product-price padding-30">
-                              <div class="font-size-20">
-                                  <!-- <input class="round-g-btn margin-top-20" type="submit" value="Edit"></div> -->
-                                  <a class="round-btn " [routerLink]="['/dashboard/app-store/edit-app', apps.id]"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                  <img class="img-fluid rounded" src="{{urlEndpoint}}{{apps.logo}}" alt="">
-                                  <h2 class=" text-center font-size-15">{{apps.app_name}}</h2>
-                              </div>
-                              <div class="clearfix"></div>
-                          </div>
-                      </div>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+                <div class="product-dash bg-white box-shadow padding-top-15 padding-10">
 
-                  </div>
-                  
-              </div>
-          </div>
+                    <div *ngFor="let apps of userAndAppDetails.user_details[0].app_details; let i = index;">
+                        <div class="payment-btn min-height-100 dashdoard-sec broder-radius-5 ">
+                            <ul>
+                                <li>
+
+
+                                    <a matTooltip="Edit" class="round-btn " [routerLink]="['/dashboard/app-store/edit-app', apps.id]"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <img class="img-fluid rounded" src="{{urlEndpoint}}{{apps.logo}}" alt="">
+                                    <span class=" text-center font-size-12">{{apps.app_name}}</span>
+
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+
         </div>
 
-
     </div>
-
-  </div>
 </div>
