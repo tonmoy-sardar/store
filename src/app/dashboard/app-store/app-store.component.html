@@ -1,7 +1,7 @@
 <div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
     <div class="container">
         <!--Dropdown primary-->
-        <div class="pull-left col-md-3">
+        <div class="pull-left col-md-3  ">
             <a href="#"><img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt=""></a>
         </div>
         <div class=" primary-color">
@@ -40,8 +40,8 @@
 <div class="get-in-touch background-pink  padding-top-15">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3 padding-10 bg-white box-shadow min-height-600">
-                <div class="my-profile">
+            <div class="col-md-3 padding-10 box-shadow min-height-600 gradient-bg-pink-purple">
+                <div class="my-profile bg-white padding-10 margin-top-100 ">
                     <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="{{userAndAppDetails.user_details[0].users_pic}}" alt="">
                     <h2 class="font-size-22 padding-10">{{userAndAppDetails.first_name}}</h2>
                     <ul>
@@ -69,23 +69,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-9">
-                <div class="dashdoard-menu">
-                    <h2>User Dashboard</h2>
-                    <!-- <div class="dropdown pull-right">
-                        <span class="text-color-white">
-                          Hi. shail
-                <img src="assets/images/apps-logo1.png" alt=""> </span>
+            <div class="col-md-9 get-in-touch">
 
-                        <ul class="dropdown-content">
-                            <li>
-                                <a href="#">
-                    Logout
-                  </a>
-                            </li>
-                        </ul>
-                    </div> -->
-                </div>
+                <h2 class="title fontface-one text-color-dark letter-spacing ">User Dashboard</h2>
+
                 <div class="product-dash bg-white box-shadow padding-top-15 padding-10">
 
                     <div *ngFor="let apps of userAndAppDetails.user_details[0].app_details; let i = index;">

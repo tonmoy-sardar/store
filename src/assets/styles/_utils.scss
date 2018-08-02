@@ -306,6 +306,10 @@ p {
     padding-bottom: 140px;
 }
 
+.padding-5 {
+    padding: 5px;
+}
+
 .padding-top-5 {
     padding-top: 5px;
 }
@@ -3819,6 +3823,10 @@ z #generic_price_table .generic_content,
 //     color: #908e8e;
 //     font-weight: 500;
 // }
+.log-in-out .mat-menu-panel {
+    margin-top: 20px;
+}
+
 .log-in-out .text-name {
     color: #908e8e;
     font-weight: 500;
@@ -5242,16 +5250,10 @@ z #generic_price_table .generic_content,
     margin: 0 auto;
 }
 
-.my-profile ul li {
-    width: 100%;
-    border-top: 1px solid #5a5a5a;
-    padding: 9px 10px;
-    text-align: center;
-    background: #434343;
-}
+.my-profile ul li {}
 
 .my-profile ul li a {
-    color: #fff;
+    color: #777575;
     font-size: 16px;
 }
 
@@ -5303,6 +5305,8 @@ z #generic_price_table .generic_content,
     display: table;
     position: relative;
     background: #f2f2f2;
+    margin-right: 18px;
+    padding: 5px;
     transition: all .40s ease;
 }
 
