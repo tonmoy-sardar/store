@@ -136,11 +136,9 @@
             <form [formGroup]="stepThree" class="contact-form row">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            <section class="get-in-touch">
-                                <h1 class="title">
-                                    <span> your own app</span> Get in 5 Minutes
-                                </h1>
+                        <div class="col-md-6 padding-top-50">
+                            <section class="get-in-touch full_width">
+
 
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
@@ -214,6 +212,13 @@
 
                         </div>
                         <div class="col-md-6">
+                            <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                                <div class="container">
+                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                                        OWNER INTRODUCTION
+                                    </h1>
+                                </div>
+                            </div>
 
                             <div class="mob">
                                 <div class="wallpaper-size profile-page apps-design padding-10 text-center ">
@@ -237,45 +242,53 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="stepFive">
-            <div class="container">
+            <div class="col-md-12 get-in-touch padding-top-bottom-10">
+                <div class="container">
+                    <h1 class="title fontface-one text-color-dark letter-spacing">
+                        All about the product/ service
+                    </h1>
+                </div>
+            </div>
+
+            <div class="container min-height-600 padding-top-25">
                 <div class="row">
                     <div class="col-md-9">
                         <section class="get-in-touch">
-                            <h1 class="title">
-                                <span> your own app</span> Get in 5 Minutes
-                            </h1>
-                            <div class="col-md-12">
-                                <form [formGroup]="stepFive">
-                                    <div class="col-md-12" formArrayName="product_categories">
-                                        <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
-                                            <div class="col-md-12" [formGroupName]="i">
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <mat-form-field class="input-full-width">
-                                                            <mat-icon matPrefix>info</mat-icon>
-                                                            <input matInput placeholder="Category" [(ngModel)]="step_five_data.product_categories[i].category_name" name="category_name" formControlName="category_name">
-                                                            <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
-                                                            <i class="fa fa-plus"></i>
-                                                        </a>
-                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
-                                                            <i class="fa fa-times-circle fa-2"></i>
-                                                        </a>
-                                                    </div>
 
+
+                            <form [formGroup]="stepFive">
+                                <div class="col-md-12" formArrayName="product_categories">
+                                    <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
+                                        <div class="col-md-12" [formGroupName]="i">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <mat-form-field class="input-full-width">
+                                                        <mat-icon matPrefix>info</mat-icon>
+                                                        <input matInput placeholder="Category" [(ngModel)]="step_five_data.product_categories[i].category_name" name="category_name" formControlName="category_name">
+                                                        <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
+                                                    </mat-form-field>
                                                 </div>
+                                                <div class="col-md-2 pick-oftext">
+                                                    <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length<2 ">
+                                                        <i class="fa fa-plus"></i>
+                                                        <span>Add Category</span>
+                                                    </a>
+                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                                        <i class="fa fa-times-circle fa-2"></i>
+                                                        <span>Remove</span>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="text-align: right">
-                                        <button class="round-g-btn" (click)="submitCategory()">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-12" *ngIf="step_five_data.product_categories[0].id!=null">
+                                </div>
+                                <div class="col-md-12" style="text-align: right">
+                                    <button mat-button class="round-g-biscuit" (click)="submitCategory()">Add Product</button>
+                                </div>
+                            </form>
+
+                            <div class="add-product padding-10 margin-top-10  bg-white box-shadow" *ngIf="step_five_data.product_categories[0].id!=null">
                                 <mat-tab-group>
                                     <mat-tab label="{{product_cat.category_name}}" *ngFor="let product_cat of step_five_data.product_categories; let i = index;">
                                         <div class="col-md-12" style="padding-top:10px; " *ngIf="i == 0">
@@ -284,7 +297,7 @@
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat1); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
                                                                         <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="step_five_data_cat_1.products[j].product_name" formControlName="product_name">
                                                                     </mat-form-field>
@@ -309,12 +322,14 @@
                                                                         <input matInput placeholder="tags" [(ngModel)]="step_five_data_cat_1.products[j].tags" name="tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-1">
+                                                                <div class="col-md-2 pick-oftext">
                                                                     <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
+                                                                        <span>Add Category</span>
                                                                     </a>
                                                                     <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
                                                                         <i class="fa fa-times-circle fa-2"></i>
+                                                                        <span>Remove</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -322,7 +337,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                    <button mat-button class="round-g-biscuit" (click)="submitProduct(i)">Confirm</button>
                                                 </div>
 
                                             </form>
@@ -333,7 +348,7 @@
                                                     <div class="row" *ngFor="let product of getProduct(stepFiveProductCat2); let j = index;">
                                                         <div class="col-md-12" [formGroupName]="j">
                                                             <div class="row">
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-2">
                                                                     <mat-form-field class="input-full-width">
                                                                         <input matInput placeholder="Product Name" name="product_name" [(ngModel)]="step_five_data_cat_2.products[j].product_name" formControlName="product_name">
 
@@ -359,12 +374,15 @@
                                                                         <input matInput placeholder="Tags" name="tags" [(ngModel)]="step_five_data_cat_2.products[j].tags" formControlName="tags">
                                                                     </mat-form-field>
                                                                 </div>
-                                                                <div class="col-md-1">
-                                                                    <a routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
+                                                                <div class="col-md-2  pick-oftext">
+                                                                    <a mat-button routerLink="." (click)="addProduct(i,product_cat.id)" title="Add More" name="Add More" *ngIf="j == 0">
                                                                         <i class="fa fa-plus"></i>
+                                                                        <span>Add Product</span>
+
                                                                     </a>
-                                                                    <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
+                                                                    <a mat-button href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(j,i)">
                                                                         <i class="fa fa-times-circle fa-2"></i>
+                                                                        <span>Remove</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -372,21 +390,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12" style="text-align: right">
-                                                    <button class="round-g-btn" (click)="submitProduct(i)">Submit</button>
+                                                    <button mat-button class="round-g-biscuit" (click)="submitProduct(i)">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </mat-tab>
                                 </mat-tab-group>
                             </div>
-
-                            <div class="col-md-12">
+                            <hr>
+                            <div class="col-md-6">
                                 <div class="row">
                                     <div class="align-center col-md-5">
-                                        <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(4)">Back</button>
+                                        <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                                     </div>
                                     <div class="align-center col-md-5">
-                                        <button class="round-g-btn" (click)="nextStep(5)">Next</button>
+                                        <button mat-button class="round-g-btn" (click)="nextStep(5)">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -419,9 +437,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <section class="get-in-touch">
-                                <h1 class="title">
-                                    <span> your own app</span> Get in 5 Minutes
-                                </h1>
 
                                 <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
