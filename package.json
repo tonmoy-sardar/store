@@ -29,6 +29,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
+    "ngx-page-scroll": "^5.0.0",
     "ngx-permissions": "^4.0.0",
     "ngx-spinner": "^2.0.1",
     "ngx-toastr": "^8.8.0",
