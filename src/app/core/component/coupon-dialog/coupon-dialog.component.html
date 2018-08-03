@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Apply coupon code</h2>
+<mat-dialog-content>
+  <form class="coupon_form" [formGroup]="form" novalidate>
+    <mat-form-field class="example-full-width full_width">
+      <input matInput placeholder="Coupon Code" class="form-control" formControlName="coupon" name="coupon">
+      <mat-error *ngIf="form.get('coupon').touched && form.get('coupon').hasError('required')">
+        Please enter
+        <strong>Coupon Code</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="round-g-btn" (click)="onSubmit()">Apply</button>
+</mat-dialog-actions>
