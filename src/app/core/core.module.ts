@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
 
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
@@ -39,6 +40,7 @@ import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.c
     NgbModule.forRoot(),
     RouterModule,
     NgxSpinnerModule,
+    NgxPageScrollModule,
     FormsModule,
     ReactiveFormsModule,
     //----------------Material----------------//
@@ -61,6 +63,7 @@ import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.c
     HeaderComponent,
     FooterComponent,
     NgxSpinnerModule,
+    NgxPageScrollModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
