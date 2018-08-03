@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PaymentComponent implements OnInit {
   paymentdetails_data = {};
-  totalPrice;
+  totalPrice: number;
 
   // 
   priceList: any = [];
@@ -31,7 +31,7 @@ export class PaymentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPaymentSettingsDetails(); 
+    // this.getPaymentSettingsDetails(); 
     this.getPriceList();
     this.getSubscriptionTypeList();
     this.getOfferList();
