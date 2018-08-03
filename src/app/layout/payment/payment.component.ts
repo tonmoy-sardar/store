@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CouponDialogComponent } from '../../core/component/coupon-dialog/coupon-dialog.component'
 import { PaytamService } from '../../core/services/paytam.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -11,63 +11,57 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  paymentdetails_data = {};
+  paymentdetails_data: any;
   totalPrice: number;
-
+  paymentFormActive: boolean;
   // 
   priceList: any = [];
+  price_id: any = [];
   subscription_type_id;
   subscription_value: number;
   subscriptionTypeList: any = [];
   offerList: any = [];
   offer_price: number = 0;
   coupon_code: string;
+  app_id: number;
+  user_id: number;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
     public dialog: MatDialog,
     private createAppService: CreateAppService,
     private toastr: ToastrService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    // this.getPaymentSettingsDetails(); 
     this.getPriceList();
     this.getSubscriptionTypeList();
     this.getOfferList();
+    this.user_id = this.route.snapshot.params['user_id'];
+    this.app_id = this.route.snapshot.params['app_id']
+    console.log(this.user_id)
+    console.log(this.app_id)
   }
 
   onPriceChange(event, index, item) {
     if (item.checked = !item.checked) {
       this.totalPrice = this.totalPrice + parseFloat(item.cost);
+      this.price_id.push(item.id)
     }
     else {
+      var index = this.price_id.findIndex(item.id)
+      if (index != -1) {
+        this.price_id.slice(index, 1)
+      }
       this.totalPrice = this.totalPrice - parseFloat(item.cost);
     }
   }
 
-
-  getPaymentSettingsDetails() {
-    this.paytamService.getPaymentDetailsResponse(100).subscribe(
-      (
-        data => {
-          console.log(data)
-          this.paymentdetails_data = data
-        }
-
-      ),
-    );
-  }
-
   onSubscriptionChange() {
-    if (this.subscription_type_id == 1) {
-      this.subscription_value = 30
-    }
-    if (this.subscription_type_id == 2) {
-      this.subscription_value = 180
-    }
-    if (this.subscription_type_id == 3) {
-      this.subscription_value = 365
+    var arrData = this.subscriptionTypeList.filter(x => x.id == this.subscription_type_id)
+    if (arrData.length > 0) {
+      this.subscription_value = arrData[0]['days']
     }
   }
 
@@ -80,6 +74,7 @@ export class PaymentComponent implements OnInit {
           if (i == 0) {
             this.priceList[i]['checked'] = true;
             this.priceList[i]['setDisabled'] = true;
+            this.price_id.push(this.priceList[i].id)
           }
           else {
             this.priceList[i]['checked'] = false;
@@ -101,7 +96,7 @@ export class PaymentComponent implements OnInit {
         // console.log(res)
         this.subscriptionTypeList = res;
         this.subscription_type_id = this.subscriptionTypeList[0]['id'];
-        this.subscription_value = 30
+        this.subscription_value = this.subscriptionTypeList[0]['days']
       },
       error => {
         console.log(error)
@@ -154,4 +149,53 @@ export class PaymentComponent implements OnInit {
     return (this.subscription_value * this.totalPrice).toFixed(2)
   }
 
+
+  pay() {
+    var sum = this.totalPrice * this.subscription_value - this.offer_price;
+    this.getPaymentSettingsDetails(sum);
+  }
+
+  getPaymentSettingsDetails(amount) {
+    this.createAppService.paytmFormValue(amount).subscribe(
+      (
+        data => {
+          this.paymentdetails_data = data;
+          this.paymentFormActive = true;
+          var subscription_data = {
+            app_master: +this.app_id,
+            subscription_type: this.subscription_type_id,
+            price_master: this.price_id[0],
+            total_cost: (this.totalPrice * this.subscription_value) - this.offer_price
+          }
+          var arrCoupon = this.offerList.filter(x => x.offer_code == this.coupon_code)
+          if (arrCoupon.length > 0) {
+            var coupon = arrCoupon[0]['id'];
+            subscription_data['offer_code'] = coupon;
+          }
+          // console.log(subscription_data)
+          this.appSubscribe(subscription_data)
+        }
+      ),
+    );
+  }
+
+  appSubscribe(data) {
+    this.createAppService.appSubscription(data).subscribe(
+      res => {
+        console.log(res)
+        this.paymentdetails_data['ORDER_ID'] = res['order_id'];
+        let btn: HTMLElement = document.getElementById('payment_btn') as HTMLElement;
+        setTimeout(function () {
+          btn.click();
+        }, 100);
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
 }
+
+
+

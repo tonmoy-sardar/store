@@ -5,7 +5,7 @@ import { PaymentComponent } from './payment.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':user_id/:app_id',
     component: PaymentComponent
   }
 

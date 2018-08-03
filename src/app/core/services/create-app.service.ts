@@ -261,16 +261,25 @@ export class CreateAppService {
   }
 
 
-  getPriceList(){
+  getPriceList() {
     return this.http.get(environment.apiEndpoint + 'dropdown_price_master/')
   }
 
-  getSubscriptionTypeList(){
+  getSubscriptionTypeList() {
     return this.http.get(environment.apiEndpoint + 'dropdown_subscriptions_type/')
   }
 
-  getOfferList(){
+  getOfferList() {
     return this.http.get(environment.apiEndpoint + 'dropdown_offer_code/')
+  }
+
+
+  paytmFormValue(order_amount): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'get_payment_details/?order_amount=' + order_amount)
+  }
+
+  appSubscription(data) {
+    return this.http.post(environment.apiEndpoint + 'app_subscription/', data)
   }
 
 

@@ -51,7 +51,7 @@ export class OtpDialogComponent implements OnInit {
         )
       }
       else {
-        this.error_msg = 'Please Enter Valid OTP';
+        this.error_msg = "Please Enter Valid OTP";
       }
 
     } else {

@@ -959,7 +959,7 @@ export class CreateAppComponent implements OnInit {
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
+          // var app_id = localStorage.getItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppStep');
           localStorage.removeItem('storeSessionID');
@@ -968,7 +968,7 @@ export class CreateAppComponent implements OnInit {
             timeOut: 3000,
           });
           console.log(response)
-          this.openOtpDialog(response['otp'], response['user_id'])
+          this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
         error => {
@@ -994,7 +994,7 @@ export class CreateAppComponent implements OnInit {
       response => {
         // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
         // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
+        // var app_id = localStorage.getItem('storeCreateAppID');
         localStorage.removeItem('storeCreateAppID');
         localStorage.removeItem('storeCreateAppStep');
         localStorage.removeItem('storeSessionID');
@@ -1002,7 +1002,7 @@ export class CreateAppComponent implements OnInit {
         this.toastr.success('Success', '', {
           timeOut: 3000,
         });
-        this.btnClickNav('payment')
+        this.btnClickNav('payment/' + this.logedUserId + '/' + response['app_master_id'])
 
       },
       error => {
@@ -1027,7 +1027,7 @@ export class CreateAppComponent implements OnInit {
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
           // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
+          // var app_id = localStorage.getItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppStep');
           localStorage.removeItem('storeSessionID');
@@ -1035,7 +1035,7 @@ export class CreateAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-          this.openOtpDialog(response['otp'], response['user_id'])
+          this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
         error => {
@@ -1054,6 +1054,7 @@ export class CreateAppComponent implements OnInit {
               this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
                 response => {
                   console.log(response)
+                  // var app_id = localStorage.getItem('storeCreateAppID');
                   localStorage.removeItem('storeCreateAppID');
                   localStorage.removeItem('storeCreateAppStep');
                   localStorage.removeItem('storeSessionID');
@@ -1061,7 +1062,7 @@ export class CreateAppComponent implements OnInit {
                   this.toastr.success('Success', '', {
                     timeOut: 3000,
                   });
-                  this.btnClickNav('payment')
+                  this.btnClickNav('payment/' + response['user_id'] + '/' + response['app_master_id'])
                 },
                 error => {
                   this.toastr.error(error.error.msg, '', {
@@ -1080,14 +1081,14 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  openOtpDialog(otp, user_id) {
+  openOtpDialog(otp, user_id, app_id) {
     let dialogRef = this.dialog.open(OtpDialogComponent, {
       width: '300px',
       data: { otp: otp, user_id: user_id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.btnClickNav('payment')
+        this.btnClickNav('payment/' + user_id + '/' + app_id)
       }
     })
   }

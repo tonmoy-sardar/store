@@ -57,18 +57,18 @@
                 <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
               </div>
               <div class="row" *ngIf="offer_price > 0">
-                    <div class="col-md-6">Total </div>
-                    <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
-                    <div class="col-md-6">Coupon code: {{coupon_code}} </div>
-                    <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
-                    <div class="col-md-6">Total </div>
-                    <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
-                  </div>
+                <div class="col-md-6">Total </div>
+                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
+                <div class="col-md-6">Coupon code: {{coupon_code}} </div>
+                <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
+                <div class="col-md-6">Total </div>
+                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
+              </div>
               <hr>
               <div class="row">
                 <div class="col-md-12 text-right">
                   <button class="round-g-biscuit" (click)="apply_coupon()">Apply Coupon!</button>
-                  <button class="round-g-biscuit" (click)="btnClickNav('app-success')">Procced To Pay!</button>
+                  <button class="round-g-biscuit" (click)="pay()">Procced To Pay!</button>
                 </div>
               </div>
             </div>
@@ -78,3 +78,18 @@
     </div>
   </div>
 </div>
+<!-- paytm -->
+<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm style="height: 0;visibility: hidden;">
+  <div *ngIf="paymentFormActive">
+    <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
+    <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">
+    <input type="hidden" value="{{paymentdetails_data.TXN_AMOUNT}}" name="TXN_AMOUNT">
+    <input type="hidden" value="{{paymentdetails_data.CUST_ID}}" name="CUST_ID">
+    <input type="hidden" value="{{paymentdetails_data.INDUSTRY_TYPE_ID}}" name="INDUSTRY_TYPE_ID">
+    <input type="hidden" value="{{paymentdetails_data.WEBSITE}}" name="WEBSITE">
+    <input type="hidden" value="{{paymentdetails_data.CHANNEL_ID}}" name="CHANNEL_ID">
+    <input type="hidden" value="{{paymentdetails_data.CALLBACK_URL}}" name="CALLBACK_URL">
+    <input type="hidden" value="{{paymentdetails_data.CHECKSUMHASH}}" name="CHECKSUMHASH">
+  </div>
+  <input type="submit" name="submit" value="Confirm Payment" id="payment_btn">
+</form>

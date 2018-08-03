@@ -7,10 +7,10 @@
         Please enter
         <strong>OTP</strong>
       </mat-error>
-      <mat-error *ngIf="error_msg != ''">
-        {{error_msg}}
-      </mat-error>
     </mat-form-field>
+    <span *ngIf="error_msg != ''" class="error">
+      {{error_msg}}
+    </span>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
