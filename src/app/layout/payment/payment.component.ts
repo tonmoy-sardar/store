@@ -11,13 +11,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
+  isLoggedin: boolean;
+  user_name: string;
   paymentdetails_data: any;
   totalPrice: number;
   paymentFormActive: boolean;
   // 
   priceList: any = [];
   price_id: any = [];
-  subscription_type_id;
+  subscription_type_id: number;
   subscription_value: number;
   subscriptionTypeList: any = [];
   offerList: any = [];
@@ -25,6 +27,7 @@ export class PaymentComponent implements OnInit {
   coupon_code: string;
   app_id: number;
   user_id: number;
+  user_group: string = '';
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -35,13 +38,26 @@ export class PaymentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName')
+      if (localStorage.getItem('logedUserUserGroup')) {
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
+    }
     this.getPriceList();
     this.getSubscriptionTypeList();
     this.getOfferList();
     this.user_id = this.route.snapshot.params['user_id'];
-    this.app_id = this.route.snapshot.params['app_id']
-    console.log(this.user_id)
-    console.log(this.app_id)
+    this.app_id = this.route.snapshot.params['app_id'];
+    // console.log(this.user_id)
+    // console.log(this.app_id)
+  }
+
+  logout() {
+    this.isLoggedin = false;
+    localStorage.clear();
+    this.router.navigate(['/home']);
   }
 
   onPriceChange(event, index, item) {
@@ -165,7 +181,8 @@ export class PaymentComponent implements OnInit {
             app_master: +this.app_id,
             subscription_type: this.subscription_type_id,
             price_master: this.price_id[0],
-            total_cost: (this.totalPrice * this.subscription_value) - this.offer_price
+            total_cost: (this.totalPrice * this.subscription_value) - this.offer_price,
+            order_id: this.paymentdetails_data['ORDER_ID']
           }
           var arrCoupon = this.offerList.filter(x => x.offer_code == this.coupon_code)
           if (arrCoupon.length > 0) {
@@ -183,7 +200,6 @@ export class PaymentComponent implements OnInit {
     this.createAppService.appSubscription(data).subscribe(
       res => {
         console.log(res)
-        this.paymentdetails_data['ORDER_ID'] = res['order_id'];
         let btn: HTMLElement = document.getElementById('payment_btn') as HTMLElement;
         setTimeout(function () {
           btn.click();

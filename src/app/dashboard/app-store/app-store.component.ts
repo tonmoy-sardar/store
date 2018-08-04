@@ -13,6 +13,9 @@ export class AppStoreComponent implements OnInit {
 
   userAndAppDetails;
   urlEndpoint;
+  isLoggedin: boolean;
+  user_name: string;
+  user_group: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,38 +24,44 @@ export class AppStoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName');
+      if(localStorage.getItem('logedUserUserGroup')){
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
+    }
 
-    this.urlEndpoint=environment.urlEndpoint;
-    
-    this.userAndAppDetails ={
-      first_name:'',
-      user_details:[{
-        users_pic:'',
-        contact_no:'',
-        app_details:[{
-          id:'',
-          app_name:'',
-          logo:''
+    this.urlEndpoint = environment.urlEndpoint;
+
+    this.userAndAppDetails = {
+      first_name: '',
+      user_details: [{
+        users_pic: '',
+        contact_no: '',
+        app_details: [{
+          id: '',
+          app_name: '',
+          logo: ''
         }]
       }]
     }
-    console.log(this.route.snapshot.params['user_id'])
-    if(this.route.snapshot.params['user_id']){      
+    // console.log(this.route.snapshot.params['user_id'])
+    if (this.route.snapshot.params['user_id'] != undefined) {
       this.getAppAnduserDetailsByUserID(this.route.snapshot.params['user_id']);
     }
-    else{
+    else {
       this.getAppAnduserDetailsByUserID(localStorage.getItem('logedUserUserId'));
     }
-    
+
   }
 
-  getAppAnduserDetailsByUserID(id)
-  {
+  getAppAnduserDetailsByUserID(id) {
     this.createAppService.getAppAnduserDetailsByUserID(id).subscribe(
       (data: any[]) => {
         console.log(data);
 
-        this.userAndAppDetails=data;
+        this.userAndAppDetails = data;
 
 
       },
@@ -64,4 +73,10 @@ export class AppStoreComponent implements OnInit {
       }
     );
   };
+
+  logout() {
+    this.isLoggedin = false;
+    localStorage.clear();
+    this.router.navigate(['/home']);
+  }
 }

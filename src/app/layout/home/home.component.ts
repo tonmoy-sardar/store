@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
         }
         _words = _expression[_current];
         wordsRoll();
-      }, 1000);
+      }, 3000);
     }
 
     function initStock() {
@@ -140,18 +140,6 @@ export class HomeComponent implements OnInit {
             }
           }
         }
-        // for (var i = 0; i < document.getElementsByClassName('word-span').length; i++) {
-        //   document.getElementsByClassName('word-span')[i].style.top = '0';
-        //   for (var n = 0; n < _letters[0].length; n++) {
-        //     document.getElementsByClassName('word-span')[i].style.top = '0';
-        //     if (_letters[0].charAt(n) !== ' ') {
-        //       str = '<p id=' + _letters[0].charAt(n) + '>' + _letters[0].charAt(n) + '</p>';
-        //     } else {
-        //       str = '<p>' + _letters[0].charAt(n) + '</p>';
-        //     }
-        //     document.getElementsByClassName('word-span')[i].innerHTML += str;
-        //   }
-        // }
       }
     }
 

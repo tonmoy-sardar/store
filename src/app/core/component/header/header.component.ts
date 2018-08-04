@@ -13,10 +13,14 @@ export class HeaderComponent implements OnInit {
   constructor(public dialog: MatDialog,private router: Router) { }
   isLoggedin: boolean;
   user_name: string;
+  user_group: string = '';
   ngOnInit() {
     if (localStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserUserName')
+      this.user_name = localStorage.getItem('logedUserUserName');
+      if(localStorage.getItem('logedUserUserGroup')){
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
     }
   }
 
@@ -30,7 +34,8 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.isLoggedin = false;
-    localStorage.removeItem('isLoggedin');
+    // localStorage.removeItem('isLoggedin');
+    localStorage.clear();
     this.router.navigate(['/home']);
   }
 

@@ -11,14 +11,21 @@ import { } from '@types/googlemaps';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ConfirmDialogComponent } from "../../core/component/confirm-dialog/confirm-dialog.component";
 import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.component";
-
+import { LoginComponent } from '../../core/component/login/login.component';
+import { LoadingState } from '../../core/component/loading/loading.component';
 @Component({
   selector: 'app-create-app',
   templateUrl: './create-app.component.html',
   styleUrls: ['./create-app.component.scss']
 })
 export class CreateAppComponent implements OnInit {
-
+  isLoggedin: boolean;
+  user_name: string;
+  user_group: string = '';
+  loading: LoadingState = LoadingState.NotReady;
+  now: Date = new Date();
+  currentDate;
+  sessionID;
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('search') public searchElement: ElementRef;
   isLinear = true;
@@ -137,6 +144,19 @@ export class CreateAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sessionID = localStorage.getItem('storeSessionID');
+    if (!this.sessionID) {
+      this.currentDate = this.now.getTime();
+      this.sessionID = this.currentDate.toString() + Math.floor((Math.random() * 1000000000) + 1);
+      localStorage.setItem('storeSessionID', this.sessionID);
+    }
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName');
+      if (localStorage.getItem('logedUserUserGroup')) {
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
+    }
 
     this.storeCreateAppStep = 0;
     this.stepper.selectedIndex = 0;
@@ -222,6 +242,20 @@ export class CreateAppComponent implements OnInit {
     this.getDesignationDropdown();
     this.mapLoader();
 
+  }
+
+  openLogin() {
+    this.dialog.open(
+      LoginComponent, {
+        width: '480px', panelClass: 'popup_wrapper', disableClose: true
+      }
+    );
+  }
+
+  logout() {
+    this.isLoggedin = false;
+    localStorage.clear();
+    this.router.navigate(['/home']);
   }
 
 
@@ -632,8 +666,10 @@ export class CreateAppComponent implements OnInit {
     this.createAppService.getCategoryList().subscribe(
       res => {
         this.category_list = res;
+        this.loading = LoadingState.Ready;
       },
       error => {
+        this.loading = LoadingState.Processing;
         console.log(error)
       }
     )
@@ -738,6 +774,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepOne() {
     if (this.stepOne.valid) {
+      this.loading = LoadingState.Processing;
 
       if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
         this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
@@ -748,12 +785,14 @@ export class CreateAppComponent implements OnInit {
 
         this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'), data).subscribe(
           response => {
-            this.toastr.success('Success', '', {
-              timeOut: 3000,
-            });
+            this.loading = LoadingState.Ready;
+            // this.toastr.success('Success', '', {
+            //   timeOut: 3000,
+            // });
             this.stepper.next();
           },
           error => {
+            this.loading = LoadingState.Ready;
             this.toastr.error('Something went wrong', '', {
               timeOut: 3000,
             });
@@ -771,10 +810,11 @@ export class CreateAppComponent implements OnInit {
         this.createAppService.createTempApp(data).subscribe(
           response => {
             console.log(response);
+            this.loading = LoadingState.Ready;
             localStorage.setItem('storeCreateAppID', response.id);
-            this.toastr.success('Success', '', {
-              timeOut: 3000,
-            });
+            // this.toastr.success('Success', '', {
+            //   timeOut: 3000,
+            // });
             this.stepper.next();
 
             this.setp_five_data = {
@@ -819,6 +859,7 @@ export class CreateAppComponent implements OnInit {
             }
           },
           error => {
+            this.loading = LoadingState.Ready;
             this.toastr.error('Something went wrong', '', {
               timeOut: 3000,
             });
@@ -837,7 +878,7 @@ export class CreateAppComponent implements OnInit {
   submitStepTwo() {
 
     if (this.stepTwo.valid) {
-
+      this.loading = LoadingState.Processing;
       this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
 
@@ -850,28 +891,32 @@ export class CreateAppComponent implements OnInit {
 
                 },
                 error => {
+                  this.loading = LoadingState.Ready;
                   this.toastr.error('Something went wrong', '', {
                     timeOut: 3000,
                   });
                 }
               );
               if (i == this.business_photo_arr.length - 1) {
-                this.toastr.success('Success', '', {
-                  timeOut: 3000,
-                });
+                // this.toastr.success('Success', '', {
+                //   timeOut: 3000,
+                // });
+                this.loading = LoadingState.Ready;
                 this.stepper.next();
               }
             }
           }
           else {
-            this.toastr.success('Success', '', {
-              timeOut: 3000,
-            });
+            this.loading = LoadingState.Ready;
+            // this.toastr.success('Success', '', {
+            //   timeOut: 3000,
+            // });
             this.stepper.next();
           }
 
         },
         error => {
+          this.loading = LoadingState.Ready;
           this.toastr.error('Something went wrong', '', {
             timeOut: 3000,
           });
@@ -885,19 +930,21 @@ export class CreateAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
-      console.log(this.stepThree.value)
+      // console.log(this.stepThree.value)
+      this.loading = LoadingState.Processing;
       this.createAppService.submitOwnerInfo(localStorage.getItem('storeCreateAppID'), localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
           //this.user_id = response.id;
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
           localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
+          this.loading = LoadingState.Ready;
+          // this.toastr.success('Success', '', {
+          //   timeOut: 3000,
+          // });
           this.stepper.next();
         },
         error => {
+          this.loading = LoadingState.Ready;
           this.toastr.error('Something went wrong', '', {
             timeOut: 3000,
           });
@@ -922,19 +969,21 @@ export class CreateAppComponent implements OnInit {
 
   submitStepFour() {
     if (this.stepFour.valid) {
-
+      this.loading = LoadingState.Processing;
       var data = {
         id: localStorage.getItem('storeCreateAppID'),
         app_url: this.stepFour.value.website_url
       }
       this.createAppService.updateTempAppURL(data).subscribe(
         response => {
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
+          this.loading = LoadingState.Ready;
+          // this.toastr.success('Success', '', {
+          //   timeOut: 3000,
+          // });
           this.stepper.next();
         },
         error => {
+          this.loading = LoadingState.Ready;
           this.toastr.error('Something went wrong', '', {
             timeOut: 3000,
           });
@@ -950,6 +999,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepSix() {
     if (this.stepSix.valid) {
+      this.loading = LoadingState.Processing;
       let data = {
         name: this.stepSix.value.name,
         email_id: this.stepSix.value.email_id,
@@ -963,16 +1013,16 @@ export class CreateAppComponent implements OnInit {
           localStorage.removeItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppStep');
           localStorage.removeItem('storeSessionID');
-
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
+          this.loading = LoadingState.Ready;
+          // this.toastr.success('Success', '', {
+          //   timeOut: 3000,
+          // });
           console.log(response)
           this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
         error => {
-
+          this.loading = LoadingState.Ready;
           this.toastr.error(error.error.msg, '', {
             timeOut: 3000,
           });
@@ -986,7 +1036,7 @@ export class CreateAppComponent implements OnInit {
   }
 
   submitStepSixWithLogin() {
-
+    this.loading = LoadingState.Processing;
     let data = {
       user_id: this.logedUserId
     }
@@ -998,14 +1048,15 @@ export class CreateAppComponent implements OnInit {
         localStorage.removeItem('storeCreateAppID');
         localStorage.removeItem('storeCreateAppStep');
         localStorage.removeItem('storeSessionID');
-
-        this.toastr.success('Success', '', {
-          timeOut: 3000,
-        });
-        this.btnClickNav('payment/' + this.logedUserId + '/' + response['app_master_id'])
+        this.loading = LoadingState.Ready;
+        // this.toastr.success('Success', '', {
+        //   timeOut: 3000,
+        // });
+        this.btnClickNav('payment/' + response['app_master_id'])
 
       },
       error => {
+        this.loading = LoadingState.Ready;
         this.toastr.error(error.error.msg, '', {
           timeOut: 3000,
         });
@@ -1017,6 +1068,7 @@ export class CreateAppComponent implements OnInit {
 
   submitStepSixFranchise() {
     if (this.stepSix.valid) {
+      this.loading = LoadingState.Processing;
       let data = {
         user_id: this.logedUserId,
         name: this.stepSix.value.name,
@@ -1031,10 +1083,10 @@ export class CreateAppComponent implements OnInit {
           localStorage.removeItem('storeCreateAppID');
           localStorage.removeItem('storeCreateAppStep');
           localStorage.removeItem('storeSessionID');
-
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
+          this.loading = LoadingState.Ready;
+          // this.toastr.success('Success', '', {
+          //   timeOut: 3000,
+          // });
           this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
@@ -1058,13 +1110,14 @@ export class CreateAppComponent implements OnInit {
                   localStorage.removeItem('storeCreateAppID');
                   localStorage.removeItem('storeCreateAppStep');
                   localStorage.removeItem('storeSessionID');
-
-                  this.toastr.success('Success', '', {
-                    timeOut: 3000,
-                  });
-                  this.btnClickNav('payment/' + response['user_id'] + '/' + response['app_master_id'])
+                  this.loading = LoadingState.Ready;
+                  // this.toastr.success('Success', '', {
+                  //   timeOut: 3000,
+                  // });
+                  this.btnClickNav('payment/' + response['app_master_id'])
                 },
                 error => {
+                  this.loading = LoadingState.Ready;
                   this.toastr.error(error.error.msg, '', {
                     timeOut: 3000,
                   });
@@ -1088,7 +1141,7 @@ export class CreateAppComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.btnClickNav('payment/' + user_id + '/' + app_id)
+        this.btnClickNav('payment/' + app_id)
       }
     })
   }

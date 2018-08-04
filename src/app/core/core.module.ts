@@ -31,7 +31,7 @@ import { LoginComponent } from './component/login/login.component';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component';
 import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.component';
-
+import { LoadingComponent } from './component/loading/loading.component';
 
 @NgModule({
   imports: [
@@ -56,7 +56,8 @@ import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.c
   declarations: [
     HeaderComponent,
     FooterComponent,
-    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent
+    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent,
+    LoadingComponent
   ],
   providers: [],
   exports: [
@@ -68,6 +69,7 @@ import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.c
     FormsModule,
     ReactiveFormsModule,
     OnlyNumberDirective,
+    LoadingComponent,
     //----------------Material----------------//
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
     MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,

@@ -15,7 +15,9 @@ import { } from '@types/googlemaps';
   styleUrls: ['./edit-app.component.scss']
 })
 export class EditAppComponent implements OnInit {
-
+  isLoggedin: boolean;
+  user_name: string;
+  user_group: string = '';
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('search') public searchElement: ElementRef;
   stepOne: FormGroup;
@@ -109,6 +111,13 @@ export class EditAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName');
+      if(localStorage.getItem('logedUserUserGroup')){
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
+    }
 
     this.base_url = (this.platformLocation as any).location.origin;
     this.stepOne = this._formBuilder.group({
@@ -148,6 +157,12 @@ export class EditAppComponent implements OnInit {
     this.getAppDetails(this.route.snapshot.params['id']);
     this.getDesignationDropdown();
     this.mapLoader();
+  }
+
+  logout() {
+    this.isLoggedin = false;
+    localStorage.clear();
+    this.router.navigate(['/home']);
   }
 
   mapLoader() {

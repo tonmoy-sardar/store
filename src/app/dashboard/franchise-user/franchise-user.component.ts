@@ -14,6 +14,9 @@ export class FranchiseUserComponent implements OnInit {
   FranchiseUserList: any = [];
   userAndAppDetails;
   urlEndpoint;
+  isLoggedin: boolean;
+  user_name: string;
+  user_group: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -23,6 +26,13 @@ export class FranchiseUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('isLoggedin')) {
+      this.isLoggedin = true;
+      this.user_name = localStorage.getItem('logedUserUserName');
+      if(localStorage.getItem('logedUserUserGroup')){
+        this.user_group = localStorage.getItem('logedUserUserGroup')
+      }
+    }
     this.urlEndpoint = environment.urlEndpoint;
 
     this.userAndAppDetails = {
@@ -40,6 +50,12 @@ export class FranchiseUserComponent implements OnInit {
     console.log(localStorage.getItem('logedUserUserId'))
     this.getFranchiseUserList(localStorage.getItem('logedUserUserId'))
     this.getAppAnduserDetailsByUserID(localStorage.getItem('logedUserUserId'));
+  }
+
+  logout() {
+    this.isLoggedin = false;
+    localStorage.clear();
+    this.router.navigate(['/home']);
   }
 
 

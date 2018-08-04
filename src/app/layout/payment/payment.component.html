@@ -2,13 +2,13 @@
   <div class="container">
     <!--Dropdown primary-->
     <div class="pull-left col-md-3">
-      <a href="#">
+      <a [routerLink]="['/']">
         <img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt="">
       </a>
     </div>
     <div class=" primary-color">
-      <a class="log-in-out" href="javascript:void(0)">
-        <span class="text-name">Hi. Shail </span>
+      <a class="log-in-out" href="javascript:void(0)" *ngIf="isLoggedin">
+        <span class="text-name">Hi. {{user_name}} </span>
         <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
           <span></span>
           <span></span>
@@ -16,8 +16,8 @@
         </div>
       </a>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Dashboard</button>
-        <button mat-menu-item>Logout</button>
+        <button mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </div>
     <!--/Dropdown primary-->
@@ -79,7 +79,7 @@
   </div>
 </div>
 <!-- paytm -->
-<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm style="height: 0;visibility: hidden;">
+<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm >
   <div *ngIf="paymentFormActive">
     <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
     <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">
