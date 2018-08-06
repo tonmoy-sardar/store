@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserUserName');
+      this.user_name = localStorage.getItem('logedUserFullName');
       if(localStorage.getItem('logedUserUserGroup')){
         this.user_group = localStorage.getItem('logedUserUserGroup')
       }

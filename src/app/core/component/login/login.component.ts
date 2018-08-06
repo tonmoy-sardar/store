@@ -45,17 +45,20 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('isLoggedin', 'true');
           localStorage.setItem('isLoggedin', 'true');
           localStorage.setItem('logedUserEmail', response.email);
+          localStorage.setItem('logedUserFullName', response.first_name+' '+response.last_name);
           localStorage.setItem('logedUserToken', response.token);
           localStorage.setItem('logedUserUserId', response.user_id);
           localStorage.setItem('logedUserUserName', response.username);          
           this.dialogRef.close();
-          if (response.group.toLowerCase() == "franchise") {
-            localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
-            this.router.navigateByUrl('/dashboard/franchise-user');
-          }
-          else {
-            this.router.navigateByUrl('/dashboard');
-          }
+          // if (response.group.toLowerCase() == "franchise") {
+          //   localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
+          //   this.router.navigateByUrl('/dashboard/franchise-user');
+          // }
+          // else {
+          //   this.router.navigateByUrl('/dashboard');
+          // }
+
+          this.router.navigateByUrl('/');
         },
         error => {
           console.log(error)
