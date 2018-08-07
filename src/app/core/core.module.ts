@@ -25,6 +25,8 @@ import {
 import { LoginService } from './services/login.service';
 import { CreateAppService } from './services/create-app.service';
 import { FranchiseUserService } from './services/franchise-user.service';
+import { GeneralService } from './services/general.service';
+
 // guard
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
@@ -32,6 +34,7 @@ import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialo
 import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component';
 import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.component';
 import { LoadingComponent } from './component/loading/loading.component';
+import { SiteHeaderComponent } from './component/site-header/site-header.component';
 
 @NgModule({
   imports: [
@@ -57,7 +60,8 @@ import { LoadingComponent } from './component/loading/loading.component';
     HeaderComponent,
     FooterComponent,
     OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent,
-    LoadingComponent
+    LoadingComponent,
+    SiteHeaderComponent
   ],
   providers: [],
   exports: [
@@ -70,6 +74,7 @@ import { LoadingComponent } from './component/loading/loading.component';
     ReactiveFormsModule,
     OnlyNumberDirective,
     LoadingComponent,
+    SiteHeaderComponent,
     //----------------Material----------------//
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
     MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,
@@ -95,7 +100,8 @@ export class CoreModule {
         AuthGuard,
         LoginService,
         CreateAppService,
-        FranchiseUserService
+        FranchiseUserService,
+        GeneralService
       ]
 
     };

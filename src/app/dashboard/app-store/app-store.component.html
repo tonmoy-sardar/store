@@ -1,30 +1,4 @@
-<div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-  <div class="container">
-    <!--Dropdown primary-->
-    <div class="pull-left col-md-3  ">
-      <a [routerLink]="['/']">
-        <img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt="">
-      </a>
-    </div>
-    <div class=" primary-color">
-
-      <a class="log-in-out" href="javascript:void(0)">
-        <span class="text-name">Hi. {{user_name}} </span>
-        <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </a>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </div>
-    <!--/Dropdown primary-->
-    <div class="clearfix"></div>
-  </div>
-</div>
+<app-site-header></app-site-header>
 <div class="get-in-touch background-pink min-height-600">
   <div class="col-md-12">
     <div class="row">

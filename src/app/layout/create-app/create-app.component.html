@@ -1,37 +1,5 @@
 <loading [state]="loading">
-  <header class="site-header">
-    <nav class="navbar inner-navbar navbar-expand-lg navbar-full-white-bg round">
-      <div class="container">
-        <a class="navbar-brand" [routerLink]="['/']">
-          <img src="assets/images/logo.png" alt="logo" class="logo-default">
-          <img src="assets/images/logo-dark.png" alt="logo" class="logo-after-scroll">
-        </a>
-        <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse d-sm-0 d-md-0">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="background-secondary log-round" href="javascript:void(0)" (click)="openLogin()" *ngIf="!isLoggedin">Login</a>
-              <span class="text-name" *ngIf="isLoggedin">Hi. {{user_name}}</span>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-      <!--side menu open button-->
-      <div id="menu_bars" mat-button [matMenuTriggerFor]="menu" class="full" *ngIf="isLoggedin">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </nav>
-
-  </header>
+  <app-site-header></app-site-header>
   <!-- body-start -->
   <div class="clearfix"></div>
   <div class="background-pink">
@@ -460,10 +428,8 @@
           </div>
         </div>
       </mat-step>
-      <mat-step [stepControl]="stepFour">
+      <!-- <mat-step [stepControl]="stepFour">
         <form [formGroup]="stepFour" class="contact-form row">
-
-
           <div class="container ">
             <div class="row">
               <div class="col-md-6  padding-top-50">
@@ -490,16 +456,6 @@
 
                   </div>
 
-                  <!-- <div class="form-field col-md-12">
-                                    <div class="upload-filed  oner-photo">
-    
-                                        <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
-                                            multiple>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                </div> -->
                   <hr>
                   <div class="form-field col-md-12">
                     <div class="row">
@@ -544,67 +500,191 @@
             </div>
           </div>
         </form>
-      </mat-step>
+      </mat-step> -->
+
       <mat-step [stepControl]="stepSix">
-        <div *ngIf="logedUserGroup=='franchise'">
-          <form [formGroup]="stepSix" class="contact-form row">
-            <div class="container">
+          <div *ngIf="logedUserGroup=='franchise'">
+            <form [formGroup]="stepSix" class="contact-form row">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <section class="get-in-touch">
+    
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>phone_android</mat-icon>
+                          <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
+                          <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>phone_android</mat-icon>
+                          <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                          <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>email</mat-icon>
+                          <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                          <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col-md-12">
+                        <div class="row">
+                          <div class="form-field  align-center col-md-5">
+                            <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                          </div>
+                          <div class="form-field align-center col-md-5">
+                            <button mat-button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="col-md-6">
+    
+                    <div class="mob">
+                      <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+    
+                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+    
+                        <h1>{{setp_two_data.business_name}}</h1>
+                        <div class="description">
+    
+                          <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                          <p>{{setp_six_data.contact_no}}</p>
+                        </div>
+                        <div class="description ">
+                          <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                          <p>{{setp_six_data.email_id}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="logedUserGroup!='franchise'">
+            <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
+              <div class="col-md-12 get-in-touch padding-top-bottom-10">
+                <div class="container">
+                  <h1 class="title fontface-one text-color-dark letter-spacing">
+                    Submit your details and get the app
+                  </h1>
+                </div>
+              </div>
+    
+              <div class="container  padding-top-25">
+                <div class="row">
+                  <div class="col-md-6">
+                    <section class="get-in-touch">
+    
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>phone_android</mat-icon>
+                          <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
+                          <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>phone_android</mat-icon>
+                          <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                          <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col col-md-12">
+                        <mat-form-field class="input-full-width">
+                          <mat-icon matPrefix>email</mat-icon>
+                          <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                          <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
+                        </mat-form-field>
+                        <p class="btn-switch">
+                          <mat-slide-toggle></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col-md-12">
+                        <div class="row">
+                          <div class="form-field  align-center col-md-5">
+                            <button mat-button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
+                          </div>
+                          <div class="form-field align-center col-md-5">
+                            <button mat-button class="round-g-btn" (click)="submitStepSix()">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="col-md-6">
+    
+                    <div class="mob">
+                      <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+    
+                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+    
+                        <h1>{{setp_two_data.business_name}}</h1>
+                        <div class="description">
+    
+                          <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                          <p>{{setp_six_data.contact_no}}</p>
+                        </div>
+                        <div class="description ">
+                          <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                          <p>{{setp_six_data.email_id}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+    
+            <div class="container" *ngIf="logedUserId>0">
               <div class="row">
                 <div class="col-md-6">
                   <section class="get-in-touch">
-
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>phone_android</mat-icon>
-                        <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
-                        <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>phone_android</mat-icon>
-                        <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
-                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>email</mat-icon>
-                        <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
-                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
+    
+    
                     <div class="form-field col-md-12">
                       <div class="row">
                         <div class="form-field  align-center col-md-5">
                           <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
                         </div>
-                        <div class="form-field align-center col-md-5">
-                          <button mat-button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
+                        <div mat-button class="form-field align-center col-md-5">
+                          <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
                         </div>
                       </div>
                     </div>
                   </section>
                 </div>
                 <div class="col-md-6">
-
+    
                   <div class="mob">
                     <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
+    
                       <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
+    
                       <h1>{{setp_two_data.business_name}}</h1>
                       <div class="description">
-
+    
                         <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
                         <p>{{setp_six_data.contact_no}}</p>
                       </div>
@@ -612,137 +692,13 @@
                         <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
                         <p>{{setp_six_data.email_id}}</p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div *ngIf="logedUserGroup!='franchise'">
-          <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
-            <div class="col-md-12 get-in-touch padding-top-bottom-10">
-              <div class="container">
-                <h1 class="title fontface-one text-color-dark letter-spacing">
-                  Submit your details and get the app
-                </h1>
-              </div>
-            </div>
-
-            <div class="container  padding-top-25">
-              <div class="row">
-                <div class="col-md-6">
-                  <section class="get-in-touch">
-
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>phone_android</mat-icon>
-                        <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
-                        <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>phone_android</mat-icon>
-                        <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
-                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
-                    <div class="form-field col col-md-12">
-                      <mat-form-field class="input-full-width">
-                        <mat-icon matPrefix>email</mat-icon>
-                        <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
-                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
-                      </mat-form-field>
-                      <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
-                      </p>
-                    </div>
-                    <div class="form-field col-md-12">
-                      <div class="row">
-                        <div class="form-field  align-center col-md-5">
-                          <button mat-button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
-                        </div>
-                        <div class="form-field align-center col-md-5">
-                          <button mat-button class="round-g-btn" (click)="submitStepSix()">Next</button>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <div class="col-md-6">
-
-                  <div class="mob">
-                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                      <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                      <h1>{{setp_two_data.business_name}}</h1>
-                      <div class="description">
-
-                        <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                        <p>{{setp_six_data.contact_no}}</p>
-                      </div>
-                      <div class="description ">
-                        <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                        <p>{{setp_six_data.email_id}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <div class="container" *ngIf="logedUserId>0">
-            <div class="row">
-              <div class="col-md-6">
-                <section class="get-in-touch">
-
-
-                  <div class="form-field col-md-12">
-                    <div class="row">
-                      <div class="form-field  align-center col-md-5">
-                        <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                      </div>
-                      <div mat-button class="form-field align-center col-md-5">
-                        <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-              <div class="col-md-6">
-
-                <div class="mob">
-                  <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                    <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                    <h1>{{setp_two_data.business_name}}</h1>
-                    <div class="description">
-
-                      <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                      <p>{{setp_six_data.contact_no}}</p>
-                    </div>
-                    <div class="description ">
-                      <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                      <p>{{setp_six_data.email_id}}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </mat-step>
-
+        </mat-step>
     </mat-horizontal-stepper>
   </div>
 </loading>

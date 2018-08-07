@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../../core/component/login/login.component';
+import { GeneralService } from '../../core/services/general.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +14,11 @@ import { LoginComponent } from '../../core/component/login/login.component';
 })
 export class HomeComponent implements OnInit {
 
+  private fragment: string;
   isLoggedin: boolean;
   user_name: string;
-
+  writeUsForm: FormGroup;
+  
   words = [
     ['EARN'],
     ['EASY'],
@@ -38,8 +44,22 @@ export class HomeComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private router: Router
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private generalService: GeneralService,
+  ) {
+    router.events.subscribe(s => {
+      if (s instanceof NavigationEnd) {
+        const tree = router.parseUrl(router.url);
+        if (tree.fragment) {
+          const element = document.querySelector("#" + tree.fragment);
+          if (element) { element.scrollIntoView(true); }
+        }
+      }
+    });
+   }
 
   ngOnInit() {
     if (localStorage.getItem('isLoggedin')) {
@@ -48,7 +68,25 @@ export class HomeComponent implements OnInit {
     }
 
     this.slotMachineify(this.words);
+
+    this.writeUsForm = this._formBuilder.group({
+      name: ['', Validators.required],
+      email_id: ['', [
+        Validators.required,
+        Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
+      ]],
+      subject: ['', Validators.required],
+      message: ['', Validators.required],
+    });
+
+    // this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
   }
+
+  // ngAfterViewInit(): void {
+  //   try {
+  //     document.querySelector('#' + this.fragment).scrollIntoView();
+  //   } catch (e) {alert("aaaa") }
+  // }
 
   openLogin() {
     this.dialog.open(
@@ -61,6 +99,56 @@ export class HomeComponent implements OnInit {
   btnClickNav(toNav) {
     this.router.navigateByUrl('/' + toNav);
   };
+
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && (form.get(field).dirty || form.get(field).touched);
+  }
+
+  submitWriteUs() {
+
+    if (this.writeUsForm.valid) {
+      
+      this.generalService.send_contact_mail(this.writeUsForm.value).subscribe(
+        response => {
+          console.log(response.data);
+          this.toastr.success('Email has been sent successfully.', '', {
+            timeOut: 3000,
+          });
+
+          this.writeUsForm.reset();
+          
+        },
+        error => {
+          
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+
+    }
+    else {
+
+      this.markFormGroupTouched(this.writeUsForm)
+    }
+
+  }
+
+  displayFieldCss(form: FormGroup, field: string) {
+    return {
+      'is-invalid': form.get(field).invalid && (form.get(field).dirty || form.get(field).touched),
+      'is-valid': form.get(field).valid && (form.get(field).dirty || form.get(field).touched)
+    };
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        control.controls.forEach(c => this.markFormGroupTouched(c));
+      }
+    });
+  }
 
   slotMachineify(_expression) {
     var _words = _expression[0],

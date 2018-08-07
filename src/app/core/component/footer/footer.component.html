@@ -4,7 +4,7 @@
       <div class="row">
           <div class="col-lg-4 order-lg-1 order-md-3 order-sm-3 order-3 wow fadeIn" data-wow-delay="300ms">
               <p class="paragraph-13 footer-copyright-text font-weight-500 fontface-two text-color-dark padding-top-10">&copy; 2018 Banao.app made with love by
-                  <a href="#" class="footer-web-link"> Shyamfuture</a>
+                  <a href="http://www.shyamfuture.com/" class="footer-web-link" target="_blank"> Shyamfuture</a>
               </p>
           </div>
 
@@ -12,31 +12,30 @@
               <div class="footer-links padding-top-5">
                   <ul class="footer-links-outer text-center">
                       <li class="footer-links-inner">
-                          <a class="scroll" href="#main-slider-section">home</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']">Home</a>
                       </li>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a class="scroll" href="#about-company-section">Product</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']" fragment="about-company-section">Know Us </a>
                       </li>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a class="scroll" href="#company-portfolio-section">Partnerprogram </a>
-                      </li>
+                          <a pageScroll class="scroll"  [routerLink]="['/home']" fragment="price" >Your expense</a>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a class="scroll" href="#price">pricing</a>
+                          <a pageScroll class="scroll" [routerLink]="['/franchise-club']">Franchise club </a>
                       </li>
 
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a class="scroll" href="#contact-form-section">contact</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']" fragment="contact-form-section">Tell us </a>
                       </li>
                   </ul>
               </div>
           </div>
 
           <div class="col-lg-2 order-lg-1 clearfix order-md-1 order-sm-1 order-1 wow fadeIn" data-wow-delay="400ms">
-              <a href="#" class="footer-logo">
+              <a  [routerLink]="['/']" class="footer-logo">
                   <img src="assets/images/logo-dark.png" alt="logo-BuildGo">
               </a>
           </div>

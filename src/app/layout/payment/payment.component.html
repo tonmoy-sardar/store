@@ -1,95 +1,67 @@
-<div class="col-md-12 get-in-touch bg-white padding-top-bottom-10">
-  <div class="container">
-    <!--Dropdown primary-->
-    <div class="pull-left col-md-3">
-      <a [routerLink]="['/']">
-        <img class="img-fluid" [src]="'assets/images/logo-dark.png'" alt="">
-      </a>
-    </div>
-    <div class=" primary-color">
-      <a class="log-in-out" href="javascript:void(0)" *ngIf="isLoggedin">
-        <span class="text-name">Hi. {{user_name}} </span>
-        <div class="full" id="menu_bars" mat-button [matMenuTriggerFor]="menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </a>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </div>
-    <!--/Dropdown primary-->
-    <div class="clearfix"></div>
-  </div>
-</div>
+<app-site-header></app-site-header>
 <div class="clearfix"></div>
 <div class="background-pink  padding-top-bottom-50 ">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <mat-card>
-          <mat-card-title>Subscription Type</mat-card-title>
-          <mat-card-content>
-            <mat-radio-group class="example-radio-group row" [(ngModel)]="subscription_type_id" (change)="onSubscriptionChange()">
-              <mat-radio-button class="example-radio-button col-md-12" *ngFor="let subscription of subscriptionTypeList" [value]="subscription.id">
-                {{subscription.type_name}}
-              </mat-radio-button>
-            </mat-radio-group>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-md-6">
-        <mat-card>
-          <mat-card-title>Item Details</mat-card-title>
-          <mat-card-content>
-            <div class="col-md-12">
-              <div class="row" *ngFor="let item of priceList; let i = index;">
-                <mat-checkbox [checked]="item.checked" (change)="onPriceChange($event, i, item)" [disabled]="item.setDisabled">
-                  <div class="col-md-6"> {{item.title}} </div>
-                  <div class="col-md-6" style="text-align: right">Rs. {{item.cost}}</div>
-                </mat-checkbox>
-              </div>
-              <mat-divider></mat-divider>
-              <div class="row" *ngIf="offer_price == 0">
-                <div class="col-md-6">Total </div>
-                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
-              </div>
-              <div class="row" *ngIf="offer_price > 0">
-                <div class="col-md-6">Total </div>
-                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
-                <div class="col-md-6">Coupon code: {{coupon_code}} </div>
-                <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
-                <div class="col-md-6">Total </div>
-                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-md-12 text-right">
-                  <button class="round-g-biscuit" (click)="apply_coupon()">Apply Coupon!</button>
-                  <button class="round-g-biscuit" (click)="pay()">Procced To Pay!</button>
-                </div>
-              </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <mat-card>
+                    <mat-card-title>Subscription Type</mat-card-title>
+                    <mat-card-content>
+                        <mat-radio-group class="example-radio-group row" [(ngModel)]="subscription_type_id" (change)="onSubscriptionChange()">
+                            <mat-radio-button class="example-radio-button col-md-12" *ngFor="let subscription of subscriptionTypeList" [value]="subscription.id">
+                                {{subscription.type_name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </mat-card-content>
+
+                    <mat-card-title>Item Details</mat-card-title>
+                    <mat-card-content>
+                        <div class="col-md-12">
+                            <div class="row" *ngFor="let item of priceList; let i = index;">
+                                <mat-checkbox [checked]="item.checked" (change)="onPriceChange($event, i, item)" [disabled]="item.setDisabled">
+                                    <div class="col-md-6"> {{item.title}} </div>
+                                    <div class="col-md-6" style="text-align: right">Rs. {{item.cost}}</div>
+                                </mat-checkbox>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="row" *ngIf="offer_price == 0">
+                                <div class="col-md-6">Total </div>
+                                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
+                            </div>
+                            <div class="row" *ngIf="offer_price > 0">
+                                <div class="col-md-6">Total </div>
+                                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
+                                <div class="col-md-6">Coupon code: {{coupon_code}} </div>
+                                <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
+                                <div class="col-md-6">Total </div>
+                                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="round-g-biscuit" (click)="apply_coupon()">Apply Coupon!</button>
+                                    <button class="round-g-biscuit" (click)="pay()">Procced To Pay!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- paytm -->
-<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm >
-  <div *ngIf="paymentFormActive">
-    <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
-    <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">
-    <input type="hidden" value="{{paymentdetails_data.TXN_AMOUNT}}" name="TXN_AMOUNT">
-    <input type="hidden" value="{{paymentdetails_data.CUST_ID}}" name="CUST_ID">
-    <input type="hidden" value="{{paymentdetails_data.INDUSTRY_TYPE_ID}}" name="INDUSTRY_TYPE_ID">
-    <input type="hidden" value="{{paymentdetails_data.WEBSITE}}" name="WEBSITE">
-    <input type="hidden" value="{{paymentdetails_data.CHANNEL_ID}}" name="CHANNEL_ID">
-    <input type="hidden" value="{{paymentdetails_data.CALLBACK_URL}}" name="CALLBACK_URL">
-    <input type="hidden" value="{{paymentdetails_data.CHECKSUMHASH}}" name="CHECKSUMHASH">
-  </div>
-  <input type="submit" name="submit" value="Confirm Payment" id="payment_btn">
+<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm style="visibility: hidden;height: 0;">
+    <div *ngIf="paymentFormActive">
+        <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
+        <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">
+        <input type="hidden" value="{{paymentdetails_data.TXN_AMOUNT}}" name="TXN_AMOUNT">
+        <input type="hidden" value="{{paymentdetails_data.CUST_ID}}" name="CUST_ID">
+        <input type="hidden" value="{{paymentdetails_data.INDUSTRY_TYPE_ID}}" name="INDUSTRY_TYPE_ID">
+        <input type="hidden" value="{{paymentdetails_data.WEBSITE}}" name="WEBSITE">
+        <input type="hidden" value="{{paymentdetails_data.CHANNEL_ID}}" name="CHANNEL_ID">
+        <input type="hidden" value="{{paymentdetails_data.CALLBACK_URL}}" name="CALLBACK_URL">
+        <input type="hidden" value="{{paymentdetails_data.CHECKSUMHASH}}" name="CHECKSUMHASH">
+    </div>
+    <input type="submit" name="submit" value="Confirm Payment" id="payment_btn">
 </form>

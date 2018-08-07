@@ -50,6 +50,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('logedUserUserId', response.user_id);
           localStorage.setItem('logedUserUserName', response.username);          
           this.dialogRef.close();
+
+          this.loginService.loginStatus(true);
           // if (response.group.toLowerCase() == "franchise") {
           //   localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
           //   this.router.navigateByUrl('/dashboard/franchise-user');
@@ -62,10 +64,12 @@ export class LoginComponent implements OnInit {
         },
         error => {
           console.log(error)
+          this.loginService.loginStatus(false);
         }
       );
     } else {
       this.markFormGroupTouched(this.form)
+      this.loginService.loginStatus(false);
     }
 
   }
