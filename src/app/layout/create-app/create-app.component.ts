@@ -38,8 +38,6 @@ export class CreateAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   stepFiveDataCatProd: FormGroup;
-  stepFiveProductCat1: FormGroup;
-  stepFiveProductCat2: FormGroup;
   stepSix: FormGroup;
   stepSeven: FormGroup;
   stepEight: FormGroup;
@@ -110,38 +108,7 @@ export class CreateAppComponent implements OnInit {
   ]
   category_confirm_key: boolean;
 
-  setp_five_data_cat_1 = {
-    products: [
-      {
-        id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
-        product_category: '',
-        product_name: '',
-        price: '',
-        discounted_price: '0.00',
-        packing_charges: '0.00',
-        tags: '',
-      }
-    ]
-  }
-
-  setp_five_data_cat_2 = {
-    products: [
-      {
-        id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
-        product_category: '',
-        product_name: '',
-        price: '',
-        discounted_price: '0.00',
-        packing_charges: '0.00',
-        tags: '',
-      }
-    ]
-  }
-
-
-
+  user_app_details: any;
 
   setp_six_data = {
     name: '',
@@ -217,14 +184,6 @@ export class CreateAppComponent implements OnInit {
     this.stepFiveDataCatProd = this._formBuilder.group({
       product_cols: this._formBuilder.array([this.createProductCols()]),
     })
-
-    this.stepFiveProductCat1 = this._formBuilder.group({
-      products: this._formBuilder.array([this.createProduct()]),
-    });
-
-    this.stepFiveProductCat2 = this._formBuilder.group({
-      products: this._formBuilder.array([this.createProduct()]),
-    });
 
 
     this.stepSix = this._formBuilder.group({
@@ -423,7 +382,7 @@ export class CreateAppComponent implements OnInit {
 
 
   }
-  
+
 
   addProductCategory() {
     var product_cate = {
@@ -495,7 +454,7 @@ export class CreateAppComponent implements OnInit {
   deleteProduct(i: number, j: number) {
     const control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
     control.removeAt(j);
-    this.setp_five_data_cat_prod[i].products.splice(j, 1)    
+    this.setp_five_data_cat_prod[i].products.splice(j, 1)
 
   }
 
@@ -533,13 +492,14 @@ export class CreateAppComponent implements OnInit {
     else {
       this.haveBusinessDescription = false;
     }
-  }  
+  }
 
 
   getTempAppDetails(id) {
     this.createAppService.getTempAppDetails(id).subscribe(
       (data: any[]) => {
         console.log(data);
+        this.user_app_details = data;
         if (data.length > 0) {
           this.setp_one_data.app_category = data[0].app_category.id;
           this.stepOne.patchValue({
@@ -611,11 +571,11 @@ export class CreateAppComponent implements OnInit {
                   }
                 ]
               }
+
               this.setp_five_data_cat_prod.push(catProdData);
-
-
               if (data[0].product_details[i].products.length > 0) {
                 const product_rows_control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
+                console.log(data[0].product_details[i].products.length)
                 for (var j = 0; j < data[0].product_details[i].products.length; j++) {
                   var prod = {
                     id: data[0].product_details[i].products[j].id,
@@ -627,6 +587,10 @@ export class CreateAppComponent implements OnInit {
                     packing_charges: data[0].product_details[i].products[j].packing_charges,
                     tags: data[0].product_details[i].products[j].tags
                   }
+
+                  if (j == 0) {
+                    this.setp_five_data_cat_prod[i].products.splice(j, 1)
+                  }
                   this.setp_five_data_cat_prod[i].products.splice(j, 0, prod);
                   if (j < data[0].product_details[i].products.length - 1) {
                     product_rows_control.push(this.createProduct());
@@ -635,7 +599,7 @@ export class CreateAppComponent implements OnInit {
                 }
               }
               this.category_confirm_key = true;
-              
+
             }
           }
 
@@ -820,35 +784,6 @@ export class CreateAppComponent implements OnInit {
               ]
             }
 
-            this.setp_five_data_cat_1 = {
-              products: [
-                {
-                  id: null,
-                  app_master: response.id,
-                  product_category: '',
-                  product_name: '',
-                  price: '',
-                  discounted_price: '0.00',
-                  packing_charges: '0.00',
-                  tags: '',
-                }
-              ]
-            }
-
-            this.setp_five_data_cat_2 = {
-              products: [
-                {
-                  id: null,
-                  app_master: response.id,
-                  product_category: '',
-                  product_name: '',
-                  price: '',
-                  discounted_price: '0.00',
-                  packing_charges: '0.00',
-                  tags: '',
-                }
-              ]
-            }
           },
           error => {
             this.loading = LoadingState.Ready;
@@ -957,6 +892,41 @@ export class CreateAppComponent implements OnInit {
     this.storeCreateAppStep = parseInt(value) - 1;
     localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
     this.stepper.next();
+  }
+
+  save_nextStep(value) {
+    var keepCatGoing = true;
+    var keepProdGoing = true;
+    if (this.user_app_details[0].product_details.length != this.setp_five_data.product_categories.length) {
+      this.setp_five_data.product_categories.forEach(x => {
+        if (x.category_name != "" && keepCatGoing) {
+          this.toastr.error('Please confirm category', '', {
+            timeOut: 3000,
+          });
+          keepCatGoing = false;
+        }
+      })
+    }
+    for (var i = 0; i < this.setp_five_data_cat_prod.length; i++) {
+      var d = this.setp_five_data_cat_prod[i];
+      var k = this.user_app_details[0].product_details[i]
+      if (d.products.length != k.products.length) {
+        d.products.forEach(y => {
+          if (y.product_name != "" && y.price != "" && keepProdGoing) {
+            this.toastr.error('Please confirm product', '', {
+              timeOut: 3000,
+            });
+            keepProdGoing = false;
+          }
+        })
+      }
+    }
+    if (keepCatGoing && keepProdGoing) {
+      this.storeCreateAppStep = parseInt(value) - 1;
+      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+      this.stepper.next();
+    }
+
   }
 
   submitStepFour() {

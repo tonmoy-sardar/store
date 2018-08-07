@@ -322,7 +322,7 @@
                     </div>
                   </div>
                   <div class="col-md-12" style="text-align: right">
-                    <button mat-button class="round-g-biscuit" (click)="submitCategory()">Confirm Category & Add Product</button>
+                    <button mat-button class="round-g-biscuit" (click)="submitCategory()">Confirm Category</button>
                   </div>
                 </form>
 
@@ -400,7 +400,7 @@
                       <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                     </div>
                     <div class="align-center col-md-5">
-                      <button mat-button class="round-g-btn" (click)="nextStep(5)" *ngIf="category_confirm_key">Next</button>
+                      <button mat-button class="round-g-btn" (click)="save_nextStep(5)" *ngIf="category_confirm_key">Next</button>
                       <button mat-button class="round-g-btn" (click)="nextStep(5)" *ngIf="!category_confirm_key">Skip</button>
                     </div>
                   </div>
