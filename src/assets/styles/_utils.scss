@@ -5309,14 +5309,15 @@ z #generic_price_table .generic_content,
 
 .dashdoard-sec ul li {
     float: left;
-    width: 130px;
-    height: 130px;
+    width: 122px;
+    height: 122px;
     text-align: center;
     border: 1px solid #d8d8d8;
     display: table;
     position: relative;
     background: #f2f2f2;
-    margin-right: 18px;
+    margin-right: 15px;
+    margin-bottom: 15px;
     padding: 5px;
     transition: all .40s ease;
 }
@@ -5544,7 +5545,13 @@ z #generic_price_table .generic_content,
     padding-top: 50px;
 }
 
-.navbar.inner-navbar { position: relative; }
+.navbar.inner-navbar {
+    position: relative;
+}
+
+.login_modal .mat-form-field {
+    display: block;
+}
 
 // .mat-horizontal-stepper-content {
 //     overflow: visible !important;
