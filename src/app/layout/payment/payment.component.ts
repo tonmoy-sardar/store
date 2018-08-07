@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CouponDialogComponent } from '../../core/component/coupon-dialog/coupon-dialog.component'
+import { TermsDialogComponent } from '../../core/component/terms-dialog/terms-dialog.component'
 import { PaytamService } from '../../core/services/paytam.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CreateAppService } from '../../core/services/create-app.service';
@@ -160,6 +161,15 @@ export class PaymentComponent implements OnInit {
       }
     })
   }
+
+
+  showTermsAndConditions() {
+    let dialogRef = this.dialog.open(TermsDialogComponent, {
+      width: '600px',
+      data: {}
+    });
+  }
+
 
   getPaidTotal() {
     return (this.subscription_value * this.totalPrice).toFixed(2)

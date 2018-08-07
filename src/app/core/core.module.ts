@@ -35,6 +35,7 @@ import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component'
 import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { SiteHeaderComponent } from './component/site-header/site-header.component';
+import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.component';
 
 @NgModule({
   imports: [
@@ -59,9 +60,10 @@ import { SiteHeaderComponent } from './component/site-header/site-header.compone
   declarations: [
     HeaderComponent,
     FooterComponent,
-    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent,
+    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent,TermsDialogComponent,
     LoadingComponent,
-    SiteHeaderComponent
+    SiteHeaderComponent,
+    TermsDialogComponent
   ],
   providers: [],
   exports: [
@@ -89,7 +91,8 @@ import { SiteHeaderComponent } from './component/site-header/site-header.compone
     LoginComponent,
     ConfirmDialogComponent,
     OtpDialogComponent,
-    CouponDialogComponent
+    CouponDialogComponent,
+    TermsDialogComponent
   ]
 })
 export class CoreModule {

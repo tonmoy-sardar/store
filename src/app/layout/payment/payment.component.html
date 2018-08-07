@@ -23,7 +23,7 @@
                                     <div class="col-md-6" style="text-align: right">Rs. {{item.cost}}</div>
                                 </mat-checkbox>
                             </div>
-                            <mat-divider></mat-divider>
+                            <hr>
                             <div class="row" *ngIf="offer_price == 0">
                                 <div class="col-md-6">Total </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
@@ -34,9 +34,14 @@
                                 <div class="col-md-6">Coupon code: {{coupon_code}} </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
                                 <div class="col-md-6">Total </div>
-                                <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
+                                <!-- <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div> -->
                             </div>
                             <hr>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <mat-checkbox>I Agree to the <a (click)="showTermsAndConditions()">terms & conditions</a></mat-checkbox>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <button class="round-g-biscuit" (click)="apply_coupon()">Apply Coupon!</button>
