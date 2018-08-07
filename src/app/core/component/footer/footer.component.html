@@ -12,24 +12,23 @@
               <div class="footer-links padding-top-5">
                   <ul class="footer-links-outer text-center">
                       <li class="footer-links-inner">
-                          <a pageScroll class="scroll" href="#main-slider-section">Home</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']">Home</a>
                       </li>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a pageScroll class="scroll" href="#about-company-section">Product</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']" fragment="about-company-section">Know Us </a>
                       </li>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a pageScroll class="scroll"   [routerLink]="['/franchise-club']">Franchise Club </a>
-                      </li>
+                          <a pageScroll class="scroll"  [routerLink]="['/home']" fragment="price" >Your expense</a>
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a pageScroll class="scroll" href="#price">Your Expense</a>
+                          <a pageScroll class="scroll" [routerLink]="['/franchise-club']">Franchise club </a>
                       </li>
 
                       <li class="footer-divider">|</li>
                       <li class="footer-links-inner">
-                          <a pageScroll class="scroll" href="#contact-form-section">Contact</a>
+                          <a pageScroll class="scroll" [routerLink]="['/home']" fragment="contact-form-section">Tell us </a>
                       </li>
                   </ul>
               </div>

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../../core/component/login/login.component';
+import { GeneralService } from '../../core/services/general.service';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +14,11 @@ import { LoginComponent } from '../../core/component/login/login.component';
 })
 export class HomeComponent implements OnInit {
 
+  private fragment: string;
   isLoggedin: boolean;
   user_name: string;
   writeUsForm: FormGroup;
+  
   words = [
     ['EARN'],
     ['EASY'],
@@ -40,8 +45,21 @@ export class HomeComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private _formBuilder: FormBuilder
-  ) { }
+    private route: ActivatedRoute,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private generalService: GeneralService,
+  ) {
+    router.events.subscribe(s => {
+      if (s instanceof NavigationEnd) {
+        const tree = router.parseUrl(router.url);
+        if (tree.fragment) {
+          const element = document.querySelector("#" + tree.fragment);
+          if (element) { element.scrollIntoView(true); }
+        }
+      }
+    });
+   }
 
   ngOnInit() {
     if (localStorage.getItem('isLoggedin')) {
@@ -60,7 +78,15 @@ export class HomeComponent implements OnInit {
       subject: ['', Validators.required],
       message: ['', Validators.required],
     });
+
+    // this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
   }
+
+  // ngAfterViewInit(): void {
+  //   try {
+  //     document.querySelector('#' + this.fragment).scrollIntoView();
+  //   } catch (e) {alert("aaaa") }
+  // }
 
   openLogin() {
     this.dialog.open(
@@ -79,14 +105,33 @@ export class HomeComponent implements OnInit {
   }
 
   submitWriteUs() {
+
     if (this.writeUsForm.valid) {
-     console.log(this.writeUsForm.value);
-     this.writeUsForm.reset();
+      
+      this.generalService.send_contact_mail(this.writeUsForm.value).subscribe(
+        response => {
+          console.log(response.data);
+          this.toastr.success('Email has been sent successfully.', '', {
+            timeOut: 3000,
+          });
+
+          this.writeUsForm.reset();
+          
+        },
+        error => {
+          
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
 
     }
     else {
+
       this.markFormGroupTouched(this.writeUsForm)
     }
+
   }
 
   displayFieldCss(form: FormGroup, field: string) {
