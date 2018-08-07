@@ -3571,6 +3571,23 @@ p {
     border-left: 3px solid #fcc42c;
 }
 
+.Features li {
+    font-size: 14px;
+    text-align: left;
+    padding-left: 58px !important;
+}
+
+.Features .heading-list {
+    font-size: 16px;
+}
+
+.heading-list {
+    background: #e0dfdf;
+    font-weight: bold;
+    color: #000;
+    border: 1px solid #e0e0e0;
+}
+
 .blog-detail-page-text-list ul {
     list-style: circle;
     margin-left: 15px;
@@ -3586,10 +3603,6 @@ p {
 
 
 /* for-price */
-
-#generic_price_table {
-    background-color: #f0eded;
-}
 
 
 /*PRICE COLOR CODE START*/
@@ -3629,22 +3642,18 @@ p {
     color: #414141;
 }
 
-#generic_price_table .generic_content .generic_feature_list ul li {
-    color: #a7a7a7;
-}
-
 #generic_price_table .generic_content .generic_feature_list ul li span {
     color: #414141;
 }
 
 #generic_price_table .generic_content .generic_feature_list ul li:hover {
     background-color: #E4E4E4;
-    border-left: 5px solid #00abc9;
+    border-left: 5px solid #c39b76;
 }
 
 #generic_price_table .generic_content .generic_price_btn a {
     border: 1px solid #fcc42c;
-    color: #00abc9;
+    color: #c39b76;
     -webkit-box-shadow: 5px 11px 28px -9px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 11px 28px -9px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 11px 28px -9px rgba(0, 0, 0, 0.75);
@@ -3652,7 +3661,7 @@ p {
 
 #generic_price_table .generic_content.active .generic_head_price .generic_head_content .head_bg,
 #generic_price_table .generic_content:hover .generic_head_price .generic_head_content .head_bg {
-    border-color: #00abc9 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #00abc9;
+    border-color: #c39b76 rgba(253, 174, 174, 0) rgba(228, 56, 56, 0) #d4ac87;
     color: #fff;
 }
 
@@ -3685,10 +3694,6 @@ p {
     text-align: center;
 }
 
-#generic_price_table .generic_content .generic_head_price {
-    margin: 0 0 20px 0;
-}
-
 #generic_price_table .generic_content .generic_head_price .generic_head_content {
     margin: 0 0 50px 0;
 }
@@ -3700,7 +3705,7 @@ p {
 }
 
 #generic_price_table .generic_content .generic_head_price .generic_head_content .head {
-    padding-top: 40px;
+    padding-top: 18px;
     position: relative;
     z-index: 1;
 }
@@ -3750,9 +3755,9 @@ p {
 }
 
 #generic_price_table .generic_content .generic_head_price .generic_price_tag .month {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
-    letter-spacing: 3px;
+    letter-spacing: 0px;
     vertical-align: bottom;
 }
 
@@ -3764,8 +3769,9 @@ p {
 
 #generic_price_table .generic_content .generic_feature_list ul li {
     display: block;
-    font-size: 18px;
     padding: 15px 0;
+    height: 54px;
+    border: 1px solid #f2f1f1;
     transition: all 0.3s ease-in-out 0s;
 }
 
