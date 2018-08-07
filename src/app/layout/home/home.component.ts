@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../../core/component/login/login.component';
 
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   isLoggedin: boolean;
   user_name: string;
-
+  writeUsForm: FormGroup;
   words = [
     ['EARN'],
     ['EASY'],
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private _formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -48,6 +50,16 @@ export class HomeComponent implements OnInit {
     }
 
     this.slotMachineify(this.words);
+
+    this.writeUsForm = this._formBuilder.group({
+      name: ['', Validators.required],
+      email_id: ['', [
+        Validators.required,
+        Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)
+      ]],
+      subject: ['', Validators.required],
+      message: ['', Validators.required],
+    });
   }
 
   openLogin() {
@@ -61,6 +73,37 @@ export class HomeComponent implements OnInit {
   btnClickNav(toNav) {
     this.router.navigateByUrl('/' + toNav);
   };
+
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && (form.get(field).dirty || form.get(field).touched);
+  }
+
+  submitWriteUs() {
+    if (this.writeUsForm.valid) {
+     console.log(this.writeUsForm.value);
+     this.writeUsForm.reset();
+
+    }
+    else {
+      this.markFormGroupTouched(this.writeUsForm)
+    }
+  }
+
+  displayFieldCss(form: FormGroup, field: string) {
+    return {
+      'is-invalid': form.get(field).invalid && (form.get(field).dirty || form.get(field).touched),
+      'is-valid': form.get(field).valid && (form.get(field).dirty || form.get(field).touched)
+    };
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        control.controls.forEach(c => this.markFormGroupTouched(c));
+      }
+    });
+  }
 
   slotMachineify(_expression) {
     var _words = _expression[0],

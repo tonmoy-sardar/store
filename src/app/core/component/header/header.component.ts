@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,26 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,private router: Router) { }
+  constructor(public dialog: MatDialog,private router: Router, private loginService: LoginService) {
+
+    loginService.getLoggedInStatus.subscribe(status => this.changeStatus(status));
+   }
   isLoggedin: boolean;
   user_name: string;
   user_group: string = '';
+
+  loginStatus: boolean;
+
+  private changeStatus(status: boolean): void {
+    this.loginStatus = status;
+    if(this.loginStatus == true)
+    {
+      this.ngOnInit();
+    }
+    
+    //alert(this.userName)
+  }
+
   ngOnInit() {
     if (localStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;

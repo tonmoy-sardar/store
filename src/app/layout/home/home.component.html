@@ -44,7 +44,7 @@
                                     <a target="_blank" href="http://www.shyamfuture.com/">Shyam Future Tech.</a> Introducing Banao.app! The ultimate app creator that allows you to make your own app in five simple steps. </p>
                                 <p class="paragraph-15 padding-bottom-35 text-color-darkgrey">
                                     Having an app for your business is an unrivalled way to project your brand and boost your venture. So we have engaged the best of professionals to create this practical solution. It gives you complete liberty to create an app and manage it just the way
-                                    you want, that serves your end motive. You can have your own customized app; have the app listed in Play Store and App Store for the least possible expense – for just Rs 15 per day!
+                                    you want, that serves your end motive. You can have your own customized app; have the app listed in Play Store and App Store for the least possible expense – for just Rs 10 per day!
                                 </p>
 
                                 <a href="#" mat-button class="button-setting background-orange text-color-white button-setting-secondary"> Learn More </a>
@@ -97,7 +97,7 @@
                             </h5>
                             <ul class="list-tick padding-bottom-10">
                                 <li>Five simple steps to create a functional app</li>
-                                <li>Rs 15 per day ONLY!</li>
+                                <li>Rs 10 per day ONLY!</li>
                                 <li>App gets listed in Play Store and App Store</li>
                                 <li>Skip investment in marketing</li>
                                 <li>Elevate brand image</li>
@@ -106,7 +106,7 @@
 
                         </div>
 
-                        <a href="#." mat-button class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft" data-wow-delay="400ms">Create Now</a>
+                        <a href="javascript:void(0);" (click)="btnClickNav('create-app')" mat-button class="button-setting background-secondary button-setting-primary text-color-white wow fadeInLeft" data-wow-delay="400ms">Create Now</a>
                     </div>
                 </div>
 
@@ -149,7 +149,7 @@
 
                             <div class="col-md-12">
                                 <h2 class="pricing-main-price fontface-one font-weight-700 text-color-dark">
-                                    <span class="paragraph-22 pricing-currency-sign font-weight-600 fontface-two">₹</span>15
+                                    <span class="paragraph-22 pricing-currency-sign font-weight-600 fontface-two">₹</span>10
                                     <span class="paragraph-16 font-weight-400 fontface-two"> /Day</span>
                                 </h2>
                             </div>
@@ -192,8 +192,13 @@
                             <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">Shyam future tech, Shyam Towers, EN 32, Sector V,
                                 <br> Salt Lake, Kolkata-700091</li>
                             <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">
-                                <a href="mailto:sales@shyamfuture.com ">
-                                    <i class="fa fa-envelope-open text-color-dark"></i> &nbsp; Sales@Shyamfuture.com</a>
+                                <a href="mailto:support@banaoapp.com ">
+                                    <i class="fa fa-envelope-open text-color-dark"></i> &nbsp; support@banaoapp.com</a>
+                            </li>
+                            <br>
+                            <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">
+                                <a href="tel:+91 03371024582">
+                                    <i class="fa fa-phone-square text-color-dark"></i>&nbsp; 03371024582</a>
                             </li>
                             <br>
                             <li class="paragraph-15 text-color-darkgrey fontface-two padding-top-10">
@@ -241,30 +246,35 @@
             <div class="col-lg-6 offset-lg-1">
                 <div class="company-contact-form wow fadeInRight" data-wow-delay="300ms">
                     <h3 class="text-color-dark font-weight-600 text-transform letter-spacing fontface-one padding-bottom-45">Write Us</h3>
-                    <form class="contact-form-outer">
+                    <form class="contact-form-outer" [formGroup]="writeUsForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="contact-form-textfield padding-bottom-30">
-                                    <input type="text" placeholder="Your Name" class="form-control paragraph-16">
+                                    <input type="text" placeholder="Your Name" formControlName="name" class="form-control paragraph-16">
+                                    <mat-error *ngIf="isFieldValid(writeUsForm,'name')"> Please Enter Your Name</mat-error>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="contact-form-textfield padding-bottom-30">
-                                    <input type="email" placeholder="Your Email" class="form-control paragraph-16">
+                                    <input matInput type="text" formControlName="email_id" placeholder="Your Email" class="form-control paragraph-16">
+                                    <mat-error *ngIf="isFieldValid(writeUsForm,'email_id')"> Please Enter Your Email</mat-error>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="contact-form-textfield padding-bottom-45">
-                                    <input type="text" placeholder="Subject" class="form-control paragraph-16">
+                                    <input matInput type="text" formControlName="subject" placeholder="Subject" class="form-control paragraph-16">
+                                    <mat-error *ngIf="isFieldValid(writeUsForm,'subject')"> Please Enter Subject</mat-error>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="contact-form-textfield padding-bottom-40">
-                                    <textarea placeholder="Your Message" class="form-control paragraph-16"></textarea>
+                                    <textarea matInput placeholder="Your Message"  formControlName="message" class="form-control paragraph-16"></textarea>
+                                    <mat-error *ngIf="isFieldValid(writeUsForm,'message')"> Please Enter Your Message</mat-error>
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
-                                <a mat-button class="button-setting button-setting-primary background-black text-color-white text-center" href="#">Send Message</a>
+                                <!-- <a mat-button class="button-setting button-setting-primary background-black text-color-white text-center" href="#">Send Message</a> -->
+                                <button mat-button class="button-setting button-setting-primary background-black text-color-white text-center" (click)="submitWriteUs()">Send Message</button>
                             </div>
                         </div>
                     </form>
