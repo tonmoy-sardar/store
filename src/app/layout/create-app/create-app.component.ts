@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from "../../core/component/confirm-dialog/conf
 import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.component";
 import { LoginComponent } from '../../core/component/login/login.component';
 import { LoadingState } from '../../core/component/loading/loading.component';
+import { forkJoin } from "rxjs/observable/forkJoin";
 @Component({
   selector: 'app-create-app',
   templateUrl: './create-app.component.html',
@@ -36,6 +37,7 @@ export class CreateAppComponent implements OnInit {
   stepThree: FormGroup;
   stepFour: FormGroup;
   stepFive: FormGroup;
+  stepFiveDataCatProd: FormGroup;
   stepFiveProductCat1: FormGroup;
   stepFiveProductCat2: FormGroup;
   stepSix: FormGroup;
@@ -89,6 +91,24 @@ export class CreateAppComponent implements OnInit {
       }
     ]
   }
+
+  setp_five_data_cat_prod = [
+    {
+      products: [
+        {
+          id: null,
+          app_master: localStorage.getItem('storeCreateAppID'),
+          product_category: '',
+          product_name: '',
+          price: '',
+          discounted_price: '0.00',
+          packing_charges: '0.00',
+          tags: '',
+        }
+      ]
+    }
+  ]
+  category_confirm_key: boolean;
 
   setp_five_data_cat_1 = {
     products: [
@@ -194,6 +214,10 @@ export class CreateAppComponent implements OnInit {
       product_categories: this._formBuilder.array([this.createProductCategory('Generic')]),
     });
 
+    this.stepFiveDataCatProd = this._formBuilder.group({
+      product_cols: this._formBuilder.array([this.createProductCols()]),
+    })
+
     this.stepFiveProductCat1 = this._formBuilder.group({
       products: this._formBuilder.array([this.createProduct()]),
     });
@@ -297,72 +321,110 @@ export class CreateAppComponent implements OnInit {
   };
 
   submitCategory() {
-    //console.log(this.setp_five_data);
 
-    this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'), this.setp_five_data).subscribe(
-      response => {
-        console.log(response);
-        const control = <FormArray>this.stepFive.controls['product_categories'];
-        control.removeAt(1);
-        const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
-        control1.removeAt(1);
-        const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
-        control2.removeAt(1);
+    if (this.stepFive.valid) {
+      this.loading = LoadingState.Processing;
+      console.log(this.setp_five_data);
+      this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'), this.setp_five_data).subscribe(
+        response => {
+          console.log(response);
+          this.loading = LoadingState.Ready;
+          const product_categories_control = <FormArray>this.stepFive.controls['product_categories'];
+          for (var i = this.setp_five_data.product_categories.length - 1; i > 0; i--) {
+            product_categories_control.removeAt(i);
+          }
+          const product_cols_control = <FormArray>this.stepFiveDataCatProd.controls['product_cols'];
 
-        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
+          for (var j = this.setp_five_data_cat_prod.length - 1; j >= 0; j--) {
+            const product_rows_control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(j).get('products') as FormArray;
+            for (var k = this.setp_five_data_cat_prod[j].products.length - 1; k > 0; k--) {
+              product_rows_control.removeAt(k);
+            }
+            if (j > 0) {
+              product_cols_control.removeAt(j);
+            }
+          }
 
-        this.toastr.success('Success', '', {
-          timeOut: 3000,
-        });
+          this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
 
-      },
-      error => {
-        this.toastr.error('Something went wrong', '', {
-          timeOut: 3000,
-        });
-      }
-    );
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+
+        },
+        error => {
+          this.loading = LoadingState.Ready;
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    else {
+      this.markFormGroupTouched(this.stepFive)
+    }
+
+
 
   }
 
-  submitProduct(type: number) {
-    if (type == 0) {
-      var submitedData = this.setp_five_data_cat_1;
-    }
-    if (type == 1) {
-      var submitedData = this.setp_five_data_cat_2;
-    }
-
-    this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), submitedData).subscribe(
-      response => {
-        console.log(response);
-
-        const control = <FormArray>this.stepFive.controls['product_categories'];
-        control.removeAt(1);
-
-        if (type == 0) {
-          const control1 = <FormArray>this.stepFiveProductCat1.controls['products'];
-          control1.removeAt(1);
+  submitProduct() {
+    var i = 0;
+    var forkArray = []
+    this.setp_five_data_cat_prod.forEach(x => {
+      var data = {
+        products: []
+      };
+      x.products.forEach(y => {
+        if (y.product_name != "" && y.price != "") {
+          data.products.push(y)
         }
-        if (type == 1) {
-          const control2 = <FormArray>this.stepFiveProductCat2.controls['products'];
-          control2.removeAt(1);
-        }
-        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
+        else {
 
+        }
+      })
+      if (data.products.length > 0) {
+        this.loading = LoadingState.Processing;
+        forkArray.push(this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), data))
+      }
+      i++;
+    })
+    if (i == this.setp_five_data_cat_prod.length) {
+      forkJoin(forkArray).subscribe(results => {
         this.toastr.success('Success', '', {
           timeOut: 3000,
         });
+        const product_categories_control = <FormArray>this.stepFive.controls['product_categories'];
+        for (var i = this.setp_five_data.product_categories.length - 1; i > 0; i--) {
+          product_categories_control.removeAt(i);
+        }
+        const product_cols_control = <FormArray>this.stepFiveDataCatProd.controls['product_cols'];
+        for (var j = this.setp_five_data_cat_prod.length - 1; j >= 0; j--) {
+          const product_rows_control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(j).get('products') as FormArray;
+          for (var k = this.setp_five_data_cat_prod[j].products.length - 1; k > 0; k--) {
+            product_rows_control.removeAt(k);
+          }
+          if (j > 0) {
+            product_cols_control.removeAt(j);
+          }
 
+        }
+        this.loading = LoadingState.Ready;
+        this.category_confirm_key = false;
+        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
       },
-      error => {
-        this.toastr.error('Something went wrong', '', {
-          timeOut: 3000,
-        });
-      }
-    );
+        error => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+
 
   }
+  
+
   addProductCategory() {
     var product_cate = {
       id: null,
@@ -382,6 +444,20 @@ export class CreateAppComponent implements OnInit {
     }
     const control = <FormArray>this.stepFive.controls['product_categories'];
     control.removeAt(index);
+    const product_cols_control = <FormArray>this.stepFiveDataCatProd.controls['product_cols'];
+
+    for (var i = this.setp_five_data_cat_prod.length - 1; i >= 0; i--) {
+      if (i == index) {
+        const product_rows_control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
+        for (var k = this.setp_five_data_cat_prod[i].products.length - 1; k > 0; k--) {
+          product_rows_control.removeAt(k);
+        }
+        this.setp_five_data_cat_prod.splice(index, 1)
+        if (i > 0) {
+          product_cols_control.removeAt(i);
+        }
+      }
+    }
   }
   createProductCategory(categoryName) {
     return this._formBuilder.group({
@@ -399,8 +475,8 @@ export class CreateAppComponent implements OnInit {
 
 
 
-  addProduct(type: number, product_cat_id) {
 
+  addProduct(i: number, product_cat_id) {
     var prod = {
       id: null,
       app_master: localStorage.getItem('storeCreateAppID'),
@@ -410,31 +486,23 @@ export class CreateAppComponent implements OnInit {
       discounted_price: '0.00',
       packing_charges: '0.00',
       tags: '',
-
     }
-
-    if (type == 0) {
-      this.setp_five_data_cat_1.products.push(prod);
-      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
-      control.push(this.createProduct());
-    }
-    if (type == 1) {
-      this.setp_five_data_cat_2.products.push(prod);
-      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
-      control.push(this.createProduct());
-    }
+    const control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
+    control.push(this.createProduct());
+    this.setp_five_data_cat_prod[i].products.push(prod)
   }
 
-  deleteProduct(index: number, type: number) {
-    if (type == 0) {
-      const control = <FormArray>this.stepFiveProductCat1.controls['products'];
-      control.removeAt(index);
-    }
-    if (type == 1) {
-      const control = <FormArray>this.stepFiveProductCat2.controls['products'];
-      control.removeAt(index);
-    }
+  deleteProduct(i: number, j: number) {
+    const control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
+    control.removeAt(j);
+    this.setp_five_data_cat_prod[i].products.splice(j, 1)    
 
+  }
+
+  createProductCols() {
+    return this._formBuilder.group({
+      products: this._formBuilder.array([this.createProduct()]),
+    });
   }
 
   createProduct() {
@@ -465,30 +533,7 @@ export class CreateAppComponent implements OnInit {
     else {
       this.haveBusinessDescription = false;
     }
-  }
-
-  // getTempUserDetails(id) {
-  //   this.createAppService.getTempUserDetails(id).subscribe(
-  //     (data: any[]) => {
-  //       console.log(data);
-  //       if (data.length > 0) {
-  //         this.setp_three_data.owner_pic = data[0].owner_pic;
-  //         this.setp_three_data.owner_name = data[0].owner_name;
-  //         this.setp_three_data.owner_designation = data[0].owner_designation;
-  //         this.setp_three_data.store_address = data[0].store_address;
-  //         this.setp_three_data.lat = data[0].lat;
-  //         this.setp_three_data.long = data[0].long;
-  //         this.setp_three_data.business_est_year = data[0].business_est_year;
-  //         this.user_id = data[0].id;
-  //       }
-  //     },
-  //     error => {
-  //       this.toastr.error('Something went wrong', '', {
-  //         timeOut: 3000,
-  //       });
-  //     }
-  //   );
-  // };
+  }  
 
 
   getTempAppDetails(id) {
@@ -533,11 +578,14 @@ export class CreateAppComponent implements OnInit {
 
           if (data[0].product_details.length > 0) {
             this.setp_five_data.product_categories = [];
-            const category_control = <FormArray>this.stepFive.controls['product_categories'];
+            this.setp_five_data_cat_prod = [];
 
+            const category_control = <FormArray>this.stepFive.controls['product_categories'];
+            const product_cols_control = <FormArray>this.stepFiveDataCatProd.controls['product_cols'];
             for (var i = 0; i < data[0].product_details.length; i++) {
               if (i < data[0].product_details.length - 1) {
                 category_control.push(this.createProductCategory(''));
+                product_cols_control.push(this.createProductCols());
               }
 
               var prod_cat = {
@@ -549,105 +597,49 @@ export class CreateAppComponent implements OnInit {
               }
               this.setp_five_data.product_categories.push(prod_cat);
 
-
-              if (i == 0) {
-                this.setp_five_data_cat_1.products = [];
-                const product_control_one = <FormArray>this.stepFiveProductCat1.controls['products'];
-                if (data[0].product_details[i].products.length > 0) {
-                  for (var j = 0; j < data[0].product_details[i].products.length; j++) {
-                    if (j < data[0].product_details[i].products.length - 1) {
-                      product_control_one.push(this.createProduct());
-                    }
-
-                    var prod = {
-                      id: data[0].product_details[i].products[j].id,
-                      app_master: localStorage.getItem('storeCreateAppID'),
-                      product_category: data[0].product_details[i].id,
-                      product_name: data[0].product_details[i].products[j].product_name,
-                      price: data[0].product_details[i].products[j].price,
-                      discounted_price: data[0].product_details[i].products[j].discounted_price,
-                      packing_charges: data[0].product_details[i].products[j].packing_charges,
-                      tags: data[0].product_details[i].products[j].tags,
-
-                    }
-                    this.setp_five_data_cat_1.products.push(prod);
+              var catProdData = {
+                products: [
+                  {
+                    id: null,
+                    app_master: localStorage.getItem('storeCreateAppID'),
+                    product_category: data[0].product_details[i].id,
+                    product_name: '',
+                    price: '',
+                    discounted_price: '0.00',
+                    packing_charges: '0.00',
+                    tags: '',
                   }
-
-                }
-                else {
-                  this.setp_five_data_cat_1 = {
-                    products: [
-                      {
-                        id: null,
-                        app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category: data[0].product_details[i].id,
-                        product_name: '',
-                        price: '',
-                        discounted_price: '0.00',
-                        packing_charges: '0.00',
-                        tags: '',
-                      }
-                    ]
-                  }
-                }
-
+                ]
               }
+              this.setp_five_data_cat_prod.push(catProdData);
 
-              if (i == 1) {
-                this.setp_five_data_cat_2.products = [];
-                const product_control_two = <FormArray>this.stepFiveProductCat2.controls['products'];
-                if (data[0].product_details[i].products.length > 0) {
-                  for (var j = 0; j < data[0].product_details[i].products.length; j++) {
-                    if (j < data[0].product_details[i].products.length - 1) {
-                      product_control_two.push(this.createProduct());
-                    }
 
-                    var prod = {
-                      id: data[0].product_details[i].products[j].id,
-                      app_master: localStorage.getItem('storeCreateAppID'),
-                      product_category: data[0].product_details[i].id,
-                      product_name: data[0].product_details[i].products[j].product_name,
-                      price: data[0].product_details[i].products[j].price,
-                      discounted_price: data[0].product_details[i].products[j].discounted_price,
-                      packing_charges: data[0].product_details[i].products[j].packing_charges,
-                      tags: data[0].product_details[i].products[j].tags,
-
-                    }
-                    this.setp_five_data_cat_2.products.push(prod);
+              if (data[0].product_details[i].products.length > 0) {
+                const product_rows_control = (<FormArray>this.stepFiveDataCatProd.controls['product_cols']).at(i).get('products') as FormArray;
+                for (var j = 0; j < data[0].product_details[i].products.length; j++) {
+                  var prod = {
+                    id: data[0].product_details[i].products[j].id,
+                    app_master: localStorage.getItem('storeCreateAppID'),
+                    product_category: data[0].product_details[i].id,
+                    product_name: data[0].product_details[i].products[j].product_name,
+                    price: data[0].product_details[i].products[j].price,
+                    discounted_price: data[0].product_details[i].products[j].discounted_price,
+                    packing_charges: data[0].product_details[i].products[j].packing_charges,
+                    tags: data[0].product_details[i].products[j].tags
+                  }
+                  this.setp_five_data_cat_prod[i].products.splice(j, 0, prod);
+                  if (j < data[0].product_details[i].products.length - 1) {
+                    product_rows_control.push(this.createProduct());
                   }
 
                 }
-                else {
-                  this.setp_five_data_cat_2 = {
-                    products: [
-                      {
-                        id: null,
-                        app_master: localStorage.getItem('storeCreateAppID'),
-                        product_category: data[0].product_details[i].id,
-                        product_name: '',
-                        price: '',
-                        discounted_price: '0.00',
-                        packing_charges: '0.00',
-                        tags: '',
-                      }
-                    ]
-                  }
-                }
-
               }
+              this.category_confirm_key = true;
+              
             }
           }
 
-
-
-
         }
-
-        // = {
-        // logo:data.logo,
-        // business_name: '',
-        // business_description: '',
-        // }
       },
       error => {
 
