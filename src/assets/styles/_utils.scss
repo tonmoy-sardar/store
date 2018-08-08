@@ -3838,6 +3838,17 @@ z #generic_price_table .generic_content,
     font-family: 'Circular Std Book'
 }
 
+.droop-item .mat-menu-content {
+    padding: 2px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.droop-item .mat-menu-content:hover button {
+    background-color: #00abc9;
+}
+
 .log-in-out {
     float: right;
     margin-top: 9px;
@@ -3878,6 +3889,31 @@ z #generic_price_table .generic_content,
 .log-round:hover {
     background-color: #ff9104;
     color: #fff;
+}
+
+.success-app img {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+.success-app h1 {
+    text-align: center;
+    font-size: 30px;
+    line-height: 70px;
+}
+
+.create-success span {
+    font-size: 25px;
+    text-align: center;
+    display: block;
+}
+
+.create-success ul li {
+    display: -webkit-box;
+    font-size: 21px;
+    border: 1px solid #ebe9e9;
+    padding: 12px
 }
 
 @media (max-width: 320px) {}
@@ -5493,12 +5529,19 @@ z #generic_price_table .generic_content,
     font-weight: 600;
 }
 
+.mat-error {
+    color: #f44336;
+    font-size: 11px;
+    text-align: right;
+}
+
 .login_modal .close {
-    background-color: #ff9104;
+    background-color: #9e9a9a;
     opacity: 1;
     height: 25px;
     width: 25px;
     text-align: center;
+    border-radius: 50%;
     color: #fff !important;
     -webkit-transition: all .40s ease-out;
     transition: all .40s ease-out;
