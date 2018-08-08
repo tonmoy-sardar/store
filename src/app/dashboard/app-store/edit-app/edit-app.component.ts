@@ -8,6 +8,7 @@ import { PlatformLocation } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
+import { LoadingState } from '../../../core/component/loading/loading.component';
 
 @Component({
   selector: 'app-edit-app',
@@ -18,6 +19,7 @@ export class EditAppComponent implements OnInit {
   isLoggedin: boolean;
   user_name: string;
   user_group: string = '';
+  loading: LoadingState = LoadingState.NotReady;
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('search') public searchElement: ElementRef;
   stepOne: FormGroup;
@@ -34,7 +36,7 @@ export class EditAppComponent implements OnInit {
   designations = [];
   logoToUpload: File = null;
   ownerToUpload: File = null;
-
+  app_details;
   step_one_data = {
     logo: '',
     business_name: '',
@@ -202,10 +204,11 @@ export class EditAppComponent implements OnInit {
     );
   };
   getAppDetails(id) {
+    
     this.createAppService.getAppDetails(id).subscribe(
       data => {
         console.log(data);
-
+        this.app_details = data;
         this.step_one_data.logo = data.logo;
         this.step_one_data.business_name = data.business_name;
         if (!this.step_one_data.business_name) {
@@ -341,10 +344,10 @@ export class EditAppComponent implements OnInit {
             }
           }
         }
-
+        this.loading = LoadingState.Ready;
       },
       error => {
-
+        this.loading = LoadingState.Ready;
         this.toastr.error('Something went wrong', '', {
           timeOut: 3000,
         });
@@ -522,9 +525,10 @@ export class EditAppComponent implements OnInit {
   submitStepOne() {
 
     if (this.stepOne.valid) {
-
+      this.loading = LoadingState.Processing;
       this.createAppService.updateAppStepOne(this.route.snapshot.params['id'], this.logoToUpload, this.stepOne.value).subscribe(
         response => {
+         
           if (this.business_photo_arr.length > 0) {
             for (let i = 0; i < this.business_photo_arr.length; i++) {
               this.createAppService.uploadOrgBusinessImages(this.route.snapshot.params['id'], this.business_photo_arr[i]).subscribe(
@@ -532,12 +536,14 @@ export class EditAppComponent implements OnInit {
 
                 },
                 error => {
+                  this.loading = LoadingState.Ready;
                   this.toastr.error('Something went wrong', '', {
                     timeOut: 3000,
                   });
                 }
               );
               if (i == this.business_photo_arr.length - 1) {
+                this.loading = LoadingState.Ready;
                 this.toastr.success('Success', '', {
                   timeOut: 3000,
                 });
@@ -546,6 +552,7 @@ export class EditAppComponent implements OnInit {
             }
           }
           else {
+            this.loading = LoadingState.Ready;
             this.toastr.success('Success', '', {
               timeOut: 3000,
             });
@@ -554,6 +561,7 @@ export class EditAppComponent implements OnInit {
 
         },
         error => {
+          this.loading = LoadingState.Ready;
           this.toastr.error('Something went wrong', '', {
             timeOut: 3000,
           });
@@ -567,16 +575,18 @@ export class EditAppComponent implements OnInit {
 
   submitStepThree() {
     if (this.stepThree.valid) {
+      this.loading = LoadingState.Processing;
       console.log(this.stepThree.value)
       this.createAppService.updateOwnerInfo(this.route.snapshot.params['id'], this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
-
+          this.loading = LoadingState.Ready;
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
           this.stepper.next();
         },
         error => {
+          this.loading = LoadingState.Ready;
           this.toastr.error('Something went wrong', '', {
             timeOut: 3000,
           });
@@ -588,36 +598,7 @@ export class EditAppComponent implements OnInit {
     }
   }
 
-  submitStepFour() {
-    if (this.stepFour.valid) {
-
-      var data = {
-        id: this.route.snapshot.params['id'],
-        app_url: this.stepFour.value.website_url
-      }
-      this.createAppService.updateOrgAppURL(data).subscribe(
-        response => {
-
-          this.toastr.success('Success', '', {
-            timeOut: 3000,
-          });
-          this.stepper.next()
-          this.btnClickNav('app-success')
-
-        },
-        error => {
-          this.toastr.error('Something went wrong', '', {
-            timeOut: 3000,
-          });
-        }
-      );
-
-    }
-    else {
-
-      this.markFormGroupTouched(this.stepFive)
-    }
-  }
+  
 
   goToStep(value) {
     // this.storeCreateAppStep = parseInt(value) - 1;
@@ -715,6 +696,11 @@ export class EditAppComponent implements OnInit {
         control.controls.forEach(c => this.markFormGroupTouched(c));
       }
     });
+  }
+
+  goToPayment()
+  {
+    this.btnClickNav('payment/' + this.route.snapshot.params['id'])
   }
 
   btnClickNav(toNav) {

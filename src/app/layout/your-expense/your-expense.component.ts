@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-your-expense',
   templateUrl: './your-expense.component.html',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class YourExpenseComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
+
+  btnClickNav(toNav) {
+    alert(toNav)
+    this.router.navigateByUrl('/' + toNav);
+  };
 }
