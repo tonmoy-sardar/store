@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'franchise-club', loadChildren: './franchise-club/franchise-club.module#FranchiseClubModule' },
       { path: 'create-app', loadChildren: './create-app/create-app.module#CreateAppModule' },
       { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
-      { path: 'app-success', loadChildren: './app-success/app-success.module#AppSuccessModule'}
+      { path: 'payment-response/:app_id/:status', loadChildren: './app-success/app-success.module#AppSuccessModule'}
     ]
   }
 ];

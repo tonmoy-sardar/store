@@ -182,7 +182,7 @@ export class PaymentComponent implements OnInit {
   }
 
   getPaymentSettingsDetails(amount) {
-    this.createAppService.paytmFormValue(amount).subscribe(
+    this.createAppService.paytmFormValue(this.app_id,amount).subscribe(
       (
         data => {
           this.paymentdetails_data = data;

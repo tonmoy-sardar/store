@@ -56,7 +56,7 @@
     </div>
 </div>
 <!-- paytm -->
-<form class="form" method="post" action="https://pguat.paytm.com/oltp-web/processTransaction" name="payment" ngNoForm style="visibility: hidden;height: 0;">
+<form class="form" method="post" action="https://securegw-stage.paytm.in/theia/processTransaction" name="payment" ngNoForm style="visibility: hidden;height: 0;">
     <div *ngIf="paymentFormActive">
         <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
         <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">

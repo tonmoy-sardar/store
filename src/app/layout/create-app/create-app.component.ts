@@ -14,6 +14,7 @@ import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.c
 import { LoginComponent } from '../../core/component/login/login.component';
 import { LoadingState } from '../../core/component/loading/loading.component';
 import { forkJoin } from "rxjs/observable/forkJoin";
+
 @Component({
   selector: 'app-create-app',
   templateUrl: './create-app.component.html',
