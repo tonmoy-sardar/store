@@ -65,6 +65,9 @@ export class LoginComponent implements OnInit {
         error => {
           console.log(error)
           this.loginService.loginStatus(false);
+          this.toastr.error(error.error.non_field_errors[0], '', {
+            timeOut: 3000,
+          });
         }
       );
     } else {

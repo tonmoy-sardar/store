@@ -302,11 +302,11 @@
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-2 pick-oftext">
-                                                        <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length < 4 ">
+                                                        <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i==0 && geCategory(stepFive).length < 4 ">
                                                             <i class="fa fa-plus"></i>
                                                             <span>Add More Category</span>
                                                         </a>
-                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i>0" (click)="deleteProductCategory(i)">
                                                             <i class="fa fa-times-circle fa-2"></i>
                                                             <span>Remove</span>
                                                         </a>
