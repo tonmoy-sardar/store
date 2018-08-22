@@ -275,7 +275,7 @@ export class CreateAppService {
 
 
   paytmFormValue(app_id,order_amount): Observable<any> {
-    return this.http.get(environment.apiEndpoint + 'get_payment_details/?app_id='+app_id+'&order_amount=' + order_amount)
+    return this.http.get(environment.apiEndpoint + 'get_payment_details/?app_id='+app_id+'&order_amount=' + order_amount+'&type=web')
   }
 
   appSubscription(data) {

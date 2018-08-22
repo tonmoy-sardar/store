@@ -18,6 +18,6 @@ export class PaytamService {
   }
 
   pytamFormValue(order_amount):Observable<any>{
-    return this.http.get(environment.apiEndpoint + 'get_payment_details/?order_amount='+order_amount)
+    return this.http.get(environment.apiEndpoint + 'get_payment_details/?order_amount='+order_amount+'type=web')
   }
 }
