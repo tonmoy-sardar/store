@@ -51,6 +51,8 @@ export class CreateAppComponent implements OnInit {
 
   storeCreateAppStep;
 
+  serviceType = 1;
+
   logedUserId;
   logedUserGroup;
 
@@ -99,7 +101,7 @@ export class CreateAppComponent implements OnInit {
           app_master: localStorage.getItem('storeCreateAppID'),
           product_category: '',
           product_name: '',
-          price: '',
+          price: '0.00',
           discounted_price: '0.00',
           packing_charges: '0.00',
           tags: '',
@@ -228,6 +230,8 @@ export class CreateAppComponent implements OnInit {
 
   }
 
+  
+
   openLogin() {
     this.dialog.open(
       LoginComponent, {
@@ -280,7 +284,23 @@ export class CreateAppComponent implements OnInit {
     );
   };
 
+  updateAppMasterIsProductService()
+  {
+    var data = {
+      is_product_service:this.serviceType
+    }
+    this.createAppService.updateAppMasterIsProductService(localStorage.getItem('storeCreateAppID'),data).subscribe(
+      response => {
+        
+      },
+      error => {
+        
+      }
+    );
+  }
   submitCategory() {
+
+    this.updateAppMasterIsProductService();
 
     if (this.stepFive.valid) {
       this.loading = LoadingState.Processing;
@@ -329,20 +349,37 @@ export class CreateAppComponent implements OnInit {
   }
 
   submitProduct() {
+
+    this.updateAppMasterIsProductService();
     var i = 0;
     var forkArray = []
     this.setp_five_data_cat_prod.forEach(x => {
       var data = {
         products: []
       };
-      x.products.forEach(y => {
-        if (y.product_name != "" && y.price != "") {
-          data.products.push(y)
-        }
-        else {
-
-        }
-      })
+      if(this.serviceType==1)
+      {
+        x.products.forEach(y => {
+          if (y.product_name != "" && y.price != "") {
+            data.products.push(y)
+          }
+          else {
+  
+          }
+        })
+      }
+      else if (this.serviceType==2)
+      {
+        x.products.forEach(y => {
+          if (y.product_name != "") {
+            data.products.push(y)
+          }
+          else {
+  
+          }
+        })
+      }
+     
       if (data.products.length > 0) {
         this.loading = LoadingState.Processing;
         forkArray.push(this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), data))
@@ -442,7 +479,7 @@ export class CreateAppComponent implements OnInit {
       app_master: localStorage.getItem('storeCreateAppID'),
       product_category: product_cat_id,
       product_name: '',
-      price: '',
+      price: '0.00',
       discounted_price: '0.00',
       packing_charges: '0.00',
       tags: '',
@@ -468,7 +505,7 @@ export class CreateAppComponent implements OnInit {
   createProduct() {
     return this._formBuilder.group({
       product_name: ['', Validators.required],
-      price: ['', Validators.required],
+      price: ['0.00', Validators.required],
       discounted_price: ['0.00'],
       packing_charges: ['0.00'],
       tags: [''],
@@ -506,7 +543,15 @@ export class CreateAppComponent implements OnInit {
           this.stepOne.patchValue({
             app_category: data[0].app_category.id
           });
+          if(data[0].is_product_service)
+          {
+            this.serviceType =data[0].is_product_service;
 
+          }
+          else
+          {
+            this.serviceType =1;
+          }
           this.setp_two_data.logo = data[0].appmaster.logo;
           this.setp_two_data.business_name = data[0].appmaster.business_name;
           if (!this.setp_two_data.business_name) {
@@ -565,7 +610,7 @@ export class CreateAppComponent implements OnInit {
                     app_master: localStorage.getItem('storeCreateAppID'),
                     product_category: data[0].product_details[i].id,
                     product_name: '',
-                    price: '',
+                    price: '0.00',
                     discounted_price: '0.00',
                     packing_charges: '0.00',
                     tags: '',

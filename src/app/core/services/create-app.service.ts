@@ -287,6 +287,16 @@ export class CreateAppService {
   }
 
 
+  updateAppMasterIsProductService(id, data)
+  {
+    return this.http.put(environment.apiEndpoint + 'update_app_master_is_product_service/' + id + '/', data)
+  }
+
+  updateOrgAppMasterIsProductService(id, data)
+  {
+    return this.http.put(environment.apiEndpoint + 'org_update_app_master_is_product_service/' + id + '/', data)
+  }
+
 
 
 

@@ -35,6 +35,8 @@ export class EditAppComponent implements OnInit {
   logoToUpload: File = null;
   ownerToUpload: File = null;
 
+  serviceType = 1;
+
   step_one_data = {
     logo: '',
     business_name: '',
@@ -74,7 +76,7 @@ export class EditAppComponent implements OnInit {
           app_master: this.route.snapshot.params['id'],
           product_category: '',
           product_name: '',
-          price: '',
+          price: '0.00',
           discounted_price: '0.00',
           packing_charges: '0.00',
           tags: '',
@@ -199,7 +201,15 @@ export class EditAppComponent implements OnInit {
           this.haveBusinessName = true;
         }
 
+        if(data.is_product_service)
+        {
+          this.serviceType =data.is_product_service;
 
+        }
+        else
+        {
+          this.serviceType =1;
+        }
         this.step_one_data.business_description = data.business_description;
 
         if (!this.step_one_data.business_description) {
@@ -250,7 +260,7 @@ export class EditAppComponent implements OnInit {
                   app_master: this.route.snapshot.params['id'],
                   product_category: data.app_product_categories[i].id,
                   product_name: '',
-                  price: '',
+                  price: '0.00',
                   discounted_price: '0.00',
                   packing_charges: '0.00',
                   tags: '',
@@ -299,8 +309,23 @@ export class EditAppComponent implements OnInit {
     );
   }
 
-  submitCategory() {
+  updateOrgAppMasterIsProductService()
+  {
+    var data = {
+      is_product_service:this.serviceType
+    }
+    this.createAppService.updateOrgAppMasterIsProductService(this.route.snapshot.params['id'],data).subscribe(
+      response => {
+        
+      },
+      error => {
+        
+      }
+    );
+  }
 
+  submitCategory() {
+    this.updateOrgAppMasterIsProductService();
     if (this.stepFive.valid) {
       this.loading = LoadingState.Processing;
       console.log(this.step_five_data);
@@ -360,20 +385,35 @@ export class EditAppComponent implements OnInit {
   }
 
   submitProduct() {
+    this.updateOrgAppMasterIsProductService();
     var i = 0;
     var forkArray = []
     this.setp_five_data_cat_prod.forEach(x => {
       var data = {
         products: []
       };
-      x.products.forEach(y => {
-        if (y.product_name != "" && y.price != "") {
-          data.products.push(y)
-        }
-        else {
-
-        }
-      })
+      if(this.serviceType==1)
+      {
+        x.products.forEach(y => {
+          if (y.product_name != "" && y.price != "") {
+            data.products.push(y)
+          }
+          else {
+  
+          }
+        })
+      }
+      else if (this.serviceType==2)
+      {
+        x.products.forEach(y => {
+          if (y.product_name != "") {
+            data.products.push(y)
+          }
+          else {
+  
+          }
+        })
+      }
       if (data.products.length > 0) {
         this.loading = LoadingState.Processing;
         forkArray.push(this.createAppService.editOrgProduct(this.route.snapshot.params['id'], data))
@@ -474,7 +514,7 @@ export class EditAppComponent implements OnInit {
       app_master: this.route.snapshot.params['id'],
       product_category: product_cat_id,
       product_name: '',
-      price: '',
+      price: '0.00',
       discounted_price: '0.00',
       packing_charges: '0.00',
       tags: '',
@@ -500,7 +540,7 @@ export class EditAppComponent implements OnInit {
   createProduct() {
     return this._formBuilder.group({
       product_name: ['', Validators.required],
-      price: ['', Validators.required],
+      price: ['0.00', Validators.required],
       discounted_price: ['0.00'],
       packing_charges: ['0.00'],
       tags: [''],

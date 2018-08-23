@@ -218,6 +218,16 @@
         </div>
         <div class="container min-height-600 padding-top-25">
           <div class="row">
+            <div class="col-md-12">
+              <div>
+                <mat-radio-group [(ngModel)]="serviceType">
+                  <mat-radio-button value="1">Product</mat-radio-button>
+                  <mat-radio-button value="2">Service</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="serviceType == 1">
             <div class="col-md-9">
               <section class="get-in-touch">
                 <form [formGroup]="stepFive">
@@ -350,6 +360,113 @@
               </div>
             </div>
           </div>
+          <div class="row" *ngIf="serviceType == 2">
+              <div class="col-md-9">
+                <section class="get-in-touch">
+                  <form [formGroup]="stepFive">
+                    <div formArrayName="product_categories">
+                      <div class="row" *ngFor="let categories of geCategory(stepFive); let i = index;">
+                        <div class="col-md-12" [formGroupName]="i">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <mat-form-field class="input-full-width">
+                                <mat-icon matPrefix>info</mat-icon>
+                                <input matInput placeholder="Category" [(ngModel)]="step_five_data.product_categories[i].category_name" name="category_name"
+                                  formControlName="category_name">
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-2 pick-oftext">
+                              <a routerLink="." (click)="addProductCategory()" title="Add More" name="Add More" *ngIf="i == 0 && geCategory(stepFive).length < 4 ">
+                                <i class="fa fa-plus"></i>
+                                <span>Add More Category</span>
+                              </a>
+                              <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProductCategory(i)">
+                                <i class="fa fa-times-circle fa-2"></i>
+                                <span>Remove</span>
+                              </a>
+                            </div>
+  
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: right">
+                      <button mat-button class="round-g-biscuit" (click)="submitCategory()">Confirm Category</button>
+                    </div>
+                  </form>
+  
+                  <div class="add-product padding-10 margin-top-10  bg-white box-shadow" *ngIf="category_confirm_key">
+                    <form class="row" [formGroup]="stepFiveDataCatProd">
+                      <mat-tab-group formArrayName="product_cols">
+                        <mat-tab label="{{step_five_data.product_categories[i].category_name}}" *ngFor="let productCols of stepFiveDataCatProd.controls['product_cols'].controls; let i=index">
+                          <div class="col-md-12" [formGroupName]="i">
+  
+                            <div class="col-md-12" formArrayName="products">
+                              <div class="row" *ngFor="let product of productCols.controls['products'].controls; let j = index">
+                                <div class="col-md-12" [formGroupName]="j">
+                                  <div class="row">
+                                    <div class="col-md-10">
+                                      <mat-form-field class="input-full-width">
+                                        <input matInput placeholder="Service" name="product_name" [(ngModel)]="setp_five_data_cat_prod[i].products[j].product_name"
+                                          formControlName="product_name">
+                                      </mat-form-field>
+                                    </div>
+                                    
+                                    <div class="col-md-2 pick-oftext">
+                                      <a mat-button routerLink="." (click)="addProduct(i,step_five_data.product_categories[i].id)" title="Add More" name="Add More"
+                                        *ngIf="j == 0">
+                                        <i class="fa fa-plus"></i>
+                                        <span>Add More Service</span>
+                                      </a>
+                                      <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="j > 0" (click)="deleteProduct(i,j)">
+                                        <i class="fa fa-times-circle fa-2"></i>
+                                        <span>Remove</span>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-tab>
+                      </mat-tab-group>
+                      <div class="col-md-12" style="text-align: right">
+                        <button mat-button class="round-g-biscuit" (click)="submitProduct()">Confirm Service</button>
+                      </div>
+                    </form>
+                  </div>
+                  <hr>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="align-center col-md-5">
+                        <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
+                      </div>
+                      <div class="align-center col-md-5">
+                        <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="category_confirm_key && !user_app_details.is_paid">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-md-3">
+  
+                <div class="mob">
+                  <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+  
+                    <img [src]="step_one_data.logo ?step_one_data.logo : 'assets/images/resturent-logo.png'" alt="">
+  
+                    <h1>{{step_one_data.business_name}}</h1>
+                    <div class="description">
+  
+  
+                    </div>
+                    <div class="description ">
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
