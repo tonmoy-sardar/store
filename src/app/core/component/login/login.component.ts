@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef,MatDialog } from '@angular/material';
+
 import { Router } from '@angular/router';
 
 import { LoginService } from '../../services/login.service';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+
+import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     public router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -84,6 +88,16 @@ export class LoginComponent implements OnInit {
         control.controls.forEach(c => this.markFormGroupTouched(c));
       }
     });
+  }
+
+
+  forgotPassword() {
+    this.dialogRef.close();
+    this.dialog.open(
+      ForgotPasswordDialogComponent, {
+        width: '480px', panelClass: 'popup_wrapper', disableClose: true
+      }
+    );
   }
 
 }

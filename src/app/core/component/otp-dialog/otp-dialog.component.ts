@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateAppService } from "../../services/create-app.service"
 import { identifierModuleUrl } from '../../../../../node_modules/@angular/compiler';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-otp-dialog',
   templateUrl: './otp-dialog.component.html',
@@ -10,17 +11,22 @@ import { identifierModuleUrl } from '../../../../../node_modules/@angular/compil
 })
 export class OtpDialogComponent implements OnInit {
   form: FormGroup;
-  user_id: string;
+  email_id: string;
+  user_id:string;
+  contact_no: string;
   error_msg: string;
   otp: string;
   constructor(
     public dialogRef: MatDialogRef<OtpDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private createAppService: CreateAppService
+    private createAppService: CreateAppService,
+    private toastr: ToastrService,
   ) {
-    this.user_id = data.user_id;
+    this.contact_no = data.contact_no;
+    this.email_id = data.email_id;
     this.otp = data.otp;
+    this.user_id = data.user_id
   }
 
   ngOnInit() {
@@ -35,20 +41,9 @@ export class OtpDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      var id = this.user_id;
-      var data = {
-        is_active: 1
-      }
+      
       if (this.otp == this.form.value.otp) {
-        this.createAppService.confirmOtp(id, data).subscribe(
-          res => {
-            console.log(res);
-            this.dialogRef.close(true);
-          },
-          error => {
-            console.log(error)
-          }
-        )
+        this.dialogRef.close(true);
       }
       else {
         this.error_msg = "Please Enter Valid OTP";
@@ -61,6 +56,22 @@ export class OtpDialogComponent implements OnInit {
   }
 
   resendOtp() {
+    let data = {
+      user_id: this.user_id,
+      email_id: this.email_id,
+      contact_no: this.contact_no
+    }
+    this.createAppService.sendAppCreateOtp(data).subscribe(
+      response => {
+        this.otp = response['otp']
+      },
+      error => {
+       
+        this.toastr.error(error.error.msg, '', {
+          timeOut: 3000,
+        });
+      }
+    );
 
   }
 

@@ -298,6 +298,10 @@ export class CreateAppService {
   }
 
 
+  sendAppCreateOtp(data)
+  {
+    return this.http.post(environment.apiEndpoint + 'otp_resend/', data)
+  }
 
 
 }

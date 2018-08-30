@@ -32,6 +32,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './component/login/login.component';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { OtpDialogComponent } from './component/otp-dialog/otp-dialog.component';
+import { ForgotPasswordDialogComponent } from './component/forgot-password-dialog/forgot-password-dialog.component';
 import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { SiteHeaderComponent } from './component/site-header/site-header.component';
@@ -60,7 +61,7 @@ import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.comp
   declarations: [
     HeaderComponent,
     FooterComponent,
-    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent, CouponDialogComponent,TermsDialogComponent,
+    OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent,ForgotPasswordDialogComponent, CouponDialogComponent,TermsDialogComponent,
     LoadingComponent,
     SiteHeaderComponent,
     TermsDialogComponent
@@ -91,6 +92,7 @@ import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.comp
     LoginComponent,
     ConfirmDialogComponent,
     OtpDialogComponent,
+    ForgotPasswordDialogComponent,
     CouponDialogComponent,
     TermsDialogComponent
   ]

@@ -7,7 +7,7 @@ import { MatStepper } from '@angular/material';
 import { PlatformLocation } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { MapsAPILoader } from '@agm/core';
-import { } from '@types/googlemaps';
+import { } from 'googlemaps';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ConfirmDialogComponent } from "../../core/component/confirm-dialog/confirm-dialog.component";
 import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.component";
@@ -31,8 +31,18 @@ export class CreateAppComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('search') public searchElement: ElementRef;
   isLinear = true;
-  haveBusinessName;
-  haveBusinessDescription;
+  haveBusinessName =false;
+  haveBusinessDescription =false;
+  haveBusinessLogo = false;
+  haveBusinessImage = false;
+  haveOwnerName = false;
+  haveOwnerDesignation = false;
+  haveBusinessEstYear = false;
+  haveBusinessLocation = false;
+  haveOwnerPic = false;
+  haveName = false;
+  haveContactNo = false;
+  haveEmailAddress =false;
   stepOne: FormGroup;
   stepTwo: FormGroup;
   stepThree: FormGroup;
@@ -261,6 +271,7 @@ export class CreateAppComponent implements OnInit {
             this.setp_three_data.store_address = place.formatted_address;
             this.setp_three_data.lat = lat.toString();
             this.setp_three_data.long = lng.toString();
+            this.haveBusinessLocation =true;
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
@@ -532,6 +543,67 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
+  checkOwnerName()
+  {
+    if (this.setp_three_data.owner_name != null && this.setp_three_data.owner_name.length > 0) {
+      this.haveOwnerName = true;
+    }
+    else {
+      this.haveOwnerName = false;
+    }
+  }
+
+  checkBusinessEstYear()
+  {
+    if (this.setp_three_data.business_est_year != null && this.setp_three_data.business_est_year.length > 0) {
+      this.haveBusinessEstYear = true;
+    }
+    else {
+      this.haveBusinessEstYear = false;
+    }
+  }
+
+  checkOwnerDesignation()
+  {
+    if (this.setp_three_data.owner_designation) {
+      this.haveOwnerDesignation = true;
+    }
+    else {
+      this.haveOwnerDesignation = false;
+    }
+  }
+
+  checkName()
+  {
+    if (this.setp_six_data.name != null && this.setp_six_data.name.length > 0) {
+      this.haveName = true;
+    }
+    else {
+      this.haveName = false;
+    }
+  }
+
+  checkContactNo()
+  {
+    if (this.setp_six_data.contact_no != null && this.setp_six_data.contact_no.length > 0) {
+      this.haveContactNo = true;
+    }
+    else {
+      this.haveContactNo = false;
+    }
+  }
+  checkEmailAddress()
+  {
+    if (this.setp_six_data.email_id != null && this.setp_six_data.email_id.length > 0) {
+      this.haveEmailAddress = true;
+    }
+    else {
+      this.haveEmailAddress = false;
+    }
+  }
+
+
+
 
   getTempAppDetails(id) {
     this.createAppService.getTempAppDetails(id).subscribe(
@@ -553,33 +625,57 @@ export class CreateAppComponent implements OnInit {
             this.serviceType =1;
           }
           this.setp_two_data.logo = data[0].appmaster.logo;
+
+          if(this.setp_two_data.logo)
+          {
+            this.haveBusinessLogo = true
+          }
           this.setp_two_data.business_name = data[0].appmaster.business_name;
-          if (!this.setp_two_data.business_name) {
+          if (this.setp_two_data.business_name) {
             this.haveBusinessName = true;
           }
 
 
           this.setp_two_data.business_description = data[0].appmaster.business_description;
 
-          if (!this.setp_two_data.business_description) {
+          if (this.setp_two_data.business_description) {
             this.haveBusinessDescription = true;
           }
 
 
           this.setp_three_data.owner_pic = data[0].appmaster.owner_pic;
+          if (this.setp_three_data.owner_pic) {
+            this.haveOwnerPic = true;
+          }
+
           this.setp_three_data.owner_name = data[0].appmaster.owner_name;
+          if (this.setp_three_data.owner_name) {
+            this.haveOwnerName = true;
+          }
+
           this.setp_three_data.owner_designation = data[0].appmaster.owner_designation;
+          if (this.setp_three_data.owner_designation) {
+            this.haveOwnerDesignation = true;
+          }
+
           this.setp_three_data.store_address = data[0].appmaster.store_address;
           this.setp_three_data.lat = data[0].appmaster.lat;
           this.setp_three_data.long = data[0].appmaster.long;
-          this.setp_three_data.business_est_year = data[0].appmaster.business_est_year;
+          if (this.setp_three_data.store_address && this.setp_three_data.lat && this.setp_three_data.long) {
+            this.haveBusinessLocation = true;
+          }
 
+          this.setp_three_data.business_est_year = data[0].appmaster.business_est_year;
+          if (this.setp_three_data.business_est_year) {
+            this.haveBusinessEstYear = true;
+          }
 
           this.setp_four_data.website_url = data[0].appmaster.app_url;
           this.setp_two_data.business_photos = [];
           for (var i = 0; i < data[0].app_imgs.length; i++) {
             var business_img_url = environment.urlEndpoint + data[0].app_imgs[i].app_img;
             this.setp_two_data.business_photos.push(business_img_url)
+            this.haveBusinessImage = true;
           }
 
           if (data[0].product_details.length > 0) {
@@ -705,6 +801,7 @@ export class CreateAppComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.setp_two_data.logo = event.target.result;
+        this.haveBusinessLogo = true;
         // this.stepTwo.patchValue({
         //   logo: reader.result
         // });
@@ -722,6 +819,7 @@ export class CreateAppComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.setp_three_data.owner_pic = event.target.result;
+        this.haveOwnerPic = true;
         // this.stepThree.patchValue({
         //   owner_logo: reader.result
         // });
@@ -745,6 +843,7 @@ export class CreateAppComponent implements OnInit {
           reader.readAsDataURL(event.target.files[i]);
         }
         // need to run CD since file load runs outside of zone
+        this.haveBusinessImage = true;
         this.cd.markForCheck();
       }
       else {
@@ -1005,7 +1104,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  submitStepSix() {
+  submitStepSixOld() {
     if (this.stepSix.valid) {
       this.loading = LoadingState.Processing;
       let data = {
@@ -1026,7 +1125,7 @@ export class CreateAppComponent implements OnInit {
           //   timeOut: 3000,
           // });
           console.log(response)
-          this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
+          // this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
         error => {
@@ -1041,6 +1140,67 @@ export class CreateAppComponent implements OnInit {
     else {
       this.markFormGroupTouched(this.stepSix)
     }
+  }
+
+  submitStepSix() {
+    if (this.stepSix.valid) {
+      this.loading = LoadingState.Processing;
+      var user_id = '';
+      let data = {
+          user_id:user_id,
+          email_id: this.stepSix.value.email_id,
+          contact_no: this.stepSix.value.contact_no
+        }
+        this.createAppService.sendAppCreateOtp(data).subscribe(
+            response => {
+             
+             
+              this.loading = LoadingState.Ready;
+             
+              console.log(response)
+              this.openOtpDialog(response['otp'],user_id,this.stepSix.value.contact_no,this.stepSix.value.email_id,'normalUser')
+    
+            },
+            error => {
+              this.loading = LoadingState.Ready;
+              this.toastr.error(error.error.msg, '', {
+                timeOut: 3000,
+              });
+            }
+          );
+    }
+    else {
+      this.markFormGroupTouched(this.stepSix)
+    }
+  }
+
+
+  createOriginalApp()
+  {
+    this.loading = LoadingState.Processing;
+    let data = {
+        name: this.stepSix.value.name,
+        email_id: this.stepSix.value.email_id,
+        contact_no: this.stepSix.value.contact_no
+      }
+      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
+        response => {
+         
+          localStorage.removeItem('storeCreateAppID');
+          localStorage.removeItem('storeCreateAppStep');
+          localStorage.removeItem('storeSessionID');
+          this.loading = LoadingState.Ready;
+         
+          this.btnClickNav('payment/' + response['app_master_id'])
+
+        },
+        error => {
+          this.loading = LoadingState.Ready;
+          this.toastr.error(error.error.msg, '', {
+            timeOut: 3000,
+          });
+        }
+      );
   }
 
   submitStepSixWithLogin() {
@@ -1074,7 +1234,7 @@ export class CreateAppComponent implements OnInit {
   }
 
 
-  submitStepSixFranchise() {
+  submitStepSixFranchiseOld() {
     if (this.stepSix.valid) {
       this.loading = LoadingState.Processing;
       let data = {
@@ -1095,7 +1255,7 @@ export class CreateAppComponent implements OnInit {
           // this.toastr.success('Success', '', {
           //   timeOut: 3000,
           // });
-          this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
+          //this.openOtpDialog(response['otp'], response['user_id'], response['app_master_id'])
 
         },
         error => {
@@ -1142,14 +1302,147 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  openOtpDialog(otp, user_id, app_id) {
+
+  createOriginalAppByFranchise()
+  { this.loading = LoadingState.Processing;
+    let data = {
+      user_id: this.logedUserId,
+      name: this.stepSix.value.name,
+      email_id: this.stepSix.value.email_id,
+      contact_no: this.stepSix.value.contact_no
+    }
+    this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      response => {
+       
+        localStorage.removeItem('storeCreateAppID');
+        localStorage.removeItem('storeCreateAppStep');
+        localStorage.removeItem('storeSessionID');
+        this.loading = LoadingState.Ready;
+        
+        this.btnClickNav('payment/' + response['app_master_id'])
+      },
+      error => {
+        // console.log(error)
+        let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '300px',
+          data: { msg: error.error.msg }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            let data = {
+              name: this.stepSix.value.name,
+              email_id: this.stepSix.value.email_id,
+              contact_no: this.stepSix.value.contact_no
+            }
+            this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+              response => {
+                console.log(response)
+                // var app_id = localStorage.getItem('storeCreateAppID');
+                localStorage.removeItem('storeCreateAppID');
+                localStorage.removeItem('storeCreateAppStep');
+                localStorage.removeItem('storeSessionID');
+                this.loading = LoadingState.Ready;
+                // this.toastr.success('Success', '', {
+                //   timeOut: 3000,
+                // });
+                this.btnClickNav('payment/' + response['app_master_id'])
+              },
+              error => {
+                this.loading = LoadingState.Ready;
+                this.toastr.error(error.error.msg, '', {
+                  timeOut: 3000,
+                });
+              }
+            )
+          }
+        });
+      }
+    );
+
+  }
+
+  createAppStepLastForFranchiseExist()
+  {
+    this.loading = LoadingState.Processing;
+    let data = {
+      name: this.stepSix.value.name,
+      email_id: this.stepSix.value.email_id,
+      contact_no: this.stepSix.value.contact_no
+    }
+    this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      response => {
+        console.log(response)
+        localStorage.removeItem('storeCreateAppID');
+        localStorage.removeItem('storeCreateAppStep');
+        localStorage.removeItem('storeSessionID');
+        this.loading = LoadingState.Ready;
+       
+        this.btnClickNav('payment/' + response['app_master_id'])
+      },
+      error => {
+        this.loading = LoadingState.Ready;
+        this.toastr.error(error.error.msg, '', {
+          timeOut: 3000,
+        });
+      }
+    )
+
+  }
+
+  submitStepSixFranchise() {
+    if (this.stepSix.valid) {
+      this.loading = LoadingState.Processing;
+      
+      let data = {
+          user_id: this.logedUserId,
+          email_id: this.stepSix.value.email_id,
+          contact_no: this.stepSix.value.contact_no
+        }
+        this.createAppService.sendAppCreateOtp(data).subscribe(
+            response => {
+             
+             
+              this.loading = LoadingState.Ready;
+             
+              console.log(response)
+              this.openOtpDialog(response['otp'],this.logedUserId,this.stepSix.value.contact_no,this.stepSix.value.email_id,'franchiseUser')
+    
+            },
+            error => {
+             
+              let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '300px',
+                data: { msg: error.error.msg }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                  this.createAppStepLastForFranchiseExist()
+                }
+              });
+
+            }
+          );
+    }
+    else {
+      this.markFormGroupTouched(this.stepSix)
+    }
+  }
+
+  openOtpDialog(otp,user_id,contact_no,email_id,type) {
     let dialogRef = this.dialog.open(OtpDialogComponent, {
       width: '300px',
-      data: { otp: otp, user_id: user_id }
+      data: { otp: otp,user_id:user_id, contact_no:contact_no,email_id:email_id}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.btnClickNav('payment/' + app_id)
+        if(type=='normalUser')
+        {
+          this.createOriginalApp();
+        }
+        else if(type=='franchiseUser')
+        {
+          this.createOriginalAppByFranchise();
+        }
       }
     })
   }

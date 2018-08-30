@@ -15,6 +15,14 @@ export class LoginService {
     return this.http.post(environment.apiEndpoint+'login/', data)
   }
 
+  userForgetPasswordOtp(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'user_forget_password_otp/', data)
+  }
+  
+  userForgetPasswordUpdate(data): Observable<any> {
+    return this.http.put(environment.apiEndpoint + 'user_forget_password_update/', data)
+  }
+
 
   loginStatus(data): Observable<any> {
     if (data=true) {
@@ -25,10 +33,5 @@ export class LoginService {
         return
     }
   }
-
-
-
-
-  
 
 }

@@ -27,8 +27,19 @@ export class EditAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   stepFiveDataCatProd: FormGroup;
-  haveBusinessName;
-  haveBusinessDescription;
+  haveBusinessName =false;
+  haveBusinessDescription =false;
+  haveBusinessLogo = false;
+  haveBusinessImage = false;
+  haveOwnerName = false;
+  haveOwnerDesignation = false;
+  haveBusinessEstYear = false;
+  haveBusinessLocation = false;
+  haveOwnerPic = false;
+  haveName = false;
+  haveContactNo = false;
+  haveEmailAddress =false;
+  
   category_list: any = [];
   business_photo_arr = [];
   designations = [];
@@ -197,7 +208,12 @@ export class EditAppComponent implements OnInit {
         this.user_app_details = data;
         this.step_one_data.logo = data.logo;
         this.step_one_data.business_name = data.business_name;
-        if (!this.step_one_data.business_name) {
+        if(this.step_one_data.logo)
+        {
+          this.haveBusinessLogo = true
+        }
+
+        if (this.step_one_data.business_name) {
           this.haveBusinessName = true;
         }
 
@@ -212,17 +228,32 @@ export class EditAppComponent implements OnInit {
         }
         this.step_one_data.business_description = data.business_description;
 
-        if (!this.step_one_data.business_description) {
+        if (this.step_one_data.business_description) {
           this.haveBusinessDescription = true;
         }
 
         this.setp_three_data.owner_pic = data.owner_pic;
+        if (this.setp_three_data.owner_pic) {
+          this.haveOwnerPic = true;
+        }
         this.setp_three_data.owner_name = data.owner_name;
+        if (this.setp_three_data.owner_name) {
+          this.haveOwnerName = true;
+        }
         this.setp_three_data.owner_designation = data.owner_designation;
+        if (this.setp_three_data.owner_designation) {
+          this.haveOwnerDesignation = true;
+        }
         this.setp_three_data.store_address = data.store_address;
         this.setp_three_data.lat = data.lat;
         this.setp_three_data.long = data.long;
+        if (this.setp_three_data.store_address && this.setp_three_data.lat && this.setp_three_data.long) {
+          this.haveBusinessLocation = true;
+        }
         this.setp_three_data.business_est_year = data.business_est_year;
+        if (this.setp_three_data.business_est_year) {
+          this.haveBusinessEstYear = true;
+        }
 
 
         this.step_four_data.website_url = data.app_url;
@@ -230,6 +261,7 @@ export class EditAppComponent implements OnInit {
         for (var i = 0; i < data.app_imgs.length; i++) {
           var business_img_url = environment.urlEndpoint + data.app_imgs[i].app_img;
           this.step_one_data.business_photos.push(business_img_url)
+          this.haveBusinessImage = true;
         }
 
         if (data.app_product_categories.length > 0) {
@@ -379,6 +411,7 @@ export class EditAppComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.setp_three_data.owner_pic = event.target.result;
+        this.haveOwnerPic = true;
         this.cd.markForCheck();
       };
     }
@@ -709,6 +742,7 @@ export class EditAppComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.step_one_data.logo = event.target.result;
+        this.haveBusinessLogo = true;
         // this.stepTwo.patchValue({
         //   logo: reader.result
         // });
@@ -735,6 +769,7 @@ export class EditAppComponent implements OnInit {
           reader.readAsDataURL(event.target.files[i]);
         }
         // need to run CD since file load runs outside of zone
+        this.haveBusinessImage = true;
         this.cd.markForCheck();
 
       }
@@ -760,6 +795,38 @@ export class EditAppComponent implements OnInit {
       this.haveBusinessDescription = false;
     }
   }
+
+  checkOwnerName()
+  {
+    if (this.setp_three_data.owner_name != null && this.setp_three_data.owner_name.length > 0) {
+      this.haveOwnerName = true;
+    }
+    else {
+      this.haveOwnerName = false;
+    }
+  }
+
+  checkBusinessEstYear()
+  {
+    if (this.setp_three_data.business_est_year != null && this.setp_three_data.business_est_year.length > 0) {
+      this.haveBusinessEstYear = true;
+    }
+    else {
+      this.haveBusinessEstYear = false;
+    }
+  }
+
+  checkOwnerDesignation()
+  {
+    if (this.setp_three_data.owner_designation) {
+      this.haveOwnerDesignation = true;
+    }
+    else {
+      this.haveOwnerDesignation = false;
+    }
+  }
+
+  
 
   getSuggestedUrl(url: string) {
     return url.replace(/\s/g, "").toLowerCase();

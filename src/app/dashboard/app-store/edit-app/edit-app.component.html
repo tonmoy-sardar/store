@@ -40,7 +40,7 @@
                       <div class="upload-filed">
                         <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
                         <p class="btn-switch">
-                          <mat-slide-toggle></mat-slide-toggle>
+                          <mat-slide-toggle [checked]="haveBusinessLogo"></mat-slide-toggle>
                         </p>
                       </div>
                     </div>
@@ -51,7 +51,7 @@
                         <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
                           multiple>
                         <p class="btn-switch">
-                          <mat-slide-toggle></mat-slide-toggle>
+                          <mat-slide-toggle [checked]="haveBusinessImage"></mat-slide-toggle>
                         </p>
                       </div>
                     </div>
@@ -113,7 +113,7 @@
                       <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
                     </mat-form-field>
                     <p class="btn-switch">
-                      <mat-slide-toggle></mat-slide-toggle>
+                      <mat-slide-toggle [checked]="haveOwnerName"></mat-slide-toggle>
                     </p>
                   </div>
                   <div class="form-field col col-md-12">
@@ -131,7 +131,7 @@
                       </mat-select>
                     </mat-form-field>
                     <p class="btn-switch">
-                      <mat-slide-toggle></mat-slide-toggle>
+                      <mat-slide-toggle [checked]="haveOwnerDesignation"></mat-slide-toggle>
                     </p>
                   </div>
                   <div class="form-field col col-md-12">
@@ -140,7 +140,7 @@
                       <input matInput placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year">
                     </mat-form-field>
                     <p class="btn-switch">
-                      <mat-slide-toggle></mat-slide-toggle>
+                      <mat-slide-toggle [checked]="haveBusinessEstYear"></mat-slide-toggle>
                     </p>
                   </div>
                   <div class="form-field col col-md-12">
@@ -152,14 +152,14 @@
                       <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
                     </mat-form-field>
                     <p class="btn-switch">
-                      <mat-slide-toggle></mat-slide-toggle>
+                      <mat-slide-toggle [checked]="haveBusinessLocation"></mat-slide-toggle>
                     </p>
                   </div>
                   <div class="form-field col-md-12">
                     <div class="upload-filed  oner-photo">
                       <input type="file" name="owner_pic" formControlName="owner_pic" (change)="ownerLogoChange($event.target.files)" accept="image/*">
                       <p class="btn-switch">
-                        <mat-slide-toggle></mat-slide-toggle>
+                        <mat-slide-toggle [checked]="haveOwnerPic"></mat-slide-toggle>
                       </p>
                     </div>
                   </div>
@@ -208,7 +208,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="stepFive">
+      <!-- <mat-step [stepControl]="stepFive">
         <div class="col-md-12 get-in-touch padding-top-bottom-10">
           <div class="container">
             <h1 class="title fontface-one text-color-dark letter-spacing">
@@ -468,7 +468,7 @@
               </div>
             </div>
         </div>
-      </mat-step>
+      </mat-step> -->
     </mat-horizontal-stepper>
   </div>
 </loading>

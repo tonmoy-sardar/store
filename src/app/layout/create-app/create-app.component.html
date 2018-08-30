@@ -75,8 +75,9 @@
                                         <div class="form-field col col-md-12 ">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>info</mat-icon>
-                                                <input matInput placeholder="Description Of Your Business" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
+                                                <input matInput placeholder="Description Of Your Business" #input maxlength="300" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
                                                     (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
+                                                    <mat-hint align="end">{{input.value?.length || 0}}/300</mat-hint>
                                             </mat-form-field>
 
                                             <p class="btn-switch">
@@ -98,7 +99,7 @@
                                             <div class="upload-filed">
                                                 <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
                                                 <p class="btn-switch">
-                                                    <mat-slide-toggle></mat-slide-toggle>
+                                                    <mat-slide-toggle [checked]="haveBusinessLogo"></mat-slide-toggle>
                                                 </p>
                                             </div>
                                         </div>
@@ -109,7 +110,7 @@
                                                 <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
                                                     multiple>
                                                 <p class="btn-switch">
-                                                    <mat-slide-toggle></mat-slide-toggle>
+                                                    <mat-slide-toggle [checked]="haveBusinessImage"></mat-slide-toggle>
                                                 </p>
                                             </div>
 
@@ -177,11 +178,11 @@
                                     <div class="form-field  ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>perm_identity</mat-icon>
-                                            <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name">
+                                            <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name" (keyup)=checkOwnerName() (keydown)=checkOwnerName()>
                                             <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
                                         </mat-form-field>
                                         <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="haveOwnerName"></mat-slide-toggle>
                                         </p>
                                     </div>
                                     <div class="form-field  ">
@@ -191,7 +192,7 @@
 
                                 </mat-form-field> -->
                                         <mat-form-field>
-                                            <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
+                                            <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation"  (change)=checkOwnerDesignation()>
                                                 <mat-option *ngFor="let designation of designations" [value]="designation.id">
                                                     {{ designation.designation_name }}
                                                 </mat-option>
@@ -199,35 +200,35 @@
                                             </mat-select>
                                         </mat-form-field>
                                         <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="haveOwnerDesignation"></mat-slide-toggle>
                                         </p>
                                     </div>
                                     <div class="form-field  ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>calendar_today</mat-icon>
-                                            <input matInput placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year">
+                                            <input matInput appOnlyNumber placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year" maxlength="4" (keyup)=checkBusinessEstYear() (keydown)=checkBusinessEstYear()>
                                         </mat-form-field>
                                         <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="haveBusinessEstYear"></mat-slide-toggle>
                                         </p>
                                     </div>
                                     <div class="form-field   ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>location_on</mat-icon>
-                                            <input matInput placeholder="Business location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
+                                            <input matInput placeholder="Business Location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
                                                 [(ngModel)]="setp_three_data.store_address">
                                             <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
                                             <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
                                         </mat-form-field>
                                         <p class="btn-switch">
-                                            <mat-slide-toggle></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="haveBusinessLocation"></mat-slide-toggle>
                                         </p>
                                     </div>
                                     <div class="form-field col-md-12">
                                         <div class="upload-filed  oner-photo">
                                             <input type="file" name="owner_pic" formControlName="owner_pic" (change)="ownerLogoChange($event.target.files)" accept="image/*">
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveOwnerPic"></mat-slide-toggle>
                                             </p>
                                         </div>
                                     </div>
@@ -276,7 +277,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="stepFive">
+            <!-- <mat-step [stepControl]="stepFive">
                 <div class="col-md-12 get-in-touch padding-top-bottom-10">
                     <div class="container">
                         <h1 class="title fontface-one text-color-dark letter-spacing">
@@ -308,7 +309,7 @@
                                                             <mat-icon matPrefix>info</mat-icon>
                                                             <input matInput placeholder="Category" [(ngModel)]="setp_five_data.product_categories[i].category_name" name="category_name"
                                                                 formControlName="category_name">
-                                                            <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
+                                                           
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-2 pick-oftext">
@@ -444,7 +445,6 @@
                                                             <mat-icon matPrefix>info</mat-icon>
                                                             <input matInput placeholder="Category" [(ngModel)]="setp_five_data.product_categories[i].category_name" name="category_name"
                                                                 formControlName="category_name">
-                                                            <!-- <mat-error *ngIf="isFieldValid(stepFive,'owner_name')"> Please Enter Owner Name</mat-error> -->
                                                         </mat-form-field>
                                                     </div>
                                                     <div class="col-md-2 pick-oftext">
@@ -542,7 +542,7 @@
                         </div>
                     </div>
                 </div>
-            </mat-step>
+            </mat-step> -->
             <!-- <mat-step [stepControl]="stepFour">
         <form [formGroup]="stepFour" class="contact-form row">
           <div class="container ">
@@ -627,32 +627,32 @@
 
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
+                                                <mat-icon matPrefix>perm_identity</mat-icon>
+                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name" (keyup)=checkName() (keydown)=checkName()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col-md-12">
@@ -708,32 +708,32 @@
 
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name">
+                                                <mat-icon matPrefix>perm_identity</mat-icon>
+                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name" (keyup)=checkName() (keydown)=checkName()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no">
+                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id">
+                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
-                                                <mat-slide-toggle></mat-slide-toggle>
+                                                <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
                                             </p>
                                         </div>
                                         <div class="form-field col-md-12">
