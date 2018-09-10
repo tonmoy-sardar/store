@@ -523,6 +523,7 @@ p {
     padding: 6px 23px;
     font-weight: 200;
     font-family: 'Circular Std Book';
+    display: block;
 }
 
 .bg-setting {
@@ -3769,7 +3770,7 @@ p {
 
 #generic_price_table .generic_content .generic_feature_list ul li {
     display: block;
-    padding: 15px 0;
+    padding: 5px 0;
     height: 54px;
     border: 1px solid #f2f1f1;
     transition: all 0.3s ease-in-out 0s;
