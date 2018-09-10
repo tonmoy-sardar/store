@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
+  
   isLoggedin: boolean;
   user_name: string;
   paymentdetails_data: any;
@@ -29,6 +30,7 @@ export class PaymentComponent implements OnInit {
   app_id: number;
   user_id: number;
   user_group: string = '';
+  termsAndConditionChecked = false;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -182,6 +184,9 @@ export class PaymentComponent implements OnInit {
   }
 
   getPaymentSettingsDetails(amount) {
+
+    if(this.termsAndConditionChecked == true)
+    {
     this.createAppService.paytmFormValue(this.app_id,amount).subscribe(
       (
         data => {
@@ -204,6 +209,12 @@ export class PaymentComponent implements OnInit {
         }
       ),
     );
+  }
+  else{
+    this.toastr.error('Please agree to the terms & conditions', '', {
+      timeOut: 3000,
+    });
+  }
   }
 
   appSubscribe(data) {

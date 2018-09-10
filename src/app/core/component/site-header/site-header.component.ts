@@ -19,7 +19,7 @@ export class SiteHeaderComponent implements OnInit {
 
     if (localStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserFullName');
+      this.user_name = localStorage.getItem('logedUserFirstName');
       if(localStorage.getItem('logedUserUserGroup')){
         this.user_group = localStorage.getItem('logedUserUserGroup')
       }

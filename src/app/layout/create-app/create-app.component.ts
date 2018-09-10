@@ -130,6 +130,9 @@ export class CreateAppComponent implements OnInit {
   }
 
   base_url: string;
+  logedUserFullName;
+  logedUserContactNo;
+  logedUserEmail
 
   constructor(
     private router: Router,
@@ -153,6 +156,12 @@ export class CreateAppComponent implements OnInit {
     if (localStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = localStorage.getItem('logedUserFullName');
+      this.logedUserEmail = localStorage.getItem('logedUserEmail');
+      
+      this.logedUserFullName = localStorage.getItem('logedUserFullName');
+      
+      this.logedUserContactNo = localStorage.getItem('logedUserContactNo');
+      
       if (localStorage.getItem('logedUserUserGroup')) {
         this.user_group = localStorage.getItem('logedUserUserGroup')
       }

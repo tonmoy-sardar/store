@@ -39,7 +39,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <mat-checkbox>I Agree to the <a (click)="showTermsAndConditions()">terms & conditions</a></mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="termsAndConditionChecked">I Agree to the <a (click)="showTermsAndConditions()">terms & conditions</a></mat-checkbox>
                                 </div>
                             </div>
                             <div class="row">

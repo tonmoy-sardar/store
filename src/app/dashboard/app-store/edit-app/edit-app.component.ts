@@ -656,6 +656,32 @@ export class EditAppComponent implements OnInit {
     }
   }
 
+  save_nextStep(id) {
+    if (this.stepThree.valid) {
+      this.loading = LoadingState.Processing;
+      console.log(this.stepThree.value)
+      this.createAppService.updateOwnerInfo(this.route.snapshot.params['id'], this.ownerToUpload, this.stepThree.value).subscribe(
+        response => {
+          this.loading = LoadingState.Ready;
+          this.toastr.success('Success', '', {
+            timeOut: 3000,
+          });
+          this.router.navigateByUrl('/payment/' + id);
+          
+        },
+        error => {
+          this.loading = LoadingState.Ready;
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    else {
+      this.markFormGroupTouched(this.stepThree)
+    }
+  }
+
   submitStepFour() {
     if (this.stepFour.valid) {
 
@@ -697,7 +723,7 @@ export class EditAppComponent implements OnInit {
     // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
-  save_nextStep(id) {
+  save_nextStepOld(id) {
     this.loading = LoadingState.Processing
     var keepCatGoing = true;
     var keepProdGoing = true;

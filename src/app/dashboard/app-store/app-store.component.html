@@ -8,9 +8,10 @@
 
 
           <div class="my-profile bg-white padding-10 ">
-            <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="{{userAndAppDetails.user_details[0].users_pic}}"
+            <img class="img-fluid rounded" style="width: 100px; height: 100px;" src="assets/images/no-image-user.jpg"
               alt="">
-            <h2 class="font-size-22 padding-10">{{userAndAppDetails.first_name}}</h2>
+            
+            <h2 class="font-size-22 padding-10">{{userAndAppDetails.first_name}} {{userAndAppDetails.last_name}}</h2>
             <ul>
               <li>
                 <a href="tel:{{userAndAppDetails.user_details[0].contact_no}}">
@@ -41,8 +42,11 @@
                   <a matTooltip="Edit" class="round-btn " [routerLink]="['/dashboard/app-store/edit-app', apps.id]">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                   </a>
-                  <img class="img-fluid rounded" src="{{urlEndpoint}}{{apps.logo}}" alt="">
+                  <img class="img-fluid rounded" src="{{urlEndpoint}}{{apps.logo}}" alt="{{apps.app_name}}" *ngIf="apps.logo != ''">
+                  <img class="img-fluid rounded" src="assets/images/no-image-logo.jpg" alt="{{apps.app_name}}" *ngIf="apps.logo == ''">
+                  <img class="img-fluid rounded payment-due" *ngIf="!apps.is_paid" src="assets/images/payment-due.png">
                   <span class=" text-center font-size-12">{{apps.app_name}}</span>
+
 
                   <div class="clearfix"></div>
                 </li>

@@ -49,10 +49,13 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('isLoggedin', 'true');
           localStorage.setItem('isLoggedin', 'true');
           localStorage.setItem('logedUserEmail', response.email);
+          localStorage.setItem('logedUserFirstName', response.first_name);
+          localStorage.setItem('logedUserLastName', response.last_name);
           localStorage.setItem('logedUserFullName', response.first_name+' '+response.last_name);
           localStorage.setItem('logedUserToken', response.token);
           localStorage.setItem('logedUserUserId', response.user_id);
-          localStorage.setItem('logedUserUserName', response.username);          
+          localStorage.setItem('logedUserUserName', response.username); 
+          localStorage.setItem('logedUserContactNo', response.contact_no);  
           this.dialogRef.close();
 
           this.loginService.loginStatus(true);
