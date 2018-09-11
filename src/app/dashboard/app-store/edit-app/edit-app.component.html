@@ -35,7 +35,19 @@
                         <mat-slide-toggle [checked]="haveBusinessDescription"></mat-slide-toggle>
                       </p>
                     </div>
-
+                    <div class="form-field col col-md-12 ">
+                        <mat-radio-group formControlName="is_product_service" [(ngModel)]="step_one_data.is_product_service">
+                          <mat-radio-button *ngFor="let business of business_type" [value]="business.value" (change)="businessTypeChange($event)">{{business.name}}</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="isFieldValid(stepOne,'is_product_service')"> Please Select Business Type</mat-error>
+                        <p class="btn-switch">
+                          <mat-slide-toggle [checked]="haveBusinessType"></mat-slide-toggle>
+                        </p>
+                      </div>
+                      <div class="form-field col col-md-12 ">
+                        <mat-checkbox *ngIf="step_one_data.is_only_display_key" [(ngModel)]="step_one_data.is_only_display"
+                          formControlName="is_only_display">Only Display</mat-checkbox>
+                      </div>
                     <div class="form-field col-md-6">
                       <div class="upload-filed">
                         <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
@@ -169,8 +181,8 @@
                         <button type="button" matStepperPrevious class="round-g-btn" (click)="goToStep(2)">Back</button>
                       </div>
                       <div class="form-field align-center col-md-5">
-                        <button class="round-g-btn" (click)="submitStepThree()"  *ngIf="user_app_details.is_paid">Submit</button>
-                        <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="!user_app_details.is_paid">Next</button>
+                        <button class="round-g-btn" (click)="submitStepThree()"  *ngIf="user_app_details?.is_paid">Submit</button>
+                        <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="!user_app_details?.is_paid">Next</button>
                       </div>
                     </div>
                   </div>
@@ -336,7 +348,7 @@
                       <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                     </div>
                     <div class="align-center col-md-5">
-                      <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="category_confirm_key && !user_app_details.is_paid">Next</button>
+                      <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="category_confirm_key && !user_app_details?.is_paid">Next</button>
                     </div>
                   </div>
                 </div>
@@ -443,7 +455,7 @@
                         <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(4)">Back</button>
                       </div>
                       <div class="align-center col-md-5">
-                        <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="category_confirm_key && !user_app_details.is_paid">Next</button>
+                        <button mat-button class="round-g-btn" (click)="save_nextStep(user_app_details.id)" *ngIf="category_confirm_key && !user_app_details?.is_paid">Next</button>
                       </div>
                     </div>
                   </div>

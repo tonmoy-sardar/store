@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef,MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 import { Router } from '@angular/router';
 
@@ -51,23 +51,23 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('logedUserEmail', response.email);
           localStorage.setItem('logedUserFirstName', response.first_name);
           localStorage.setItem('logedUserLastName', response.last_name);
-          localStorage.setItem('logedUserFullName', response.first_name+' '+response.last_name);
+          localStorage.setItem('logedUserFullName', response.first_name + ' ' + response.last_name);
           localStorage.setItem('logedUserToken', response.token);
           localStorage.setItem('logedUserUserId', response.user_id);
-          localStorage.setItem('logedUserUserName', response.username); 
-          localStorage.setItem('logedUserContactNo', response.contact_no);  
+          localStorage.setItem('logedUserUserName', response.username);
+          localStorage.setItem('logedUserContactNo', response.contact_no);
           this.dialogRef.close();
 
-          this.loginService.loginStatus(true);
-          // if (response.group.toLowerCase() == "franchise") {
-          //   localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
-          //   this.router.navigateByUrl('/dashboard/franchise-user');
-          // }
-          // else {
-          //   this.router.navigateByUrl('/dashboard');
-          // }
+          if (response.group.toLowerCase() == "franchise") {
+            localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
+            this.loginService.loginStatus(true);
+            this.router.navigateByUrl('/');
+          }
+          else {
+            this.loginService.loginStatus(true);
+            this.router.navigateByUrl('/');
+          }
 
-          this.router.navigateByUrl('/');
         },
         error => {
           console.log(error)

@@ -27,8 +27,8 @@ export class EditAppComponent implements OnInit {
   stepFour: FormGroup;
   stepFive: FormGroup;
   stepFiveDataCatProd: FormGroup;
-  haveBusinessName =false;
-  haveBusinessDescription =false;
+  haveBusinessName = false;
+  haveBusinessDescription = false;
   haveBusinessLogo = false;
   haveBusinessImage = false;
   haveOwnerName = false;
@@ -38,8 +38,8 @@ export class EditAppComponent implements OnInit {
   haveOwnerPic = false;
   haveName = false;
   haveContactNo = false;
-  haveEmailAddress =false;
-  
+  haveEmailAddress = false;
+
   category_list: any = [];
   business_photo_arr = [];
   designations = [];
@@ -53,6 +53,9 @@ export class EditAppComponent implements OnInit {
     business_name: '',
     business_description: '',
     business_photos: [],
+    is_product_service: null,
+    is_only_display: false,
+    is_only_display_key: false
   }
   setp_three_data = {
     owner_name: '',
@@ -97,11 +100,22 @@ export class EditAppComponent implements OnInit {
   ]
   category_confirm_key: boolean;
 
-  user_app_details: any;  
+  user_app_details: any;
 
   base_url: string;
 
   isLinear = true;
+  haveBusinessType: boolean = false;
+  business_type: any = [
+    {
+      name: "Product",
+      value: 1
+    },
+    {
+      name: "Service",
+      value: 2
+    }
+  ]
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -129,6 +143,8 @@ export class EditAppComponent implements OnInit {
       business_name: ['', Validators.required],
       business_description: [''],
       business_photos: [''],
+      is_product_service: [null, Validators.required],
+      is_only_display: [false]
     });
 
     this.stepThree = this._formBuilder.group({
@@ -152,11 +168,24 @@ export class EditAppComponent implements OnInit {
 
     this.stepFiveDataCatProd = this._formBuilder.group({
       product_cols: this._formBuilder.array([this.createProductCols()]),
-    })    
+    })
 
     this.getAppDetails(this.route.snapshot.params['id']);
     this.getDesignationDropdown();
     this.mapLoader();
+  }
+
+  businessTypeChange(e) {
+    if (e.value) {
+      this.haveBusinessType = true;
+      if (e.value == 1) {
+        this.step_one_data.is_only_display_key = true;
+      }
+      else {
+        this.step_one_data.is_only_display_key = false;
+        this.step_one_data.is_only_display = false;
+      }
+    }
   }
 
   logout() {
@@ -208,8 +237,7 @@ export class EditAppComponent implements OnInit {
         this.user_app_details = data;
         this.step_one_data.logo = data.logo;
         this.step_one_data.business_name = data.business_name;
-        if(this.step_one_data.logo)
-        {
+        if (this.step_one_data.logo) {
           this.haveBusinessLogo = true
         }
 
@@ -217,17 +245,22 @@ export class EditAppComponent implements OnInit {
           this.haveBusinessName = true;
         }
 
-        if(data.is_product_service)
-        {
-          this.serviceType =data.is_product_service;
+        if (data.is_product_service) {
+          this.serviceType = data.is_product_service;
 
         }
-        else
-        {
-          this.serviceType =1;
+        else {
+          this.serviceType = 1;
         }
         this.step_one_data.business_description = data.business_description;
-
+        this.step_one_data.is_product_service = data.is_product_service;
+        if (data.is_product_service == 1) {
+          this.step_one_data.is_only_display_key = true;
+        }
+        this.step_one_data.is_only_display = data.is_only_display;
+        if(data.is_product_service){
+          this.haveBusinessType = true;
+        }
         if (this.step_one_data.business_description) {
           this.haveBusinessDescription = true;
         }
@@ -341,17 +374,16 @@ export class EditAppComponent implements OnInit {
     );
   }
 
-  updateOrgAppMasterIsProductService()
-  {
+  updateOrgAppMasterIsProductService() {
     var data = {
-      is_product_service:this.serviceType
+      is_product_service: this.serviceType
     }
-    this.createAppService.updateOrgAppMasterIsProductService(this.route.snapshot.params['id'],data).subscribe(
+    this.createAppService.updateOrgAppMasterIsProductService(this.route.snapshot.params['id'], data).subscribe(
       response => {
-        
+
       },
       error => {
-        
+
       }
     );
   }
@@ -425,25 +457,23 @@ export class EditAppComponent implements OnInit {
       var data = {
         products: []
       };
-      if(this.serviceType==1)
-      {
+      if (this.serviceType == 1) {
         x.products.forEach(y => {
           if (y.product_name != "" && y.price != "") {
             data.products.push(y)
           }
           else {
-  
+
           }
         })
       }
-      else if (this.serviceType==2)
-      {
+      else if (this.serviceType == 2) {
         x.products.forEach(y => {
           if (y.product_name != "") {
             data.products.push(y)
           }
           else {
-  
+
           }
         })
       }
@@ -667,7 +697,7 @@ export class EditAppComponent implements OnInit {
             timeOut: 3000,
           });
           this.router.navigateByUrl('/payment/' + id);
-          
+
         },
         error => {
           this.loading = LoadingState.Ready;
@@ -822,8 +852,7 @@ export class EditAppComponent implements OnInit {
     }
   }
 
-  checkOwnerName()
-  {
+  checkOwnerName() {
     if (this.setp_three_data.owner_name != null && this.setp_three_data.owner_name.length > 0) {
       this.haveOwnerName = true;
     }
@@ -832,8 +861,7 @@ export class EditAppComponent implements OnInit {
     }
   }
 
-  checkBusinessEstYear()
-  {
+  checkBusinessEstYear() {
     if (this.setp_three_data.business_est_year != null && this.setp_three_data.business_est_year.length > 0) {
       this.haveBusinessEstYear = true;
     }
@@ -842,8 +870,7 @@ export class EditAppComponent implements OnInit {
     }
   }
 
-  checkOwnerDesignation()
-  {
+  checkOwnerDesignation() {
     if (this.setp_three_data.owner_designation) {
       this.haveOwnerDesignation = true;
     }
@@ -852,7 +879,7 @@ export class EditAppComponent implements OnInit {
     }
   }
 
-  
+
 
   getSuggestedUrl(url: string) {
     return url.replace(/\s/g, "").toLowerCase();

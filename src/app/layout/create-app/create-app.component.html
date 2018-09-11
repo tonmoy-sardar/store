@@ -1,90 +1,104 @@
 <loading [state]="loading">
-    <app-site-header></app-site-header>
-    <!-- body-start -->
-    <div class="clearfix"></div>
-    <div class="background-pink">
-        <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+  <app-site-header></app-site-header>
+  <!-- body-start -->
+  <div class="clearfix"></div>
+  <div class="background-pink">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
 
-            <mat-step [stepControl]="stepOne">
-                <form [formGroup]="stepOne" class="contact-form row">
+      <mat-step [stepControl]="stepOne">
+        <form [formGroup]="stepOne" class="contact-form row">
 
-                    <div class="container">
-                        <div class="row">
+          <div class="container">
+            <div class="row">
 
-                            <div class="clearfix"></div>
-                            <div class="col-md-6">
-                                <section class="get-in-touch edit-area">
+              <div class="clearfix"></div>
+              <div class="col-md-6">
+                <section class="get-in-touch edit-area">
 
-                                    <div class="select-btn min-height-200 bg-white box-shadow padding-10 broder-radius-5">
-                                        <ul *ngIf="category_list.length > 0">
-                                            <li *ngFor="let category of category_list">
-                                                <a href="javascript:void(0)" (click)="categorySelect(category.id)" [ngClass]="{'selected': setp_one_data.app_category == category.id}">
-                                                    <img src="assets/images/select-1.png" alt="" *ngIf="category.icon=='null'">
-                                                    <img [src]="category.icon" alt="" *ngIf="category.icon!='null'"> {{category.category_name}}
-                                                </a>
-                                            </li>
-                                            <div class="clearfix"></div>
-                                        </ul>
-                                    </div>
-                                    <hr>
-                                    <div class="row padding-top-15">
-                                        <div class="form-field col x-100 align-center col-md-5">
-                                            <button mat-button class="round-g-btn" (click)="submitStepOne()">Next</button>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
-                                    <div class="container">
-                                        <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                                            Choose your business category
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div class="mob ">
-                                    <div class="wallpaper-size caragory-resturent"></div>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="select-btn min-height-200 bg-white box-shadow padding-10 broder-radius-5">
+                    <ul *ngIf="category_list.length > 0">
+                      <li *ngFor="let category of category_list">
+                        <a href="javascript:void(0)" (click)="categorySelect(category.id)" [ngClass]="{'selected': setp_one_data.app_category == category.id}">
+                          <img src="assets/images/select-1.png" alt="" *ngIf="category.icon=='null'">
+                          <img [src]="category.icon" alt="" *ngIf="category.icon!='null'"> {{category.category_name}}
+                        </a>
+                      </li>
+                      <div class="clearfix"></div>
+                    </ul>
+                  </div>
+                  <hr>
+                  <div class="row padding-top-15">
+                    <div class="form-field col x-100 align-center col-md-5">
+                      <button mat-button class="round-g-btn" (click)="submitStepOne()">Next</button>
                     </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="stepTwo" class="contact-form row">
-                <form [formGroup]="stepTwo">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-6 padding-top-50">
-                                <section class="get-in-touch">
+                  </div>
+                </section>
+              </div>
+              <div class="col-md-6">
 
-                                    <div class="contact-form row">
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>card_travel</mat-icon>
-                                                <input matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name"
-                                                    (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
-                                                <mat-error *ngIf="isFieldValid(stepTwo,'business_name')"> Please Enter Business Name</mat-error>
+                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                  <div class="container">
+                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                      Choose your business category
+                    </h1>
+                  </div>
+                </div>
+                <div class="mob ">
+                  <div class="wallpaper-size caragory-resturent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="stepTwo" class="contact-form row">
+        <form [formGroup]="stepTwo">
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-6 padding-top-50">
+                <section class="get-in-touch">
 
-                                            </mat-form-field>
+                  <div class="contact-form row">
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>card_travel</mat-icon>
+                        <input matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name"
+                          (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
+                        <mat-error *ngIf="isFieldValid(stepTwo,'business_name')"> Please Enter Business Name</mat-error>
 
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveBusinessName"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col col-md-12 ">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>info</mat-icon>
-                                                <input matInput placeholder="Description Of Your Business" #input maxlength="300" formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
-                                                    (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
-                                                    <mat-hint align="end">{{input.value?.length || 0}}/300</mat-hint>
-                                            </mat-form-field>
+                      </mat-form-field>
 
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveBusinessDescription"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <!-- <div class="form-field col col-md-12">
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveBusinessName"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12 ">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>info</mat-icon>
+                        <input matInput placeholder="Description Of Your Business" #input maxlength="300"
+                          formControlName="business_description" [(ngModel)]="setp_two_data.business_description"
+                          (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
+                        <mat-hint align="end">{{input.value?.length || 0}}/300</mat-hint>
+                      </mat-form-field>
+
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveBusinessDescription"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12 ">
+                      <mat-radio-group formControlName="is_product_service" [(ngModel)]="setp_two_data.is_product_service">
+                        <mat-radio-button *ngFor="let business of business_type" [value]="business.value" (change)="businessTypeChange($event)">{{business.name}}</mat-radio-button>
+                      </mat-radio-group>
+                      <mat-error *ngIf="isFieldValid(stepTwo,'is_product_service')"> Please Select Business Type</mat-error>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveBusinessType"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12 ">
+                      <mat-checkbox *ngIf="setp_two_data.is_only_display_key" [(ngModel)]="setp_two_data.is_only_display"
+                        formControlName="is_only_display">Only Display</mat-checkbox>
+                    </div>
+                    <!-- <div class="form-field col col-md-12">
                                     <mat-form-field class="input-full-width">
                                         <mat-icon matPrefix>location_on</mat-icon>
                                         <input matInput placeholder="Business Location" formControlName="locality" [(ngModel)]="setp_two_data.locality">
@@ -95,189 +109,196 @@
                                     </p>
                                 </div> -->
 
-                                        <div class="form-field col-md-6">
-                                            <div class="upload-filed">
-                                                <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)" accept="image/*">
-                                                <p class="btn-switch">
-                                                    <mat-slide-toggle [checked]="haveBusinessLogo"></mat-slide-toggle>
-                                                </p>
-                                            </div>
-                                        </div>
+                    <div class="form-field col-md-6">
+                      <div class="upload-filed">
+                        <input type="file" name="logo" formControlName="logo" (change)="appLogoChange($event.target.files)"
+                          accept="image/*">
+                        <p class="btn-switch">
+                          <mat-slide-toggle [checked]="haveBusinessLogo"></mat-slide-toggle>
+                        </p>
+                      </div>
+                    </div>
 
-                                        <div class="form-field col-md-6">
-                                            <div class="upload-filed  business-photo">
+                    <div class="form-field col-md-6">
+                      <div class="upload-filed  business-photo">
 
-                                                <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
-                                                    multiple>
-                                                <p class="btn-switch">
-                                                    <mat-slide-toggle [checked]="haveBusinessImage"></mat-slide-toggle>
-                                                </p>
-                                            </div>
+                        <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)"
+                          accept="image/*" multiple>
+                        <p class="btn-switch">
+                          <mat-slide-toggle [checked]="haveBusinessImage"></mat-slide-toggle>
+                        </p>
+                      </div>
 
-                                        </div>
+                    </div>
 
-                                        <div class="form-field padding-top-10 col-md-12">
+                    <div class="form-field padding-top-10 col-md-12">
 
-                                            <div class="row">
-                                                <div class="form-field  align-center col-md-5">
-                                                    <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(1)">Back</button>
-                                                </div>
-                                                <div class="form-field align-center col-md-5">
-                                                    <button mat-button class="round-g-btn" (click)="submitStepTwo()">Next</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
-                                    <div class="container">
-                                        <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                                            Enter your business details
-                                        </h1>
-                                    </div>
-                                </div>
+                      <div class="row">
+                        <div class="form-field  align-center col-md-5">
+                          <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(1)">Back</button>
+                        </div>
+                        <div class="form-field align-center col-md-5">
+                          <button mat-button class="round-g-btn" (click)="submitStepTwo()">Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+                  <div class="container">
+                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                      Enter your business details
+                    </h1>
+                  </div>
+                </div>
 
 
-                                <div class="mob">
-                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-                                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
-                                        <h1>{{setp_two_data.business_name}}</h1>
-                                        <div class="description ">
-                                            <!-- <span *ngIf="setp_two_data.business_description != '' && setp_two_data.business_description != null">Description</span> -->
-                                            <p>{{setp_two_data.business_description}}</p>
-                                        </div>
-                                        <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
-                                            <ul>
-                                                <li *ngFor="let img of setp_two_data.business_photos">
-                                                    <img [src]="img" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- <div class="description ">
+                <div class="mob">
+                  <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+                    <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="" alt="">
+                    <h1>{{setp_two_data.business_name}}</h1>
+                    <div class="description ">
+                      <!-- <span *ngIf="setp_two_data.business_description != '' && setp_two_data.business_description != null">Description</span> -->
+                      <p>{{setp_two_data.business_description}}</p>
+                    </div>
+                    <div class="sub-image" *ngIf="setp_two_data.business_photos.length > 0">
+                      <ul>
+                        <li *ngFor="let img of setp_two_data.business_photos">
+                          <img [src]="img" alt="">
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- <div class="description ">
                                     <span *ngIf="setp_two_data.locality != ''">LOCATION</span>
                                     <p>{{setp_two_data.locality}}</p>
                                 </div> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="stepThree">
-                <form [formGroup]="stepThree" class="contact-form row">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="stepThree">
+        <form [formGroup]="stepThree" class="contact-form row">
 
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 padding-top-50">
-                                <section class="get-in-touch full_width">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 padding-top-50">
+                <section class="get-in-touch full_width">
 
-                                    <div class="form-field  ">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>perm_identity</mat-icon>
-                                            <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name" (keyup)=checkOwnerName() (keydown)=checkOwnerName()>
-                                            <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle [checked]="haveOwnerName"></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field  ">
-                                        <!-- <mat-form-field class="input-full-width">
+                  <div class="form-field  ">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>perm_identity</mat-icon>
+                      <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name"
+                        (keyup)=checkOwnerName() (keydown)=checkOwnerName()>
+                      <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle [checked]="haveOwnerName"></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field  ">
+                    <!-- <mat-form-field class="input-full-width">
                                     <mat-icon matPrefix>perm_identity</mat-icon>
                                     <input matInput placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
 
                                 </mat-form-field> -->
-                                        <mat-form-field>
-                                            <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation"  (change)=checkOwnerDesignation()>
-                                                <mat-option *ngFor="let designation of designations" [value]="designation.id">
-                                                    {{ designation.designation_name }}
-                                                </mat-option>
-                                                <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Owner Designation</mat-error>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle [checked]="haveOwnerDesignation"></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field  ">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>calendar_today</mat-icon>
-                                            <input matInput appOnlyNumber placeholder="Established in The Year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year" maxlength="4" (keyup)=checkBusinessEstYear() (keydown)=checkBusinessEstYear()>
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle [checked]="haveBusinessEstYear"></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field   ">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>location_on</mat-icon>
-                                            <input matInput placeholder="Business Location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
-                                                [(ngModel)]="setp_three_data.store_address">
-                                            <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
-                                            <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
-                                        </mat-form-field>
-                                        <p class="btn-switch">
-                                            <mat-slide-toggle [checked]="haveBusinessLocation"></mat-slide-toggle>
-                                        </p>
-                                    </div>
-                                    <div class="form-field col-md-12">
-                                        <div class="upload-filed  oner-photo">
-                                            <input type="file" name="owner_pic" formControlName="owner_pic" (change)="ownerLogoChange($event.target.files)" accept="image/*">
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveOwnerPic"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-field padding-top-10 col-md-12">
-                                        <div class="row">
-                                            <div class="form-field  align-center col-md-5">
-                                                <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(2)">Back</button>
-                                            </div>
-                                            <div class="form-field align-center col-md-5">
-                                                <button mat-button class="round-g-btn" (click)="submitStepThree()">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <mat-form-field>
+                      <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation"
+                        (change)=checkOwnerDesignation()>
+                        <mat-option *ngFor="let designation of designations" [value]="designation.id">
+                          {{ designation.designation_name }}
+                        </mat-option>
+                        <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Owner Designation</mat-error>
+                      </mat-select>
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle [checked]="haveOwnerDesignation"></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field  ">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>calendar_today</mat-icon>
+                      <input matInput appOnlyNumber placeholder="Established in The Year" formControlName="business_est_year"
+                        [(ngModel)]="setp_three_data.business_est_year" maxlength="4" (keyup)=checkBusinessEstYear()
+                        (keydown)=checkBusinessEstYear()>
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle [checked]="haveBusinessEstYear"></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field   ">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>location_on</mat-icon>
+                      <input matInput placeholder="Business Location" autocorrect="off" autocapitalize="off" spellcheck="off"
+                        #search formControlName="store_address" [(ngModel)]="setp_three_data.store_address">
+                      <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
+                      <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
+                    </mat-form-field>
+                    <p class="btn-switch">
+                      <mat-slide-toggle [checked]="haveBusinessLocation"></mat-slide-toggle>
+                    </p>
+                  </div>
+                  <div class="form-field col-md-12">
+                    <div class="upload-filed  oner-photo">
+                      <input type="file" name="owner_pic" formControlName="owner_pic" (change)="ownerLogoChange($event.target.files)"
+                        accept="image/*">
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveOwnerPic"></mat-slide-toggle>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-field padding-top-10 col-md-12">
+                    <div class="row">
+                      <div class="form-field  align-center col-md-5">
+                        <button mat-button type="button" matStepperPrevious class="round-g-grey" (click)="goToStep(2)">Back</button>
+                      </div>
+                      <div class="form-field align-center col-md-5">
+                        <button mat-button class="round-g-btn" (click)="submitStepThree()">Next</button>
+                      </div>
+                    </div>
+                  </div>
 
-                                </section>
+                </section>
 
 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
 
-                                    <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                                        Owner introduction
-                                    </h1>
+                  <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
+                    Owner introduction
+                  </h1>
 
-                                </div>
-                                <div class="mob">
-                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+                </div>
+                <div class="mob">
+                  <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
 
-                                        <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'" alt="">
+                    <img [src]="setp_three_data.owner_pic ?setp_three_data.owner_pic : 'assets/images/resturent-logo.png'"
+                      alt="">
 
-                                        <h1>{{setp_three_data.owner_name}}</h1>
-                                        <!-- <div class="description ">
+                    <h1>{{setp_three_data.owner_name}}</h1>
+                    <!-- <div class="description ">
                                     <span *ngIf="setp_three_data.owner_designation != ''">Designation</span>
                                     <p>{{setp_three_data.owner_designation}}</p>
                                 </div> -->
-                                        <!-- <div class="description ">
+                    <!-- <div class="description ">
                                     <span>Ex. Year</span>
                                     <p>{{setp_three_data.owner_name}}</p>
                                 </div> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </mat-step>
-            <!-- <mat-step [stepControl]="stepFive">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <!-- <mat-step [stepControl]="stepFive">
                 <div class="col-md-12 get-in-touch padding-top-bottom-10">
                     <div class="container">
                         <h1 class="title fontface-one text-color-dark letter-spacing">
@@ -543,7 +564,7 @@
                     </div>
                 </div>
             </mat-step> -->
-            <!-- <mat-step [stepControl]="stepFour">
+      <!-- <mat-step [stepControl]="stepFour">
         <form [formGroup]="stepFour" class="contact-form row">
           <div class="container ">
             <div class="row">
@@ -617,226 +638,254 @@
         </form>
       </mat-step> -->
 
-            <mat-step [stepControl]="stepSix">
-                <div *ngIf="logedUserGroup=='franchise'">
-                    <form [formGroup]="stepSix" class="contact-form row">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <section class="get-in-touch">
+      <mat-step [stepControl]="stepSix">
+        <div *ngIf="logedUserGroup=='franchise'">
+          <form [formGroup]="stepSix" class="contact-form row">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <section class="get-in-touch">
 
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>perm_identity</mat-icon>
-                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name" (keyup)=checkName() (keydown)=checkName()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Email Address</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col-md-12">
-                                            <div class="row">
-                                                <div class="form-field  align-center col-md-5">
-                                                    <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                                                </div>
-                                                <div class="form-field align-center col-md-5">
-                                                    <button mat-button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="mob">
-                                        <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                            <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                            <h1>{{setp_two_data.business_name}}</h1>
-                                            <div class="description">
-
-                                                <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                                <p>{{setp_six_data.contact_no}}</p>
-                                            </div>
-                                            <div class="description ">
-                                                <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                                <p>{{setp_six_data.email_id}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div *ngIf="logedUserGroup!='franchise'">
-                    <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
-                        <div class="col-md-12 get-in-touch padding-top-bottom-10">
-                            <div class="container">
-                                <h1 class="title fontface-one text-color-dark letter-spacing">
-                                    Submit your details and get the app
-                                </h1>
-                            </div>
-                        </div>
-
-                        <div class="container  padding-top-25">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <section class="get-in-touch">
-
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>perm_identity</mat-icon>
-                                                <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name" (keyup)=checkName() (keydown)=checkName()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
-                                                <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
-                                            </mat-form-field>
-                                            <p class="btn-switch">
-                                                <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
-                                            </p>
-                                        </div>
-                                        <div class="form-field col-md-12">
-                                            <div class="row">
-                                                <div class="form-field  align-center col-md-5">
-                                                    <button mat-button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
-                                                </div>
-                                                <div class="form-field align-center col-md-5">
-                                                    <button mat-button class="round-g-btn" (click)="submitStepSix()">Next</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="mob">
-                                        <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                            <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                            <h1>{{setp_two_data.business_name}}</h1>
-                                            <div class="description">
-
-                                                <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                                <p>{{setp_six_data.contact_no}}</p>
-                                            </div>
-                                            <div class="description ">
-                                                <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                                <p>{{setp_six_data.email_id}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="container" *ngIf="logedUserId>0">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <section class="get-in-touch">
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>perm_identity</mat-icon>
-                                            <input matInput readonly="readonly" placeholder="Your Name"  [(ngModel)]="logedUserFullName" >
-                                            
-                                        </mat-form-field>
-                                       
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>phone_android</mat-icon>
-                                            <input matInput readonly="readonly" placeholder="Your Mobile Number"  [(ngModel)]="logedUserContactNo" >
-                                            
-                                        </mat-form-field>
-                                        
-                                    </div>
-                                    <div class="form-field col col-md-12">
-                                        <mat-form-field class="input-full-width">
-                                            <mat-icon matPrefix>email</mat-icon>
-                                            <input matInput readonly="readonly" placeholder="Your Email Address"  [(ngModel)]="logedUserEmail" >
-                                            
-                                        </mat-form-field>
-                                       
-                                    </div>
-
-                                    <div class="form-field col-md-12">
-                                        <div class="row">
-                                            <div class="form-field  align-center col-md-5">
-                                                <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                                            </div>
-                                            <div mat-button class="form-field align-center col-md-5">
-                                                <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="mob">
-                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                        <h1>{{setp_two_data.business_name}}</h1>
-                                        <div class="description">
-
-                                            <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                            <p>{{setp_six_data.contact_no}}</p>
-                                        </div>
-                                        <div class="description ">
-                                            <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                            <p>{{setp_six_data.email_id}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name"
+                          (keyup)=checkName() (keydown)=checkName()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
+                      </p>
                     </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>phone_android</mat-icon>
+                        <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no"
+                          (keyup)=checkContactNo() (keydown)=checkContactNo()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>email</mat-icon>
+                        <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id"
+                          (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>security</mat-icon>
+                        <input matInput type="password" placeholder="Your Password" formControlName="password"
+                          [(ngModel)]="setp_six_data.password" (keyup)=checkPassword() (keydown)=checkPassword()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'password')"> Please Enter Your Password</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="havePassword"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col-md-12">
+                      <div class="row">
+                        <div class="form-field  align-center col-md-5">
+                          <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                        </div>
+                        <div class="form-field align-center col-md-5">
+                          <button mat-button class="round-g-btn" (click)="submitStepSixFranchise()">Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
-            </mat-step>
-        </mat-horizontal-stepper>
-    </div>
+                <div class="col-md-6">
+
+                  <div class="mob">
+                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                      <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+
+                      <h1>{{setp_two_data.business_name}}</h1>
+                      <div class="description">
+
+                        <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                        <p>{{setp_six_data.contact_no}}</p>
+                      </div>
+                      <div class="description ">
+                        <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                        <p>{{setp_six_data.email_id}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="logedUserGroup!='franchise'">
+          <form [formGroup]="stepSix" class="contact-form row" *ngIf="!logedUserId">
+            <div class="col-md-12 get-in-touch padding-top-bottom-10">
+              <div class="container">
+                <h1 class="title fontface-one text-color-dark letter-spacing">
+                  Submit your details and get the app
+                </h1>
+              </div>
+            </div>
+
+            <div class="container  padding-top-25">
+              <div class="row">
+                <div class="col-md-6">
+                  <section class="get-in-touch">
+
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput placeholder="Your Name" formControlName="name" [(ngModel)]="setp_six_data.name"
+                          (keyup)=checkName() (keydown)=checkName()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'name')"> Please Enter Your Name</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveName"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>phone_android</mat-icon>
+                        <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no"
+                          (keyup)=checkContactNo() (keydown)=checkContactNo()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveContactNo"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>email</mat-icon>
+                        <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id"
+                          (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="haveEmailAddress"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col col-md-12">
+                      <mat-form-field class="input-full-width">
+                        <mat-icon matPrefix>security</mat-icon>
+                        <input matInput type="password" placeholder="Your Password" formControlName="password"
+                          [(ngModel)]="setp_six_data.password" (keyup)=checkPassword() (keydown)=checkPassword()>
+                        <mat-error *ngIf="isFieldValid(stepSix,'password')"> Please Enter Your Password</mat-error>
+                      </mat-form-field>
+                      <p class="btn-switch">
+                        <mat-slide-toggle [checked]="havePassword"></mat-slide-toggle>
+                      </p>
+                    </div>
+                    <div class="form-field col-md-12">
+                      <div class="row">
+                        <div class="form-field  align-center col-md-5">
+                          <button mat-button matStepperPrevious class="round-g-grey" (click)="goToStep(5)">Back</button>
+                        </div>
+                        <div class="form-field align-center col-md-5">
+                          <button mat-button class="round-g-btn" (click)="submitStepSix()">Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="col-md-6">
+
+                  <div class="mob">
+                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                      <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+
+                      <h1>{{setp_two_data.business_name}}</h1>
+                      <div class="description">
+
+                        <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                        <p>{{setp_six_data.contact_no}}</p>
+                      </div>
+                      <div class="description ">
+                        <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                        <p>{{setp_six_data.email_id}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="container" *ngIf="logedUserId>0">
+            <div class="row">
+              <div class="col-md-6">
+                <section class="get-in-touch">
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>perm_identity</mat-icon>
+                      <input matInput readonly="readonly" placeholder="Your Name" [(ngModel)]="logedUserFullName">
+
+                    </mat-form-field>
+
+                  </div>
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>phone_android</mat-icon>
+                      <input matInput readonly="readonly" placeholder="Your Mobile Number" [(ngModel)]="logedUserContactNo">
+
+                    </mat-form-field>
+
+                  </div>
+                  <div class="form-field col col-md-12">
+                    <mat-form-field class="input-full-width">
+                      <mat-icon matPrefix>email</mat-icon>
+                      <input matInput readonly="readonly" placeholder="Your Email Address" [(ngModel)]="logedUserEmail">
+
+                    </mat-form-field>
+
+                  </div>
+
+                  <div class="form-field col-md-12">
+                    <div class="row">
+                      <div class="form-field  align-center col-md-5">
+                        <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                      </div>
+                      <div mat-button class="form-field align-center col-md-5">
+                        <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-md-6">
+
+                <div class="mob">
+                  <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                    <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+
+                    <h1>{{setp_two_data.business_name}}</h1>
+                    <div class="description">
+
+                      <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                      <p>{{setp_six_data.contact_no}}</p>
+                    </div>
+                    <div class="description ">
+                      <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                      <p>{{setp_six_data.email_id}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
 </loading>

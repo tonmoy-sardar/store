@@ -31,8 +31,8 @@ export class CreateAppComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('search') public searchElement: ElementRef;
   isLinear = true;
-  haveBusinessName =false;
-  haveBusinessDescription =false;
+  haveBusinessName = false;
+  haveBusinessDescription = false;
   haveBusinessLogo = false;
   haveBusinessImage = false;
   haveOwnerName = false;
@@ -42,7 +42,8 @@ export class CreateAppComponent implements OnInit {
   haveOwnerPic = false;
   haveName = false;
   haveContactNo = false;
-  haveEmailAddress =false;
+  haveEmailAddress = false;
+  havePassword: boolean = false;
   stepOne: FormGroup;
   stepTwo: FormGroup;
   stepThree: FormGroup;
@@ -76,6 +77,9 @@ export class CreateAppComponent implements OnInit {
     business_name: '',
     business_description: '',
     business_photos: [],
+    is_product_service: null,
+    is_only_display: false,
+    is_only_display_key: false
   }
 
   setp_three_data = {
@@ -126,14 +130,25 @@ export class CreateAppComponent implements OnInit {
   setp_six_data = {
     name: '',
     contact_no: '',
-    email_id: ''
+    email_id: '',
+    password: ''
   }
 
   base_url: string;
   logedUserFullName;
   logedUserContactNo;
-  logedUserEmail
-
+  logedUserEmail;
+  haveBusinessType: boolean = false;
+  business_type: any = [
+    {
+      name: "Product",
+      value: 1
+    },
+    {
+      name: "Service",
+      value: 2
+    }
+  ]
   constructor(
     private router: Router,
     private _formBuilder: FormBuilder,
@@ -157,11 +172,11 @@ export class CreateAppComponent implements OnInit {
       this.isLoggedin = true;
       this.user_name = localStorage.getItem('logedUserFullName');
       this.logedUserEmail = localStorage.getItem('logedUserEmail');
-      
+
       this.logedUserFullName = localStorage.getItem('logedUserFullName');
-      
+
       this.logedUserContactNo = localStorage.getItem('logedUserContactNo');
-      
+
       if (localStorage.getItem('logedUserUserGroup')) {
         this.user_group = localStorage.getItem('logedUserUserGroup')
       }
@@ -182,6 +197,8 @@ export class CreateAppComponent implements OnInit {
       business_name: ['', Validators.required],
       business_description: [''],
       business_photos: [''],
+      is_product_service: [null, Validators.required],
+      is_only_display: [false]
     });
 
     this.stepThree = this._formBuilder.group({
@@ -219,6 +236,7 @@ export class CreateAppComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(12)
       ]],
+      password: ['',Validators.required]
     });
 
     this.stepOne.patchValue({
@@ -249,7 +267,20 @@ export class CreateAppComponent implements OnInit {
 
   }
 
-  
+  businessTypeChange(e) {
+    if (e.value) {
+      this.haveBusinessType = true;
+      if (e.value == 1) {
+        this.setp_two_data.is_only_display_key = true;
+      }
+      else {
+        this.setp_two_data.is_only_display_key = false;
+        this.setp_two_data.is_only_display = false;
+      }
+    }
+  }
+
+
 
   openLogin() {
     this.dialog.open(
@@ -280,7 +311,7 @@ export class CreateAppComponent implements OnInit {
             this.setp_three_data.store_address = place.formatted_address;
             this.setp_three_data.lat = lat.toString();
             this.setp_three_data.long = lng.toString();
-            this.haveBusinessLocation =true;
+            this.haveBusinessLocation = true;
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
@@ -304,17 +335,16 @@ export class CreateAppComponent implements OnInit {
     );
   };
 
-  updateAppMasterIsProductService()
-  {
+  updateAppMasterIsProductService() {
     var data = {
-      is_product_service:this.serviceType
+      is_product_service: this.serviceType
     }
-    this.createAppService.updateAppMasterIsProductService(localStorage.getItem('storeCreateAppID'),data).subscribe(
+    this.createAppService.updateAppMasterIsProductService(localStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
-        
+
       },
       error => {
-        
+
       }
     );
   }
@@ -377,29 +407,27 @@ export class CreateAppComponent implements OnInit {
       var data = {
         products: []
       };
-      if(this.serviceType==1)
-      {
+      if (this.serviceType == 1) {
         x.products.forEach(y => {
           if (y.product_name != "" && y.price != "") {
             data.products.push(y)
           }
           else {
-  
+
           }
         })
       }
-      else if (this.serviceType==2)
-      {
+      else if (this.serviceType == 2) {
         x.products.forEach(y => {
           if (y.product_name != "") {
             data.products.push(y)
           }
           else {
-  
+
           }
         })
       }
-     
+
       if (data.products.length > 0) {
         this.loading = LoadingState.Processing;
         forkArray.push(this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), data))
@@ -552,8 +580,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkOwnerName()
-  {
+  checkOwnerName() {
     if (this.setp_three_data.owner_name != null && this.setp_three_data.owner_name.length > 0) {
       this.haveOwnerName = true;
     }
@@ -562,8 +589,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkBusinessEstYear()
-  {
+  checkBusinessEstYear() {
     if (this.setp_three_data.business_est_year != null && this.setp_three_data.business_est_year.length > 0) {
       this.haveBusinessEstYear = true;
     }
@@ -572,8 +598,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkOwnerDesignation()
-  {
+  checkOwnerDesignation() {
     if (this.setp_three_data.owner_designation) {
       this.haveOwnerDesignation = true;
     }
@@ -582,8 +607,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkName()
-  {
+  checkName() {
     if (this.setp_six_data.name != null && this.setp_six_data.name.length > 0) {
       this.haveName = true;
     }
@@ -592,8 +616,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkContactNo()
-  {
+  checkContactNo() {
     if (this.setp_six_data.contact_no != null && this.setp_six_data.contact_no.length > 0) {
       this.haveContactNo = true;
     }
@@ -601,13 +624,21 @@ export class CreateAppComponent implements OnInit {
       this.haveContactNo = false;
     }
   }
-  checkEmailAddress()
-  {
+  checkEmailAddress() {
     if (this.setp_six_data.email_id != null && this.setp_six_data.email_id.length > 0) {
       this.haveEmailAddress = true;
     }
     else {
       this.haveEmailAddress = false;
+    }
+  }
+
+  checkPassword(){
+    if (this.setp_six_data.password != null && this.setp_six_data.password.length > 0) {
+      this.havePassword = true;
+    }
+    else {
+      this.havePassword = false;
     }
   }
 
@@ -624,19 +655,25 @@ export class CreateAppComponent implements OnInit {
           this.stepOne.patchValue({
             app_category: data[0].app_category.id
           });
-          if(data[0].is_product_service)
-          {
-            this.serviceType =data[0].is_product_service;
+          if (data[0].is_product_service) {
+            this.serviceType = data[0].is_product_service;
 
           }
-          else
-          {
-            this.serviceType =1;
+          else {
+            this.serviceType = 1;
           }
           this.setp_two_data.logo = data[0].appmaster.logo;
 
-          if(this.setp_two_data.logo)
-          {
+          this.setp_two_data.is_product_service = data[0].appmaster.is_product_service;
+          if (data[0].appmaster.is_product_service == 1) {
+            this.setp_two_data.is_only_display_key = true;
+          }
+          this.setp_two_data.is_only_display = data[0].appmaster.is_only_display;
+          if(data[0].appmaster.is_product_service){
+            this.haveBusinessType = true;
+          }          
+
+          if (this.setp_two_data.logo) {
             this.haveBusinessLogo = true
           }
           this.setp_two_data.business_name = data[0].appmaster.business_name;
@@ -1119,7 +1156,8 @@ export class CreateAppComponent implements OnInit {
       let data = {
         name: this.stepSix.value.name,
         email_id: this.stepSix.value.email_id,
-        contact_no: this.stepSix.value.contact_no
+        contact_no: this.stepSix.value.contact_no,
+        password: this.stepSix.value.password
       }
       this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
@@ -1156,51 +1194,19 @@ export class CreateAppComponent implements OnInit {
       this.loading = LoadingState.Processing;
       var user_id = '';
       let data = {
-          user_id:user_id,
-          email_id: this.stepSix.value.email_id,
-          contact_no: this.stepSix.value.contact_no
-        }
-        this.createAppService.sendAppCreateOtp(data).subscribe(
-            response => {
-             
-             
-              this.loading = LoadingState.Ready;
-             
-              console.log(response)
-              this.openOtpDialog(response['otp'],user_id,this.stepSix.value.contact_no,this.stepSix.value.email_id,'normalUser')
-    
-            },
-            error => {
-              this.loading = LoadingState.Ready;
-              this.toastr.error(error.error.msg, '', {
-                timeOut: 3000,
-              });
-            }
-          );
-    }
-    else {
-      this.markFormGroupTouched(this.stepSix)
-    }
-  }
-
-
-  createOriginalApp()
-  {
-    this.loading = LoadingState.Processing;
-    let data = {
-        name: this.stepSix.value.name,
+        user_id: user_id,
         email_id: this.stepSix.value.email_id,
-        contact_no: this.stepSix.value.contact_no
+        contact_no: this.stepSix.value.contact_no,
+        password: this.stepSix.value.password
       }
-      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      this.createAppService.sendAppCreateOtp(data).subscribe(
         response => {
-         
-          localStorage.removeItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppStep');
-          localStorage.removeItem('storeSessionID');
+
+
           this.loading = LoadingState.Ready;
-         
-          this.btnClickNav('payment/' + response['app_master_id'])
+
+          console.log(response)
+          this.openOtpDialog(response['otp'], user_id, this.stepSix.value.contact_no, this.stepSix.value.email_id, 'normalUser')
 
         },
         error => {
@@ -1210,6 +1216,39 @@ export class CreateAppComponent implements OnInit {
           });
         }
       );
+    }
+    else {
+      this.markFormGroupTouched(this.stepSix)
+    }
+  }
+
+
+  createOriginalApp() {
+    this.loading = LoadingState.Processing;
+    let data = {
+      name: this.stepSix.value.name,
+      email_id: this.stepSix.value.email_id,
+      contact_no: this.stepSix.value.contact_no,
+      password: this.stepSix.value.password
+    }
+    this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      response => {
+
+        localStorage.removeItem('storeCreateAppID');
+        localStorage.removeItem('storeCreateAppStep');
+        localStorage.removeItem('storeSessionID');
+        this.loading = LoadingState.Ready;
+
+        this.btnClickNav('payment/' + response['app_master_id'])
+
+      },
+      error => {
+        this.loading = LoadingState.Ready;
+        this.toastr.error(error.error.msg, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 
   submitStepSixWithLogin() {
@@ -1250,7 +1289,8 @@ export class CreateAppComponent implements OnInit {
         user_id: this.logedUserId,
         name: this.stepSix.value.name,
         email_id: this.stepSix.value.email_id,
-        contact_no: this.stepSix.value.contact_no
+        contact_no: this.stepSix.value.contact_no,
+        password: this.stepSix.value.password
       }
       this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
@@ -1269,6 +1309,7 @@ export class CreateAppComponent implements OnInit {
         },
         error => {
           // console.log(error)
+          this.loading = LoadingState.Ready;
           let dialogRef = this.dialog.open(ConfirmDialogComponent, {
             width: '300px',
             data: { msg: error.error.msg }
@@ -1312,26 +1353,28 @@ export class CreateAppComponent implements OnInit {
   }
 
 
-  createOriginalAppByFranchise()
-  { this.loading = LoadingState.Processing;
+  createOriginalAppByFranchise() {
+    this.loading = LoadingState.Processing;
     let data = {
       user_id: this.logedUserId,
       name: this.stepSix.value.name,
       email_id: this.stepSix.value.email_id,
-      contact_no: this.stepSix.value.contact_no
+      contact_no: this.stepSix.value.contact_no,
+      password: this.stepSix.value.password
     }
     this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
-       
+
         localStorage.removeItem('storeCreateAppID');
         localStorage.removeItem('storeCreateAppStep');
         localStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
-        
+
         this.btnClickNav('payment/' + response['app_master_id'])
       },
       error => {
         // console.log(error)
+        this.loading = LoadingState.Ready;
         let dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '300px',
           data: { msg: error.error.msg }
@@ -1370,8 +1413,7 @@ export class CreateAppComponent implements OnInit {
 
   }
 
-  createAppStepLastForFranchiseExist()
-  {
+  createAppStepLastForFranchiseExist() {
     this.loading = LoadingState.Processing;
     let data = {
       name: this.stepSix.value.name,
@@ -1385,7 +1427,7 @@ export class CreateAppComponent implements OnInit {
         localStorage.removeItem('storeCreateAppStep');
         localStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
-       
+
         this.btnClickNav('payment/' + response['app_master_id'])
       },
       error => {
@@ -1401,55 +1443,53 @@ export class CreateAppComponent implements OnInit {
   submitStepSixFranchise() {
     if (this.stepSix.valid) {
       this.loading = LoadingState.Processing;
-      
-      let data = {
-          user_id: this.logedUserId,
-          email_id: this.stepSix.value.email_id,
-          contact_no: this.stepSix.value.contact_no
-        }
-        this.createAppService.sendAppCreateOtp(data).subscribe(
-            response => {
-             
-             
-              this.loading = LoadingState.Ready;
-             
-              console.log(response)
-              this.openOtpDialog(response['otp'],this.logedUserId,this.stepSix.value.contact_no,this.stepSix.value.email_id,'franchiseUser')
-    
-            },
-            error => {
-             
-              let dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                width: '300px',
-                data: { msg: error.error.msg }
-              });
-              dialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                  this.createAppStepLastForFranchiseExist()
-                }
-              });
 
+      let data = {
+        user_id: this.logedUserId,
+        email_id: this.stepSix.value.email_id,
+        contact_no: this.stepSix.value.contact_no
+      }
+      this.createAppService.sendAppCreateOtp(data).subscribe(
+        response => {
+
+
+          this.loading = LoadingState.Ready;
+
+          console.log(response)
+          this.openOtpDialog(response['otp'], this.logedUserId, this.stepSix.value.contact_no, this.stepSix.value.email_id, 'franchiseUser')
+
+        },
+        error => {
+          this.loading = LoadingState.Ready;
+          let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '300px',
+            data: { msg: error.error.msg }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              this.createAppStepLastForFranchiseExist()
             }
-          );
+          });
+
+        }
+      );
     }
     else {
       this.markFormGroupTouched(this.stepSix)
     }
   }
 
-  openOtpDialog(otp,user_id,contact_no,email_id,type) {
+  openOtpDialog(otp, user_id, contact_no, email_id, type) {
     let dialogRef = this.dialog.open(OtpDialogComponent, {
       width: '300px',
-      data: { otp: otp,user_id:user_id, contact_no:contact_no,email_id:email_id}
+      data: { otp: otp, user_id: user_id, contact_no: contact_no, email_id: email_id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(type=='normalUser')
-        {
+        if (type == 'normalUser') {
           this.createOriginalApp();
         }
-        else if(type=='franchiseUser')
-        {
+        else if (type == 'franchiseUser') {
           this.createOriginalAppByFranchise();
         }
       }
