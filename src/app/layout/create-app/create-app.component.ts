@@ -77,7 +77,7 @@ export class CreateAppComponent implements OnInit {
     business_name: '',
     business_description: '',
     business_photos: [],
-    is_product_service: null,
+    is_product_service: 0,
     is_only_display: false,
     is_only_display_key: false
   }
@@ -197,7 +197,7 @@ export class CreateAppComponent implements OnInit {
       business_name: ['', Validators.required],
       business_description: [''],
       business_photos: [''],
-      is_product_service: [null, Validators.required],
+      is_product_service: [null],
       is_only_display: [false]
     });
 
@@ -236,7 +236,7 @@ export class CreateAppComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(12)
       ]],
-      password: ['',Validators.required]
+      password: ['', Validators.required]
     });
 
     this.stepOne.patchValue({
@@ -633,7 +633,7 @@ export class CreateAppComponent implements OnInit {
     }
   }
 
-  checkPassword(){
+  checkPassword() {
     if (this.setp_six_data.password != null && this.setp_six_data.password.length > 0) {
       this.havePassword = true;
     }
@@ -669,9 +669,9 @@ export class CreateAppComponent implements OnInit {
             this.setp_two_data.is_only_display_key = true;
           }
           this.setp_two_data.is_only_display = data[0].appmaster.is_only_display;
-          if(data[0].appmaster.is_product_service){
+          if (data[0].appmaster.is_product_service) {
             this.haveBusinessType = true;
-          }          
+          }
 
           if (this.setp_two_data.logo) {
             this.haveBusinessLogo = true

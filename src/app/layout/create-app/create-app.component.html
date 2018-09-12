@@ -89,7 +89,6 @@
                       <mat-radio-group formControlName="is_product_service" [(ngModel)]="setp_two_data.is_product_service">
                         <mat-radio-button *ngFor="let business of business_type" [value]="business.value" (change)="businessTypeChange($event)">{{business.name}}</mat-radio-button>
                       </mat-radio-group>
-                      <mat-error *ngIf="isFieldValid(stepTwo,'is_product_service')"> Please Select Business Type</mat-error>
                       <p class="btn-switch">
                         <mat-slide-toggle [checked]="haveBusinessType"></mat-slide-toggle>
                       </p>

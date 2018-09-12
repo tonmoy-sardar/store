@@ -53,7 +53,7 @@ export class EditAppComponent implements OnInit {
     business_name: '',
     business_description: '',
     business_photos: [],
-    is_product_service: null,
+    is_product_service: 0,
     is_only_display: false,
     is_only_display_key: false
   }
@@ -143,7 +143,7 @@ export class EditAppComponent implements OnInit {
       business_name: ['', Validators.required],
       business_description: [''],
       business_photos: [''],
-      is_product_service: [null, Validators.required],
+      is_product_service: [null],
       is_only_display: [false]
     });
 
