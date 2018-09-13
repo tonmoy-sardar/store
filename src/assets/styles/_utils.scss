@@ -5570,9 +5570,6 @@ z #generic_price_table .generic_content,
     color: #00aff0 !important;
 }
 
-
-
-
 .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: #00aff0 !important;
 }
@@ -5612,9 +5609,24 @@ z #generic_price_table .generic_content,
 
 /************** END MATERIAL CUSTOM CSSS ************/
 
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #00aff0;
+}
 
-.payment-due
-{
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #00aff0;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #00aff0;
+}
+
+.radio-btn-ps .ps {
+    margin-right: 20px;
+}
+
+.payment-due {
     position: absolute;
     top: 5px;
     left: 15px;
