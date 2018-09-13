@@ -7,8 +7,8 @@
             </a>
 
             <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-        <i class="fa fa-bars"></i>
-      </button>
+                <i class="fa fa-bars"></i>
+            </button>
 
             <div class="collapse navbar-collapse d-sm-0 d-md-0">
                 <ul class="navbar-nav ml-auto">
@@ -49,7 +49,7 @@
             <span></span>
         </div>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
+            <button *ngIf="app_exist_key" mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
             <button mat-menu-item (click)="logout()">Logout</button>
         </mat-menu>
     </nav>
