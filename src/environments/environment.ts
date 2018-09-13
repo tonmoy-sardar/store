@@ -8,8 +8,8 @@ export const environment = {
   // apiEndpoint: 'http://192.168.24.208:8000/',
   // urlEndpoint: 'http://192.168.24.208:8000'
 
-  apiEndpoint: 'https://www.api-store.banaoapp.com:8002/',
-  urlEndpoint: 'https://www.api-store.banaoapp.com:8002'
+  apiEndpoint: 'http://www.api-store.banaoapp.com:8001/',
+  urlEndpoint: 'http://www.api-store.banaoapp.com:8001'
 
 
 };
