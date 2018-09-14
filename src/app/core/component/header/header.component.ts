@@ -39,13 +39,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('isLoggedin')) {
+    if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserFirstName');
-      if (localStorage.getItem('logedUserUserGroup')) {
-        this.user_group = localStorage.getItem('logedUserUserGroup')
+      this.user_name = sessionStorage.getItem('logedUserFirstName');
+      if (sessionStorage.getItem('logedUserUserGroup')) {
+        this.user_group = sessionStorage.getItem('logedUserUserGroup')
       }
-      this.getAppAnduserDetailsByUserID(localStorage.getItem('logedUserUserId'))
+      this.getAppAnduserDetailsByUserID(sessionStorage.getItem('logedUserUserId'))
     }
   }
 
@@ -76,8 +76,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.isLoggedin = false;
-    // localStorage.removeItem('isLoggedin');
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/home']);
   }
 

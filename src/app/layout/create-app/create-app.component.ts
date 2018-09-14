@@ -100,7 +100,7 @@ export class CreateAppComponent implements OnInit {
     product_categories: [
       {
         id: null,
-        app_master: localStorage.getItem('storeCreateAppID'),
+        app_master: sessionStorage.getItem('storeCreateAppID'),
         category_name: 'Generic',
         description: ''
       }
@@ -112,7 +112,7 @@ export class CreateAppComponent implements OnInit {
       products: [
         {
           id: null,
-          app_master: localStorage.getItem('storeCreateAppID'),
+          app_master: sessionStorage.getItem('storeCreateAppID'),
           product_category: '',
           product_name: '',
           price: '0.00',
@@ -162,23 +162,23 @@ export class CreateAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sessionID = localStorage.getItem('storeSessionID');
+    this.sessionID = sessionStorage.getItem('storeSessionID');
     if (!this.sessionID) {
       this.currentDate = this.now.getTime();
       this.sessionID = this.currentDate.toString() + Math.floor((Math.random() * 1000000000) + 1);
-      localStorage.setItem('storeSessionID', this.sessionID);
+      sessionStorage.setItem('storeSessionID', this.sessionID);
     }
-    if (localStorage.getItem('isLoggedin')) {
+    if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserFullName');
-      this.logedUserEmail = localStorage.getItem('logedUserEmail');
+      this.user_name = sessionStorage.getItem('logedUserFullName');
+      this.logedUserEmail = sessionStorage.getItem('logedUserEmail');
 
-      this.logedUserFullName = localStorage.getItem('logedUserFullName');
+      this.logedUserFullName = sessionStorage.getItem('logedUserFullName');
 
-      this.logedUserContactNo = localStorage.getItem('logedUserContactNo');
+      this.logedUserContactNo = sessionStorage.getItem('logedUserContactNo');
 
-      if (localStorage.getItem('logedUserUserGroup')) {
-        this.user_group = localStorage.getItem('logedUserUserGroup')
+      if (sessionStorage.getItem('logedUserUserGroup')) {
+        this.user_group = sessionStorage.getItem('logedUserUserGroup')
       }
     }
 
@@ -240,27 +240,27 @@ export class CreateAppComponent implements OnInit {
     });
 
     this.stepOne.patchValue({
-      session_id: localStorage.getItem('storeSessionID')
+      session_id: sessionStorage.getItem('storeSessionID')
     });
 
-    this.setp_one_data.session_id = localStorage.getItem('storeSessionID');
+    this.setp_one_data.session_id = sessionStorage.getItem('storeSessionID');
 
-    if (localStorage.getItem('storeCreateAppStep')) {
-      //alert(localStorage.getItem('storeCreateAppStep'));
-      //this.storeCreateAppStep = localStorage.getItem('storeCreateAppStep')
+    if (sessionStorage.getItem('storeCreateAppStep')) {
+      //alert(sessionStorage.getItem('storeCreateAppStep'));
+      //this.storeCreateAppStep = sessionStorage.getItem('storeCreateAppStep')
       //this.stepper.selectedIndex =  parseInt(this.storeCreateAppStep)
     }
 
-    if (localStorage.getItem('storeCreateAppID')) {
-      this.getTempAppDetails((localStorage.getItem('storeCreateAppID')));
+    if (sessionStorage.getItem('storeCreateAppID')) {
+      this.getTempAppDetails((sessionStorage.getItem('storeCreateAppID')));
     }
 
-    // if (localStorage.getItem('storeSessionID')) {
-    //   this.getTempUserDetails(localStorage.getItem('storeSessionID'));
+    // if (sessionStorage.getItem('storeSessionID')) {
+    //   this.getTempUserDetails(sessionStorage.getItem('storeSessionID'));
     // }
 
-    this.logedUserId = localStorage.getItem('logedUserUserId');
-    this.logedUserGroup = localStorage.getItem('logedUserUserGroup');
+    this.logedUserId = sessionStorage.getItem('logedUserUserId');
+    this.logedUserGroup = sessionStorage.getItem('logedUserUserGroup');
     this.getCategoryList();
     this.getDesignationDropdown();
     this.mapLoader();
@@ -292,7 +292,7 @@ export class CreateAppComponent implements OnInit {
 
   logout() {
     this.isLoggedin = false;
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/home']);
   }
 
@@ -339,7 +339,7 @@ export class CreateAppComponent implements OnInit {
     var data = {
       is_product_service: this.serviceType
     }
-    this.createAppService.updateAppMasterIsProductService(localStorage.getItem('storeCreateAppID'), data).subscribe(
+    this.createAppService.updateAppMasterIsProductService(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
 
       },
@@ -355,7 +355,7 @@ export class CreateAppComponent implements OnInit {
     if (this.stepFive.valid) {
       this.loading = LoadingState.Processing;
       console.log(this.setp_five_data);
-      this.createAppService.createProductCategory(localStorage.getItem('storeCreateAppID'), this.setp_five_data).subscribe(
+      this.createAppService.createProductCategory(sessionStorage.getItem('storeCreateAppID'), this.setp_five_data).subscribe(
         response => {
           console.log(response);
           this.loading = LoadingState.Ready;
@@ -375,7 +375,7 @@ export class CreateAppComponent implements OnInit {
             }
           }
 
-          this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
+          this.getTempAppDetails(sessionStorage.getItem('storeCreateAppID'));
 
           this.toastr.success('Success', '', {
             timeOut: 3000,
@@ -430,7 +430,7 @@ export class CreateAppComponent implements OnInit {
 
       if (data.products.length > 0) {
         this.loading = LoadingState.Processing;
-        forkArray.push(this.createAppService.createProduct(localStorage.getItem('storeCreateAppID'), data))
+        forkArray.push(this.createAppService.createProduct(sessionStorage.getItem('storeCreateAppID'), data))
       }
       i++;
     })
@@ -456,7 +456,7 @@ export class CreateAppComponent implements OnInit {
         }
         this.loading = LoadingState.Ready;
         this.category_confirm_key = false;
-        this.getTempAppDetails(localStorage.getItem('storeCreateAppID'));
+        this.getTempAppDetails(sessionStorage.getItem('storeCreateAppID'));
       },
         error => {
           this.toastr.error('Something went wrong', '', {
@@ -473,7 +473,7 @@ export class CreateAppComponent implements OnInit {
   addProductCategory() {
     var product_cate = {
       id: null,
-      app_master: localStorage.getItem('storeCreateAppID'),
+      app_master: sessionStorage.getItem('storeCreateAppID'),
       category_name: '',
       description: ''
     }
@@ -524,7 +524,7 @@ export class CreateAppComponent implements OnInit {
   addProduct(i: number, product_cat_id) {
     var prod = {
       id: null,
-      app_master: localStorage.getItem('storeCreateAppID'),
+      app_master: sessionStorage.getItem('storeCreateAppID'),
       product_category: product_cat_id,
       product_name: '',
       price: '0.00',
@@ -749,7 +749,7 @@ export class CreateAppComponent implements OnInit {
                 products: [
                   {
                     id: null,
-                    app_master: localStorage.getItem('storeCreateAppID'),
+                    app_master: sessionStorage.getItem('storeCreateAppID'),
                     product_category: data[0].product_details[i].id,
                     product_name: '',
                     price: '0.00',
@@ -767,7 +767,7 @@ export class CreateAppComponent implements OnInit {
                 for (var j = 0; j < data[0].product_details[i].products.length; j++) {
                   var prod = {
                     id: data[0].product_details[i].products[j].id,
-                    app_master: localStorage.getItem('storeCreateAppID'),
+                    app_master: sessionStorage.getItem('storeCreateAppID'),
                     product_category: data[0].product_details[i].id,
                     product_name: data[0].product_details[i].products[j].product_name,
                     price: data[0].product_details[i].products[j].price,
@@ -923,14 +923,14 @@ export class CreateAppComponent implements OnInit {
     if (this.stepOne.valid) {
       this.loading = LoadingState.Processing;
 
-      if (localStorage.getItem('storeSessionID') && localStorage.getItem('storeCreateAppID')) {
+      if (sessionStorage.getItem('storeSessionID') && sessionStorage.getItem('storeCreateAppID')) {
         this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+        sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           app_category: this.stepOne.value.app_category
         }
 
-        this.createAppService.editCategoryMaping(localStorage.getItem('storeCreateAppID'), data).subscribe(
+        this.createAppService.editCategoryMaping(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
           response => {
             this.loading = LoadingState.Ready;
             // this.toastr.success('Success', '', {
@@ -948,7 +948,7 @@ export class CreateAppComponent implements OnInit {
       }
       else {
         this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-        localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+        sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
         let data = {
           session_id: this.stepOne.value.session_id,
           app_category: this.stepOne.value.app_category
@@ -958,7 +958,7 @@ export class CreateAppComponent implements OnInit {
           response => {
             console.log(response);
             this.loading = LoadingState.Ready;
-            localStorage.setItem('storeCreateAppID', response.id);
+            sessionStorage.setItem('storeCreateAppID', response.id);
             // this.toastr.success('Success', '', {
             //   timeOut: 3000,
             // });
@@ -997,14 +997,14 @@ export class CreateAppComponent implements OnInit {
 
     if (this.stepTwo.valid) {
       this.loading = LoadingState.Processing;
-      this.createAppService.logoUploadSection(localStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
+      this.createAppService.logoUploadSection(sessionStorage.getItem('storeCreateAppID'), this.logoToUpload, this.stepTwo.value).subscribe(
         response => {
 
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+          sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
           if (this.business_photo_arr.length > 0) {
             for (let i = 0; i < this.business_photo_arr.length; i++) {
-              this.createAppService.uploadBusinessImages(localStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
+              this.createAppService.uploadBusinessImages(sessionStorage.getItem('storeCreateAppID'), this.business_photo_arr[i]).subscribe(
                 response => {
 
                 },
@@ -1050,11 +1050,11 @@ export class CreateAppComponent implements OnInit {
     if (this.stepThree.valid) {
       // console.log(this.stepThree.value)
       this.loading = LoadingState.Processing;
-      this.createAppService.submitOwnerInfo(localStorage.getItem('storeCreateAppID'), localStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
+      this.createAppService.submitOwnerInfo(sessionStorage.getItem('storeCreateAppID'), sessionStorage.getItem('storeSessionID'), this.ownerToUpload, this.stepThree.value).subscribe(
         response => {
           //this.user_id = response.id;
           this.storeCreateAppStep = parseInt(this.storeCreateAppStep) + 1;
-          localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+          sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
           this.loading = LoadingState.Ready;
           // this.toastr.success('Success', '', {
           //   timeOut: 3000,
@@ -1076,12 +1076,12 @@ export class CreateAppComponent implements OnInit {
 
   goToStep(value) {
     this.storeCreateAppStep = parseInt(value) - 1;
-    //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+    //sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
   }
 
   nextStep(value) {
     this.storeCreateAppStep = parseInt(value) - 1;
-    localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+    sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
     this.stepper.next();
   }
 
@@ -1114,7 +1114,7 @@ export class CreateAppComponent implements OnInit {
     }
     if (keepCatGoing && keepProdGoing) {
       this.storeCreateAppStep = parseInt(value) - 1;
-      localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+      sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
       this.stepper.next();
     }
 
@@ -1124,7 +1124,7 @@ export class CreateAppComponent implements OnInit {
     if (this.stepFour.valid) {
       this.loading = LoadingState.Processing;
       var data = {
-        id: localStorage.getItem('storeCreateAppID'),
+        id: sessionStorage.getItem('storeCreateAppID'),
         app_url: this.stepFour.value.website_url
       }
       this.createAppService.updateTempAppURL(data).subscribe(
@@ -1159,14 +1159,14 @@ export class CreateAppComponent implements OnInit {
         contact_no: this.stepSix.value.contact_no,
         password: this.stepSix.value.password
       }
-      this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      this.createAppService.createOriginalApp(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
-          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-          // var app_id = localStorage.getItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppStep');
-          localStorage.removeItem('storeSessionID');
+          // sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+          // var app_id = sessionStorage.getItem('storeCreateAppID');
+          sessionStorage.removeItem('storeCreateAppID');
+          sessionStorage.removeItem('storeCreateAppStep');
+          sessionStorage.removeItem('storeSessionID');
           this.loading = LoadingState.Ready;
           // this.toastr.success('Success', '', {
           //   timeOut: 3000,
@@ -1231,12 +1231,12 @@ export class CreateAppComponent implements OnInit {
       contact_no: this.stepSix.value.contact_no,
       password: this.stepSix.value.password
     }
-    this.createAppService.createOriginalApp(localStorage.getItem('storeCreateAppID'), data).subscribe(
+    this.createAppService.createOriginalApp(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
 
-        localStorage.removeItem('storeCreateAppID');
-        localStorage.removeItem('storeCreateAppStep');
-        localStorage.removeItem('storeSessionID');
+        sessionStorage.removeItem('storeCreateAppID');
+        sessionStorage.removeItem('storeCreateAppStep');
+        sessionStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
 
         this.btnClickNav('payment/' + response['app_master_id'])
@@ -1256,14 +1256,14 @@ export class CreateAppComponent implements OnInit {
     let data = {
       user_id: this.logedUserId
     }
-    this.createAppService.createOriginalAppWithLogin(localStorage.getItem('storeCreateAppID'), data).subscribe(
+    this.createAppService.createOriginalAppWithLogin(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
         // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
-        // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-        // var app_id = localStorage.getItem('storeCreateAppID');
-        localStorage.removeItem('storeCreateAppID');
-        localStorage.removeItem('storeCreateAppStep');
-        localStorage.removeItem('storeSessionID');
+        // sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+        // var app_id = sessionStorage.getItem('storeCreateAppID');
+        sessionStorage.removeItem('storeCreateAppID');
+        sessionStorage.removeItem('storeCreateAppStep');
+        sessionStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
         // this.toastr.success('Success', '', {
         //   timeOut: 3000,
@@ -1292,14 +1292,14 @@ export class CreateAppComponent implements OnInit {
         contact_no: this.stepSix.value.contact_no,
         password: this.stepSix.value.password
       }
-      this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
+      this.createAppService.createOriginalAppByFranchise(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
         response => {
           // this.storeCreateAppStep = (this.storeCreateAppStep) + 1;
-          // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
-          // var app_id = localStorage.getItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppID');
-          localStorage.removeItem('storeCreateAppStep');
-          localStorage.removeItem('storeSessionID');
+          // sessionStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+          // var app_id = sessionStorage.getItem('storeCreateAppID');
+          sessionStorage.removeItem('storeCreateAppID');
+          sessionStorage.removeItem('storeCreateAppStep');
+          sessionStorage.removeItem('storeSessionID');
           this.loading = LoadingState.Ready;
           // this.toastr.success('Success', '', {
           //   timeOut: 3000,
@@ -1321,13 +1321,13 @@ export class CreateAppComponent implements OnInit {
                 email_id: this.stepSix.value.email_id,
                 contact_no: this.stepSix.value.contact_no
               }
-              this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+              this.createAppService.createAppStepLastForFranchiseExist(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
                 response => {
                   console.log(response)
-                  // var app_id = localStorage.getItem('storeCreateAppID');
-                  localStorage.removeItem('storeCreateAppID');
-                  localStorage.removeItem('storeCreateAppStep');
-                  localStorage.removeItem('storeSessionID');
+                  // var app_id = sessionStorage.getItem('storeCreateAppID');
+                  sessionStorage.removeItem('storeCreateAppID');
+                  sessionStorage.removeItem('storeCreateAppStep');
+                  sessionStorage.removeItem('storeSessionID');
                   this.loading = LoadingState.Ready;
                   // this.toastr.success('Success', '', {
                   //   timeOut: 3000,
@@ -1362,12 +1362,12 @@ export class CreateAppComponent implements OnInit {
       contact_no: this.stepSix.value.contact_no,
       password: this.stepSix.value.password
     }
-    this.createAppService.createOriginalAppByFranchise(localStorage.getItem('storeCreateAppID'), data).subscribe(
+    this.createAppService.createOriginalAppByFranchise(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
 
-        localStorage.removeItem('storeCreateAppID');
-        localStorage.removeItem('storeCreateAppStep');
-        localStorage.removeItem('storeSessionID');
+        sessionStorage.removeItem('storeCreateAppID');
+        sessionStorage.removeItem('storeCreateAppStep');
+        sessionStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
 
         this.btnClickNav('payment/' + response['app_master_id'])
@@ -1386,13 +1386,13 @@ export class CreateAppComponent implements OnInit {
               email_id: this.stepSix.value.email_id,
               contact_no: this.stepSix.value.contact_no
             }
-            this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+            this.createAppService.createAppStepLastForFranchiseExist(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
               response => {
                 console.log(response)
-                // var app_id = localStorage.getItem('storeCreateAppID');
-                localStorage.removeItem('storeCreateAppID');
-                localStorage.removeItem('storeCreateAppStep');
-                localStorage.removeItem('storeSessionID');
+                // var app_id = sessionStorage.getItem('storeCreateAppID');
+                sessionStorage.removeItem('storeCreateAppID');
+                sessionStorage.removeItem('storeCreateAppStep');
+                sessionStorage.removeItem('storeSessionID');
                 this.loading = LoadingState.Ready;
                 // this.toastr.success('Success', '', {
                 //   timeOut: 3000,
@@ -1420,12 +1420,12 @@ export class CreateAppComponent implements OnInit {
       email_id: this.stepSix.value.email_id,
       contact_no: this.stepSix.value.contact_no
     }
-    this.createAppService.createAppStepLastForFranchiseExist(localStorage.getItem('storeCreateAppID'), data).subscribe(
+    this.createAppService.createAppStepLastForFranchiseExist(sessionStorage.getItem('storeCreateAppID'), data).subscribe(
       response => {
         console.log(response)
-        localStorage.removeItem('storeCreateAppID');
-        localStorage.removeItem('storeCreateAppStep');
-        localStorage.removeItem('storeSessionID');
+        sessionStorage.removeItem('storeCreateAppID');
+        sessionStorage.removeItem('storeCreateAppStep');
+        sessionStorage.removeItem('storeSessionID');
         this.loading = LoadingState.Ready;
 
         this.btnClickNav('payment/' + response['app_master_id'])

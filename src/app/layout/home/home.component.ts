@@ -62,9 +62,9 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
-    if (localStorage.getItem('isLoggedin')) {
+    if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserUserName')
+      this.user_name = sessionStorage.getItem('logedUserUserName')
     }
 
     this.slotMachineify(this.words);

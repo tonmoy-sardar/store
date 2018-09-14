@@ -129,11 +129,11 @@ export class EditAppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('isLoggedin')) {
+    if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
-      this.user_name = localStorage.getItem('logedUserUserName');
-      if (localStorage.getItem('logedUserUserGroup')) {
-        this.user_group = localStorage.getItem('logedUserUserGroup')
+      this.user_name = sessionStorage.getItem('logedUserUserName');
+      if (sessionStorage.getItem('logedUserUserGroup')) {
+        this.user_group = sessionStorage.getItem('logedUserUserGroup')
       }
     }
 
@@ -190,7 +190,7 @@ export class EditAppComponent implements OnInit {
 
   logout() {
     this.isLoggedin = false;
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/home']);
   }
 
@@ -744,13 +744,11 @@ export class EditAppComponent implements OnInit {
   }
 
   goToStep(value) {
-    // this.storeCreateAppStep = parseInt(value) - 1;
-    //localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+    
   }
 
   nextStep(value) {
-    // this.storeCreateAppStep = parseInt(value) - 1;
-    // localStorage.setItem('storeCreateAppStep', this.storeCreateAppStep);
+   
   }
 
   save_nextStepOld(id) {

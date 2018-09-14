@@ -16,21 +16,21 @@
             <a pageScroll class="nav-link active scroll" href="#main-slider-section">Soft board</a>
           </li> -->
                     <li class="nav-item">
-                        <a pageScroll class="nav-link active scroll" [routerLink]="['/home']">Home</a>
+                        <a pageScroll class="nav-link scroll" routerLinkActive="active" [routerLink]="['/home']" href="#main-slider-section">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" fragment="about-company-section">Know Us </a>
+                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" href="#about-company-section">Know Us </a>
                     </li>
                     <li class="nav-item">
-                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" fragment="price">Your expense</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a pageScroll class="nav-link scroll" [routerLink]="['/franchise-club']">Franchise club </a>
+                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" href="#price">Your expense</a>
                     </li>
 
                     <li class="nav-item">
-                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" fragment="contact-form-section">Tell us </a>
+                        <a pageScroll class="nav-link scroll" routerLinkActive="active" [routerLink]="['/franchise-club']">Franchise club </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a pageScroll class="nav-link scroll" [routerLink]="['/home']" href="#contact-form-section">Tell us </a>
                     </li>
                     <li class="nav-item">
                         <a class="background-secondary log-round" href="javascript:void(0)" (click)="openLogin()" *ngIf="!isLoggedin">Login</a>

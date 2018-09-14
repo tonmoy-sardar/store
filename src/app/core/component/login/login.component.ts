@@ -46,20 +46,20 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Login successfully', '', {
             timeOut: 3000,
           });
-          localStorage.setItem('isLoggedin', 'true');
-          localStorage.setItem('isLoggedin', 'true');
-          localStorage.setItem('logedUserEmail', response.email);
-          localStorage.setItem('logedUserFirstName', response.first_name);
-          localStorage.setItem('logedUserLastName', response.last_name);
-          localStorage.setItem('logedUserFullName', response.first_name + ' ' + response.last_name);
-          localStorage.setItem('logedUserToken', response.token);
-          localStorage.setItem('logedUserUserId', response.user_id);
-          localStorage.setItem('logedUserUserName', response.username);
-          localStorage.setItem('logedUserContactNo', response.contact_no);
+          sessionStorage.setItem('isLoggedin', 'true');
+          sessionStorage.setItem('isLoggedin', 'true');
+          sessionStorage.setItem('logedUserEmail', response.email);
+          sessionStorage.setItem('logedUserFirstName', response.first_name);
+          sessionStorage.setItem('logedUserLastName', response.last_name);
+          sessionStorage.setItem('logedUserFullName', response.first_name + ' ' + response.last_name);
+          sessionStorage.setItem('logedUserToken', response.token);
+          sessionStorage.setItem('logedUserUserId', response.user_id);
+          sessionStorage.setItem('logedUserUserName', response.username);
+          sessionStorage.setItem('logedUserContactNo', response.contact_no);
           this.dialogRef.close();
 
           if (response.group.toLowerCase() == "franchise") {
-            localStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
+            sessionStorage.setItem('logedUserUserGroup', response.group.toLowerCase());
             this.loginService.loginStatus(true);
             this.router.navigateByUrl('/');
           }
