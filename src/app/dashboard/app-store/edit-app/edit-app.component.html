@@ -85,7 +85,7 @@
                 <div class="col-md-12 get-in-touch  padding-top-bottom-10">
                   <div class="container">
                     <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                      Edit your app
+                      Provide Your Business Details
                     </h1>
                   </div>
                 </div>
@@ -124,8 +124,8 @@
                   <div class="form-field col col-md-12">
                     <mat-form-field class="input-full-width">
                       <mat-icon matPrefix>perm_identity</mat-icon>
-                      <input matInput placeholder="Owner Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name">
-                      <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner Name</mat-error>
+                      <input matInput placeholder="Owner's Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name">
+                      <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner's Name</mat-error>
                     </mat-form-field>
                     <p class="btn-switch">
                       <mat-slide-toggle [checked]="haveOwnerName"></mat-slide-toggle>
@@ -138,11 +138,11 @@
     
                                     </mat-form-field> -->
                     <mat-form-field>
-                      <mat-select placeholder="Owner Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
+                      <mat-select placeholder="Your Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation">
                         <mat-option *ngFor="let designation of designations" [value]="designation.id">
                           {{ designation.designation_name }}
                         </mat-option>
-                        <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Owner Designation</mat-error>
+                        <mat-error *ngIf="isFieldValid(stepThree,'owner_designation')">Please choose Your Designation</mat-error>
                       </mat-select>
                     </mat-form-field>
                     <p class="btn-switch">
@@ -152,7 +152,7 @@
                   <div class="form-field col col-md-12">
                     <mat-form-field class="input-full-width">
                       <mat-icon matPrefix>calendar_today</mat-icon>
-                      <input matInput placeholder="Established in The Year" formControlName="business_est_year"
+                      <input matInput placeholder="Foundation year" formControlName="business_est_year"
                         [(ngModel)]="setp_three_data.business_est_year">
                     </mat-form-field>
                     <p class="btn-switch">
@@ -200,7 +200,7 @@
                 <div class="col-md-12 get-in-touch  padding-top-bottom-10">
                   <div class="container">
                     <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
-                      OWNER INTRODUCTION
+                      Owner Details
                     </h1>
                   </div>
                 </div>
