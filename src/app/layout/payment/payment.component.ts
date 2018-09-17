@@ -34,6 +34,7 @@ export class PaymentComponent implements OnInit {
   termsAndConditionChecked = false;
   cuponForm: FormGroup;
   referralForm: FormGroup;
+  referral_user_id: number;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -149,7 +150,7 @@ export class PaymentComponent implements OnInit {
 
   apply_coupon() {
     if (this.cuponForm.valid) {
-      var valid = this.offerList.filter(x => x.offer_code == this.cuponForm.value.coupon.toUpperCase())
+      var valid = this.offerList.filter(x => x.offer_code == this.cuponForm.value.coupon)
       console.log(valid)
       if (valid.length > 0) {
         this.offer_price = valid[0].offer_value;
@@ -170,7 +171,25 @@ export class PaymentComponent implements OnInit {
 
   apply_referral() {
     if (this.referralForm.valid) {
-      this.referral_code = '';
+      this.referral_code = this.referralForm.value.referral_code
+      var data = {
+        referral_code: this.referral_code
+      }
+      this.createAppService.checkReferralCode(data).subscribe(
+        res => {
+          console.log(res)
+          this.referral_user_id = res['referral_user_id'];
+          this.toastr.success('Referral code is applied successfully', '', {
+            timeOut: 3000,
+          });
+        },
+        error => {
+          console.log(error)
+          this.toastr.error('Invalid Referral Code', '', {
+            timeOut: 3000,
+          });
+        }
+      )
     } else {
       this.markFormGroupTouched(this.referralForm)
     }
@@ -222,6 +241,11 @@ export class PaymentComponent implements OnInit {
               var coupon = arrCoupon[0]['id'];
               subscription_data['offer_code'] = coupon;
             }
+
+            if (this.referral_user_id != null) {
+              subscription_data['referral_code_userid'] = this.referral_user_id;
+            }
+
             // console.log(subscription_data)
             this.appSubscribe(subscription_data)
           }

@@ -2113,7 +2113,7 @@ p {
     }
     .navbar-full-white-bg .navbar-toggler,
     .navbar-transparent-white .navbar-toggler {
-        display: none;
+        // display: none;
     }
     .center-brand .navbar-toggler {
         display: block;
@@ -5550,6 +5550,14 @@ z #generic_price_table .generic_content,
     box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
+.mat-form-field-label-wrapper {
+    font-size: 13px;
+}
+
+.mat-dialog-container {
+    border-radius: 8px !important;
+}
+
 .mat-icon,
 .mat-form-field-suffix .mat-icon {
     // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));
@@ -5624,6 +5632,11 @@ z #generic_price_table .generic_content,
 
 .radio-btn-ps .ps {
     margin-right: 20px;
+    font-size: 12px;
+}
+
+.mat-checkbox-label {
+    font-size: 12px;
 }
 
 .payment-due {

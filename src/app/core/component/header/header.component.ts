@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
   openLogin() {
     this.dialog.open(
       LoginComponent, {
-        width: '480px', panelClass: 'popup_wrapper', disableClose: true
+        width: '350px', panelClass: 'popup_wrapper', disableClose: true
       }
     );
   }

@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
     this.dialogRef.close();
     this.dialog.open(
       ForgotPasswordDialogComponent, {
-        width: '480px', panelClass: 'popup_wrapper', disableClose: true
+        width: '350px', panelClass: 'popup_wrapper', disableClose: true
       }
     );
   }
