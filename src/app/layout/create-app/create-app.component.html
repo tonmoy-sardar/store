@@ -62,8 +62,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>card_travel</mat-icon>
-                                                <input matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name"
-                                                    (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
+                                                <input matInput placeholder="Name Of Your Business" formControlName="business_name" [(ngModel)]="setp_two_data.business_name" (keyup)=checkBusinessName() (keydown)=checkBusinessName()>
                                                 <mat-error *ngIf="isFieldValid(stepTwo,'business_name')"> Please Enter Business Name</mat-error>
 
                                             </mat-form-field>
@@ -75,9 +74,7 @@
                                         <div class="form-field col col-md-12 ">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>info</mat-icon>
-                                                <input matInput placeholder="Description Of Your Business" #input maxlength="300" formControlName="business_description"
-                                                    [(ngModel)]="setp_two_data.business_description" (keyup)=checkBusinessDescription()
-                                                    (keydown)=checkBusinessDescription()>
+                                                <input matInput placeholder="Description Of Your Business" #input maxlength="300" formControlName="business_description" [(ngModel)]="setp_two_data.business_description" (keyup)=checkBusinessDescription() (keydown)=checkBusinessDescription()>
                                                 <mat-hint align="end">{{input.value?.length || 0}}/300</mat-hint>
                                             </mat-form-field>
 
@@ -133,8 +130,7 @@
                                         <div class="form-field col-md-6">
                                             <div class="upload-filed  business-photo">
 
-                                                <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*"
-                                                    multiple>
+                                                <input type="file" name="business_photos" formControlName="business_photos" (change)="businessPhotoChange($event)" accept="image/*" multiple>
                                                 <p class="btn-switch">
                                                     <mat-slide-toggle [checked]="haveBusinessImage"></mat-slide-toggle>
                                                 </p>
@@ -204,8 +200,7 @@
                                     <div class="form-field  ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>perm_identity</mat-icon>
-                                            <input matInput placeholder="Owner's Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name" (keyup)=checkOwnerName()
-                                                (keydown)=checkOwnerName()>
+                                            <input matInput placeholder="Owner's Name" formControlName="owner_name" [(ngModel)]="setp_three_data.owner_name" (keyup)=checkOwnerName() (keydown)=checkOwnerName()>
                                             <mat-error *ngIf="isFieldValid(stepThree,'owner_name')"> Please Enter Owner's Name</mat-error>
                                         </mat-form-field>
                                         <p class="btn-switch">
@@ -220,8 +215,7 @@
                                 </mat-form-field> -->
                                         <mat-form-field>
                                             <mat-icon matPrefix>work</mat-icon>
-                                            <mat-select placeholder="Your Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation"
-                                                (change)=checkOwnerDesignation()>
+                                            <mat-select placeholder="Your Designation" formControlName="owner_designation" [(ngModel)]="setp_three_data.owner_designation" (change)=checkOwnerDesignation()>
                                                 <mat-option *ngFor="let designation of designations" [value]="designation.id">
                                                     {{ designation.designation_name }}
                                                 </mat-option>
@@ -235,8 +229,7 @@
                                     <div class="form-field  ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>calendar_today</mat-icon>
-                                            <input matInput appOnlyNumber placeholder="Foundation year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year"
-                                                maxlength="4" (keyup)=checkBusinessEstYear() (keydown)=checkBusinessEstYear()>
+                                            <input matInput appOnlyNumber placeholder="Foundation year" formControlName="business_est_year" [(ngModel)]="setp_three_data.business_est_year" maxlength="4" (keyup)=checkBusinessEstYear() (keydown)=checkBusinessEstYear()>
                                         </mat-form-field>
                                         <p class="btn-switch">
                                             <mat-slide-toggle [checked]="haveBusinessEstYear"></mat-slide-toggle>
@@ -245,8 +238,7 @@
                                     <div class="form-field   ">
                                         <mat-form-field class="input-full-width">
                                             <mat-icon matPrefix>location_on</mat-icon>
-                                            <input matInput placeholder="Business Location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address"
-                                                [(ngModel)]="setp_three_data.store_address">
+                                            <input matInput placeholder="Business Location" autocorrect="off" autocapitalize="off" spellcheck="off" #search formControlName="store_address" [(ngModel)]="setp_three_data.store_address">
                                             <input type="hidden" formControlName="lat" [(ngModel)]="setp_three_data.lat">
                                             <input type="hidden" formControlName="long" [(ngModel)]="setp_three_data.long">
                                         </mat-form-field>
@@ -676,8 +668,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo()
-                                                    (keydown)=checkContactNo()>
+                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -687,8 +678,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress()
-                                                    (keydown)=checkEmailAddress()>
+                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -698,8 +688,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>security</mat-icon>
-                                                <input matInput type="password" placeholder="Your Password" formControlName="password" [(ngModel)]="setp_six_data.password"
-                                                    (keyup)=checkPassword() (keydown)=checkPassword()>
+                                                <input matInput type="password" placeholder="Your Password" formControlName="password" [(ngModel)]="setp_six_data.password" (keyup)=checkPassword() (keydown)=checkPassword()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'password')"> Please Enter Your Password</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -770,8 +759,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo()
-                                                    (keydown)=checkContactNo()>
+                                                <input matInput placeholder="Your Mobile Number" formControlName="contact_no" [(ngModel)]="setp_six_data.contact_no" (keyup)=checkContactNo() (keydown)=checkContactNo()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'contact_no')"> Please Enter Your Mobile Number</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -781,8 +769,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress()
-                                                    (keydown)=checkEmailAddress()>
+                                                <input matInput placeholder="Your Email Address" formControlName="email_id" [(ngModel)]="setp_six_data.email_id" (keyup)=checkEmailAddress() (keydown)=checkEmailAddress()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'email_id')"> Please Enter Your Email Address</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -792,8 +779,7 @@
                                         <div class="form-field col col-md-12">
                                             <mat-form-field class="input-full-width">
                                                 <mat-icon matPrefix>security</mat-icon>
-                                                <input matInput type="password" placeholder="Your Password" formControlName="password" [(ngModel)]="setp_six_data.password"
-                                                    (keyup)=checkPassword() (keydown)=checkPassword()>
+                                                <input matInput type="password" placeholder="Your Password" formControlName="password" [(ngModel)]="setp_six_data.password" (keyup)=checkPassword() (keydown)=checkPassword()>
                                                 <mat-error *ngIf="isFieldValid(stepSix,'password')"> Please Enter Your Password</mat-error>
                                             </mat-form-field>
                                             <p class="btn-switch">
@@ -838,75 +824,79 @@
 
                     <div class="container" *ngIf="logedUserId>0">
                         <div class="row">
-                            <div class="container  padding-top-25">
-                                <div class="col-md-12 get-in-touch padding-top-bottom-10">
+
+
+
+                            <div class="col-md-6 padding-top-50">
+                                <section class="get-in-touch">
+                                    <div class="form-field col col-md-12">
+                                        <mat-form-field class="input-full-width">
+                                            <mat-icon matPrefix>perm_identity</mat-icon>
+                                            <input matInput readonly="readonly" placeholder="Your Name" [(ngModel)]="logedUserFullName">
+
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="form-field col col-md-12">
+                                        <mat-form-field class="input-full-width">
+                                            <mat-icon matPrefix>phone_android</mat-icon>
+                                            <input matInput readonly="readonly" placeholder="Your Mobile Number" [(ngModel)]="logedUserContactNo">
+
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="form-field col col-md-12">
+                                        <mat-form-field class="input-full-width">
+                                            <mat-icon matPrefix>email</mat-icon>
+                                            <input matInput readonly="readonly" placeholder="Your Email Address" [(ngModel)]="logedUserEmail">
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="form-field col-md-12">
+                                        <div class="row">
+                                            <div class="form-field  align-center col-md-5">
+                                                <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
+                                            </div>
+                                            <div mat-button class="form-field align-center col-md-5">
+                                                <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="col-md-12 get-in-touch  padding-top-bottom-10">
                                     <div class="container">
-                                        <h1 class="title fontface-one text-color-dark letter-spacing">
+                                        <h1 class="title fontface-one text-color-darkgrey-b letter-spacing">
                                             Your Details
                                         </h1>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 ">
-                                    <section class="get-in-touch">
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>perm_identity</mat-icon>
-                                                <input matInput readonly="readonly" placeholder="Your Name" [(ngModel)]="logedUserFullName">
 
-                                            </mat-form-field>
 
+                                <div class="mob">
+                                    <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
+
+                                        <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
+
+                                        <h1>{{setp_two_data.business_name}}</h1>
+                                        <div class="description">
+
+                                            <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
+                                            <p>{{setp_six_data.contact_no}}</p>
                                         </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>phone_android</mat-icon>
-                                                <input matInput readonly="readonly" placeholder="Your Mobile Number" [(ngModel)]="logedUserContactNo">
-
-                                            </mat-form-field>
-
-                                        </div>
-                                        <div class="form-field col col-md-12">
-                                            <mat-form-field class="input-full-width">
-                                                <mat-icon matPrefix>email</mat-icon>
-                                                <input matInput readonly="readonly" placeholder="Your Email Address" [(ngModel)]="logedUserEmail">
-
-                                            </mat-form-field>
-
-                                        </div>
-
-                                        <div class="form-field col-md-12">
-                                            <div class="row">
-                                                <div class="form-field  align-center col-md-5">
-                                                    <button mat-button matStepperPrevious class="round-g-btn" (click)="goToStep(5)">Back</button>
-                                                </div>
-                                                <div mat-button class="form-field align-center col-md-5">
-                                                    <button class="round-g-btn" (click)="submitStepSixWithLogin()">Next</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="col-md-6 padding-top-50">
-
-                                    <div class="mob">
-                                        <div class="wallpaper-size resturent-screen apps-design padding-10 text-center ">
-
-                                            <img [src]="setp_two_data.logo ?setp_two_data.logo : 'assets/images/resturent-logo.png'" alt="">
-
-                                            <h1>{{setp_two_data.business_name}}</h1>
-                                            <div class="description">
-
-                                                <span *ngIf="setp_six_data.contact_no != ''">Mobile Number</span>
-                                                <p>{{setp_six_data.contact_no}}</p>
-                                            </div>
-                                            <div class="description ">
-                                                <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
-                                                <p>{{setp_six_data.email_id}}</p>
-                                            </div>
+                                        <div class="description ">
+                                            <span *ngIf="setp_six_data.email_id != ''">Email Address</span>
+                                            <p>{{setp_six_data.email_id}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
