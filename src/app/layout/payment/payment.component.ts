@@ -1,18 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CouponDialogComponent } from '../../core/component/coupon-dialog/coupon-dialog.component'
 import { TermsDialogComponent } from '../../core/component/terms-dialog/terms-dialog.component'
 import { PaytamService } from '../../core/services/paytam.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  
+
   isLoggedin: boolean;
   user_name: string;
   paymentdetails_data: any;
@@ -27,10 +27,13 @@ export class PaymentComponent implements OnInit {
   offerList: any = [];
   offer_price: number = 0;
   coupon_code: string;
+  referral_code: string;
   app_id: number;
   user_id: number;
   user_group: string = '';
   termsAndConditionChecked = false;
+  cuponForm: FormGroup;
+  referralForm: FormGroup;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -38,6 +41,7 @@ export class PaymentComponent implements OnInit {
     private createAppService: CreateAppService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -53,8 +57,12 @@ export class PaymentComponent implements OnInit {
     this.getOfferList();
     this.user_id = this.route.snapshot.params['user_id'];
     this.app_id = this.route.snapshot.params['app_id'];
-    // console.log(this.user_id)
-    // console.log(this.app_id)
+    this.cuponForm = this.formBuilder.group({
+      coupon: [null, Validators.required]
+    });
+    this.referralForm = this.formBuilder.group({
+      referral_code: [null, Validators.required]
+    });
   }
 
   logout() {
@@ -140,28 +148,32 @@ export class PaymentComponent implements OnInit {
   };
 
   apply_coupon() {
-    let dialogRef = this.dialog.open(CouponDialogComponent, {
-      width: '300px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        var valid = this.offerList.filter(x => x.offer_code == result.coupon.toUpperCase())
-        console.log(valid)
-        if (valid.length > 0) {
-          this.offer_price = valid[0].offer_value;
-          this.coupon_code = valid[0].offer_code;
-          this.toastr.success('Coupon is applied successfully', '', {
-            timeOut: 3000,
-          });
-        }
-        else {
-          this.toastr.error('Invalid coupon code', '', {
-            timeOut: 3000,
-          });
-        }
+    if (this.cuponForm.valid) {
+      var valid = this.offerList.filter(x => x.offer_code == this.cuponForm.value.coupon.toUpperCase())
+      console.log(valid)
+      if (valid.length > 0) {
+        this.offer_price = valid[0].offer_value;
+        this.coupon_code = valid[0].offer_code;
+        this.toastr.success('Coupon is applied successfully', '', {
+          timeOut: 3000,
+        });
       }
-    })
+      else {
+        this.toastr.error('Invalid coupon code', '', {
+          timeOut: 3000,
+        });
+      }
+    } else {
+      this.markFormGroupTouched(this.cuponForm)
+    }
+  }
+
+  apply_referral() {
+    if (this.referralForm.valid) {
+      this.referral_code = '';
+    } else {
+      this.markFormGroupTouched(this.referralForm)
+    }
   }
 
 
@@ -185,36 +197,35 @@ export class PaymentComponent implements OnInit {
 
   getPaymentSettingsDetails(amount) {
 
-    if(this.termsAndConditionChecked == true)
-    {
-    this.createAppService.paytmFormValue(this.app_id,amount).subscribe(
-      (
-        data => {
-          this.paymentdetails_data = data;
-          this.paymentFormActive = true;
-          var subscription_data = {
-            app_master: +this.app_id,
-            subscription_type: this.subscription_type_id,
-            price_master: this.price_id[0],
-            total_cost: (this.totalPrice * this.subscription_value) - this.offer_price,
-            order_id: this.paymentdetails_data['ORDER_ID']
+    if (this.termsAndConditionChecked == true) {
+      this.createAppService.paytmFormValue(this.app_id, amount).subscribe(
+        (
+          data => {
+            this.paymentdetails_data = data;
+            this.paymentFormActive = true;
+            var subscription_data = {
+              app_master: +this.app_id,
+              subscription_type: this.subscription_type_id,
+              price_master: this.price_id[0],
+              total_cost: (this.totalPrice * this.subscription_value) - this.offer_price,
+              order_id: this.paymentdetails_data['ORDER_ID']
+            }
+            var arrCoupon = this.offerList.filter(x => x.offer_code == this.coupon_code)
+            if (arrCoupon.length > 0) {
+              var coupon = arrCoupon[0]['id'];
+              subscription_data['offer_code'] = coupon;
+            }
+            // console.log(subscription_data)
+            this.appSubscribe(subscription_data)
           }
-          var arrCoupon = this.offerList.filter(x => x.offer_code == this.coupon_code)
-          if (arrCoupon.length > 0) {
-            var coupon = arrCoupon[0]['id'];
-            subscription_data['offer_code'] = coupon;
-          }
-          // console.log(subscription_data)
-          this.appSubscribe(subscription_data)
-        }
-      ),
-    );
-  }
-  else{
-    this.toastr.error('Please agree to the terms & conditions', '', {
-      timeOut: 3000,
-    });
-  }
+        ),
+      );
+    }
+    else {
+      this.toastr.error('Please agree to the terms & conditions', '', {
+        timeOut: 3000,
+      });
+    }
   }
 
   appSubscribe(data) {
@@ -230,6 +241,19 @@ export class PaymentComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && (form.get(field).dirty || form.get(field).touched);
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        control.controls.forEach(c => this.markFormGroupTouched(c));
+      }
+    });
   }
 
 }
