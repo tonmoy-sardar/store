@@ -274,33 +274,34 @@ export class CreateAppService {
   }
 
 
-  paytmFormValue(app_id,order_amount): Observable<any> {
-    return this.http.get(environment.apiEndpoint + 'get_payment_details/?app_id='+app_id+'&order_amount=' + order_amount+'&type=web')
+  paytmFormValue(app_id, order_amount): Observable<any> {
+    return this.http.get(environment.apiEndpoint + 'get_payment_details/?app_id=' + app_id + '&order_amount=' + order_amount + '&type=web')
   }
 
   appSubscription(data) {
     return this.http.post(environment.apiEndpoint + 'app_subscription/', data)
   }
 
-  getPaymentResponse(url,data){
+  getPaymentResponse(url, data) {
     return this.http.post(url, data)
   }
 
 
-  updateAppMasterIsProductService(id, data)
-  {
+  updateAppMasterIsProductService(id, data) {
     return this.http.put(environment.apiEndpoint + 'update_app_master_is_product_service/' + id + '/', data)
   }
 
-  updateOrgAppMasterIsProductService(id, data)
-  {
+  updateOrgAppMasterIsProductService(id, data) {
     return this.http.put(environment.apiEndpoint + 'org_update_app_master_is_product_service/' + id + '/', data)
   }
 
 
-  sendAppCreateOtp(data)
-  {
+  sendAppCreateOtp(data) {
     return this.http.post(environment.apiEndpoint + 'otp_resend/', data)
+  }
+
+  checkReferralCode(data){
+    return this.http.post(environment.apiEndpoint + 'check_referral_code/', data)
   }
 
 
