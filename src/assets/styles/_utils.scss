@@ -5554,6 +5554,10 @@ z #generic_price_table .generic_content,
     font-size: 13px;
 }
 
+.mat-dialog-container {
+    border-radius: 8px !important;
+}
+
 .mat-icon,
 .mat-form-field-suffix .mat-icon {
     // background-image: -webkit-gradient(linear, left top, right top, from(#00aff0), to(#99dff9));

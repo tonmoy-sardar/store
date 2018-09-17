@@ -24,6 +24,47 @@
                                 </mat-checkbox>
                             </div>
                             <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Apply coupon code</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <form class="coupon_form" [formGroup]="cuponForm" novalidate>
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput placeholder="Coupon Code" formControlName="coupon" name="coupon">
+                                            <mat-error *ngIf="isFieldValid(cuponForm,'coupon')">
+                                                Please enter
+                                                <strong>Coupon Code</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+
+
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="round-g-biscuit pull-right" (click)="apply_coupon()">Apply</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Apply referral code</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <form class="coupon_form" [formGroup]="referralForm" novalidate>
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput placeholder="Referral Code" formControlName="referral_code" name="referral_code">
+                                            <mat-error *ngIf="isFieldValid(referralForm,'referral_code')">
+                                                Please enter
+                                                <strong>Referral Code</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="round-g-biscuit pull-right" (click)="apply_referral()">Apply</button>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="row" *ngIf="offer_price == 0">
                                 <div class="col-md-6">Total </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
@@ -33,18 +74,19 @@
                                 <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
                                 <div class="col-md-6">Coupon code: {{coupon_code}} </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
-                                <div class="col-md-6">Total </div>
-                                <!-- <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div> -->
+                                <div class="col-md-6 text-white bg-dark">Total </div>
+                                <div class="col-md-6 text-white bg-dark" style="text-align: right">Rs. {{getPaidTotal() - offer_price}} </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <mat-checkbox [(ngModel)]="termsAndConditionChecked">I Agree to the <a (click)="showTermsAndConditions()">terms & conditions</a></mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="termsAndConditionChecked">I Agree to the <a (click)="showTermsAndConditions()" class="text-primary
+
+                                        ">terms & conditions</a></mat-checkbox>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <button class="round-g-biscuit" (click)="apply_coupon()">Apply Coupon!</button>
                                     <button class="round-g-biscuit" (click)="pay()">Procced To Pay!</button>
                                 </div>
                             </div>

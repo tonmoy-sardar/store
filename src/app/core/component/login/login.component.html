@@ -1,11 +1,11 @@
-<div class="login_modal ">
+<div class="login_modal">
 
     <a class="close" (click)="modalClose()">×</a>
     <h5 class="text-color-secondary text-center text-transform ">Login</h5>
     <form class="login_form" [formGroup]="form" novalidate>
         <div class="full_width">
             <mat-form-field class="example-full-width full_width">
-                <input matInput placeholder="User name" class="form-control" formControlName="username" name="username">
+                <input matInput placeholder="User name" formControlName="username" name="username">
                 <mat-error *ngIf="form.get('username').touched && form.get('username').hasError('required')">
                     User name is
                     <strong>required</strong>
@@ -14,7 +14,7 @@
         </div>
         <div class="full_width padding-bottom-10">
             <mat-form-field class="example-full-width full_width">
-                <input type="password" matInput class="form-control" placeholder="Password" formControlName="password" name="password">
+                <input type="password" matInput placeholder="Password" formControlName="password" name="password">
                 <mat-error *ngIf="form.get('password').touched && form.get('password').hasError('required')">
                     Password is
                     <strong>required</strong>
