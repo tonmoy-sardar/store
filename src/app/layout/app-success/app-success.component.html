@@ -5,31 +5,33 @@
         <div class="col-md-12 success-app">
             <mat-card>
                 <mat-card-content>
-                    <h1>Congratulations! Your app has been successfully created. </h1>
-                    <img src="assets/images/lonch.png" data-slide="animated" data-animate="zoomIn">
+                    <h1>Congratulations! Your app has been created successfully. </h1>
+                    <img [src]="app_details.logo" data-slide="animated" *ngIf="app_details.logo !='' && app_details.logo !=null" data-animate="zoomIn">
+                    <img src="assets/images/logo-dark.png" data-slide="animated" *ngIf="app_details.logo =='' || app_details.logo ==null" data-animate="zoomIn" >
 
 
                     <div class="create-success col-md-6 offset-md-3">
-                        <span>You note the details:</span>
+                        <span>Application Summary:</span>
                         <hr>
                         <table class="table table-bordered">
 
                             <tbody>
                                 <tr>
 
-                                    <td><strong> Name: </strong> </td>
+                                    <td><strong>Business Name: </strong> </td>
                                     <td>{{app_details.business_name}}</td>
                                 </tr>
                                 <tr>
 
-                                    <td><strong>Owner name:</strong> </td>
-                                    <td>{{app_details.owner_name}}</td>
-                                </tr>
+                                        <td><strong>Business category</strong></td>
+                                        <td>{{app_details.category}}</td>
+                                    </tr>
                                 <tr>
 
-                                    <td><strong>Category</strong></td>
-                                    <td>{{app_details.category}}</td>
+                                    <td><strong>Owner's name:</strong> </td>
+                                    <td>{{app_details.owner_name}}</td>
                                 </tr>
+                                
                                 <tr>
 
                                     <td><strong>Payment Status</strong></td>
@@ -37,12 +39,15 @@
                                 </tr>
                             </tbody>
                         </table>
-
                         <p>
-                            Now, enjoy the features and make the most of it! You can also visit Banao.partner App to manage your app and make changes. But before these, here’s your app Download Link:
-                        </p>
-                        to us on our helpline number *********** for assistance or guidance, any time!
+                                Manage your Application using Banao.Partner App
+                                <br/><br/>
+                                Download Link:
+                                <br/><br/>
+                                In case you require assistance, please call us on +91 33 4007 4004 , <br/>Mon – Fri  between 10 AM to 7 PM or write to us on support@banaoapp.com
+                            </p>
                     </div>
+
 
 
                 </mat-card-content>

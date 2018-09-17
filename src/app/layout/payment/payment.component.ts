@@ -195,6 +195,13 @@ export class PaymentComponent implements OnInit {
     this.getPaymentSettingsDetails(sum);
   }
 
+
+  getPaidTotalAfterOffer() {
+    var totalPrice = this.subscription_value * this.totalPrice;
+    var totalAfterOffer = totalPrice - this.offer_price;
+    return (totalAfterOffer).toFixed(2);
+
+}
   getPaymentSettingsDetails(amount) {
 
     if (this.termsAndConditionChecked == true) {
