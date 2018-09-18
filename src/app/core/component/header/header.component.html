@@ -51,7 +51,7 @@
             <span></span>
             <span></span>
         </div>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu="matMenu" class=" login-dropdown">
             <button *ngIf="app_exist_key" mat-menu-item [routerLink]="[user_group == '' ? '/dashboard' : '/dashboard/franchise-user']">Dashboard</button>
             <button mat-menu-item (click)="logout()">Logout</button>
         </mat-menu>
