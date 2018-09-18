@@ -5635,6 +5635,9 @@ z #generic_price_table .generic_content,
     .padding-top-70 {
         padding-top: 30px;
     }
+    .main-banner-bg .mobile-image-responsive {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 540px) {
