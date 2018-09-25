@@ -15,6 +15,7 @@ export class PaymentComponent implements OnInit {
 
   isLoggedin: boolean;
   user_name: string;
+  customer_email :string;
   paymentdetails_data: any;
   totalPrice: number;
   paymentFormActive: boolean;
@@ -33,8 +34,10 @@ export class PaymentComponent implements OnInit {
   user_group: string = '';
   termsAndConditionChecked = false;
   cuponForm: FormGroup;
+  priceForm: FormGroup;
   referralForm: FormGroup;
   referral_user_id: number;
+  min_per_day_price:number;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -58,12 +61,61 @@ export class PaymentComponent implements OnInit {
     this.getOfferList();
     this.user_id = this.route.snapshot.params['user_id'];
     this.app_id = this.route.snapshot.params['app_id'];
+
+    this.getAppDetails(this.route.snapshot.params['app_id']);
+
     this.cuponForm = this.formBuilder.group({
       coupon: [null, Validators.required]
     });
     this.referralForm = this.formBuilder.group({
       referral_code: [null, Validators.required]
     });
+    // this.priceForm = this.formBuilder.group({
+    //   price_per_day: ['0.00', Validators.required]
+    // });
+  }
+
+
+
+  getAppDetails(id) {
+    this.createAppService.getAppDetails(id).subscribe(
+      data => {
+        console.log(data);
+        this.customer_email= data.user.email;
+        console.log(this.customer_email);
+      },
+      error => {
+       
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  }
+
+  getPerDayPrice(val, i)
+  {
+      var min_val = parseInt(this.priceList[i]['cost']);
+      if (val < min_val) {
+       
+        this.min_per_day_price = min_val
+        this.totalPrice =  this.min_per_day_price
+      }
+      else
+      {
+        this.totalPrice =  this.min_per_day_price
+        if(this.offer_price==0)
+        {
+          this.getPaidTotal();
+        }
+        else if(this.offer_price>0)
+        {
+          this.getPaidTotalAfterOffer();
+        }
+      }
+      
+
+      
   }
 
   logout() {
@@ -110,7 +162,11 @@ export class PaymentComponent implements OnInit {
           }
 
         }
-        this.totalPrice = parseFloat(this.priceList[0].cost);
+        this.totalPrice = parseInt(this.priceList[0].cost);
+        this.min_per_day_price = this.totalPrice
+        this.priceForm = this.formBuilder.group({
+          price_per_day: [this.totalPrice, Validators.required]
+        });
       },
       error => {
         // console.log(error)
@@ -224,7 +280,7 @@ export class PaymentComponent implements OnInit {
   getPaymentSettingsDetails(amount) {
 
     if (this.termsAndConditionChecked == true) {
-      this.createAppService.paytmFormValue(this.app_id, amount).subscribe(
+      this.createAppService.paytmFormValue(this.app_id, amount,this.customer_email).subscribe(
         (
           data => {
             this.paymentdetails_data = data;

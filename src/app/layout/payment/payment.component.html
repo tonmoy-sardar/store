@@ -19,9 +19,14 @@
                         <div class="col-md-12">
                             <div class="row" *ngFor="let item of priceList; let i = index;">
                                 <mat-checkbox [checked]="item.checked" (change)="onPriceChange($event, i, item)" [disabled]="item.setDisabled">
-                                    <div class="col-md-6"> {{item.title}} </div>
-                                    <div class="col-md-6" style="text-align: right">Rs. {{item.cost}}</div>
+                                    <div class="col-md-8"> {{item.title}} </div>
                                 </mat-checkbox>
+                                <!-- <div class="col-md-6" style="text-align: right">Rs. {{item.cost}} / day</div> -->
+                                <div class="col-md-4" style="text-align: right">
+                                    <mat-form-field class="input-full-width">
+                                    <input matInput appOnlyNumber placeholder="Price per day" [(ngModel)]="min_per_day_price" (blur)="getPerDayPrice($event.target.value, i)" >
+                                        </mat-form-field>
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
