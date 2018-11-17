@@ -14,6 +14,16 @@ export class AppComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router
   ) {
+
+     // For Google Analytics code start
+     this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+       
+      }
+    });
+    // For Google Analytics code end
     
   }
 

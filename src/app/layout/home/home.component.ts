@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../../core/component/login/login.component';
 import { GeneralService } from '../../core/services/general.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -58,6 +57,7 @@ export class HomeComponent implements OnInit {
           if (element) { element.scrollIntoView(true); }
         }
       }
+     
     });
    }
 
