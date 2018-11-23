@@ -5305,6 +5305,83 @@ z #generic_price_table .generic_content,
     color: #fff;
 }
 
+// blog-css
+.blog {
+    padding-top: 122px;
+}
+
+.blog .card {
+    border-radius: 5px;
+    position: relative;
+}
+
+.blog .card-title {
+    font-size: 28px;
+}
+
+.blog .form-control {
+    height: auto;
+}
+
+.blog .list-unstyled li {
+    display: block;
+}
+
+.blog .card-header {
+    background: linear-gradient(to right, #c39b76 0, #b17340 100%);
+    color: #fff;
+}
+
+.blog .card .date {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(to right, #ff9104 0, #d87c05 100%);
+    padding: 3px;
+    border-radius: 2px;
+    text-align: center;
+    color: #fff;
+    line-height: 1;
+    font-size: 13px;
+    font-weight: 200;
+    left: -35px;
+    top: -17px;
+    -webkit-box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.11);
+    box-shadow: 10px 10px 5px -4px rgba(0, 0, 0, 0.11);
+}
+
+.blog .card .date .cu-date {
+    font-size: 46px;
+}
+
+.blog .card .date span {
+    display: block;
+}
+
+.card-body ul li {
+    background: url(../images/tick.png) no-repeat;
+    padding: 6px 23px;
+    font-weight: 200;
+    font-family: 'Circular Std Book';
+    display: block;
+}
+
+.recent-blog-recent img {
+    height: 50px;
+    ;
+}
+
+.recent-blog-recent p {
+    font-size: 15px;
+}
+
+.recent-blog-recent {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-top: 5px;
+}
+
 // responsive-css
 @media only screen and (min-width: 1600px) {
     .container {
