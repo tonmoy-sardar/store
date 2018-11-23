@@ -38,6 +38,7 @@ import { LoadingComponent } from './component/loading/loading.component';
 import { SiteHeaderComponent } from './component/site-header/site-header.component';
 import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -20,6 +20,8 @@ const routes: Routes = [
       { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
       { path: 'payment-response/:app_id/:status', loadChildren: './app-success/app-success.module#AppSuccessModule'},
       { path: 'customer/privacy-policy', loadChildren: './privacy-policy/privacy-policy.module#PrivacyPolicyModule' },
+      { path: 'blog', loadChildren: './blog/blog.module#BlogModule' },
+      { path: 'blogdetails', loadChildren: './blogdetails/blogdetails.module#BlogdetailsModule' },
     ]
   }
 ];
