@@ -35,7 +35,8 @@
                         <mat-slide-toggle [checked]="haveBusinessDescription"></mat-slide-toggle>
                       </p>
                     </div>
-                    <div class="form-field col col-md-12 radio-btn-ps ">
+                   
+                    <div class="form-field col col-md-12 radio-btn-ps " *ngIf="appId==''">
                         <mat-chip-list>
                             <mat-chip>Business Type</mat-chip>
                             <mat-divider></mat-divider>

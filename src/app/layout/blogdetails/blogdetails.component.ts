@@ -192,6 +192,7 @@ export class BlogdetailsComponent implements OnInit {
   }
 
   comment() {
+    console.log(this.commentForm);
     if (!this.loggedIn) {
       this.openLoginModal()
     }

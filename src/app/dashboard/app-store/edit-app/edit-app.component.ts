@@ -116,6 +116,7 @@ export class EditAppComponent implements OnInit {
       value: 2
     }
   ]
+  appId: any = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -169,7 +170,7 @@ export class EditAppComponent implements OnInit {
     this.stepFiveDataCatProd = this._formBuilder.group({
       product_cols: this._formBuilder.array([this.createProductCols()]),
     })
-
+    this.appId = this.route.snapshot.params['id'];
     this.getAppDetails(this.route.snapshot.params['id']);
     this.getDesignationDropdown();
     this.mapLoader();
@@ -254,11 +255,12 @@ export class EditAppComponent implements OnInit {
         }
         this.step_one_data.business_description = data.business_description;
         this.step_one_data.is_product_service = data.is_product_service;
+        console.log(this.step_one_data)
         if (data.is_product_service == 1) {
           this.step_one_data.is_only_display_key = true;
         }
         this.step_one_data.is_only_display = data.is_only_display;
-        if(data.is_product_service){
+        if (data.is_product_service) {
           this.haveBusinessType = true;
         }
         if (this.step_one_data.business_description) {
@@ -611,8 +613,12 @@ export class EditAppComponent implements OnInit {
   }
 
 
-  submitStepOne() {
-
+  submitStepOne() {    
+    this.stepOne.patchValue({
+      is_only_display: this.step_one_data.is_only_display,
+      is_product_service: this.step_one_data.is_product_service
+    })
+    console.log(this.stepOne.value);
     if (this.stepOne.valid) {
       this.loading = LoadingState.Processing;
       this.createAppService.updateAppStepOne(this.route.snapshot.params['id'], this.logoToUpload, this.stepOne.value).subscribe(
@@ -671,7 +677,9 @@ export class EditAppComponent implements OnInit {
           this.toastr.success('Success', '', {
             timeOut: 3000,
           });
-          this.stepper.next();
+          //this.stepper.next();
+          console.log("kkk");
+          this.router.navigate(['/dashboard/app-store']);
         },
         error => {
           this.loading = LoadingState.Ready;
@@ -744,11 +752,11 @@ export class EditAppComponent implements OnInit {
   }
 
   goToStep(value) {
-    
+
   }
 
   nextStep(value) {
-   
+
   }
 
   save_nextStepOld(id) {
