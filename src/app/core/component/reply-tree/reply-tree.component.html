@@ -1,0 +1,44 @@
+<ul class="comments-list reply-list" *ngFor="let reply of data.reply; let i = index">
+    <li>
+
+        <div class="comment-avatar"><img src="assets/images/no-image.png" alt=""></div>
+        <div class="comment-box">
+            <div class="comment-head">
+                <h6 class="comment-name"><a href="http://creaticode.com/blog">{{reply.user}}</a></h6>
+                <span>{{reply.date_created | date:'mediumDate'}}</span>
+
+                <small *ngIf="userId == reply.user_id && reply.is_approved == 0" class="waiting">Waiting for approval</small>
+                <i class="fa fa-reply" (click)="toggleReplySec(reply.id)"></i>
+
+            </div>
+            <div class="comment-content">
+                {{reply.title}}
+            </div>
+        </div>
+        <app-reply-tree [data]="reply" [userName]="userName" [userId]="userId" [userPic]="userPic" [loggedIn]="loggedIn"
+            [selectedToggleArea]="selectedToggleArea" [blogId]="blogId" [getSelectedToggleArea]="toggleSelectedToggleArea.bind(this)"
+            (refreshData)='refreshAllData()' *ngIf="reply.is_approved == 1 || userId == reply.user_id"></app-reply-tree>
+
+        <div class="comment-box" *ngIf="selectedToggleArea == reply.id">
+            <div class="comment-head">
+                <h6 class="comment-name by-author" *ngIf="!loggedIn"><a href="http://creaticode.com/blog">Join
+                        Discussion - Now</a></h6>
+                <h6 class="comment-name" *ngIf="loggedIn"><a href="http://creaticode.com/blog">{{reply.user}}</a></h6>
+
+            </div>
+            <form role="form" [formGroup]="replyForm" novalidate>
+                <div class="comment-content form-group">
+                    <textarea rows="3" cols="100%" placeholder="Enter comment" formControlName="title" [ngClass]="displayFieldCss(replyForm,'title')"></textarea>
+                    <div class="invalid-feedback text-left" *ngIf="isFieldValid(replyForm,'title')">
+                        Please enter comment
+                    </div>
+                    <button type="button" class="btn btn-info" (click)="addReply(reply)">Submit</button>
+
+                </div>
+            </form>
+        </div>
+
+    </li>
+
+
+</ul>

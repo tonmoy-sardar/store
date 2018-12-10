@@ -33,6 +33,9 @@
                         <a pageScroll class="nav-link scroll" [routerLink]="['/home']" href="#contact-form-section">Tell us </a>
                     </li>
                     <li class="nav-item">
+                        <a pageScroll class="nav-link scroll" [routerLink]="['/blog']" href="#contact-form-section">Blog </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="background-secondary log-round" href="javascript:void(0)" (click)="openLogin()" *ngIf="!isLoggedin">Login</a>
                         <span class="text-name" *ngIf="isLoggedin">Hi {{user_name}}</span>
                     </li>

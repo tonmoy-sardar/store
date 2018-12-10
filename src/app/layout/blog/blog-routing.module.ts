@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: BlogComponent
+  },
+  {
+    path: 'blog/:category',
+    component: BlogComponent
   }
 ];
 

@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             this.loginService.loginStatus(true);
-            this.router.navigateByUrl('/');
+           // this.router.navigateByUrl('/');
           }
 
         },

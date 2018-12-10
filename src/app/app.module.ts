@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 // core
 import { CoreModule } from "./core/core.module";
 import { PaytamService } from './core/services/paytam.service';
+import { SeoserviceService } from './core/services/seoservice.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { PaytamService } from './core/services/paytam.service';
     })
     
   ],
-  providers: [PaytamService],
+  providers: [PaytamService,SeoserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

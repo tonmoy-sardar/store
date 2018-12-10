@@ -11,6 +11,9 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { OnlyNumberDirective } from './directive/only-number.directive';
+// For Social Sharing
+import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+
 
 //----------------Material----------------//
 import {
@@ -20,12 +23,14 @@ import {
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
   MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatStepperModule,
+  
 } from '@angular/material';
 //----------------Services----------------//
 import { LoginService } from './services/login.service';
 import { CreateAppService } from './services/create-app.service';
 import { FranchiseUserService } from './services/franchise-user.service';
 import { GeneralService } from './services/general.service';
+import { BlogService } from './services/blog.service';
 
 // guard
 import { AuthGuard } from './guard/auth.guard';
@@ -37,6 +42,8 @@ import { CouponDialogComponent } from './component/coupon-dialog/coupon-dialog.c
 import { LoadingComponent } from './component/loading/loading.component';
 import { SiteHeaderComponent } from './component/site-header/site-header.component';
 import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.component';
+import { ReplyTreeComponent } from './component/reply-tree/reply-tree.component';
+
 
 
 @NgModule({
@@ -58,6 +65,7 @@ import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.comp
     MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule,
     MatTabsModule, MatToolbarModule, MatTooltipModule,
     //----------------Material----------------//
+    JwSocialButtonsModule,
   ],
   declarations: [
     HeaderComponent,
@@ -65,7 +73,8 @@ import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.comp
     OnlyNumberDirective, LoginComponent, ConfirmDialogComponent, OtpDialogComponent,ForgotPasswordDialogComponent, CouponDialogComponent,TermsDialogComponent,
     LoadingComponent,
     SiteHeaderComponent,
-    TermsDialogComponent
+    TermsDialogComponent,
+    ReplyTreeComponent,
   ],
   providers: [],
   exports: [
@@ -79,6 +88,9 @@ import { TermsDialogComponent } from './component/terms-dialog/terms-dialog.comp
     OnlyNumberDirective,
     LoadingComponent,
     SiteHeaderComponent,
+    ReplyTreeComponent,
+    JwSocialButtonsModule,
+
     //----------------Material----------------//
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
     MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,
@@ -107,7 +119,8 @@ export class CoreModule {
         LoginService,
         CreateAppService,
         FranchiseUserService,
-        GeneralService
+        GeneralService,
+        BlogService
       ]
 
     };

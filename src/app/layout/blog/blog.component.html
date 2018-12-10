@@ -1,3 +1,4 @@
+<app-header></app-header>
 <!-- Page Content -->
 <section class="background-pink blog">
     <div class="container">
@@ -10,66 +11,48 @@
 
 
                 <!-- Blog Post -->
-                <div class="card mb-4 wow fadeInUp" data-wow-delay="350ms">
+                <div class="card mb-4 wow fadeInUp" data-wow-delay="350ms" *ngFor="let blogList of allBlogList; let i = index;">
                     <div class="date">
-                        <span class="cu-date">12</span>
+                        <!-- <span class="cu-date">12</span>
                         <strong>Oct</strong>
-                        <span>2018</span>
+                        <span>2018</span> -->
+                        <span class="cu-date">{{transformDate(blogList.date_created)}}</span>
                     </div>
 
-
-                    <img class="card-img-top" src="../assets/images/blog3.jpg" alt="Card image cap">
+                    <img class="card-img-top" [src]="blogList.blog_large_image != '' && imageBaseUrl+ blogList.blog_large_image || 'assets/img/no-image.png'" alt="Card image cap">
                     <div class="card-body">
-                        <h2 class="card-title">Post Title</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                        <a href="#" class="button-setting background-orange text-color-white button-setting-secondary mat-button">Read More &rarr;</a>
+                        <h2 class="card-title">{{blogList.blog_title}}</h2>
+                        <p class="card-text" [innerHtml]="blogList.blog_content"></p>
+
+                      
+                        <a href="#" [routerLink]="['/blog/details/'+blogList.blog_url]" class="button-setting background-orange text-color-white button-setting-secondary mat-button">Read More &rarr;</a>
                     </div>
-
-                </div>
-
-                <!-- Blog Post -->
-                <div class="card mb-4 wow fadeInUp" data-wow-delay="350ms">
-                    <div class="date">
-                        <span class="cu-date">12</span>
-                        <strong>Oct</strong>
-                        <span>2018</span>
-                    </div>
-
-                    <img class="card-img-top" src="../assets/images/blog2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h2 class="card-title">Post Title</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                        <a href="#" class="button-setting background-orange text-color-white button-setting-secondary">Read More &rarr;</a>
-                    </div>
-
-                </div>
-
-                <!-- Blog Post -->
-                <div class="card mb-4 wow fadeInUp" data-wow-delay="350ms">
-                    <div class="date">
-                        <span class="cu-date">12</span>
-                        <strong>Oct</strong>
-                        <span>2018</span>
-                    </div>
-
-                    <img class="card-img-top" src="../assets/images/blog1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h2 class="card-title">Post Title</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                        <a href="#" class="button-setting background-orange text-color-white button-setting-secondary mat-button">Read More &rarr;</a>
-                    </div>
-
+                   
                 </div>
 
                 <!-- Pagination -->
-                <ul class="pagination justify-content-center mb-4">
+                <!-- <ul class="pagination justify-content-center mb-4">
                     <li class="page-item">
                         <a class="page-link" href="#">&larr; Older</a>
                     </li>
                     <li class="page-item disabled">
                         <a class="page-link" href="#">Newer &rarr;</a>
                     </li>
-                </ul>
+                </ul> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pagination-msg" *ngIf="allBlogListCount > 0">
+                            <p>Showing {{lower_count}} to {{upper_count}} of {{allBlogListCount}}
+                                entries</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class=" pull-right" *ngIf="allBlogListCount > itemPerPage">
+                            <ngb-pagination [collectionSize]="allBlogListCount" [pageSize]="itemPerPage" [maxSize]="paginationMaxSize"
+                                [(page)]="defaultPagination" (pageChange)="pagination()" size="sm"></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -81,9 +64,9 @@
                     <h5 class="card-header">Search</h5>
                     <div class="card-body">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
+                            <input type="text" class="form-control"   [(ngModel)]="blogname" placeholder="Search for...">
                             <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
+                  <button class="btn btn-secondary" type="button" (click)="SearchBlog(blogname)">Go!</button>
                 </span>
                         </div>
                     </div>
@@ -96,15 +79,15 @@
 
 
                         <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#">Web Design</a>
+                            <li *ngFor="let catList of allCategoryList; let i = index;">
+                                <a href="javascript:void(0)" (click)=getCatwiseBlog(catList.category_slug)>{{catList.category_name}}</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#">HTML</a>
                             </li>
                             <li>
                                 <a href="#">Freebies</a>
-                            </li>
+                            </li> -->
                         </ul>
 
 
@@ -123,3 +106,4 @@
     </div>
 </section>
 <!-- /.container -->
+<app-footer></app-footer>

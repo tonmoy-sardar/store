@@ -9,7 +9,11 @@ export const environment = {
   // urlEndpoint: 'http://192.168.24.208:8000'
 
   apiEndpoint: 'http://www.api-store.banaoapp.com:8001/',
-  urlEndpoint: 'http://www.api-store.banaoapp.com:8001'
+  urlEndpoint: 'http://www.api-store.banaoapp.com:8001',
+
+  apiEndpointBlog: 'http://192.168.24.208/blog-admin/api/',
+  urlEndpointBlog: 'http://192.168.24.208/blog-admin/api/',
+  imageBaseUrlBlog: "http://192.168.24.208/blog-admin/uploads/"
 
 
 };

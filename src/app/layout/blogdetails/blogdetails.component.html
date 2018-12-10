@@ -1,3 +1,4 @@
+<app-header></app-header>
 <!-- Page Content -->
 <section class="background-pink blog">
     <div class="container">
@@ -12,37 +13,36 @@
                 <!-- Blog Post -->
                 <div class="card mb-4">
                     <div class="date">
-                        <span class="cu-date">12</span>
+                        <!-- <span class="cu-date">12</span>
                         <strong>Oct</strong>
-                        <span>2018</span>
+                        <span>2018</span> -->
+                        <span class="cu-date"> {{transformDate(blogDetails.date_created)}}</span>
                     </div>
 
 
-                    <img class="card-img-top" src="../assets/images/blog3.jpg" alt="Card image cap">
+                    <img class="card-img-top" [src]="blogDetails.blog_large_image != '' && imageBaseUrl+ blogDetails.blog_large_image || 'assets/img/no-image.png'">
                     <div class="card-body">
-                        <h2 class="card-title">Post Title</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis! Lorem Ipsum
-                        </p>
-                        <ul>
-                            <li>is simply dummy text of the printing</li>
-                            <li>is simply dummy text of the printing</li>
-                            <li>is simply dummy text of the printing</li>
-                            <li>is simply dummy text of the printing</li>
-                            <li>is simply dummy text of the printing</li>
-
-
-                        </ul>
-                        <p>
-                            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not
-                            only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                            desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-
-
-                        </p>
+                        <h2 class="card-title">{{blogDetails.blog_title}}</h2>
+                        <p class="card-text" [innerHtml]="blogDetails.blog_content"></p>
+                      
 
                     </div>
-
+                    <div class="col-md-12">
+                        
+                        <div class="fb-like" [attr.data-href]="fburl" data-layout="button_count" data-show-faces="true" data-share="true"></div>
+                            <div class="g-plusone" [attr.data-href]="googleurl" data-size="medium"></div>
+                            <a href="https://twitter.com/share" [attr.data-text]="text" [attr.data-url]="twitterurl" class="twitter-share-button"></a>
+                            <hr>
+                        <!-- <ul class="social-network social-circle">
+                            <li><a href="#"  class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                            <li><a [attr.data-href]="fburl" data-layout="button_count" data-show-faces="true" data-share="true" class="icoFacebook fb-like" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a  [attr.data-href]="googleurl" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                        </ul> -->
+                      
+                        
+                    </div>
                 </div>
 
 
@@ -53,7 +53,7 @@
             <div class="col-md-4">
 
                 <!-- Search Widget -->
-                <div class="card mb-4">
+                <!-- <div class="card mb-4">
                     <h5 class="card-header">Search</h5>
                     <div class="card-body">
                         <div class="input-group">
@@ -63,14 +63,31 @@
                 </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Categories Widget -->
                 <div class="card mb-4">
                     <h5 class="card-header">Popular Posts</h5>
                     <div class="card-body ">
 
-                        <div class="recent-blog-recent">
+                        <div class="recent-blog-recent" *ngFor="let blogList of recentBlogList; let i = index">
+                            <div class="row" (click)="goToBlog(blogList.blog_url)">
+
+                                <div class="col-md-4">
+
+                                    <img class="card-img-top" [src]="blogList.blog_small_image != '' && imageBaseUrl+ blogList.blog_small_image || 'assets/img/no-image.png'"
+                                        alt="No Image">
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <p> {{blogList.blog_title}}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- <div class="recent-blog-recent">
                             <div class="row">
 
                                 <div class="col-md-4"> <img class="card-img-top" src="../assets/images/blog3.jpg" alt="Card image cap"></div>
@@ -80,31 +97,113 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="recent-blog-recent">
-                            <div class="row">
-
-                                <div class="col-md-4"> <img class="card-img-top" src="../assets/images/blog3.jpg" alt="Card image cap"></div>
-
-                                <div class="col-md-8">
-                                    <p> desktop publishing software like Aldus .</p>
-                                </div>
-                            </div>
-
-                        </div>
+                        </div> -->
 
 
                     </div>
                 </div>
-
                 <!-- Side Widget -->
-
-
             </div>
-
         </div>
         <!-- /.row -->
-
     </div>
+    <hr>
+    <div class="container">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+            integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <div class="row">
+            <!-- Contenedor Principal -->
+            <div class="comments-container">
+
+                <h1>Comentarios <button type="button" class="btn btn-primary"><i class="fa fa-commenting" aria-hidden="true"></i>
+                        {{blogDetails.comments_approved}}</button>
+                    <!-- <button type="button" class="btn btn-secondary"> <i class="fa fa-thumbs-up" aria-hidden="true"></i> 25</button> -->
+                </h1>
+                <ul id="comments-list" class="comments-list">
+
+                    <li>
+                        <div class="comment-main-level">
+                    
+                            <div class="comment-avatar"><img src="assets/images/no-image.png" alt=""></div>
+                    
+                            <div class="comment-box">
+                                <div class="comment-head">
+                                    <h6 class="comment-name by-author" *ngIf="!loggedIn"><a href="http://creaticode.com/blog">Join
+                                            Discussion - Now</a></h6>
+                                    <h6 class="comment-name" *ngIf="loggedIn"><a href="javascript:void(0)">{{userName}}</a></h6>
+                                    <!-- <span>{{reply.date_created | date:'mediumDate'}}</span> -->
+                                    <!-- <i class="fa fa-reply" ></i> -->
+                                    <!-- <i class="fa fa-heart"></i> -->
+                                </div>
+                                <form role="form" [formGroup]="commentForm" novalidate>
+                                    <div class="comment-content form-group">
+                                        <textarea rows="3" cols="100%" placeholder="Enter comment" formControlName="title" [ngClass]="displayFieldCss(commentForm,'title')"></textarea>
+                                        <div class="invalid-feedback text-left" *ngIf="isFieldValid(commentForm,'title')">
+                                            Please enter comment
+                                        </div>
+                                        <button type="button" class="btn btn-info" (click)="comment()">Submit</button>
+                    
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li *ngFor="let comment of blogDetails.comments; let i = index">
+
+                        <div class="comment-main-level">
+                            <!-- Avatar -->
+                            <div class="comment-avatar"><img src="assets/images/no-image.png" alt=""></div>
+                            <!-- Contenedor del Comentario -->
+                            <div class="comment-box">
+                                <div class="comment-head">
+
+                                    <h6 class="comment-name by-author" *ngIf="loggedIn"><a href="javascript:void(0)">{{comment.user}}</a></h6>
+                                    <span>{{comment.date_created | date:'mediumDate'}}</span>
+                              
+                                    <small *ngIf="userId == comment.user_id && comment.is_approved == 0" class="waiting">Waiting for approval</small>
+                                    <i class="fa fa-reply" (click)="toggleReplySec(comment.id)"></i>
+                                    <!-- <i class="fa fa-heart"></i> -->
+                                </div>
+
+                                <div class="comment-content">
+                                    {{comment.title}}
+                                </div>
+
+                                <div class="comment-box" *ngIf="selectedToggleArea == comment.id">
+                                    <!-- <div class="comment-head">
+                                        <h6 class="comment-name by-author" *ngIf="!loggedIn"><a href="http://creaticode.com/blog">Join
+                                                Discussion - Now</a></h6>
+                                        <h6 class="comment-name" *ngIf="loggedIn"><a href="javascript:void(0)">{{comment.user}}</a></h6>
+                                        
+                                        <small *ngIf="userId == comment.user_id && comment.is_approved == 0" class="waiting">Waiting for approval</small>
+                                        <i class="fa fa-reply"></i>
+                                       
+                                    </div> -->
+                                    <form role="form" [formGroup]="replyForm" novalidate>
+                                        <div class="comment-content form-group">
+                                            <textarea rows="3" cols="90%" placeholder="Enter comment" formControlName="title"
+                                                [ngClass]="displayFieldCss(replyForm,'title')"></textarea>
+                                            <div class="invalid-feedback text-left" *ngIf="isFieldValid(replyForm,'title')">
+                                                Please enter comment
+                                            </div>
+                                            <button type="button" class="btn btn-info" (click)="reply(comment)">Submit</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <app-reply-tree [data]="comment" [userName]="userName" [userId]="userId" [loggedIn]="loggedIn"
+                            [selectedToggleArea]="selectedToggleArea" [blogId]="blogId" [getSelectedToggleArea]="toggleSelectedToggleArea.bind(this)"
+                            (refreshData)='refreshAllData()' *ngIf="comment.is_approved == 1 || userId == comment.user_id"></app-reply-tree>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </section>
 <!-- /.container -->
+<app-footer></app-footer>
