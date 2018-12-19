@@ -26,4 +26,5 @@ this.meta.updateTag({ name: 'description', content: desc })
 updateKeywords(category: string) {
 this.meta.updateTag({ name: 'keywords', content: category })
 }
+
 }

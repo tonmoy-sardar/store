@@ -1,4 +1,4 @@
-import { Component, OnInit,Input  } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +10,9 @@ import { environment } from '../../../environments/environment';
 import * as moment from 'moment';
 import * as Globals from '../../core/global';
 //import { Meta } from '@angular/platform-browser';
+
+//import { SeoserviceService } from '../../core/services/seoservice.service';
+
 @Component({
   selector: 'app-blogdetails',
   templateUrl: './blogdetails.component.html',
@@ -32,7 +35,7 @@ export class BlogdetailsComponent implements OnInit {
   userName: string;
   blogId: number;
   selectedToggleArea: number;
-  
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -40,7 +43,8 @@ export class BlogdetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private blogService: BlogService,
-   // private meta: Meta
+    // private _seoService: SeoserviceService
+    // private meta: Meta
   ) {
 
     // this.meta.addTag({ name: 'og:title', content: 'Banao App Title' });
@@ -49,43 +53,43 @@ export class BlogdetailsComponent implements OnInit {
 
     this.loadData();
 
-  if (!window['fbAsyncInit']) {
-  window['fbAsyncInit'] = function () {
-    window['FB'].init({
-      appId: '413420495745137d',
-      autoLogAppEvents: true,
-      xfbml: true,
-      version: 'v3.0'
-    });
-  };
+    if (!window['fbAsyncInit']) {
+      window['fbAsyncInit'] = function () {
+        window['FB'].init({
+          appId: '413420495745137d',
+          autoLogAppEvents: true,
+          xfbml: true,
+          version: 'v3.0'
+        });
+      };
+    }
+
+    // load facebook sdk if required
+    const fburl = 'https://connect.facebook.net/en_US/sdk.js';
+    if (!document.querySelector(`script[src='${fburl}']`)) {
+      let script = document.createElement('script');
+      script.src = fburl;
+      document.body.appendChild(script);
+    }
+
+    // load google plus sdk if required
+    const googleurl = 'https://apis.google.com/js/platform.js';
+    if (!document.querySelector(`script[src='${googleurl}']`)) {
+      let script = document.createElement('script');
+      script.src = googleurl;
+      document.body.appendChild(script);
+    }
+
+    // load twitter sdk if required
+    const twitterurl = 'https://platform.twitter.com/widgets.js';
+    if (!document.querySelector(`script[src='${twitterurl}']`)) {
+      let script = document.createElement('script');
+      script.src = twitterurl;
+      document.body.appendChild(script);
+    }
+
   }
 
-  // load facebook sdk if required
-  const fburl = 'https://connect.facebook.net/en_US/sdk.js';
-  if (!document.querySelector(`script[src='${fburl}']`)) {
-  let script = document.createElement('script');
-  script.src = fburl;
-  document.body.appendChild(script);
-  }
-
-   // load google plus sdk if required
-   const googleurl = 'https://apis.google.com/js/platform.js';
-   if (!document.querySelector(`script[src='${googleurl}']`)) {
-       let script = document.createElement('script');
-       script.src = googleurl;
-       document.body.appendChild(script);
-   }
-
-   // load twitter sdk if required
-   const twitterurl = 'https://platform.twitter.com/widgets.js';
-   if (!document.querySelector(`script[src='${twitterurl}']`)) {
-       let script = document.createElement('script');
-       script.src = twitterurl;
-       document.body.appendChild(script);
-   }
-
-  }
-  
 
   ngOnInit() {
     this.imageBaseUrl = environment.imageBaseUrlBlog;
@@ -108,7 +112,7 @@ export class BlogdetailsComponent implements OnInit {
     window['gapi'] && window['gapi'].plusone.go();
     // // render tweet button
     window['twttr'] && window['twttr'].widgets.load();
-  } 
+  }
 
   loadData() {
     this.commentForm = this.formBuilder.group({
@@ -150,7 +154,6 @@ export class BlogdetailsComponent implements OnInit {
         this.blogDetails = data['result'];
         console.log("Blog Details ==>", this.blogDetails);
         this.blogId = data['result']['id'];
-
       },
       error => {
 
@@ -308,7 +311,5 @@ export class BlogdetailsComponent implements OnInit {
   refreshAllData() {
     this.getBlogDetailss(this.route.snapshot.params['slug']);
   }
-
-
 
 }
