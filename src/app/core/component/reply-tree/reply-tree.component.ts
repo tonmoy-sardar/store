@@ -75,8 +75,8 @@ export class ReplyTreeComponent implements OnInit {
           res => {
              console.log(res);
              //this.getBlogDetailss(this.route.snapshot.params['slug']);
-            this.toastr.success('Comment has been submitted', '', {
-              timeOut: 3000,
+            this.toastr.success('Comment has been submitted,waiting for approval', '', {
+              timeOut: 5000,
             });
             this.replyForm.reset();
             this.refreshData.emit();

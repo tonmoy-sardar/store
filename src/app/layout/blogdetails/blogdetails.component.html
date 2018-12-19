@@ -23,7 +23,7 @@
                     <img class="card-img-top" [src]="blogDetails.blog_large_image != '' && imageBaseUrl+ blogDetails.blog_large_image || 'assets/img/no-image.png'">
                     <div class="card-body">
                         <h2 class="card-title">{{blogDetails.blog_title}}</h2>
-                        <p class="card-text" [innerHtml]="blogDetails.blog_content"></p>
+                        <p class="card-text post-body-p" [innerHtml]="blogDetails.blog_content"></p>
 
 
                     </div>
@@ -120,7 +120,7 @@
                         {{blogDetails.comments_approved}}</button>
                
                 </h1>
-                <ul id="comments-list" class="comments-list">
+                <!-- <ul id="comments-list" class="comments-list">
 
                     <li>
                         <div class="comment-main-level">
@@ -190,17 +190,19 @@
                             (refreshData)='refreshAllData()' *ngIf="comment.is_approved == 1 || userId == comment.user_id"></app-reply-tree>
                     </li>
                    
-                </ul>
+                </ul> -->
             </div> 
             <!-- New Comment Code -->
-<!-- 
+
             <ul class="comments">
                 <li class="comment-wrap">
                     <div class="photo">
-                        <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+                        <div class="avatar" style="background-image: url('assets/images/no-image.png')"></div>
                     </div>
                     <div class="comment-block">
-                       
+                            <h6 class="comment-name by-author" *ngIf="!loggedIn"><a href="javascript:void(0)">Join
+                                Discussion - Now</a></h6>
+                        <h6 class="comment-name" *ngIf="loggedIn"><a href="javascript:void(0)">{{userName}}</a></h6>
                         <form role="form" [formGroup]="commentForm" novalidate>
                             <div class="comment-content form-group">
                                 <textarea rows="3" cols="100%" placeholder="Enter comment" formControlName="title" [ngClass]="displayFieldCss(commentForm,'title')"></textarea>
@@ -208,58 +210,47 @@
                                     Please enter comment
                                 </div>
                                 <button type="button" class="btn btn-info" (click)="comment()">Submit</button>
+                            </div>
+                        </form>
+                    </div>       
+                </li>
+                <li class="comment-wrap" *ngFor="let comment of blogDetails.comments; let i = index">
+                    <div class="photo">
+                        <div class="avatar" style="background-image: url('assets/images/no-image.png')"></div>
+                    </div>
+            
+                    <div class="comment-block">
+                            <h6 class="comment-name"><a href="javascript:void(0)">{{comment.user}}</a></h6>
+                        <p class="comment-text">{{comment.title}}</p>
+                        <div class="bottom-comment">
+                            <div class="comment-date">{{comment.date_created | date:'mediumDate'}}</div>
+                            <ul class="comment-actions">
+                                <!-- <li class="complain">Complain</li> -->
+                                <li class="reply"><a href="javascript:void(0)" (click)="toggleReplySec(comment.id)">Reply</a></li>
+                            </ul>
+                            <small *ngIf="userId == comment.user_id && comment.is_approved == 0" class="waiting">Waiting for
+                                approval</small>
+                        </div>
+                    </div>
+            
+                    <div class="comment-block" style="margin-top:2px;" *ngIf="selectedToggleArea == comment.id">
+                        <form role="form" [formGroup]="replyForm" novalidate>
+                            <div class="comment-content form-group">
+                                <textarea rows="3" cols="100%" placeholder="Enter comment" formControlName="title" [ngClass]="displayFieldCss(replyForm,'title')"></textarea>
+                                <div class="invalid-feedback text-left" *ngIf="isFieldValid(replyForm,'title')">
+                                    Please enter comment
+                                </div>
+                                <button type="button" class="btn btn-info" (click)="reply(comment)">Submit</button>
             
                             </div>
                         </form>
                     </div>
-
-                </li>
-
-                <li class="comment-wrap" *ngFor="let comment of blogDetails.comments; let i = index">
-                    <div class="photo">
-                        <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
-                    </div>
-
-                    <div class="comment-block">
-                        <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto
-                            temporibus iste nostrum
-                            dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto
-                            tempore, quaerat explicabo
-                            veniam fuga corporis totam reprehenderit quasi
-                            sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
-                        <div class="bottom-comment">
-                            <div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
-                            <ul class="comment-actions">
-                                <li class="complain">Complain</li>
-                                <li class="reply"><a href="#">Reply</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
+            
                     <app-reply-tree [data]="comment" [userName]="userName" [userId]="userId" [loggedIn]="loggedIn"
                         [selectedToggleArea]="selectedToggleArea" [blogId]="blogId" [getSelectedToggleArea]="toggleSelectedToggleArea.bind(this)"
                         (refreshData)='refreshAllData()' *ngIf="comment.is_approved == 1 || userId == comment.user_id"></app-reply-tree>
                 </li>
-
-                <li class="comment-wrap">
-                    <div class="photo">
-                        <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-                    </div>
-                    <div class="comment-block">
-                        <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
-                            dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo
-                            veniam fuga corporis totam.</p>
-                        <div class="bottom-comment">
-                            <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
-                            <ul class="comment-actions">
-                                <li class="complain">Complain</li>
-                                <li class="reply">Reply</li>
-                            </ul>
-                        </div>
-                    </div>
-        
-                </li>
-            </ul> -->
+            </ul>
         </div>
     </div>
 

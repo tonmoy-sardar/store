@@ -22,7 +22,8 @@
                     <img class="card-img-top" [src]="blogList.blog_large_image != '' && imageBaseUrl+ blogList.blog_large_image || 'assets/img/no-image.png'" alt="Card image cap">
                     <div class="card-body">
                         <h2 class="card-title">{{blogList.blog_title}}</h2>
-                        <p class="card-text" [innerHtml]="blogList.blog_content"></p>
+                        <!-- <p class="card-text" [innerHtml]="blogList.blog_content"></p> -->
+                        <p class="card-text">{{blogList.blog_excerpt}}</p>
 
                       
                         <a href="#" [routerLink]="['/blog/details/'+blogList.blog_url]" class="button-setting background-orange text-color-white button-setting-secondary mat-button">Read More &rarr;</a>

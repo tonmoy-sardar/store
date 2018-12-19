@@ -206,8 +206,8 @@ export class BlogdetailsComponent implements OnInit {
       if (this.commentForm.valid) {
         this.blogService.addcomment(this.commentForm.value).subscribe(
           res => {
-            this.toastr.success('Comment has been submitted', '', {
-              timeOut: 3000,
+            this.toastr.success('Comment has been submitted, waiting for approval', '', {
+              timeOut: 5000,
             });
             this.commentForm.reset();
             this.getBlogDetailss(this.route.snapshot.params['slug']);

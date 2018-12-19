@@ -1,4 +1,4 @@
- <ul class="comments-list reply-list" *ngFor="let reply of data.reply; let i = index">
+<!-- <ul class="comments-list reply-list" *ngFor="let reply of data.reply; let i = index">
     <li>
 
         <div class="comment-avatar"><img src="assets/images/no-image.png" alt=""></div>
@@ -41,80 +41,52 @@
     </li>
 
 
-</ul> 
-<!-- <ul class="reply-comment" *ngFor="let reply of data.reply; let i = index">
-    <li class="comment-wrap reply-comment">
+</ul>  -->
+
+
+
+
+<ul class="reply-comment" *ngFor="let reply of data.reply; let i = index">
+
+    <li class="comment-wrap class1">
         <div class="photo">
-            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+            <div class="avatar" style="background-image: url('assets/images/no-image.png')"></div>
+        </div>
+        <div class="comment-block" >
+            <h6 class="comment-name"><a href="javascript:void(0)">{{reply.user}}</a></h6>
+            <p class="comment-text" >{{reply.title}}</p>
+            <div class="bottom-comment">
+                <div class="comment-date" >{{reply.date_created | date:'mediumDate'}}</div>
+                <ul class="comment-actions">
+                    <li class="reply" (click)="toggleReplySec(reply.id)">Reply</li>
+                    <small  class="waiting" *ngIf="userId == reply.user_id && reply.is_approved == 0">Waiting for approval</small>
+                </ul>
+            </div>
+        </div>
+        <app-reply-tree [data]="reply" [userName]="userName" [userId]="userId" [userPic]="userPic" [loggedIn]="loggedIn"
+        [selectedToggleArea]="selectedToggleArea" [blogId]="blogId" [getSelectedToggleArea]="toggleSelectedToggleArea.bind(this)"
+        (refreshData)='refreshAllData()' *ngIf="reply.is_approved == 1 || userId == reply.user_id"></app-reply-tree>
+    </li>
+    
+            
+    <li class="comment-wrap reply-comment" *ngIf="selectedToggleArea == reply.id">
+        <div class="photo">
+            <div class="avatar" style="background-image: url('assets/images/no-image.png')"></div>
         </div>
         <div class="comment-block">
-            <form action="">
-                <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
+            <form [formGroup]="replyForm" novalidate>
+                <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..." formControlName="title"
+                    [ngClass]="displayFieldCss(replyForm,'title')"></textarea>
                 <div class="bottom-comment">
-                    <div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
                     <ul class="comment-actions">
 
-                        <li class="reply"><a class="submit-send" href="#">Submit</a></li>
+                        <li class="reply" (click)="addReply(reply)"><a class="submit-send" href="javascript:void(0)">Submit</a></li>
                     </ul>
                 </div>
             </form>
         </div>
 
     </li>
-     <li class="comment-wrap">
-        <div class="photo">
-            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-        </div>
-        <div class="comment-block">
-            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
-                dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo
-                veniam fuga corporis totam.</p>
-            <div class="bottom-comment">
-                <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
-                <ul class="comment-actions">
-                    <li class="complain">Complain</li>
-                    <li class="reply">Reply</li>
-                </ul>
-            </div>
-        </div>
-
-    </li>
-    <li class="comment-wrap">
-        <div class="photo">
-            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-        </div>
-        <div class="comment-block">
-            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
-                dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo
-                veniam fuga corporis totam.</p>
-            <div class="bottom-comment">
-                <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
-                <ul class="comment-actions">
-                    <li class="complain">Complain</li>
-                    <li class="reply">Reply</li>
-                </ul>
-            </div>
-        </div>
-
-    </li>
-    <li class="comment-wrap">
-        <div class="photo">
-            <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-        </div>
-        <div class="comment-block">
-            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
-                dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo
-                veniam fuga corporis totam.</p>
-            <div class="bottom-comment">
-                <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
-                <ul class="comment-actions">
-                    <li class="complain">Complain</li>
-                    <li class="reply">Reply</li>
-                </ul>
-            </div>
-        </div>
-
-    </li>
 
 
-</ul> -->
+</ul>

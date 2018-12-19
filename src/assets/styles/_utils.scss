@@ -2092,6 +2092,37 @@ p {
     left: 10%;
 }
 
+// For blog Details  body custom css (Don't change)
+.post-body-p strong {
+       color: #000!important;
+    font-size: 15px !important;
+}
+.post-body-p p {
+    font-weight: 600 !important;
+    color: #9e9d9d !important;
+    line-height: 1.5 !important;
+font-family: initial !important;
+}
+.post-body-p ul {
+    display: block !important;
+    list-style-type: disc !important;
+    margin-block-start: 1em !important;
+    margin-block-end: 1em !important;
+    margin-inline-start: 0px !important;
+    margin-inline-end: 0px !important;
+    padding-inline-start: 40px !important;
+}
+
+.post-body-p ul li {
+color: #9e9d9d!important;
+background: 0 0!important;
+display: list-item!important;
+text-align: -webkit-match-parent!important;
+padding: 10px!important;
+font-family: initial!important;
+font-size: 15px !important;
+}
+
 @media only screen and (min-width: 993px) and (max-width: 1091px) {
     #menu_bars {
         right: 5px;
