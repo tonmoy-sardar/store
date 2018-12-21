@@ -3,6 +3,7 @@ import { CreateAppService } from "../../core/services/create-app.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingState } from '../../core/component/loading/loading.component';
+import { SeoserviceService } from '../../core/services/seoservice.service';
 
 @Component({
   selector: 'app-app-success',
@@ -21,6 +22,7 @@ export class AppSuccessComponent implements OnInit {
     private createAppService: CreateAppService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private _seoService: SeoserviceService
   ) {
     //console.log('Called Constructor');
     this.route.params.subscribe(params => {
@@ -30,6 +32,12 @@ export class AppSuccessComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
     
     if(this.status=='TXN_SUCCESS')
     {

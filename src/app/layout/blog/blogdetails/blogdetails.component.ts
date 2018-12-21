@@ -4,14 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { LoginComponent } from '../../core/component/login/login.component';
-import { BlogService } from '../../core/services/blog.service';
-import { environment } from '../../../environments/environment';
+import { LoginComponent } from '../../../core/component/login/login.component';
+import { BlogService } from '../../../core/services/blog.service';
+import { environment } from '../../../../environments/environment';
 import * as moment from 'moment';
-import * as Globals from '../../core/global';
-//import { Meta } from '@angular/platform-browser';
-
-//import { SeoserviceService } from '../../core/services/seoservice.service';
+import * as Globals from '../../../core/global';
+import { SeoserviceService } from '../../../core/services/seoservice.service';
 
 @Component({
   selector: 'app-blogdetails',
@@ -35,7 +33,7 @@ export class BlogdetailsComponent implements OnInit {
   userName: string;
   blogId: number;
   selectedToggleArea: number;
-
+  current_url: string;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -43,55 +41,56 @@ export class BlogdetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private blogService: BlogService,
-    // private _seoService: SeoserviceService
-    // private meta: Meta
+    private _seoService: SeoserviceService
   ) {
-
-    // this.meta.addTag({ name: 'og:title', content: 'Banao App Title' });
-    // this.meta.addTag({ name: 'og:description', content: 'Banao App description' });
-    // this.meta.addTag({ name: 'og:image', content: 'https://www.banaoapp.com/assets/images/logo-dark.png' });
-
     this.loadData();
 
-    if (!window['fbAsyncInit']) {
-      window['fbAsyncInit'] = function () {
-        window['FB'].init({
-          appId: '413420495745137d',
-          autoLogAppEvents: true,
-          xfbml: true,
-          version: 'v3.0'
-        });
-      };
-    }
+    // if (!window['fbAsyncInit']) {
+    //   window['fbAsyncInit'] = function () {
+    //     window['FB'].init({
+    //       appId: '413420495745137d',
+    //       autoLogAppEvents: true,
+    //       xfbml: true,
+    //       version: 'v3.0'
+    //     });
+    //   };
+    // }
 
-    // load facebook sdk if required
-    const fburl = 'https://connect.facebook.net/en_US/sdk.js';
-    if (!document.querySelector(`script[src='${fburl}']`)) {
-      let script = document.createElement('script');
-      script.src = fburl;
-      document.body.appendChild(script);
-    }
+    // // load facebook sdk if required
+    // const fburl = 'https://connect.facebook.net/en_US/sdk.js';
+    // if (!document.querySelector(`script[src='${fburl}']`)) {
+    //   let script = document.createElement('script');
+    //   script.src = fburl;
+    //   document.body.appendChild(script);
+    // }
 
-    // load google plus sdk if required
-    const googleurl = 'https://apis.google.com/js/platform.js';
-    if (!document.querySelector(`script[src='${googleurl}']`)) {
-      let script = document.createElement('script');
-      script.src = googleurl;
-      document.body.appendChild(script);
-    }
+    // // load google plus sdk if required
+    // const googleurl = 'https://apis.google.com/js/platform.js';
+    // if (!document.querySelector(`script[src='${googleurl}']`)) {
+    //   let script = document.createElement('script');
+    //   script.src = googleurl;
+    //   document.body.appendChild(script);
+    // }
 
-    // load twitter sdk if required
-    const twitterurl = 'https://platform.twitter.com/widgets.js';
-    if (!document.querySelector(`script[src='${twitterurl}']`)) {
-      let script = document.createElement('script');
-      script.src = twitterurl;
-      document.body.appendChild(script);
-    }
+    // // load twitter sdk if required
+    // const twitterurl = 'https://platform.twitter.com/widgets.js';
+    // if (!document.querySelector(`script[src='${twitterurl}']`)) {
+    //   let script = document.createElement('script');
+    //   script.src = twitterurl;
+    //   document.body.appendChild(script);
+    // }
 
   }
 
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title'] + ' ' + this.route.snapshot.params['slug']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     this.imageBaseUrl = environment.imageBaseUrlBlog;
     if (sessionStorage.getItem('isLoggedin')) {
       this.loggedIn = true;
@@ -102,16 +101,16 @@ export class BlogdetailsComponent implements OnInit {
     }
     this.getBlogDetailss(this.route.snapshot.params['slug']);
     this.blogListMostRecents();
-
+    this.current_url = window.location.href;
   }
 
   ngAfterViewInit(): void {
-    // render facebook button
-    window['FB'] && window['FB'].XFBML.parse();
-    // render google plus button
-    window['gapi'] && window['gapi'].plusone.go();
-    // // render tweet button
-    window['twttr'] && window['twttr'].widgets.load();
+    // // render facebook button
+    // window['FB'] && window['FB'].XFBML.parse();
+    // // render google plus button
+    // window['gapi'] && window['gapi'].plusone.go();
+    // // // render tweet button
+    // window['twttr'] && window['twttr'].widgets.load();
   }
 
   loadData() {
@@ -154,6 +153,13 @@ export class BlogdetailsComponent implements OnInit {
         this.blogDetails = data['result'];
         console.log("Blog Details ==>", this.blogDetails);
         this.blogId = data['result']['id'];
+        var og_data = {
+          og_image: this.imageBaseUrl + this.blogDetails.blog_large_image,
+          og_title: this.blogDetails.blog_title,
+          og_description: this.blogDetails.blog_excerpt,
+          og_url: this.current_url
+        }
+        this._seoService.updateOg(og_data)
       },
       error => {
 

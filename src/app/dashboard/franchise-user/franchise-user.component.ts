@@ -4,6 +4,8 @@ import { FranchiseUserService } from "../../core/services/franchise-user.service
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
+import { SeoserviceService } from '../../core/services/seoservice.service';
+
 @Component({
   selector: 'app-franchise-user',
   templateUrl: './franchise-user.component.html',
@@ -23,9 +25,17 @@ export class FranchiseUserComponent implements OnInit {
     private franchiseUserService: FranchiseUserService,
     private createAppService: CreateAppService,
     private toastr: ToastrService,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = sessionStorage.getItem('logedUserUserName');

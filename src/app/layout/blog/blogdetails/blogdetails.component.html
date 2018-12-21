@@ -29,11 +29,14 @@
                     </div>
                     <div class="col-md-12">
 
-                        <div class="fb-like" [attr.data-href]="fburl" data-layout="button_count" data-show-faces="true"
+                        <!-- <div class="fb-like" [attr.data-href]="fburl" data-layout="button_count" data-show-faces="true"
                             data-share="true"></div>
                         <div class="g-plusone" [attr.data-href]="googleurl" data-size="medium"></div>
                         <a href="https://twitter.com/share" [attr.data-text]="text" [attr.data-url]="twitterurl" class="twitter-share-button"></a>
-                        <hr>
+                        <hr> -->
+                        <fb-like url={{current_url}}></fb-like>
+                        <google-plus url={{current_url}}></google-plus>
+                        <tweet url={{current_url}} text={{blogDetails.blog_title}}></tweet>
                         <!-- <ul class="social-network social-circle">
                             <li><a href="#"  class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
                             <li><a [attr.data-href]="fburl" data-layout="button_count" data-show-faces="true" data-share="true" class="icoFacebook fb-like" title="Facebook"><i class="fa fa-facebook"></i></a></li>
