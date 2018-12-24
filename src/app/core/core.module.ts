@@ -13,7 +13,7 @@ import { FooterComponent } from './component/footer/footer.component';
 import { OnlyNumberDirective } from './directive/only-number.directive';
 // For Social Sharing
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
-
+import { ShareModule } from '@ngx-share/core';
 
 //----------------Material----------------//
 import {
@@ -66,6 +66,7 @@ import { ReplyTreeComponent } from './component/reply-tree/reply-tree.component'
     MatTabsModule, MatToolbarModule, MatTooltipModule,
     //----------------Material----------------//
     JwSocialButtonsModule,
+    ShareModule.forRoot()
   ],
   declarations: [
     HeaderComponent,
@@ -90,7 +91,7 @@ import { ReplyTreeComponent } from './component/reply-tree/reply-tree.component'
     SiteHeaderComponent,
     ReplyTreeComponent,
     JwSocialButtonsModule,
-
+    ShareModule,
     //----------------Material----------------//
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
     MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule,

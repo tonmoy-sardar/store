@@ -22,7 +22,7 @@ export class SeoserviceService {
 
     updateOg(data: any) {
         // og
-        this.meta.updateTag({ property: 'og:type', content: 'Website' })
+        this.meta.updateTag({ property: 'og:type', content: 'website' })
         this.meta.updateTag({ property: 'og:image', content: data['og_image'] })
         this.meta.updateTag({ property: 'og:title', content: data['og_title'] })
         this.meta.updateTag({ property: 'og:description', content: data['og_description'] })

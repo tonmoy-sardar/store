@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';
 import * as moment from 'moment';
 import * as Globals from '../../../core/global';
 import { SeoserviceService } from '../../../core/services/seoservice.service';
+import { ShareButtons } from '@ngx-share/core';
 
 @Component({
   selector: 'app-blogdetails',
@@ -41,7 +42,8 @@ export class BlogdetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private blogService: BlogService,
-    private _seoService: SeoserviceService
+    private _seoService: SeoserviceService,
+    public share: ShareButtons
   ) {
     this.loadData();
 
@@ -156,7 +158,7 @@ export class BlogdetailsComponent implements OnInit {
         var og_data = {
           og_image: this.imageBaseUrl + this.blogDetails.blog_large_image,
           og_title: this.blogDetails.blog_title,
-          og_description: this.blogDetails.blog_excerpt,
+          og_description: this.blogDetails.blog_excerpt.trim(),
           og_url: this.current_url
         }
         this._seoService.updateOg(og_data)
