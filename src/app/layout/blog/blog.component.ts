@@ -9,6 +9,7 @@ import { BlogService } from '../../core/services/blog.service';
 import { environment } from '../../../environments/environment';
 import * as moment from 'moment';
 import * as Globals from '../../core/global';
+import { SeoserviceService } from '../../core/services/seoservice.service';
 
 @Component({
   selector: 'app-blog',
@@ -37,9 +38,17 @@ export class BlogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private blogService: BlogService,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     this.itemNo = 0;
     this.defaultPagination = 1;
     this.paginationMaxSize = Globals.paginationMaxSize;

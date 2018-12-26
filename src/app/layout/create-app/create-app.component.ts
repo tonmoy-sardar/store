@@ -14,6 +14,8 @@ import { OtpDialogComponent } from "../../core/component/otp-dialog/otp-dialog.c
 import { LoginComponent } from '../../core/component/login/login.component';
 import { LoadingState } from '../../core/component/loading/loading.component';
 import { forkJoin } from "rxjs/observable/forkJoin";
+import { SeoserviceService } from '../../core/services/seoservice.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-app',
@@ -158,10 +160,19 @@ export class CreateAppComponent implements OnInit {
     private platformLocation: PlatformLocation,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+    
     this.sessionID = sessionStorage.getItem('storeSessionID');
     if (!this.sessionID) {
       this.currentDate = this.now.getTime();

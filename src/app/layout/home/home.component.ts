@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../../core/component/login/login.component';
 import { GeneralService } from '../../core/services/general.service';
+import { SeoserviceService } from '../../core/services/seoservice.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -48,6 +50,8 @@ export class HomeComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private generalService: GeneralService,
+    private _seoService: SeoserviceService,
+    private activatedRoute: ActivatedRoute,
   ) {
     router.events.subscribe(s => {
       if (s instanceof NavigationEnd) {
@@ -62,6 +66,13 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+    
     if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = sessionStorage.getItem('logedUserUserName')

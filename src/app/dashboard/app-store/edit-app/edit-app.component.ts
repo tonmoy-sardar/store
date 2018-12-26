@@ -10,6 +10,8 @@ import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 import { LoadingState } from '../../../core/component/loading/loading.component';
 import { forkJoin } from "rxjs/observable/forkJoin";
+import { SeoserviceService } from '../../../core/services/seoservice.service';
+
 @Component({
   selector: 'app-edit-app',
   templateUrl: './edit-app.component.html',
@@ -126,10 +128,18 @@ export class EditAppComponent implements OnInit {
     private toastr: ToastrService,
     private platformLocation: PlatformLocation,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = sessionStorage.getItem('logedUserUserName');

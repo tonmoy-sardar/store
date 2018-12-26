@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
+import { SeoserviceService } from '../../core/services/seoservice.service';
 
 @Component({
   selector: 'app-app-store',
@@ -21,9 +22,17 @@ export class AppStoreComponent implements OnInit {
     private route: ActivatedRoute,
     private createAppService: CreateAppService,
     private toastr: ToastrService,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = sessionStorage.getItem('logedUserUserName');

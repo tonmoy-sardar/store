@@ -6,6 +6,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CreateAppService } from '../../core/services/create-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SeoserviceService } from '../../core/services/seoservice.service';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -46,9 +48,17 @@ export class PaymentComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private _seoService: SeoserviceService
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this._seoService.updateTitle(data['title']);
+      this._seoService.updateDescription(data['description'])
+      this._seoService.updateKeywords(data['keywords'])
+    });
+
     if (sessionStorage.getItem('isLoggedin')) {
       this.isLoggedin = true;
       this.user_name = sessionStorage.getItem('logedUserUserName')
