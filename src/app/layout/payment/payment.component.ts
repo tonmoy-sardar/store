@@ -40,6 +40,7 @@ export class PaymentComponent implements OnInit {
   referralForm: FormGroup;
   referral_user_id: number;
   min_per_day_price:number;
+  subscription_type:number;
   constructor(
     private paytamService: PaytamService,
     private router: Router,
@@ -150,6 +151,8 @@ export class PaymentComponent implements OnInit {
 
   onSubscriptionChange() {
     var arrData = this.subscriptionTypeList.filter(x => x.id == this.subscription_type_id)
+
+    this.subscription_type = this.subscription_type_id;
     if (arrData.length > 0) {
       this.subscription_value = arrData[0]['days']
     }
@@ -271,7 +274,13 @@ export class PaymentComponent implements OnInit {
 
 
   getPaidTotal() {
-    return (this.subscription_value * this.totalPrice).toFixed(2)
+    if (this.subscription_type == 4) {
+      return '0.00';
+    }
+    else {
+      return (this.subscription_value * this.totalPrice).toFixed(2)
+    }
+
   }
 
 
@@ -282,11 +291,15 @@ export class PaymentComponent implements OnInit {
 
 
   getPaidTotalAfterOffer() {
-    var totalPrice = this.subscription_value * this.totalPrice;
-    var totalAfterOffer = totalPrice - this.offer_price;
-    return (totalAfterOffer).toFixed(2);
-
-}
+    if (this.subscription_type == 4) {
+      return '0.00';
+    }
+    else {
+      var totalPrice = this.subscription_value * this.totalPrice;
+      var totalAfterOffer = totalPrice - this.offer_price;
+      return (totalAfterOffer).toFixed(2);
+    }
+  }
   getPaymentSettingsDetails(amount) {
 
     if (this.termsAndConditionChecked == true) {
@@ -324,6 +337,31 @@ export class PaymentComponent implements OnInit {
       });
     }
   }
+
+
+
+  proceed() {
+
+    if (this.termsAndConditionChecked == true) {
+      var subscription_data = {
+        app_master: +this.app_id,
+    }
+      this.createAppService.freeSubscription(subscription_data).subscribe(
+        res => {
+          //console.log("Free Trail Response",res)
+          this.router.navigateByUrl('/payment-response/' + this.app_id + '/' +'TXN_SUCCESS');
+         
+        },
+      );
+    }
+    else {
+      this.toastr.error('Please agree to the terms & conditions', '', {
+        timeOut: 3000,
+      });
+    }
+  }
+
+
 
   appSubscribe(data) {
     this.createAppService.appSubscription(data).subscribe(

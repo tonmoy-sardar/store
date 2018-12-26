@@ -273,6 +273,10 @@ export class CreateAppService {
     return this.http.get(environment.apiEndpoint + 'dropdown_offer_code/')
   }
 
+  freeSubscription(data): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'free_subscription/', data)
+  }
+
 
   paytmFormValue(app_id, order_amount,customer_email): Observable<any> {
     return this.http.get(environment.apiEndpoint + 'get_payment_details/?app_id=' + app_id + '&order_amount=' + order_amount + '&customer_email=' + customer_email + '&type=web')

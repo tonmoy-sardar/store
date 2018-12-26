@@ -8,24 +8,27 @@
                     <mat-card-title>Subscription Type</mat-card-title>
                     <mat-card-content>
                         <mat-radio-group class="example-radio-group row" [(ngModel)]="subscription_type_id" (change)="onSubscriptionChange()">
-                            <mat-radio-button class="example-radio-button col-md-12" *ngFor="let subscription of subscriptionTypeList" [value]="subscription.id">
+                            <mat-radio-button class="example-radio-button col-md-12" *ngFor="let subscription of subscriptionTypeList"
+                                [value]="subscription.id">
                                 {{subscription.type_name}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </mat-card-content>
 
-                    <mat-card-title>Item Details</mat-card-title>
+                    <mat-card-title *ngIf="subscription_type != 4">Item Details</mat-card-title>
                     <mat-card-content>
-                        <div class="col-md-12">
+                        <div class="col-md-12" *ngIf="subscription_type != 4">
                             <div class="row" *ngFor="let item of priceList; let i = index;">
-                                <mat-checkbox [checked]="item.checked" (change)="onPriceChange($event, i, item)" [disabled]="item.setDisabled">
+                                <mat-checkbox [checked]="item.checked" (change)="onPriceChange($event, i, item)"
+                                    [disabled]="item.setDisabled">
                                     <div class="col-md-8"> {{item.title}} </div>
                                 </mat-checkbox>
                                 <!-- <div class="col-md-6" style="text-align: right">Rs. {{item.cost}} / day</div> -->
                                 <div class="col-md-4" style="text-align: right">
                                     <mat-form-field class="input-full-width">
-                                    <input matInput appOnlyNumber placeholder="Price per day" [(ngModel)]="min_per_day_price" (blur)="getPerDayPrice($event.target.value, i)" >
-                                        </mat-form-field>
+                                        <input matInput appOnlyNumber placeholder="Price per day" [(ngModel)]="min_per_day_price"
+                                            (blur)="getPerDayPrice($event.target.value, i)">
+                                    </mat-form-field>
                                 </div>
                             </div>
                             <hr>
@@ -57,7 +60,8 @@
                                 <div class="col-md-4">
                                     <form class="coupon_form" [formGroup]="referralForm" novalidate>
                                         <mat-form-field class="example-full-width">
-                                            <input matInput placeholder="Referral Code" formControlName="referral_code" name="referral_code">
+                                            <input matInput placeholder="Referral Code" formControlName="referral_code"
+                                                name="referral_code">
                                             <mat-error *ngIf="isFieldValid(referralForm,'referral_code')">
                                                 Please enter
                                                 <strong>Referral Code</strong>
@@ -70,6 +74,10 @@
                                 </div>
                             </div>
                             <hr>
+
+
+                        </div>
+                        <div class="col-md-12">
                             <div class="row" *ngIf="offer_price == 0">
                                 <div class="col-md-6">Total </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{getPaidTotal()}} </div>
@@ -80,19 +88,24 @@
                                 <div class="col-md-6">Coupon code: {{coupon_code}} </div>
                                 <div class="col-md-6" style="text-align: right">Rs. {{offer_price}} </div>
                                 <div class="col-md-6 text-white bg-dark">Total </div>
-                                <div class="col-md-6 text-white bg-dark" style="text-align: right">Rs. {{getPaidTotalAfterOffer()}} </div>
+                                <div class="col-md-6 text-white bg-dark" style="text-align: right">Rs.
+                                    {{getPaidTotalAfterOffer()}} </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <mat-checkbox [(ngModel)]="termsAndConditionChecked">I Agree to the <a (click)="showTermsAndConditions()" class="text-primary
+                                    <mat-checkbox [(ngModel)]="termsAndConditionChecked">I Agree to the <a (click)="showTermsAndConditions()"
+                                            class="text-primary
 
-                                        ">terms & conditions</a></mat-checkbox>
+                                        ">terms &
+                                            conditions</a></mat-checkbox>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <button class="round-g-biscuit" (click)="pay()">Procced To Pay!</button>
+                                    <button class="round-g-biscuit" *ngIf="subscription_type != 4" (click)="pay()">Procced
+                                        To Pay!</button>
+                                    <button class="round-g-biscuit" *ngIf="subscription_type == 4" (click)="proceed()">Procced!</button>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +116,8 @@
     </div>
 </div>
 <!-- paytm -->
-<form class="form" method="post" action="https://securegw-stage.paytm.in/theia/processTransaction" name="payment" ngNoForm style="visibility: hidden;height: 0;">
+<form class="form" method="post" action="https://securegw-stage.paytm.in/theia/processTransaction" name="payment"
+    ngNoForm style="visibility: hidden;height: 0;">
     <div *ngIf="paymentFormActive">
         <input type="hidden" value="{{paymentdetails_data.MID}}" name="MID">
         <input type="hidden" value="{{paymentdetails_data.ORDER_ID}}" name="ORDER_ID">
